@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ordinary Least Squares — A Visual Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0f14;
+    --surface: #151921;
+    --surface-raised: #1c2130;
+    --text: #e4e6eb;
+    --text-muted: #8b90a0;
+    --accent: #f0a050;
+    --accent-light: rgba(240,160,80,.15);
+    --blue: #50a0d0;
+    --blue-light: rgba(80,160,208,.12);
+    --green: #50d0a0;
+    --green-light: rgba(80,208,160,.12);
+    --red: #e05070;
+    --red-light: rgba(224,80,112,.12);
+    --border: rgba(255,255,255,.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .hero {
+    min-height: 55vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 60% at 30% 50%, var(--accent-light), transparent),
+      radial-gradient(ellipse 40% 50% at 70% 55%, var(--blue-light), transparent);
+    pointer-events: none;
+    opacity: .7;
+  }
+
+  .hero-label {
+    font-family: 'Source Code Pro', monospace;
+    font-size: .75rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    max-width: 800px;
+  }
+  .hero h1 .ols { color: var(--accent); }
+
+  .hero p {
+    max-width: 600px;
+    margin-top: 1.5rem;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+
+  section { padding: 4rem 0; }
+  section + section { border-top: 1px solid var(--border); }
+
+  .section-badge {
+    display: inline-block;
+    font-family: 'Source Code Pro', monospace;
+    font-size: .7rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    padding: .35rem .9rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+  }
+  .badge-accent { background: var(--accent-light); color: var(--accent); border: 1px solid rgba(240,160,80,.25); }
+  .badge-blue   { background: var(--blue-light);   color: var(--blue);   border: 1px solid rgba(80,160,208,.25); }
+  .badge-green  { background: var(--green-light);  color: var(--green);  border: 1px solid rgba(80,208,160,.25); }
+  .badge-red    { background: var(--red-light);     color: var(--red);    border: 1px solid rgba(224,80,112,.25); }
+
+  h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.25; }
+  h3 { font-size: 1.15rem; font-weight: 600; margin: 2rem 0 .75rem; }
+  p + p { margin-top: 1rem; }
+  strong { font-weight: 600; }
+  ul, ol { padding-left: 1.4rem; margin-top: .75rem; }
+  li { margin-bottom: .5rem; }
+  li::marker { color: var(--text-muted); }
+
+  code {
+    font-family: 'Source Code Pro', monospace;
+    background: var(--surface-raised);
+    padding: .15em .4em;
+    border-radius: 4px;
+    font-size: .9em;
+  }
+
+  .formula-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    margin: 2rem 0;
+    text-align: center;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .formula-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+
+  .formula {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    letter-spacing: .03em;
+    color: var(--accent);
+    line-height: 2;
+  }
+
+  .formula-note { font-size: .88rem; color: var(--text-muted); margin-top: .75rem; }
+
+  .diagram-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    text-align: center;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .diagram-wrap:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+  .diagram-wrap svg { max-width: 100%; height: auto; }
+  .diagram-caption { font-size: .85rem; color: var(--text-muted); margin-top: .75rem; }
+
+  .callout {
+    background: var(--surface);
+    border-left: 3px solid var(--green);
+    border-radius: 0 12px 12px 0;
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    font-size: .95rem;
+  }
+  .callout.blue { border-left-color: var(--blue); }
+  .callout.red  { border-left-color: var(--red); }
+  .callout strong { color: var(--green); }
+  .callout.blue strong { color: var(--blue); }
+  .callout.red strong  { color: var(--red); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; }
+  .col-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .col-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+  .col-card h4 {
+    font-family: 'Source Code Pro', monospace;
+    font-size: .75rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: .6rem;
+  }
+  .col-card ul { font-size: .95rem; }
+
+  .ols-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: .92rem; }
+  .ols-table th, .ols-table td { padding: .85rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+  .ols-table thead th {
+    font-family: 'Source Code Pro', monospace;
+    font-size: .75rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--surface);
+  }
+  .ols-table tbody tr:hover { background: var(--surface); }
+
+  .code-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    overflow-x: auto;
+  }
+  .code-block pre {
+    font-family: 'Source Code Pro', monospace;
+    font-size: .82rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    color: var(--text);
+    margin: 0;
+  }
+  .code-block .cm { color: var(--text-muted); }
+  .code-block .kw { color: var(--blue); }
+  .code-block .st { color: var(--green); }
+
+  footer { text-align: center; padding: 3rem 2rem; color: var(--text-muted); font-size: .82rem; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero h1, .hero p, .hero-label { animation: fadeUp .8s ease both; }
+  .hero-label { animation-delay: .1s; }
+  .hero h1   { animation-delay: .25s; }
+  .hero p    { animation-delay: .45s; }
+
+  @media (max-width: 640px) {
+    .two-col { grid-template-columns: 1fr; }
+    .formula { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="hero-label">Feature Engineering · Statistical Foundations</span>
+  <h1><span class="ols">Ordinary Least Squares</span></h1>
+  <p>The workhorse of regression — and the foundation on which much of modern data science is built.</p>
+</header>
+
+<div class="container">
+
+  <section>
+    <span class="section-badge badge-accent">Definition</span>
+    <h2>What Is OLS?</h2>
+    <p><strong>Ordinary Least Squares (OLS)</strong> is a method for estimating the parameters of a linear regression model. Given a set of data points, OLS finds the line (or hyperplane) that minimises the <em>sum of the squared differences</em> between the observed values and the values predicted by the model.</p>
+    <p>In plain language: you have data, you want the "best" straight line through it, and OLS tells you exactly where that line goes — by making the total squared error as small as possible.</p>
+
+    <div class="formula-card">
+      <div class="formula">ŷ = β₀ + β₁x₁ + β₂x₂ + … + βₚxₚ</div>
+      <p class="formula-note">The linear model: ŷ is the prediction, β₀ is the intercept, and β₁…βₚ are the coefficients for each feature.</p>
+    </div>
+
+    <div class="formula-card">
+      <div class="formula">minimise &nbsp; Σ(yᵢ − ŷᵢ)²</div>
+      <p class="formula-note">The OLS objective: choose β values to minimise the sum of squared residuals.</p>
+    </div>
+  </section>
+
+  <section>
+    <span class="section-badge badge-blue">Visual Intuition</span>
+    <h2>How It Works</h2>
+    <p>Each vertical dashed line below is a <strong>residual</strong> — the distance between an observed data point and the fitted line. OLS finds the line that makes the total area of the shaded squares as small as possible.</p>
+
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+        <rect width="500" height="300" rx="8" fill="#151921"/>
+        <line x1="50" y1="260" x2="460" y2="260" stroke="#2a2f3e" stroke-width="1.5"/>
+        <line x1="50" y1="260" x2="50" y2="30" stroke="#2a2f3e" stroke-width="1.5"/>
+        <text x="255" y="288" text-anchor="middle" fill="#8b90a0" font-size="11" font-family="Source Code Pro, monospace">features</text>
+        <text x="22" y="145" text-anchor="middle" fill="#8b90a0" font-size="11" font-family="Source Code Pro, monospace" transform="rotate(-90 22 145)">target</text>
+
+        <line x1="70" y1="230" x2="440" y2="60" stroke="#e4e6eb" stroke-width="2" opacity=".5"/>
+
+        <line x1="100" y1="210" x2="100" y2="188" stroke="#e05070" stroke-width="1.5" stroke-dasharray="4 2" opacity=".7"/>
+        <rect x="92" y="188" width="16" height="22" fill="#e05070" opacity=".1" rx="1"/>
+        <circle cx="100" cy="210" r="5" fill="#50a0d0"/>
+
+        <line x1="150" y1="160" x2="150" y2="175" stroke="#e05070" stroke-width="1.5" stroke-dasharray="4 2" opacity=".7"/>
+        <rect x="142" y="160" width="16" height="15" fill="#e05070" opacity=".1" rx="1"/>
+        <circle cx="150" cy="160" r="5" fill="#50a0d0"/>
+
+        <line x1="200" y1="175" x2="200" y2="157" stroke="#e05070" stroke-width="1.5" stroke-dasharray="4 2" opacity=".7"/>
+        <rect x="192" y="157" width="16" height="18" fill="#e05070" opacity=".1" rx="1"/>
+        <circle cx="200" cy="175" r="5" fill="#50a0d0"/>
+
+        <line x1="250" y1="120" x2="250" y2="140" stroke="#e05070" stroke-width="1.5" stroke-dasharray="4 2" opacity=".7"/>
+        <rect x="242" y="120" width="16" height="20" fill="#e05070" opacity=".1" rx="1"/>
+        <circle cx="250" cy="120" r="5" fill="#50a0d0"/>
+
+        <line x1="300" y1="130" x2="300" y2="122" stroke="#e05070" stroke-width="1.5" stroke-dasharray="4 2" opacity=".7"/>
+        <rect x="292" y="122" width="16" height="8" fill="#e05070" opacity=".1" rx="1"/>
+        <circle cx="300" cy="130" r="5" fill="#50a0d0"/>
+
+        <line x1="340" y1="85" x2="340" y2="107" stroke="#e05070" stroke-width="1.5" stroke-dasharray="4 2" opacity=".7"/>
+        <rect x="332" y="85" width="16" height="22" fill="#e05070" opacity=".1" rx="1"/>
+        <circle cx="340" cy="85" r="5" fill="#50a0d0"/>
+
+        <line x1="390" y1="100" x2="390" y2="88" stroke="#e05070" stroke-width="1.5" stroke-dasharray="4 2" opacity=".7"/>
+        <rect x="382" y="88" width="16" height="12" fill="#e05070" opacity=".1" rx="1"/>
+        <circle cx="390" cy="100" r="5" fill="#50a0d0"/>
+
+        <line x1="430" y1="55" x2="430" y2="73" stroke="#e05070" stroke-width="1.5" stroke-dasharray="4 2" opacity=".7"/>
+        <rect x="422" y="55" width="16" height="18" fill="#e05070" opacity=".1" rx="1"/>
+        <circle cx="430" cy="55" r="5" fill="#50a0d0"/>
+
+        <circle cx="80" cy="20" r="4" fill="#50a0d0"/>
+        <text x="90" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">Data point</text>
+        <line x1="170" y1="20" x2="185" y2="20" stroke="#e05070" stroke-width="1.5" stroke-dasharray="4 2" opacity=".7"/>
+        <text x="192" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">Residual</text>
+        <line x1="270" y1="20" x2="295" y2="20" stroke="#e4e6eb" stroke-width="2" opacity=".5"/>
+        <text x="302" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">OLS fit</text>
+      </svg>
+      <p class="diagram-caption">The OLS regression line minimises the total area of the shaded squares — hence "least squares."</p>
+    </div>
+  </section>
+
+  <section>
+    <span class="section-badge badge-accent">Assumptions</span>
+    <h2>The Five Key Assumptions</h2>
+    <p>OLS produces the <strong>Best Linear Unbiased Estimator (BLUE)</strong> — but only when these assumptions hold.</p>
+
+    <table class="ols-table">
+      <thead>
+        <tr><th>#</th><th>Assumption</th><th>What It Means</th><th>What Breaks If Violated</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Linearity</strong></td><td>The relationship between features and target is linear.</td><td>Biased estimates — the model systematically misses the true pattern.</td></tr>
+        <tr><td>2</td><td><strong>Independence</strong></td><td>Observations are independent of each other.</td><td>Standard errors are wrong; hypothesis tests become unreliable.</td></tr>
+        <tr><td>3</td><td><strong>Homoscedasticity</strong></td><td>Residuals have constant variance across all levels of X.</td><td>Estimates still unbiased but inefficient; confidence intervals misleading.</td></tr>
+        <tr><td>4</td><td><strong>Normality of residuals</strong></td><td>Residuals are normally distributed (needed for valid inference).</td><td>p-values and confidence intervals lose validity, especially in small samples.</td></tr>
+        <tr><td>5</td><td><strong>No multicollinearity</strong></td><td>Features are not highly correlated with each other.</td><td>Coefficients become unstable; standard errors inflate.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout blue">
+      <strong>Practical tip:</strong> In the real world, these assumptions are almost never perfectly met. The key is understanding <em>which</em> is violated and <em>how badly</em> — mild violations often don't matter, while severe ones require alternative methods.
+    </div>
+  </section>
+
+  <section>
+    <span class="section-badge badge-green">Applications</span>
+    <h2>What Is OLS Used For?</h2>
+
+    <div class="two-col">
+      <div class="col-card">
+        <h4 style="color:var(--blue)">Explanation &amp; Inference</h4>
+        <ul>
+          <li>Understanding which features drive an outcome (and by how much)</li>
+          <li>A/B test analysis — estimating treatment effects with covariates</li>
+          <li>Econometric modelling — causal inference, policy evaluation</li>
+          <li>Scientific research — testing hypotheses about relationships</li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <h4 style="color:var(--green)">Prediction &amp; Baselines</h4>
+        <ul>
+          <li>Quick baseline model before trying complex algorithms</li>
+          <li>Forecasting when the relationship is approximately linear</li>
+          <li>Feature selection — coefficients reveal which inputs matter</li>
+          <li>Foundation for Ridge, Lasso, Elastic Net</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Interpreting the Output</h3>
+    <p>Each coefficient β tells you: <em>"Holding all other features constant, a one-unit increase in this feature is associated with a β-unit change in the target."</em> This makes OLS the default when stakeholders need to understand <em>why</em> a model makes a prediction.</p>
+
+    <h3>Key Diagnostics</h3>
+    <ul>
+      <li><strong>R²</strong> — proportion of variance explained. Higher is better, but a high R² alone doesn't validate the model.</li>
+      <li><strong>Adjusted R²</strong> — penalises for adding features, preventing artificial inflation.</li>
+      <li><strong>p-values</strong> — probability of seeing a coefficient this extreme if the true value were zero.</li>
+      <li><strong>F-statistic</strong> — tests whether the model as a whole is significant.</li>
+      <li><strong>Residual plots</strong> — visual checks for linearity, homoscedasticity, and normality.</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="section-badge badge-blue">Tradeoffs</span>
+    <h2>Strengths &amp; Limitations</h2>
+
+    <div class="two-col">
+      <div class="col-card">
+        <h4 style="color:var(--green)">Strengths</h4>
+        <ul>
+          <li>Closed-form solution — no iterative tuning</li>
+          <li>Highly interpretable coefficients</li>
+          <li>Fast to fit, even on large datasets</li>
+          <li>Well-understood statistical properties</li>
+          <li>Foundation for many advanced methods</li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <h4 style="color:var(--red)">Limitations</h4>
+        <ul>
+          <li>Assumes linear relationships — misses curves and interactions</li>
+          <li>Sensitive to outliers</li>
+          <li>Struggles with multicollinearity</li>
+          <li>Can overfit when p &gt; n</li>
+          <li>Predictions aren't bounded</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="section-badge badge-green">Context</span>
+    <h2>OLS in the Modern DS Toolkit</h2>
+
+    <table class="ols-table">
+      <thead><tr><th>Use Case</th><th>Best Tool</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Explain which features drive churn</td><td>OLS / Logistic regression</td><td>Stakeholders need interpretable coefficients</td></tr>
+        <tr><td>Predict house prices (tabular)</td><td>XGBoost / LightGBM</td><td>Nonlinear patterns handled natively</td></tr>
+        <tr><td>Estimate causal effect of a campaign</td><td>OLS with controls</td><td>Well-established inference framework</td></tr>
+        <tr><td>Quick baseline</td><td>OLS</td><td>Minutes to fit, easy to beat (or not)</td></tr>
+        <tr><td>High-dimensional gene expression</td><td>Lasso / Ridge</td><td>OLS overfits; regularisation keeps it stable</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Bottom line:</strong> OLS isn't the most powerful predictive tool today, but it's one of the most important things to <em>understand deeply</em>. It builds the intuition — about residuals, bias, variance, regularisation — that makes everything else click.
+    </div>
+  </section>
+
+  <section>
+    <span class="section-badge badge-accent">Code</span>
+    <h2>Quick Reference: Python</h2>
+
+    <div class="code-block">
+<pre><span class="cm"># Using scikit-learn</span>
+<span class="kw">from</span> sklearn.linear_model <span class="kw">import</span> LinearRegression
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> train_test_split
+<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> r2_score, mean_squared_error
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+<span class="kw">print</span>(<span class="st">f"R²:   {r2_score(y_test, y_pred):.4f}"</span>)
+<span class="kw">print</span>(<span class="st">f"RMSE: {mean_squared_error(y_test, y_pred, squared=False):.4f}"</span>)
+<span class="kw">print</span>(<span class="st">f"Coefficients: {model.coef_}"</span>)
+<span class="kw">print</span>(<span class="st">f"Intercept:    {model.intercept_}"</span>)</pre>
+    </div>
+    <p style="text-align:center;color:var(--text-muted);font-size:.88rem;">For full statistical inference (p-values, confidence intervals), use <code>statsmodels.OLS</code> instead.</p>
+  </section>
+
+</div>
+
+<footer>Feature Engineering Series &middot; Ordinary Least Squares (OLS)</footer>
+
+</body>
+</html>
