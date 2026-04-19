@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ordinary Least Squares — A Visual Guide</title>
+<title data-tr-title
+  data-tr-en="Ordinary Least Squares — A Visual Guide"
+  data-tr-es="Mínimos Cuadrados Ordinarios — Una Guía Visual"
+  data-tr-ja="普通最小二乗法 — 視覚的ガイド">Ordinary Least Squares — A Visual Guide</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lang-toggle.css">
 <style>
   :root {
     --bg: #0c0f14;
@@ -236,42 +240,87 @@
 <body>
 
 <header class="hero">
-  <span class="hero-label">Feature Engineering · Statistical Foundations</span>
-  <h1><span class="ols">Ordinary Least Squares</span></h1>
-  <p>The workhorse of regression — and the foundation on which much of modern data science is built.</p>
+  <span class="hero-label">
+    <span data-tr="en">Feature Engineering · Statistical Foundations</span>
+    <span data-tr="es">Ingeniería de Features · Fundamentos Estadísticos</span>
+    <span data-tr="ja">特徴量エンジニアリング · 統計的基礎</span>
+  </span>
+  <h1><span class="ols">
+    <span data-tr="en">Ordinary Least Squares</span>
+    <span data-tr="es">Mínimos Cuadrados Ordinarios</span>
+    <span data-tr="ja">普通最小二乗法</span>
+  </span></h1>
+  <p data-tr="en">The workhorse of regression — and the foundation on which much of modern data science is built.</p>
+  <p data-tr="es">El caballo de batalla de la regresión — y la base sobre la que se construye gran parte de la ciencia de datos moderna.</p>
+  <p data-tr="ja">回帰の主力 — そして現代データサイエンスの多くが築かれている基盤。</p>
 </header>
 
 <div class="container">
 
   <section>
-    <span class="section-badge badge-accent">Definition</span>
-    <h2>What Is OLS?</h2>
-    <p><strong>Ordinary Least Squares (OLS)</strong> is a method for estimating the parameters of a linear regression model. Given a set of data points, OLS finds the line (or hyperplane) that minimises the <em>sum of the squared differences</em> between the observed values and the values predicted by the model.</p>
-    <p>In plain language: you have data, you want the "best" straight line through it, and OLS tells you exactly where that line goes — by making the total squared error as small as possible.</p>
+    <span class="section-badge badge-accent">
+      <span data-tr="en">Definition</span>
+      <span data-tr="es">Definición</span>
+      <span data-tr="ja">定義</span>
+    </span>
+    <h2>
+      <span data-tr="en">What Is OLS?</span>
+      <span data-tr="es">¿Qué es MCO?</span>
+      <span data-tr="ja">OLSとは何か？</span>
+    </h2>
+    <p data-tr="en"><strong>Ordinary Least Squares (OLS)</strong> is a method for estimating the parameters of a linear regression model. Given a set of data points, OLS finds the line (or hyperplane) that minimises the <em>sum of the squared differences</em> between the observed values and the values predicted by the model.</p>
+    <p data-tr="es"><strong>Mínimos Cuadrados Ordinarios (MCO)</strong> es un método para estimar los parámetros de un modelo de regresión lineal. Dado un conjunto de puntos de datos, MCO encuentra la línea (o hiperplano) que minimiza la <em>suma de las diferencias al cuadrado</em> entre los valores observados y los valores predichos por el modelo.</p>
+    <p data-tr="ja"><strong>普通最小二乗法 (OLS)</strong> は、線形回帰モデルのパラメータを推定する手法です。データ点の集合が与えられたとき、OLSは観測値とモデルによって予測された値との<em>差の二乗和</em>を最小化する直線 (または超平面) を見つけます。</p>
+
+    <p data-tr="en">In plain language: you have data, you want the "best" straight line through it, and OLS tells you exactly where that line goes — by making the total squared error as small as possible.</p>
+    <p data-tr="es">En lenguaje simple: tienes datos, quieres la "mejor" línea recta a través de ellos, y MCO te dice exactamente dónde va esa línea — haciendo que el error cuadrático total sea lo más pequeño posible.</p>
+    <p data-tr="ja">簡単に言えば: データがあり、その中を通る「最良の」直線が欲しい。OLSは二乗誤差の合計を可能な限り小さくすることで、その直線がどこを通るかを正確に教えてくれます。</p>
 
     <div class="formula-card">
       <div class="formula">ŷ = β₀ + β₁x₁ + β₂x₂ + … + βₚxₚ</div>
-      <p class="formula-note">The linear model: ŷ is the prediction, β₀ is the intercept, and β₁…βₚ are the coefficients for each feature.</p>
+      <p class="formula-note" data-tr="en">The linear model: ŷ is the prediction, β₀ is the intercept, and β₁…βₚ are the coefficients for each feature.</p>
+      <p class="formula-note" data-tr="es">El modelo lineal: ŷ es la predicción, β₀ es el intercepto, y β₁…βₚ son los coeficientes para cada característica.</p>
+      <p class="formula-note" data-tr="ja">線形モデル: ŷ は予測値、β₀ は切片、β₁…βₚ は各特徴量の係数です。</p>
     </div>
 
     <div class="formula-card">
-      <div class="formula">minimise &nbsp; Σ(yᵢ − ŷᵢ)²</div>
-      <p class="formula-note">The OLS objective: choose β values to minimise the sum of squared residuals.</p>
+      <div class="formula">
+        <span data-tr="en">minimise &nbsp; Σ(yᵢ − ŷᵢ)²</span>
+        <span data-tr="es">minimizar &nbsp; Σ(yᵢ − ŷᵢ)²</span>
+        <span data-tr="ja">最小化 &nbsp; Σ(yᵢ − ŷᵢ)²</span>
+      </div>
+      <p class="formula-note" data-tr="en">The OLS objective: choose β values to minimise the sum of squared residuals.</p>
+      <p class="formula-note" data-tr="es">El objetivo de MCO: elegir valores β para minimizar la suma de residuos al cuadrado.</p>
+      <p class="formula-note" data-tr="ja">OLSの目的: 残差の二乗和を最小化する β の値を選ぶこと。</p>
     </div>
   </section>
 
   <section>
-    <span class="section-badge badge-blue">Visual Intuition</span>
-    <h2>How It Works</h2>
-    <p>Each vertical dashed line below is a <strong>residual</strong> — the distance between an observed data point and the fitted line. OLS finds the line that makes the total area of the shaded squares as small as possible.</p>
+    <span class="section-badge badge-blue">
+      <span data-tr="en">Visual Intuition</span>
+      <span data-tr="es">Intuición Visual</span>
+      <span data-tr="ja">視覚的直観</span>
+    </span>
+    <h2>
+      <span data-tr="en">How It Works</span>
+      <span data-tr="es">Cómo Funciona</span>
+      <span data-tr="ja">仕組み</span>
+    </h2>
+    <p data-tr="en">Each vertical dashed line below is a <strong>residual</strong> — the distance between an observed data point and the fitted line. OLS finds the line that makes the total area of the shaded squares as small as possible.</p>
+    <p data-tr="es">Cada línea vertical discontinua a continuación es un <strong>residuo</strong> — la distancia entre un punto de datos observado y la línea ajustada. MCO encuentra la línea que hace que el área total de los cuadrados sombreados sea lo más pequeña posible.</p>
+    <p data-tr="ja">以下の各縦の破線は<strong>残差</strong>です — 観測されたデータ点と当てはめられた直線との距離です。OLSは陰影付きの正方形の合計面積を可能な限り小さくする直線を見つけます。</p>
 
     <div class="diagram-wrap">
       <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
         <rect width="500" height="300" rx="8" fill="#151921"/>
         <line x1="50" y1="260" x2="460" y2="260" stroke="#2a2f3e" stroke-width="1.5"/>
         <line x1="50" y1="260" x2="50" y2="30" stroke="#2a2f3e" stroke-width="1.5"/>
-        <text x="255" y="288" text-anchor="middle" fill="#8b90a0" font-size="11" font-family="Source Code Pro, monospace">features</text>
-        <text x="22" y="145" text-anchor="middle" fill="#8b90a0" font-size="11" font-family="Source Code Pro, monospace" transform="rotate(-90 22 145)">target</text>
+        <text data-tr="en" x="255" y="288" text-anchor="middle" fill="#8b90a0" font-size="11" font-family="Source Code Pro, monospace">features</text>
+        <text data-tr="es" x="255" y="288" text-anchor="middle" fill="#8b90a0" font-size="11" font-family="Source Code Pro, monospace">características</text>
+        <text data-tr="ja" x="255" y="288" text-anchor="middle" fill="#8b90a0" font-size="11" font-family="Source Code Pro, monospace">特徴量</text>
+        <text data-tr="en" x="22" y="145" text-anchor="middle" fill="#8b90a0" font-size="11" font-family="Source Code Pro, monospace" transform="rotate(-90 22 145)">target</text>
+        <text data-tr="es" x="22" y="145" text-anchor="middle" fill="#8b90a0" font-size="11" font-family="Source Code Pro, monospace" transform="rotate(-90 22 145)">objetivo</text>
+        <text data-tr="ja" x="22" y="145" text-anchor="middle" fill="#8b90a0" font-size="11" font-family="Source Code Pro, monospace" transform="rotate(-90 22 145)">目標</text>
 
         <line x1="70" y1="230" x2="440" y2="60" stroke="#e4e6eb" stroke-width="2" opacity=".5"/>
 
@@ -308,128 +357,442 @@
         <circle cx="430" cy="55" r="5" fill="#50a0d0"/>
 
         <circle cx="80" cy="20" r="4" fill="#50a0d0"/>
-        <text x="90" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">Data point</text>
+        <text data-tr="en" x="90" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">Data point</text>
+        <text data-tr="es" x="90" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">Punto de datos</text>
+        <text data-tr="ja" x="90" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">データ点</text>
         <line x1="170" y1="20" x2="185" y2="20" stroke="#e05070" stroke-width="1.5" stroke-dasharray="4 2" opacity=".7"/>
-        <text x="192" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">Residual</text>
+        <text data-tr="en" x="192" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">Residual</text>
+        <text data-tr="es" x="192" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">Residuo</text>
+        <text data-tr="ja" x="192" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">残差</text>
         <line x1="270" y1="20" x2="295" y2="20" stroke="#e4e6eb" stroke-width="2" opacity=".5"/>
-        <text x="302" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">OLS fit</text>
+        <text data-tr="en" x="302" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">OLS fit</text>
+        <text data-tr="es" x="302" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">Ajuste MCO</text>
+        <text data-tr="ja" x="302" y="24" fill="#8b90a0" font-size="10" font-family="DM Sans, sans-serif">OLS適合</text>
       </svg>
-      <p class="diagram-caption">The OLS regression line minimises the total area of the shaded squares — hence "least squares."</p>
+      <p class="diagram-caption" data-tr="en">The OLS regression line minimises the total area of the shaded squares — hence "least squares."</p>
+      <p class="diagram-caption" data-tr="es">La línea de regresión MCO minimiza el área total de los cuadrados sombreados — de ahí "mínimos cuadrados."</p>
+      <p class="diagram-caption" data-tr="ja">OLS回帰直線は陰影付きの正方形の合計面積を最小化します — そのため「最小二乗法」と呼ばれます。</p>
     </div>
   </section>
 
   <section>
-    <span class="section-badge badge-accent">Assumptions</span>
-    <h2>The Five Key Assumptions</h2>
-    <p>OLS produces the <strong>Best Linear Unbiased Estimator (BLUE)</strong> — but only when these assumptions hold.</p>
+    <span class="section-badge badge-accent">
+      <span data-tr="en">Assumptions</span>
+      <span data-tr="es">Supuestos</span>
+      <span data-tr="ja">仮定</span>
+    </span>
+    <h2>
+      <span data-tr="en">The Five Key Assumptions</span>
+      <span data-tr="es">Los Cinco Supuestos Clave</span>
+      <span data-tr="ja">5つの主要な仮定</span>
+    </h2>
+    <p data-tr="en">OLS produces the <strong>Best Linear Unbiased Estimator (BLUE)</strong> — but only when these assumptions hold.</p>
+    <p data-tr="es">MCO produce el <strong>Mejor Estimador Lineal Insesgado (BLUE)</strong> — pero solo cuando estos supuestos se cumplen.</p>
+    <p data-tr="ja">OLSは<strong>最良線形不偏推定量 (BLUE)</strong> を生成します — ただし、これらの仮定が成り立つ場合に限ります。</p>
 
     <table class="ols-table">
       <thead>
-        <tr><th>#</th><th>Assumption</th><th>What It Means</th><th>What Breaks If Violated</th></tr>
+        <tr>
+          <th>#</th>
+          <th>
+            <span data-tr="en">Assumption</span>
+            <span data-tr="es">Supuesto</span>
+            <span data-tr="ja">仮定</span>
+          </th>
+          <th>
+            <span data-tr="en">What It Means</span>
+            <span data-tr="es">Qué Significa</span>
+            <span data-tr="ja">意味するところ</span>
+          </th>
+          <th>
+            <span data-tr="en">What Breaks If Violated</span>
+            <span data-tr="es">Qué Falla Si Se Viola</span>
+            <span data-tr="ja">違反した場合に壊れるもの</span>
+          </th>
+        </tr>
       </thead>
       <tbody>
-        <tr><td>1</td><td><strong>Linearity</strong></td><td>The relationship between features and target is linear.</td><td>Biased estimates — the model systematically misses the true pattern.</td></tr>
-        <tr><td>2</td><td><strong>Independence</strong></td><td>Observations are independent of each other.</td><td>Standard errors are wrong; hypothesis tests become unreliable.</td></tr>
-        <tr><td>3</td><td><strong>Homoscedasticity</strong></td><td>Residuals have constant variance across all levels of X.</td><td>Estimates still unbiased but inefficient; confidence intervals misleading.</td></tr>
-        <tr><td>4</td><td><strong>Normality of residuals</strong></td><td>Residuals are normally distributed (needed for valid inference).</td><td>p-values and confidence intervals lose validity, especially in small samples.</td></tr>
-        <tr><td>5</td><td><strong>No multicollinearity</strong></td><td>Features are not highly correlated with each other.</td><td>Coefficients become unstable; standard errors inflate.</td></tr>
+        <tr>
+          <td>1</td>
+          <td>
+            <strong data-tr="en">Linearity</strong>
+            <strong data-tr="es">Linealidad</strong>
+            <strong data-tr="ja">線形性</strong>
+          </td>
+          <td>
+            <span data-tr="en">The relationship between features and target is linear.</span>
+            <span data-tr="es">La relación entre las características y el objetivo es lineal.</span>
+            <span data-tr="ja">特徴量と目標の関係は線形である。</span>
+          </td>
+          <td>
+            <span data-tr="en">Biased estimates — the model systematically misses the true pattern.</span>
+            <span data-tr="es">Estimaciones sesgadas — el modelo falla sistemáticamente en capturar el patrón verdadero.</span>
+            <span data-tr="ja">偏った推定 — モデルは真のパターンを系統的に見逃す。</span>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>
+            <strong data-tr="en">Independence</strong>
+            <strong data-tr="es">Independencia</strong>
+            <strong data-tr="ja">独立性</strong>
+          </td>
+          <td>
+            <span data-tr="en">Observations are independent of each other.</span>
+            <span data-tr="es">Las observaciones son independientes entre sí.</span>
+            <span data-tr="ja">観測値は互いに独立している。</span>
+          </td>
+          <td>
+            <span data-tr="en">Standard errors are wrong; hypothesis tests become unreliable.</span>
+            <span data-tr="es">Los errores estándar son incorrectos; las pruebas de hipótesis se vuelven poco fiables.</span>
+            <span data-tr="ja">標準誤差が間違っている。仮説検定が信頼できなくなる。</span>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>
+            <strong data-tr="en">Homoscedasticity</strong>
+            <strong data-tr="es">Homocedasticidad</strong>
+            <strong data-tr="ja">等分散性</strong>
+          </td>
+          <td>
+            <span data-tr="en">Residuals have constant variance across all levels of X.</span>
+            <span data-tr="es">Los residuos tienen varianza constante en todos los niveles de X.</span>
+            <span data-tr="ja">残差は X のすべてのレベルにわたって一定の分散を持つ。</span>
+          </td>
+          <td>
+            <span data-tr="en">Estimates still unbiased but inefficient; confidence intervals misleading.</span>
+            <span data-tr="es">Las estimaciones siguen siendo insesgadas pero ineficientes; los intervalos de confianza son engañosos.</span>
+            <span data-tr="ja">推定値は依然として不偏だが非効率。信頼区間が誤解を招く。</span>
+          </td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>
+            <strong data-tr="en">Normality of residuals</strong>
+            <strong data-tr="es">Normalidad de los residuos</strong>
+            <strong data-tr="ja">残差の正規性</strong>
+          </td>
+          <td>
+            <span data-tr="en">Residuals are normally distributed (needed for valid inference).</span>
+            <span data-tr="es">Los residuos se distribuyen normalmente (necesario para inferencia válida).</span>
+            <span data-tr="ja">残差は正規分布する (有効な推論に必要)。</span>
+          </td>
+          <td>
+            <span data-tr="en">p-values and confidence intervals lose validity, especially in small samples.</span>
+            <span data-tr="es">Los valores p y los intervalos de confianza pierden validez, especialmente en muestras pequeñas.</span>
+            <span data-tr="ja">p値と信頼区間が有効性を失う。特に小さなサンプルで。</span>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>
+            <strong data-tr="en">No multicollinearity</strong>
+            <strong data-tr="es">No multicolinealidad</strong>
+            <strong data-tr="ja">多重共線性がないこと</strong>
+          </td>
+          <td>
+            <span data-tr="en">Features are not highly correlated with each other.</span>
+            <span data-tr="es">Las características no están altamente correlacionadas entre sí.</span>
+            <span data-tr="ja">特徴量は互いに高度に相関していない。</span>
+          </td>
+          <td>
+            <span data-tr="en">Coefficients become unstable; standard errors inflate.</span>
+            <span data-tr="es">Los coeficientes se vuelven inestables; los errores estándar se inflan.</span>
+            <span data-tr="ja">係数が不安定になる。標準誤差が膨らむ。</span>
+          </td>
+        </tr>
       </tbody>
     </table>
 
     <div class="callout blue">
-      <strong>Practical tip:</strong> In the real world, these assumptions are almost never perfectly met. The key is understanding <em>which</em> is violated and <em>how badly</em> — mild violations often don't matter, while severe ones require alternative methods.
+      <div data-tr="en"><strong>Practical tip:</strong> In the real world, these assumptions are almost never perfectly met. The key is understanding <em>which</em> is violated and <em>how badly</em> — mild violations often don't matter, while severe ones require alternative methods.</div>
+      <div data-tr="es"><strong>Consejo práctico:</strong> En el mundo real, estos supuestos casi nunca se cumplen perfectamente. La clave es entender <em>cuál</em> se viola y <em>con qué gravedad</em> — las violaciones leves a menudo no importan, mientras que las severas requieren métodos alternativos.</div>
+      <div data-tr="ja"><strong>実践的ヒント:</strong> 現実の世界では、これらの仮定はほぼ完璧に満たされることはありません。鍵は<em>どれが</em>違反されているか、<em>どの程度深刻か</em>を理解することです — 軽度の違反はしばしば問題にならず、深刻な違反は代替手法を必要とします。</div>
     </div>
   </section>
 
   <section>
-    <span class="section-badge badge-green">Applications</span>
-    <h2>What Is OLS Used For?</h2>
+    <span class="section-badge badge-green">
+      <span data-tr="en">Applications</span>
+      <span data-tr="es">Aplicaciones</span>
+      <span data-tr="ja">応用</span>
+    </span>
+    <h2>
+      <span data-tr="en">What Is OLS Used For?</span>
+      <span data-tr="es">¿Para Qué Se Usa MCO?</span>
+      <span data-tr="ja">OLSは何に使われるか？</span>
+    </h2>
 
     <div class="two-col">
       <div class="col-card">
-        <h4 style="color:var(--blue)">Explanation &amp; Inference</h4>
+        <h4 style="color:var(--blue)">
+          <span data-tr="en">Explanation &amp; Inference</span>
+          <span data-tr="es">Explicación e Inferencia</span>
+          <span data-tr="ja">説明と推論</span>
+        </h4>
         <ul>
-          <li>Understanding which features drive an outcome (and by how much)</li>
-          <li>A/B test analysis — estimating treatment effects with covariates</li>
-          <li>Econometric modelling — causal inference, policy evaluation</li>
-          <li>Scientific research — testing hypotheses about relationships</li>
+          <li data-tr="en">Understanding which features drive an outcome (and by how much)</li>
+          <li data-tr="es">Entender qué características impulsan un resultado (y en qué medida)</li>
+          <li data-tr="ja">どの特徴量が結果を駆動するか (そしてどの程度) を理解する</li>
+          <li data-tr="en">A/B test analysis — estimating treatment effects with covariates</li>
+          <li data-tr="es">Análisis de pruebas A/B — estimando efectos del tratamiento con covariables</li>
+          <li data-tr="ja">A/Bテスト分析 — 共変量を使った処置効果の推定</li>
+          <li data-tr="en">Econometric modelling — causal inference, policy evaluation</li>
+          <li data-tr="es">Modelado econométrico — inferencia causal, evaluación de políticas</li>
+          <li data-tr="ja">計量経済モデリング — 因果推論、政策評価</li>
+          <li data-tr="en">Scientific research — testing hypotheses about relationships</li>
+          <li data-tr="es">Investigación científica — probando hipótesis sobre relaciones</li>
+          <li data-tr="ja">科学研究 — 関係についての仮説の検定</li>
         </ul>
       </div>
       <div class="col-card">
-        <h4 style="color:var(--green)">Prediction &amp; Baselines</h4>
+        <h4 style="color:var(--green)">
+          <span data-tr="en">Prediction &amp; Baselines</span>
+          <span data-tr="es">Predicción y Líneas Base</span>
+          <span data-tr="ja">予測とベースライン</span>
+        </h4>
         <ul>
-          <li>Quick baseline model before trying complex algorithms</li>
-          <li>Forecasting when the relationship is approximately linear</li>
-          <li>Feature selection — coefficients reveal which inputs matter</li>
-          <li>Foundation for Ridge, Lasso, Elastic Net</li>
+          <li data-tr="en">Quick baseline model before trying complex algorithms</li>
+          <li data-tr="es">Modelo de línea base rápido antes de probar algoritmos complejos</li>
+          <li data-tr="ja">複雑なアルゴリズムを試す前のクイックベースラインモデル</li>
+          <li data-tr="en">Forecasting when the relationship is approximately linear</li>
+          <li data-tr="es">Pronóstico cuando la relación es aproximadamente lineal</li>
+          <li data-tr="ja">関係が近似的に線形の場合の予測</li>
+          <li data-tr="en">Feature selection — coefficients reveal which inputs matter</li>
+          <li data-tr="es">Selección de características — los coeficientes revelan qué entradas importan</li>
+          <li data-tr="ja">特徴選択 — 係数はどの入力が重要かを明らかにする</li>
+          <li data-tr="en">Foundation for Ridge, Lasso, Elastic Net</li>
+          <li data-tr="es">Base para Ridge, Lasso, Elastic Net</li>
+          <li data-tr="ja">Ridge、Lasso、Elastic Net の基盤</li>
         </ul>
       </div>
     </div>
 
-    <h3>Interpreting the Output</h3>
-    <p>Each coefficient β tells you: <em>"Holding all other features constant, a one-unit increase in this feature is associated with a β-unit change in the target."</em> This makes OLS the default when stakeholders need to understand <em>why</em> a model makes a prediction.</p>
+    <h3>
+      <span data-tr="en">Interpreting the Output</span>
+      <span data-tr="es">Interpretando la Salida</span>
+      <span data-tr="ja">出力の解釈</span>
+    </h3>
+    <p data-tr="en">Each coefficient β tells you: <em>"Holding all other features constant, a one-unit increase in this feature is associated with a β-unit change in the target."</em> This makes OLS the default when stakeholders need to understand <em>why</em> a model makes a prediction.</p>
+    <p data-tr="es">Cada coeficiente β te dice: <em>"Manteniendo constantes todas las demás características, un aumento de una unidad en esta característica se asocia con un cambio de β unidades en el objetivo."</em> Esto hace que MCO sea la opción predeterminada cuando los interesados necesitan entender <em>por qué</em> un modelo hace una predicción.</p>
+    <p data-tr="ja">各係数 β はこう教えてくれます: <em>「他のすべての特徴量を一定に保つとき、この特徴量が1単位増加すると、目標が β 単位変化する。」</em>これにより、ステークホルダーがモデルが予測をする<em>理由</em>を理解する必要があるとき、OLS がデフォルトの選択肢になります。</p>
 
-    <h3>Key Diagnostics</h3>
+    <h3>
+      <span data-tr="en">Key Diagnostics</span>
+      <span data-tr="es">Diagnósticos Clave</span>
+      <span data-tr="ja">主要な診断</span>
+    </h3>
     <ul>
-      <li><strong>R²</strong> — proportion of variance explained. Higher is better, but a high R² alone doesn't validate the model.</li>
-      <li><strong>Adjusted R²</strong> — penalises for adding features, preventing artificial inflation.</li>
-      <li><strong>p-values</strong> — probability of seeing a coefficient this extreme if the true value were zero.</li>
-      <li><strong>F-statistic</strong> — tests whether the model as a whole is significant.</li>
-      <li><strong>Residual plots</strong> — visual checks for linearity, homoscedasticity, and normality.</li>
+      <li data-tr="en"><strong>R²</strong> — proportion of variance explained. Higher is better, but a high R² alone doesn't validate the model.</li>
+      <li data-tr="es"><strong>R²</strong> — proporción de varianza explicada. Más alto es mejor, pero un R² alto por sí solo no valida el modelo.</li>
+      <li data-tr="ja"><strong>R²</strong> — 説明される分散の割合。高いほど良いが、高いR²だけではモデルを検証しない。</li>
+      <li data-tr="en"><strong>Adjusted R²</strong> — penalises for adding features, preventing artificial inflation.</li>
+      <li data-tr="es"><strong>R² Ajustado</strong> — penaliza añadir características, evitando inflación artificial.</li>
+      <li data-tr="ja"><strong>調整済み R²</strong> — 特徴量の追加にペナルティを課し、人為的な増大を防ぐ。</li>
+      <li data-tr="en"><strong>p-values</strong> — probability of seeing a coefficient this extreme if the true value were zero.</li>
+      <li data-tr="es"><strong>valores p</strong> — probabilidad de ver un coeficiente tan extremo si el valor verdadero fuera cero.</li>
+      <li data-tr="ja"><strong>p値</strong> — 真の値がゼロだった場合に、これほど極端な係数を見る確率。</li>
+      <li data-tr="en"><strong>F-statistic</strong> — tests whether the model as a whole is significant.</li>
+      <li data-tr="es"><strong>Estadístico F</strong> — prueba si el modelo en su conjunto es significativo.</li>
+      <li data-tr="ja"><strong>F統計量</strong> — モデル全体が有意であるかを検定する。</li>
+      <li data-tr="en"><strong>Residual plots</strong> — visual checks for linearity, homoscedasticity, and normality.</li>
+      <li data-tr="es"><strong>Gráficos de residuos</strong> — comprobaciones visuales de linealidad, homocedasticidad y normalidad.</li>
+      <li data-tr="ja"><strong>残差プロット</strong> — 線形性、等分散性、正規性の視覚的チェック。</li>
     </ul>
   </section>
 
   <section>
-    <span class="section-badge badge-blue">Tradeoffs</span>
-    <h2>Strengths &amp; Limitations</h2>
+    <span class="section-badge badge-blue">
+      <span data-tr="en">Tradeoffs</span>
+      <span data-tr="es">Compromisos</span>
+      <span data-tr="ja">トレードオフ</span>
+    </span>
+    <h2>
+      <span data-tr="en">Strengths &amp; Limitations</span>
+      <span data-tr="es">Fortalezas y Limitaciones</span>
+      <span data-tr="ja">長所と限界</span>
+    </h2>
 
     <div class="two-col">
       <div class="col-card">
-        <h4 style="color:var(--green)">Strengths</h4>
+        <h4 style="color:var(--green)">
+          <span data-tr="en">Strengths</span>
+          <span data-tr="es">Fortalezas</span>
+          <span data-tr="ja">長所</span>
+        </h4>
         <ul>
-          <li>Closed-form solution — no iterative tuning</li>
-          <li>Highly interpretable coefficients</li>
-          <li>Fast to fit, even on large datasets</li>
-          <li>Well-understood statistical properties</li>
-          <li>Foundation for many advanced methods</li>
+          <li data-tr="en">Closed-form solution — no iterative tuning</li>
+          <li data-tr="es">Solución de forma cerrada — sin ajuste iterativo</li>
+          <li data-tr="ja">閉じた形の解 — 反復的な調整が不要</li>
+          <li data-tr="en">Highly interpretable coefficients</li>
+          <li data-tr="es">Coeficientes altamente interpretables</li>
+          <li data-tr="ja">高度に解釈可能な係数</li>
+          <li data-tr="en">Fast to fit, even on large datasets</li>
+          <li data-tr="es">Rápido de ajustar, incluso en grandes conjuntos de datos</li>
+          <li data-tr="ja">大規模データセットでも高速に適合</li>
+          <li data-tr="en">Well-understood statistical properties</li>
+          <li data-tr="es">Propiedades estadísticas bien comprendidas</li>
+          <li data-tr="ja">よく理解された統計的性質</li>
+          <li data-tr="en">Foundation for many advanced methods</li>
+          <li data-tr="es">Base para muchos métodos avanzados</li>
+          <li data-tr="ja">多くの高度な手法の基盤</li>
         </ul>
       </div>
       <div class="col-card">
-        <h4 style="color:var(--red)">Limitations</h4>
+        <h4 style="color:var(--red)">
+          <span data-tr="en">Limitations</span>
+          <span data-tr="es">Limitaciones</span>
+          <span data-tr="ja">限界</span>
+        </h4>
         <ul>
-          <li>Assumes linear relationships — misses curves and interactions</li>
-          <li>Sensitive to outliers</li>
-          <li>Struggles with multicollinearity</li>
-          <li>Can overfit when p &gt; n</li>
-          <li>Predictions aren't bounded</li>
+          <li data-tr="en">Assumes linear relationships — misses curves and interactions</li>
+          <li data-tr="es">Asume relaciones lineales — no capta curvas ni interacciones</li>
+          <li data-tr="ja">線形関係を仮定 — 曲線や相互作用を見逃す</li>
+          <li data-tr="en">Sensitive to outliers</li>
+          <li data-tr="es">Sensible a valores atípicos</li>
+          <li data-tr="ja">外れ値に敏感</li>
+          <li data-tr="en">Struggles with multicollinearity</li>
+          <li data-tr="es">Tiene dificultades con la multicolinealidad</li>
+          <li data-tr="ja">多重共線性に弱い</li>
+          <li data-tr="en">Can overfit when p &gt; n</li>
+          <li data-tr="es">Puede sobreajustarse cuando p &gt; n</li>
+          <li data-tr="ja">p &gt; n のとき過学習する可能性がある</li>
+          <li data-tr="en">Predictions aren't bounded</li>
+          <li data-tr="es">Las predicciones no están acotadas</li>
+          <li data-tr="ja">予測に境界がない</li>
         </ul>
       </div>
     </div>
   </section>
 
   <section>
-    <span class="section-badge badge-green">Context</span>
-    <h2>OLS in the Modern DS Toolkit</h2>
+    <span class="section-badge badge-green">
+      <span data-tr="en">Context</span>
+      <span data-tr="es">Contexto</span>
+      <span data-tr="ja">文脈</span>
+    </span>
+    <h2>
+      <span data-tr="en">OLS in the Modern DS Toolkit</span>
+      <span data-tr="es">MCO en el Kit de Herramientas Moderno de DS</span>
+      <span data-tr="ja">現代のデータサイエンスツールキットにおけるOLS</span>
+    </h2>
 
     <table class="ols-table">
-      <thead><tr><th>Use Case</th><th>Best Tool</th><th>Why</th></tr></thead>
+      <thead>
+        <tr>
+          <th>
+            <span data-tr="en">Use Case</span>
+            <span data-tr="es">Caso de Uso</span>
+            <span data-tr="ja">ユースケース</span>
+          </th>
+          <th>
+            <span data-tr="en">Best Tool</span>
+            <span data-tr="es">Mejor Herramienta</span>
+            <span data-tr="ja">最良のツール</span>
+          </th>
+          <th>
+            <span data-tr="en">Why</span>
+            <span data-tr="es">Por Qué</span>
+            <span data-tr="ja">理由</span>
+          </th>
+        </tr>
+      </thead>
       <tbody>
-        <tr><td>Explain which features drive churn</td><td>OLS / Logistic regression</td><td>Stakeholders need interpretable coefficients</td></tr>
-        <tr><td>Predict house prices (tabular)</td><td>XGBoost / LightGBM</td><td>Nonlinear patterns handled natively</td></tr>
-        <tr><td>Estimate causal effect of a campaign</td><td>OLS with controls</td><td>Well-established inference framework</td></tr>
-        <tr><td>Quick baseline</td><td>OLS</td><td>Minutes to fit, easy to beat (or not)</td></tr>
-        <tr><td>High-dimensional gene expression</td><td>Lasso / Ridge</td><td>OLS overfits; regularisation keeps it stable</td></tr>
+        <tr>
+          <td>
+            <span data-tr="en">Explain which features drive churn</span>
+            <span data-tr="es">Explicar qué características impulsan la rotación (churn)</span>
+            <span data-tr="ja">どの特徴量が解約を駆動するかを説明</span>
+          </td>
+          <td>
+            <span data-tr="en">OLS / Logistic regression</span>
+            <span data-tr="es">MCO / Regresión logística</span>
+            <span data-tr="ja">OLS / ロジスティック回帰</span>
+          </td>
+          <td>
+            <span data-tr="en">Stakeholders need interpretable coefficients</span>
+            <span data-tr="es">Los interesados necesitan coeficientes interpretables</span>
+            <span data-tr="ja">ステークホルダーが解釈可能な係数を必要とする</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span data-tr="en">Predict house prices (tabular)</span>
+            <span data-tr="es">Predecir precios de viviendas (tabular)</span>
+            <span data-tr="ja">住宅価格の予測 (表形式)</span>
+          </td>
+          <td>XGBoost / LightGBM</td>
+          <td>
+            <span data-tr="en">Nonlinear patterns handled natively</span>
+            <span data-tr="es">Manejan patrones no lineales de forma nativa</span>
+            <span data-tr="ja">非線形パターンをネイティブに処理</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span data-tr="en">Estimate causal effect of a campaign</span>
+            <span data-tr="es">Estimar el efecto causal de una campaña</span>
+            <span data-tr="ja">キャンペーンの因果効果を推定</span>
+          </td>
+          <td>
+            <span data-tr="en">OLS with controls</span>
+            <span data-tr="es">MCO con controles</span>
+            <span data-tr="ja">制御変数を含むOLS</span>
+          </td>
+          <td>
+            <span data-tr="en">Well-established inference framework</span>
+            <span data-tr="es">Marco de inferencia bien establecido</span>
+            <span data-tr="ja">確立された推論フレームワーク</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span data-tr="en">Quick baseline</span>
+            <span data-tr="es">Línea base rápida</span>
+            <span data-tr="ja">クイックベースライン</span>
+          </td>
+          <td>OLS</td>
+          <td>
+            <span data-tr="en">Minutes to fit, easy to beat (or not)</span>
+            <span data-tr="es">Minutos para ajustar, fácil de superar (o no)</span>
+            <span data-tr="ja">数分で適合、簡単に超えられる (あるいはそうでない)</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span data-tr="en">High-dimensional gene expression</span>
+            <span data-tr="es">Expresión génica de alta dimensión</span>
+            <span data-tr="ja">高次元遺伝子発現</span>
+          </td>
+          <td>Lasso / Ridge</td>
+          <td>
+            <span data-tr="en">OLS overfits; regularisation keeps it stable</span>
+            <span data-tr="es">MCO sobreajusta; la regularización lo mantiene estable</span>
+            <span data-tr="ja">OLSは過学習する。正則化が安定性を保つ</span>
+          </td>
+        </tr>
       </tbody>
     </table>
 
     <div class="callout">
-      <strong>Bottom line:</strong> OLS isn't the most powerful predictive tool today, but it's one of the most important things to <em>understand deeply</em>. It builds the intuition — about residuals, bias, variance, regularisation — that makes everything else click.
+      <div data-tr="en"><strong>Bottom line:</strong> OLS isn't the most powerful predictive tool today, but it's one of the most important things to <em>understand deeply</em>. It builds the intuition — about residuals, bias, variance, regularisation — that makes everything else click.</div>
+      <div data-tr="es"><strong>En resumen:</strong> MCO no es la herramienta predictiva más poderosa hoy, pero es una de las cosas más importantes para <em>entender profundamente</em>. Construye la intuición — sobre residuos, sesgo, varianza, regularización — que hace que todo lo demás encaje.</div>
+      <div data-tr="ja"><strong>要点:</strong> OLSは今日最も強力な予測ツールではないが、<em>深く理解すべき</em>最も重要なものの一つです。残差、バイアス、分散、正則化についての直観を構築し、それが他のすべてを理解する鍵になります。</div>
     </div>
   </section>
 
   <section>
-    <span class="section-badge badge-accent">Code</span>
-    <h2>Quick Reference: Python</h2>
+    <span class="section-badge badge-accent">
+      <span data-tr="en">Code</span>
+      <span data-tr="es">Código</span>
+      <span data-tr="ja">コード</span>
+    </span>
+    <h2>
+      <span data-tr="en">Quick Reference: Python</span>
+      <span data-tr="es">Referencia Rápida: Python</span>
+      <span data-tr="ja">クイックリファレンス: Python</span>
+    </h2>
 
     <div class="code-block">
 <pre><span class="cm"># Using scikit-learn</span>
@@ -449,12 +812,20 @@ y_pred = model.predict(X_test)
 <span class="kw">print</span>(<span class="st">f"Coefficients: {model.coef_}"</span>)
 <span class="kw">print</span>(<span class="st">f"Intercept:    {model.intercept_}"</span>)</pre>
     </div>
-    <p style="text-align:center;color:var(--text-muted);font-size:.88rem;">For full statistical inference (p-values, confidence intervals), use <code>statsmodels.OLS</code> instead.</p>
+    <p style="text-align:center;color:var(--text-muted);font-size:.88rem;" data-tr="en">For full statistical inference (p-values, confidence intervals), use <code>statsmodels.OLS</code> instead.</p>
+    <p style="text-align:center;color:var(--text-muted);font-size:.88rem;" data-tr="es">Para inferencia estadística completa (valores p, intervalos de confianza), usa <code>statsmodels.OLS</code> en su lugar.</p>
+    <p style="text-align:center;color:var(--text-muted);font-size:.88rem;" data-tr="ja">完全な統計的推論 (p値、信頼区間) には、代わりに <code>statsmodels.OLS</code> を使用してください。</p>
   </section>
 
 </div>
 
-<footer>Feature Engineering Series &middot; Ordinary Least Squares (OLS)</footer>
+<footer>
+  <span data-tr="en">Feature Engineering Series · Ordinary Least Squares (OLS)</span>
+  <span data-tr="es">Serie de Ingeniería de Features · Mínimos Cuadrados Ordinarios (MCO)</span>
+  <span data-tr="ja">特徴量エンジニアリングシリーズ · 普通最小二乗法 (OLS)</span>
+</footer>
+
+<script src="/lang-toggle.js" defer></script>
 
 </body>
 </html>

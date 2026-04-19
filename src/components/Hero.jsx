@@ -1,4 +1,11 @@
+'use client';
+import { useLang } from '../context/LanguageContext';
+import { t } from '../i18n';
+
 export default function Hero() {
+  const { lang } = useLang();
+  const hero = t[lang].hero;
+
   return (
     <header className="hero">
       <div className="glyph">
@@ -24,23 +31,17 @@ export default function Hero() {
       </div>
 
       <h1 className="hero-title">
-        <span className="accent">Texcoco</span><br />Data Science
+        <span className="accent">Texcoco</span><br />
+        {hero.titleLine2}
       </h1>
 
-      <p className="hero-sub">
-        Systematic observation. Engineered solutions. Evidence over assumption.
-      </p>
+      <p className="hero-sub">{hero.sub}</p>
 
       <div className="hero-line" />
 
-      <p className="hero-desc">
-        Free, no-nonsense data science education — from the math that powers every model
-        to the engineering that makes it work. Named for the intellectual capital of the
-        Triple Alliance, where the philosopher-engineer Nezahualcóyotl built systems
-        from observed data five centuries before the term existed.
-      </p>
+      <p className="hero-desc">{hero.desc}</p>
 
-      <div className="scroll-hint">explore</div>
+      <div className="scroll-hint">{hero.scroll}</div>
     </header>
   );
 }

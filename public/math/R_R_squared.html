@@ -3,280 +3,141 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>R² and Adjusted R² — Step by Step</title>
+<title data-tr-title
+  data-tr-en="R² and Adjusted R² — Step by Step"
+  data-tr-es="R² y R² Ajustado — Paso a Paso"
+  data-tr-ja="R²と調整済みR² — ステップバイステップ">R² and Adjusted R² — Step by Step</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lang-toggle.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Source Serif 4', Georgia, serif;
-    background: #0d1117;
-    color: #c9d1d9;
-    line-height: 1.75;
-    padding: 2rem 1.5rem;
-    max-width: 850px;
-    margin: 0 auto;
-  }
-
+  body { font-family: 'Source Serif 4', Georgia, serif; background: #0d1117; color: #c9d1d9; line-height: 1.75; padding: 2rem 1.5rem; max-width: 850px; margin: 0 auto; }
   h1 { font-size: 1.8rem; color: #e6edf3; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
-
-  .subtitle {
-    color: #7d8590;
-    font-size: 0.95rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid #21262d;
-    padding-bottom: 1.5rem;
-  }
-
+  .subtitle { color: #7d8590; font-size: 0.95rem; margin-bottom: 1.5rem; border-bottom: 1px solid #21262d; padding-bottom: 1.5rem; }
   .v { color: #ff4d4d; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
   .v2 { color: #f0883e; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
   .vg { color: #56d364; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
   .vb { color: #58a6ff; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
   .vp { color: #a371f7; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
-
   .section { margin-bottom: 2.5rem; }
-
-  .section-title {
-    font-size: 1.1rem;
-    color: #e6edf3;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    padding: 0.4rem 0.8rem;
-    background: #161b22;
-    border-left: 3px solid #ff4d4d;
-    border-radius: 0 4px 4px 0;
-  }
+  .section-title { font-size: 1.1rem; color: #e6edf3; font-weight: 700; margin-bottom: 1rem; padding: 0.4rem 0.8rem; background: #161b22; border-left: 3px solid #ff4d4d; border-radius: 0 4px 4px 0; }
   .section-title.green { border-left-color: #56d364; }
   .section-title.blue { border-left-color: #58a6ff; }
   .section-title.orange { border-left-color: #f0883e; }
   .section-title.purple { border-left-color: #a371f7; }
-
   .step { margin-bottom: 1.5rem; padding-left: 1rem; }
-
-  .formula-box {
-    background: #161b22;
-    border: 1px solid #30363d;
-    border-radius: 6px;
-    padding: 0.8rem 1rem;
-    margin: 0.5rem 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.82rem;
-    line-height: 2;
-    overflow-x: auto;
-  }
-
+  .formula-box { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 0.8rem 1rem; margin: 0.5rem 0; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; line-height: 2; overflow-x: auto; }
   .math-line { display: block; padding: 2px 0; }
-
-  .result-box {
-    background: #0f1d0f;
-    border: 1px solid #238636;
-    border-radius: 6px;
-    padding: 0.7rem 1rem;
-    margin-top: 0.8rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.88rem;
-    color: #56d364;
-    font-weight: 700;
-  }
-
-  .data-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0.5rem 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.82rem;
-  }
-
-  .data-table th {
-    background: #161b22;
-    color: #8b949e;
-    font-weight: 600;
-    text-align: left;
-    padding: 0.5rem 0.7rem;
-    border-bottom: 2px solid #30363d;
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .data-table td {
-    padding: 0.4rem 0.7rem;
-    border-bottom: 1px solid #21262d;
-  }
-
-  .note {
-    color: #7d8590;
-    font-size: 0.88rem;
-    font-style: italic;
-    margin-top: 0.3rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .callout {
-    background: #1a1500;
-    border: 1px solid #f0883e;
-    border-radius: 6px;
-    padding: 0.8rem 1rem;
-    margin: 1rem 0;
-    font-size: 0.9rem;
-    color: #f0883e;
-  }
+  .result-box { background: #0f1d0f; border: 1px solid #238636; border-radius: 6px; padding: 0.7rem 1rem; margin-top: 0.8rem; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; color: #56d364; font-weight: 700; }
+  .data-table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; }
+  .data-table th { background: #161b22; color: #8b949e; font-weight: 600; text-align: left; padding: 0.5rem 0.7rem; border-bottom: 2px solid #30363d; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; }
+  .data-table td { padding: 0.4rem 0.7rem; border-bottom: 1px solid #21262d; }
+  .note { color: #7d8590; font-size: 0.88rem; font-style: italic; margin-top: 0.3rem; margin-bottom: 0.3rem; }
+  .callout { background: #1a1500; border: 1px solid #f0883e; border-radius: 6px; padding: 0.8rem 1rem; margin: 1rem 0; font-size: 0.9rem; color: #f0883e; }
   .callout.blue { background: #0d1520; border-color: #58a6ff; color: #58a6ff; }
   .callout.green { background: #0f1d0f; border-color: #56d364; color: #56d364; }
   .callout.purple { background: #160d20; border-color: #a371f7; color: #a371f7; }
-
-  .iteration-nav {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .iter-btn {
-    background: #161b22;
-    border: 1px solid #30363d;
-    color: #c9d1d9;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-family: 'Source Serif 4', serif;
-    font-size: 0.88rem;
-    transition: all 0.2s;
-  }
+  .iteration-nav { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .iter-btn { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Source Serif 4', serif; font-size: 0.88rem; transition: all 0.2s; }
   .iter-btn:hover { border-color: #ff4d4d; color: #ff4d4d; }
   .iter-btn.active { background: #ff4d4d; border-color: #ff4d4d; color: #fff; font-weight: 700; }
-
   .iteration-content { display: none; }
   .iteration-content.active { display: block; }
-
-  .legend {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    background: #161b22;
-    border: 1px solid #30363d;
-    border-radius: 6px;
-    padding: 0.5rem 0.8rem;
-    font-size: 0.82rem;
-    margin-bottom: 1.5rem;
-    font-family: 'JetBrains Mono', monospace;
-  }
+  .legend { display: flex; gap: 1rem; flex-wrap: wrap; background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 0.5rem 0.8rem; font-size: 0.82rem; margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; }
   .legend-item { display: flex; align-items: center; gap: 0.4rem; }
   .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-
-  .scale-bar {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background: #161b22;
-    border: 1px solid #30363d;
-    border-radius: 6px;
-  }
-  .scale-track {
-    height: 12px;
-    border-radius: 6px;
-    background: linear-gradient(to right, #da3633, #f0883e, #e3b341, #56d364);
-    position: relative;
-    margin: 0.5rem 0;
-  }
-  .scale-labels {
-    display: flex;
-    justify-content: space-between;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: #7d8590;
-  }
-  .scale-marker {
-    position: absolute;
-    top: -6px;
-    width: 3px;
-    height: 24px;
-    background: #e6edf3;
-    border-radius: 2px;
-  }
-  .scale-marker-label {
-    position: absolute;
-    top: -24px;
-    transform: translateX(-50%);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: #e6edf3;
-    font-weight: 700;
-    white-space: nowrap;
-  }
+  .scale-bar { margin-top: 1.5rem; padding: 1rem; background: #161b22; border: 1px solid #30363d; border-radius: 6px; }
+  .scale-track { height: 12px; border-radius: 6px; background: linear-gradient(to right, #da3633, #f0883e, #e3b341, #56d364); position: relative; margin: 0.5rem 0; }
+  .scale-labels { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #7d8590; }
+  .scale-marker { position: absolute; top: -6px; width: 3px; height: 24px; background: #e6edf3; border-radius: 2px; }
+  .scale-marker-label { position: absolute; top: -24px; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #e6edf3; font-weight: 700; white-space: nowrap; }
 </style>
 </head>
 <body>
 
-<h1>R² and Adjusted R²</h1>
-<p class="subtitle">How good is your regression line? R² answers that question with a single number.</p>
+<h1>
+  <span data-tr="en">R² and Adjusted R²</span>
+  <span data-tr="es">R² y R² Ajustado</span>
+  <span data-tr="ja">R² と調整済み R²</span>
+</h1>
+<p class="subtitle" data-tr="en">How good is your regression line? R² answers that question with a single number.</p>
+<p class="subtitle" data-tr="es">¿Qué tan buena es tu línea de regresión? R² responde esa pregunta con un solo número.</p>
+<p class="subtitle" data-tr="ja">あなたの回帰直線はどれくらい良いか？R² はその質問に一つの数字で答えます。</p>
 
 <div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:#ff4d4d"></div> plugged-in value</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#56d364"></div> SS<sub>res</sub> (residual)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ff4d4d"></div> <span data-tr="en">plugged-in value</span><span data-tr="es">valor sustituido</span><span data-tr="ja">代入値</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#56d364"></div> SS<sub>res</sub> <span data-tr="en">(residual)</span><span data-tr="es">(residuo)</span><span data-tr="ja">(残差)</span></div>
   <div class="legend-item"><div class="legend-dot" style="background:#58a6ff"></div> SS<sub>total</sub></div>
-  <div class="legend-item"><div class="legend-dot" style="background:#a371f7"></div> Adjusted R²</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a371f7"></div> <span data-tr="en">Adjusted R²</span><span data-tr="es">R² Ajustado</span><span data-tr="ja">調整済み R²</span></div>
 </div>
 
 <div class="iteration-nav">
-  <button class="iter-btn active" onclick="showIter(0)">The Idea</button>
+  <button class="iter-btn active" onclick="showIter(0)"><span data-tr="en">The Idea</span><span data-tr="es">La Idea</span><span data-tr="ja">アイデア</span></button>
   <button class="iter-btn" onclick="showIter(1)">SS<sub>total</sub></button>
   <button class="iter-btn" onclick="showIter(2)">SS<sub>res</sub></button>
   <button class="iter-btn" onclick="showIter(3)">R²</button>
-  <button class="iter-btn" onclick="showIter(4)">Adjusted R²</button>
+  <button class="iter-btn" onclick="showIter(4)"><span data-tr="en">Adjusted R²</span><span data-tr="es">R² Ajustado</span><span data-tr="ja">調整済み R²</span></button>
 </div>
 
-<!-- TAB 0: THE IDEA -->
 <div class="iteration-content active" id="iter-0">
   <div class="section">
-    <div class="section-title">What R² Measures</div>
+    <div class="section-title"><span data-tr="en">What R² Measures</span><span data-tr="es">Qué Mide R²</span><span data-tr="ja">R² が測定するもの</span></div>
     <div class="step">
       <div class="callout blue">
-        R² answers: <strong>"How much better is my regression line than just guessing the average every time?"</strong>
+        <div data-tr="en">R² answers: <strong>"How much better is my regression line than just guessing the average every time?"</strong></div>
+        <div data-tr="es">R² responde: <strong>"¿Cuánto mejor es mi línea de regresión que simplemente adivinar el promedio cada vez?"</strong></div>
+        <div data-tr="ja">R² は次の質問に答えます: <strong>「私の回帰直線は毎回ただ平均を推測するより、どれだけ良いか？」</strong></div>
       </div>
 
-      <p style="margin: 1rem 0;">You have two ways to "predict" a value:</p>
+      <p style="margin: 1rem 0;" data-tr="en">You have two ways to "predict" a value:</p>
+      <p style="margin: 1rem 0;" data-tr="es">Tienes dos formas de "predecir" un valor:</p>
+      <p style="margin: 1rem 0;" data-tr="ja">値を「予測」する方法は2つあります:</p>
 
       <div class="formula-box">
-        <span class="math-line" style="color:#58a6ff; font-weight:700;">Dumb model: always guess the average (ȳ)</span>
-        <span class="math-line" style="color:#7d8590;">→ Ignores x entirely. Just says "the average price is $4k" for every house.</span>
-        <span class="math-line" style="color:#7d8590;">→ The errors from this model = SS<sub>total</sub></span>
+        <span class="math-line" style="color:#58a6ff; font-weight:700;"><span data-tr="en">Dumb model: always guess the average (ȳ)</span><span data-tr="es">Modelo tonto: siempre adivinar el promedio (ȳ)</span><span data-tr="ja">単純なモデル: 常に平均 (ȳ) を推測する</span></span>
+        <span class="math-line" style="color:#7d8590;"><span data-tr="en">→ Ignores x entirely. Just says "the average price is $4k" for every house.</span><span data-tr="es">→ Ignora x completamente. Solo dice "el precio promedio es $4k" para cada casa.</span><span data-tr="ja">→ x を完全に無視。すべての家について「平均価格は $4k」とだけ言う。</span></span>
+        <span class="math-line" style="color:#7d8590;"><span data-tr="en">→ The errors from this model = SS<sub>total</sub></span><span data-tr="es">→ Los errores de este modelo = SS<sub>total</sub></span><span data-tr="ja">→ このモデルの誤差 = SS<sub>total</sub></span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#56d364; font-weight:700;">Your model: use the regression line (ŷ)</span>
-        <span class="math-line" style="color:#7d8590;">→ Uses x to make a prediction. h(x) = θ₀ + θ₁x</span>
-        <span class="math-line" style="color:#7d8590;">→ The errors from this model = SS<sub>res</sub></span>
+        <span class="math-line" style="color:#56d364; font-weight:700;"><span data-tr="en">Your model: use the regression line (ŷ)</span><span data-tr="es">Tu modelo: usar la línea de regresión (ŷ)</span><span data-tr="ja">あなたのモデル: 回帰直線 (ŷ) を使う</span></span>
+        <span class="math-line" style="color:#7d8590;"><span data-tr="en">→ Uses x to make a prediction. h(x) = θ₀ + θ₁x</span><span data-tr="es">→ Usa x para hacer una predicción. h(x) = θ₀ + θ₁x</span><span data-tr="ja">→ x を使って予測する。h(x) = θ₀ + θ₁x</span></span>
+        <span class="math-line" style="color:#7d8590;"><span data-tr="en">→ The errors from this model = SS<sub>res</sub></span><span data-tr="es">→ Los errores de este modelo = SS<sub>res</sub></span><span data-tr="ja">→ このモデルの誤差 = SS<sub>res</sub></span></span>
       </div>
 
       <div class="formula-box" style="margin-top: 1rem; border-color: #ff4d4d;">
         <span class="math-line" style="color:#e6edf3; font-weight:700; font-size: 1rem;">R² = 1 − SS<sub>res</sub> / SS<sub>total</sub></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#7d8590;">= 1 − (your model's errors) / (dumb model's errors)</span>
+        <span class="math-line" style="color:#7d8590;"><span data-tr="en">= 1 − (your model's errors) / (dumb model's errors)</span><span data-tr="es">= 1 − (errores de tu modelo) / (errores del modelo tonto)</span><span data-tr="ja">= 1 − (あなたのモデルの誤差) / (単純モデルの誤差)</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#7d8590;">If your model is perfect → SS<sub>res</sub> = 0 → R² = 1</span>
-        <span class="math-line" style="color:#7d8590;">If your model = just the average → SS<sub>res</sub> = SS<sub>total</sub> → R² = 0</span>
-        <span class="math-line" style="color:#7d8590;">If your model is worse than the average → R² &lt; 0 (yes, it can go negative)</span>
+        <span class="math-line" style="color:#7d8590;"><span data-tr="en">If your model is perfect → SS<sub>res</sub> = 0 → R² = 1</span><span data-tr="es">Si tu modelo es perfecto → SS<sub>res</sub> = 0 → R² = 1</span><span data-tr="ja">モデルが完璧なら → SS<sub>res</sub> = 0 → R² = 1</span></span>
+        <span class="math-line" style="color:#7d8590;"><span data-tr="en">If your model = just the average → SS<sub>res</sub> = SS<sub>total</sub> → R² = 0</span><span data-tr="es">Si tu modelo = solo el promedio → SS<sub>res</sub> = SS<sub>total</sub> → R² = 0</span><span data-tr="ja">モデル = 平均のみなら → SS<sub>res</sub> = SS<sub>total</sub> → R² = 0</span></span>
+        <span class="math-line" style="color:#7d8590;"><span data-tr="en">If your model is worse than the average → R² &lt; 0 (yes, it can go negative)</span><span data-tr="es">Si tu modelo es peor que el promedio → R² &lt; 0 (sí, puede ser negativo)</span><span data-tr="ja">モデルが平均より悪いなら → R² &lt; 0 (はい、負になることもある)</span></span>
       </div>
 
       <div class="scale-bar">
-        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #e6edf3; margin-bottom: 0.4rem;">R² scale:</div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #e6edf3; margin-bottom: 0.4rem;"><span data-tr="en">R² scale:</span><span data-tr="es">Escala R²:</span><span data-tr="ja">R² スケール:</span></div>
         <div class="scale-track">
           <div class="scale-marker" style="left: 0%"><div class="scale-marker-label">0</div></div>
           <div class="scale-marker" style="left: 100%"><div class="scale-marker-label">1.0</div></div>
         </div>
         <div class="scale-labels" style="margin-top: 0.6rem;">
-          <span>Useless (no better<br>than guessing avg)</span>
-          <span style="text-align: center;">Decent</span>
-          <span style="text-align: right;">Perfect fit<br>(every point on line)</span>
+          <span><span data-tr="en">Useless (no better<br>than guessing avg)</span><span data-tr="es">Inútil (no mejor<br>que adivinar prom.)</span><span data-tr="ja">役に立たない<br>(平均の推測と同等)</span></span>
+          <span style="text-align: center;"><span data-tr="en">Decent</span><span data-tr="es">Decente</span><span data-tr="ja">まずまず</span></span>
+          <span style="text-align: right;"><span data-tr="en">Perfect fit<br>(every point on line)</span><span data-tr="es">Ajuste perfecto<br>(cada punto en la línea)</span><span data-tr="ja">完璧な適合<br>(すべての点が直線上)</span></span>
         </div>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title">Same Dataset as Before</div>
+    <div class="section-title"><span data-tr="en">Same Dataset as Before</span><span data-tr="es">Mismo Conjunto de Datos de Antes</span><span data-tr="ja">以前と同じデータセット</span></div>
     <div class="step">
       <table class="data-table">
         <thead>
-          <tr><th>House</th><th>Sq ft (x)</th><th>Price $k (y)</th></tr>
+          <tr>
+            <th><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span></th>
+            <th><span data-tr="en">Sq ft (x)</span><span data-tr="es">Pies² (x)</span><span data-tr="ja">平方フィート (x)</span></th>
+            <th><span data-tr="en">Price $k (y)</span><span data-tr="es">Precio $k (y)</span><span data-tr="ja">価格 $k (y)</span></th>
+          </tr>
         </thead>
         <tbody>
           <tr><td>1</td><td>1</td><td>2</td></tr>
@@ -287,74 +148,86 @@
         </tbody>
       </table>
       <div class="formula-box">
-        <span class="math-line">Best-fit line (from gradient descent): h(x) = <span class="v">2.2</span> + <span class="v">0.6</span>x</span>
-        <span class="math-line">Average of all y values: ȳ = (<span class="v">2</span>+<span class="v">4</span>+<span class="v">5</span>+<span class="v">4</span>+<span class="v">5</span>) / <span class="v">5</span> = <span class="vb">4.0</span></span>
+        <span class="math-line"><span data-tr="en">Best-fit line (from gradient descent)</span><span data-tr="es">Línea de mejor ajuste (del descenso de gradiente)</span><span data-tr="ja">最適直線 (勾配降下法から)</span>: h(x) = <span class="v">2.2</span> + <span class="v">0.6</span>x</span>
+        <span class="math-line"><span data-tr="en">Average of all y values</span><span data-tr="es">Promedio de todos los valores y</span><span data-tr="ja">すべての y の平均</span>: ȳ = (<span class="v">2</span>+<span class="v">4</span>+<span class="v">5</span>+<span class="v">4</span>+<span class="v">5</span>) / <span class="v">5</span> = <span class="vb">4.0</span></span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- TAB 1: SS_TOTAL -->
 <div class="iteration-content" id="iter-1">
   <div class="section">
-    <div class="section-title blue">SS<sub>total</sub> — How Bad is the "Dumb Model" (Just Guess the Average)?</div>
+    <div class="section-title blue">
+      <span data-tr="en">SS<sub>total</sub> — How Bad is the "Dumb Model" (Just Guess the Average)?</span>
+      <span data-tr="es">SS<sub>total</sub> — ¿Qué Tan Malo es el "Modelo Tonto" (Adivinar el Promedio)?</span>
+      <span data-tr="ja">SS<sub>total</sub> — 「単純モデル」(ただ平均を推測) はどれほど悪いか？</span>
+    </div>
     <div class="step">
       <div class="callout blue">
-        SS<sub>total</sub> = Σ(yᵢ − ȳ)² — square the distance from each actual value to the average.
+        <div data-tr="en">SS<sub>total</sub> = Σ(yᵢ − ȳ)² — square the distance from each actual value to the average.</div>
+        <div data-tr="es">SS<sub>total</sub> = Σ(yᵢ − ȳ)² — eleva al cuadrado la distancia de cada valor real al promedio.</div>
+        <div data-tr="ja">SS<sub>total</sub> = Σ(yᵢ − ȳ)² — 各実際の値から平均までの距離を二乗する。</div>
       </div>
 
-      <p class="note">The average is ȳ = <span class="vb">4.0</span>. How far is each house from that?</p>
+      <p class="note"><span data-tr="en">The average is ȳ = <span class="vb">4.0</span>. How far is each house from that?</span><span data-tr="es">El promedio es ȳ = <span class="vb">4.0</span>. ¿Qué tan lejos está cada casa de eso?</span><span data-tr="ja">平均は ȳ = <span class="vb">4.0</span>。各住宅はそこからどれくらい離れているか？</span></p>
 
       <div class="formula-box" style="border-color: #58a6ff;">
-        <span class="math-line" style="color:#58a6ff; font-weight:700;">For each house: (actual price − average)²</span>
+        <span class="math-line" style="color:#58a6ff; font-weight:700;"><span data-tr="en">For each house: (actual price − average)²</span><span data-tr="es">Para cada casa: (precio real − promedio)²</span><span data-tr="ja">各住宅について: (実際の価格 − 平均)²</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">House 1: (<span class="v">2</span> − <span class="vb">4.0</span>)² = (−2.0)² = <span class="vb">4.00</span></span>
-        <span class="math-line">House 2: (<span class="v">4</span> − <span class="vb">4.0</span>)² = (0.0)²  = <span class="vb">0.00</span></span>
-        <span class="math-line">House 3: (<span class="v">5</span> − <span class="vb">4.0</span>)² = (1.0)²  = <span class="vb">1.00</span></span>
-        <span class="math-line">House 4: (<span class="v">4</span> − <span class="vb">4.0</span>)² = (0.0)²  = <span class="vb">0.00</span></span>
-        <span class="math-line">House 5: (<span class="v">5</span> − <span class="vb">4.0</span>)² = (1.0)²  = <span class="vb">1.00</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 1: (<span class="v">2</span> − <span class="vb">4.0</span>)² = (−2.0)² = <span class="vb">4.00</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 2: (<span class="v">4</span> − <span class="vb">4.0</span>)² = (0.0)²  = <span class="vb">0.00</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 3: (<span class="v">5</span> − <span class="vb">4.0</span>)² = (1.0)²  = <span class="vb">1.00</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 4: (<span class="v">4</span> − <span class="vb">4.0</span>)² = (0.0)²  = <span class="vb">0.00</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 5: (<span class="v">5</span> − <span class="vb">4.0</span>)² = (1.0)²  = <span class="vb">1.00</span></span>
       </div>
 
       <div class="result-box" style="border-color: #58a6ff; color: #58a6ff;">
         SS<sub>total</sub> = 4.00 + 0.00 + 1.00 + 0.00 + 1.00 = 6.00
       </div>
 
-      <p class="note" style="margin-top: 0.8rem;">This is the total variance in your data. It's the baseline — if your regression line can't beat this, it's useless.</p>
+      <p class="note" style="margin-top: 0.8rem;" data-tr="en">This is the total variance in your data. It's the baseline — if your regression line can't beat this, it's useless.</p>
+      <p class="note" style="margin-top: 0.8rem;" data-tr="es">Esta es la varianza total en tus datos. Es la línea base — si tu línea de regresión no puede superarla, es inútil.</p>
+      <p class="note" style="margin-top: 0.8rem;" data-tr="ja">これはあなたのデータの総分散です。ベースラインです — 回帰直線がこれを超えられないなら、役に立たない。</p>
     </div>
   </div>
 </div>
 
-<!-- TAB 2: SS_RES -->
 <div class="iteration-content" id="iter-2">
   <div class="section">
-    <div class="section-title green">SS<sub>res</sub> — How Bad is Your Regression Line?</div>
+    <div class="section-title green">
+      <span data-tr="en">SS<sub>res</sub> — How Bad is Your Regression Line?</span>
+      <span data-tr="es">SS<sub>res</sub> — ¿Qué Tan Mala es Tu Línea de Regresión?</span>
+      <span data-tr="ja">SS<sub>res</sub> — あなたの回帰直線はどれほど悪いか？</span>
+    </div>
     <div class="step">
       <div class="callout green">
-        SS<sub>res</sub> = Σ(yᵢ − ŷᵢ)² — square the distance from each actual value to the prediction.
+        <div data-tr="en">SS<sub>res</sub> = Σ(yᵢ − ŷᵢ)² — square the distance from each actual value to the prediction.</div>
+        <div data-tr="es">SS<sub>res</sub> = Σ(yᵢ − ŷᵢ)² — eleva al cuadrado la distancia de cada valor real a la predicción.</div>
+        <div data-tr="ja">SS<sub>res</sub> = Σ(yᵢ − ŷᵢ)² — 各実際の値から予測までの距離を二乗する。</div>
       </div>
 
-      <p class="note">First, get the predictions from h(x) = <span class="v">2.2</span> + <span class="v">0.6</span>x:</p>
+      <p class="note"><span data-tr="en">First, get the predictions from h(x) = <span class="v">2.2</span> + <span class="v">0.6</span>x:</span><span data-tr="es">Primero, obtén las predicciones de h(x) = <span class="v">2.2</span> + <span class="v">0.6</span>x:</span><span data-tr="ja">まず、h(x) = <span class="v">2.2</span> + <span class="v">0.6</span>x から予測を得る:</span></p>
 
       <div class="formula-box" style="border-color: #56d364;">
-        <span class="math-line" style="color:#56d364; font-weight:700;">Predictions:</span>
+        <span class="math-line" style="color:#56d364; font-weight:700;"><span data-tr="en">Predictions:</span><span data-tr="es">Predicciones:</span><span data-tr="ja">予測:</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">House 1: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">1</span> = <span class="vg">2.8</span></span>
-        <span class="math-line">House 2: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">2</span> = <span class="vg">3.4</span></span>
-        <span class="math-line">House 3: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">3</span> = <span class="vg">4.0</span></span>
-        <span class="math-line">House 4: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">4</span> = <span class="vg">4.6</span></span>
-        <span class="math-line">House 5: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">5</span> = <span class="vg">5.2</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 1: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">1</span> = <span class="vg">2.8</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 2: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">2</span> = <span class="vg">3.4</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 3: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">3</span> = <span class="vg">4.0</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 4: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">4</span> = <span class="vg">4.6</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 5: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">5</span> = <span class="vg">5.2</span></span>
       </div>
 
-      <p class="note" style="margin-top: 0.8rem;">Now compute (actual − predicted)² for each:</p>
+      <p class="note" style="margin-top: 0.8rem;"><span data-tr="en">Now compute (actual − predicted)² for each:</span><span data-tr="es">Ahora calcula (real − predicho)² para cada uno:</span><span data-tr="ja">次に、各々について (実際 − 予測)² を計算:</span></p>
 
       <div class="formula-box" style="border-color: #56d364;">
-        <span class="math-line" style="color:#56d364; font-weight:700;">Squared residuals:</span>
+        <span class="math-line" style="color:#56d364; font-weight:700;"><span data-tr="en">Squared residuals:</span><span data-tr="es">Residuos al cuadrado:</span><span data-tr="ja">二乗残差:</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">House 1: (<span class="v">2</span> − <span class="vg">2.8</span>)² = (−0.8)² = <span class="vg">0.64</span></span>
-        <span class="math-line">House 2: (<span class="v">4</span> − <span class="vg">3.4</span>)² = (+0.6)² = <span class="vg">0.36</span></span>
-        <span class="math-line">House 3: (<span class="v">5</span> − <span class="vg">4.0</span>)² = (+1.0)² = <span class="vg">1.00</span></span>
-        <span class="math-line">House 4: (<span class="v">4</span> − <span class="vg">4.6</span>)² = (−0.6)² = <span class="vg">0.36</span></span>
-        <span class="math-line">House 5: (<span class="v">5</span> − <span class="vg">5.2</span>)² = (−0.2)² = <span class="vg">0.04</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 1: (<span class="v">2</span> − <span class="vg">2.8</span>)² = (−0.8)² = <span class="vg">0.64</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 2: (<span class="v">4</span> − <span class="vg">3.4</span>)² = (+0.6)² = <span class="vg">0.36</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 3: (<span class="v">5</span> − <span class="vg">4.0</span>)² = (+1.0)² = <span class="vg">1.00</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 4: (<span class="v">4</span> − <span class="vg">4.6</span>)² = (−0.6)² = <span class="vg">0.36</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 5: (<span class="v">5</span> − <span class="vg">5.2</span>)² = (−0.2)² = <span class="vg">0.04</span></span>
       </div>
 
       <div class="result-box">
@@ -362,17 +235,16 @@
       </div>
 
       <div class="formula-box" style="margin-top: 1rem; border-color: #7d8590;">
-        <span class="math-line" style="color:#7d8590;">Compare: SS<sub>total</sub> = <span class="vb">6.00</span> vs SS<sub>res</sub> = <span class="vg">2.40</span></span>
-        <span class="math-line" style="color:#7d8590;">Your line's errors (2.40) are less than the average's errors (6.00) — good sign!</span>
+        <span class="math-line" style="color:#7d8590;"><span data-tr="en">Compare</span><span data-tr="es">Compara</span><span data-tr="ja">比較</span>: SS<sub>total</sub> = <span class="vb">6.00</span> vs SS<sub>res</sub> = <span class="vg">2.40</span></span>
+        <span class="math-line" style="color:#7d8590;"><span data-tr="en">Your line's errors (2.40) are less than the average's errors (6.00) — good sign!</span><span data-tr="es">Los errores de tu línea (2.40) son menores que los errores del promedio (6.00) — ¡buena señal!</span><span data-tr="ja">あなたの直線の誤差 (2.40) は平均の誤差 (6.00) より少ない — 良い兆候！</span></span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- TAB 3: R² -->
 <div class="iteration-content" id="iter-3">
   <div class="section">
-    <div class="section-title">R² — Plug It In</div>
+    <div class="section-title"><span data-tr="en">R² — Plug It In</span><span data-tr="es">R² — Sustitúyelo</span><span data-tr="ja">R² — 代入する</span></div>
     <div class="step">
       <div class="formula-box" style="border-color: #ff4d4d; font-size: 0.9rem;">
         <span class="math-line" style="color:#e6edf3; font-weight:700; font-size: 1rem;">R² = 1 − SS<sub>res</sub> / SS<sub>total</sub></span>
@@ -385,77 +257,89 @@
       </div>
 
       <div class="scale-bar" style="margin-top: 1.5rem;">
-        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #e6edf3; margin-bottom: 0.4rem;">Where 0.60 falls:</div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #e6edf3; margin-bottom: 0.4rem;"><span data-tr="en">Where 0.60 falls:</span><span data-tr="es">Dónde cae 0.60:</span><span data-tr="ja">0.60 はどこに位置するか:</span></div>
         <div class="scale-track">
           <div class="scale-marker" style="left: 0%"><div class="scale-marker-label">0</div></div>
           <div class="scale-marker" style="left: 60%; background: #ff4d4d;"><div class="scale-marker-label" style="color:#ff4d4d;">0.60 ←</div></div>
           <div class="scale-marker" style="left: 100%"><div class="scale-marker-label">1.0</div></div>
         </div>
         <div class="scale-labels" style="margin-top: 0.6rem;">
-          <span>Useless</span>
-          <span style="text-align: right;">Perfect</span>
+          <span><span data-tr="en">Useless</span><span data-tr="es">Inútil</span><span data-tr="ja">役立たず</span></span>
+          <span style="text-align: right;"><span data-tr="en">Perfect</span><span data-tr="es">Perfecto</span><span data-tr="ja">完璧</span></span>
         </div>
       </div>
 
       <div class="callout" style="margin-top: 1.5rem;">
-        <strong>How to read this:</strong><br>
-        R² = 0.60 means your regression line explains <strong>60%</strong> of the variance in house prices.<br>
-        The remaining 40% is unexplained — noise, missing features, randomness.
+        <div data-tr="en"><strong>How to read this:</strong><br>R² = 0.60 means your regression line explains <strong>60%</strong> of the variance in house prices.<br>The remaining 40% is unexplained — noise, missing features, randomness.</div>
+        <div data-tr="es"><strong>Cómo leer esto:</strong><br>R² = 0.60 significa que tu línea de regresión explica el <strong>60%</strong> de la varianza en los precios de las casas.<br>El 40% restante no está explicado — ruido, características faltantes, aleatoriedad.</div>
+        <div data-tr="ja"><strong>読み方:</strong><br>R² = 0.60 は、あなたの回帰直線が住宅価格の分散の <strong>60%</strong> を説明することを意味します。<br>残りの 40% は未説明 — ノイズ、欠けている特徴量、ランダム性。</div>
       </div>
 
       <div class="formula-box" style="margin-top: 1rem;">
-        <span class="math-line" style="color:#e6edf3; font-weight:700;">Another way to think about it:</span>
+        <span class="math-line" style="color:#e6edf3; font-weight:700;"><span data-tr="en">Another way to think about it:</span><span data-tr="es">Otra manera de pensarlo:</span><span data-tr="ja">別の考え方:</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#7d8590;">Your model reduced the total error from <span class="vb">6.00</span> down to <span class="vg">2.40</span></span>
-        <span class="math-line" style="color:#7d8590;">That's a 60% reduction — so R² = 0.60</span>
+        <span class="math-line" style="color:#7d8590;"><span data-tr="en">Your model reduced the total error from <span class="vb">6.00</span> down to <span class="vg">2.40</span></span><span data-tr="es">Tu modelo redujo el error total de <span class="vb">6.00</span> a <span class="vg">2.40</span></span><span data-tr="ja">あなたのモデルは総誤差を <span class="vb">6.00</span> から <span class="vg">2.40</span> に減らした</span></span>
+        <span class="math-line" style="color:#7d8590;"><span data-tr="en">That's a 60% reduction — so R² = 0.60</span><span data-tr="es">Eso es una reducción del 60% — así que R² = 0.60</span><span data-tr="ja">それは 60% の削減 — だから R² = 0.60</span></span>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title" style="border-left-color: #e3b341;">But R² Has a Problem...</div>
+    <div class="section-title" style="border-left-color: #e3b341;">
+      <span data-tr="en">But R² Has a Problem...</span>
+      <span data-tr="es">Pero R² Tiene un Problema...</span>
+      <span data-tr="ja">しかし R² には問題があります...</span>
+    </div>
     <div class="step">
       <div class="callout" style="border-color: #e3b341; color: #e3b341;">
-        <strong>R² always goes up (or stays the same) when you add more features</strong> — even useless ones.<br><br>
-        Add "house color" as a feature? R² goes up.<br>
-        Add "owner's shoe size"? R² goes up.<br>
-        Add random noise? R² still goes up.<br><br>
-        It can never go down because more parameters = more freedom to fit the data.<br>
-        This doesn't mean the model is actually better — it might be overfitting.
+        <div data-tr="en"><strong>R² always goes up (or stays the same) when you add more features</strong> — even useless ones.<br><br>Add "house color" as a feature? R² goes up.<br>Add "owner's shoe size"? R² goes up.<br>Add random noise? R² still goes up.<br><br>It can never go down because more parameters = more freedom to fit the data.<br>This doesn't mean the model is actually better — it might be overfitting.</div>
+        <div data-tr="es"><strong>R² siempre sube (o se queda igual) cuando añades más características</strong> — incluso las inútiles.<br><br>¿Añadir "color de la casa" como característica? R² sube.<br>¿Añadir "talla de zapato del dueño"? R² sube.<br>¿Añadir ruido aleatorio? R² aún sube.<br><br>Nunca puede bajar porque más parámetros = más libertad para ajustar los datos.<br>Esto no significa que el modelo sea realmente mejor — podría estar sobreajustándose.</div>
+        <div data-tr="ja"><strong>特徴量を追加すると R² は常に上がる (または同じまま)</strong> — 役に立たないものでも。<br><br>「家の色」を特徴量として追加？R² は上がる。<br>「オーナーの靴サイズ」を追加？R² は上がる。<br>ランダムノイズを追加？それでも R² は上がる。<br><br>パラメータが増える = データに適合する自由度が増えるので、決して下がらない。<br>これはモデルが実際に良くなっているという意味ではない — 過学習している可能性がある。</div>
       </div>
-      <p class="note">This is why Adjusted R² exists →</p>
+      <p class="note" data-tr="en">This is why Adjusted R² exists →</p>
+      <p class="note" data-tr="es">Por eso existe el R² Ajustado →</p>
+      <p class="note" data-tr="ja">だから調整済み R² が存在します →</p>
     </div>
   </div>
 </div>
 
-<!-- TAB 4: ADJUSTED R² -->
 <div class="iteration-content" id="iter-4">
   <div class="section">
-    <div class="section-title purple">Adjusted R² — Penalizes Extra Features</div>
+    <div class="section-title purple">
+      <span data-tr="en">Adjusted R² — Penalizes Extra Features</span>
+      <span data-tr="es">R² Ajustado — Penaliza Características Adicionales</span>
+      <span data-tr="ja">調整済み R² — 追加の特徴量にペナルティを課す</span>
+    </div>
     <div class="step">
       <div class="callout purple">
-        Adjusted R² adds a penalty for each feature you add. If a new feature doesn't improve the model enough to justify its existence, Adjusted R² goes <strong>down</strong>.
+        <div data-tr="en">Adjusted R² adds a penalty for each feature you add. If a new feature doesn't improve the model enough to justify its existence, Adjusted R² goes <strong>down</strong>.</div>
+        <div data-tr="es">El R² Ajustado añade una penalización por cada característica que agregas. Si una nueva característica no mejora el modelo lo suficiente para justificar su existencia, el R² Ajustado <strong>baja</strong>.</div>
+        <div data-tr="ja">調整済み R² は、追加する各特徴量に対してペナルティを加えます。新しい特徴量がその存在を正当化するほどモデルを改善しない場合、調整済み R² は<strong>下がります</strong>。</div>
       </div>
 
       <div class="formula-box" style="border-color: #a371f7; font-size: 0.9rem;">
-        <span class="math-line" style="color:#e6edf3; font-weight:700; font-size: 1rem;">Adjusted R² = 1 − [(1 − R²) × (n − 1) / (n − p − 1)]</span>
+        <span class="math-line" style="color:#e6edf3; font-weight:700; font-size: 1rem;"><span data-tr="en">Adjusted R² = 1 − [(1 − R²) × (n − 1) / (n − p − 1)]</span><span data-tr="es">R² Ajustado = 1 − [(1 − R²) × (n − 1) / (n − p − 1)]</span><span data-tr="ja">調整済み R² = 1 − [(1 − R²) × (n − 1) / (n − p − 1)]</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#7d8590;">where:</span>
-        <span class="math-line" style="color:#a371f7;">n = number of data points</span>
-        <span class="math-line" style="color:#a371f7;">p = number of features</span>
-        <span class="math-line" style="color:#a371f7;">R² = the regular R² we just computed</span>
+        <span class="math-line" style="color:#7d8590;"><span data-tr="en">where:</span><span data-tr="es">donde:</span><span data-tr="ja">ここで:</span></span>
+        <span class="math-line" style="color:#a371f7;"><span data-tr="en">n = number of data points</span><span data-tr="es">n = número de puntos de datos</span><span data-tr="ja">n = データ点の数</span></span>
+        <span class="math-line" style="color:#a371f7;"><span data-tr="en">p = number of features</span><span data-tr="es">p = número de características</span><span data-tr="ja">p = 特徴量の数</span></span>
+        <span class="math-line" style="color:#a371f7;"><span data-tr="en">R² = the regular R² we just computed</span><span data-tr="es">R² = el R² regular que acabamos de calcular</span><span data-tr="ja">R² = 先ほど計算した通常の R²</span></span>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title purple">Example 1: Simple Regression (1 feature)</div>
+    <div class="section-title purple">
+      <span data-tr="en">Example 1: Simple Regression (1 feature)</span>
+      <span data-tr="es">Ejemplo 1: Regresión Simple (1 característica)</span>
+      <span data-tr="ja">例 1: 単回帰 (1つの特徴量)</span>
+    </div>
     <div class="step">
-      <p class="note">h(x) = 2.2 + 0.6x — just using sq ft</p>
+      <p class="note"><span data-tr="en">h(x) = 2.2 + 0.6x — just using sq ft</span><span data-tr="es">h(x) = 2.2 + 0.6x — solo usando pies²</span><span data-tr="ja">h(x) = 2.2 + 0.6x — 平方フィートのみ使用</span></p>
       <div class="formula-box" style="border-color: #a371f7;">
-        <span class="math-line">n = <span class="vp">5</span> (data points) &nbsp;&nbsp; p = <span class="vp">1</span> (features) &nbsp;&nbsp; R² = <span class="v">0.60</span></span>
+        <span class="math-line">n = <span class="vp">5</span> (<span data-tr="en">data points</span><span data-tr="es">puntos de datos</span><span data-tr="ja">データ点</span>) &nbsp;&nbsp; p = <span class="vp">1</span> (<span data-tr="en">features</span><span data-tr="es">características</span><span data-tr="ja">特徴量</span>) &nbsp;&nbsp; R² = <span class="v">0.60</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">Adj R² = 1 − [( 1 − <span class="v">0.60</span> ) × ( <span class="vp">5</span> − 1 ) / ( <span class="vp">5</span> − <span class="vp">1</span> − 1 )]</span>
+        <span class="math-line"><span data-tr="en">Adj R²</span><span data-tr="es">R² Aj</span><span data-tr="ja">調整R²</span> = 1 − [( 1 − <span class="v">0.60</span> ) × ( <span class="vp">5</span> − 1 ) / ( <span class="vp">5</span> − <span class="vp">1</span> − 1 )]</span>
         <span class="math-line">&nbsp;</span>
         <span class="math-line">       = 1 − [ <span class="v">0.40</span> × <span class="vp">4</span> / <span class="vp">3</span> ]</span>
         <span class="math-line">&nbsp;</span>
@@ -466,19 +350,25 @@
         <span class="math-line" style="font-size: 1.05rem;">       = <span class="vp" style="font-size: 1.15rem;">0.4667</span></span>
       </div>
       <div class="result-box" style="border-color: #a371f7; color: #a371f7;">
-        R² = 0.60 → Adjusted R² = 0.4667 &nbsp;&nbsp; (lower, because small dataset)
+        <span data-tr="en">R² = 0.60 → Adjusted R² = 0.4667 &nbsp;&nbsp; (lower, because small dataset)</span>
+        <span data-tr="es">R² = 0.60 → R² Ajustado = 0.4667 &nbsp;&nbsp; (más bajo, porque el conjunto es pequeño)</span>
+        <span data-tr="ja">R² = 0.60 → 調整済み R² = 0.4667 &nbsp;&nbsp; (データセットが小さいため低い)</span>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title purple">Example 2: What If We Add a Useless Feature?</div>
+    <div class="section-title purple">
+      <span data-tr="en">Example 2: What If We Add a Useless Feature?</span>
+      <span data-tr="es">Ejemplo 2: ¿Qué Pasa Si Añadimos una Característica Inútil?</span>
+      <span data-tr="ja">例 2: 役に立たない特徴量を追加したらどうなる？</span>
+    </div>
     <div class="step">
-      <p class="note">Say we add "owner's shoe size" and R² barely increases to 0.61</p>
+      <p class="note"><span data-tr="en">Say we add "owner's shoe size" and R² barely increases to 0.61</span><span data-tr="es">Digamos que añadimos "talla de zapato del dueño" y R² apenas sube a 0.61</span><span data-tr="ja">「オーナーの靴サイズ」を追加して R² がかろうじて 0.61 に上がるとする</span></p>
       <div class="formula-box" style="border-color: #a371f7;">
-        <span class="math-line">n = <span class="vp">5</span> &nbsp;&nbsp; p = <span class="vp">2</span> (now 2 features) &nbsp;&nbsp; R² = <span class="v">0.61</span></span>
+        <span class="math-line">n = <span class="vp">5</span> &nbsp;&nbsp; p = <span class="vp">2</span> (<span data-tr="en">now 2 features</span><span data-tr="es">ahora 2 características</span><span data-tr="ja">今は2特徴量</span>) &nbsp;&nbsp; R² = <span class="v">0.61</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">Adj R² = 1 − [( 1 − <span class="v">0.61</span> ) × ( <span class="vp">5</span> − 1 ) / ( <span class="vp">5</span> − <span class="vp">2</span> − 1 )]</span>
+        <span class="math-line"><span data-tr="en">Adj R²</span><span data-tr="es">R² Aj</span><span data-tr="ja">調整R²</span> = 1 − [( 1 − <span class="v">0.61</span> ) × ( <span class="vp">5</span> − 1 ) / ( <span class="vp">5</span> − <span class="vp">2</span> − 1 )]</span>
         <span class="math-line">&nbsp;</span>
         <span class="math-line">       = 1 − [ <span class="v">0.39</span> × <span class="vp">4</span> / <span class="vp">2</span> ]</span>
         <span class="math-line">&nbsp;</span>
@@ -489,24 +379,30 @@
         <span class="math-line" style="font-size: 1.05rem;">       = <span class="vp" style="font-size: 1.15rem;">0.22</span></span>
       </div>
       <div class="result-box" style="border-color: #da3633; color: #da3633;">
-        R² went up: 0.60 → 0.61 &nbsp;&nbsp; but Adjusted R² went DOWN: 0.4667 → 0.22
+        <span data-tr="en">R² went up: 0.60 → 0.61 &nbsp;&nbsp; but Adjusted R² went DOWN: 0.4667 → 0.22</span>
+        <span data-tr="es">R² subió: 0.60 → 0.61 &nbsp;&nbsp; pero R² Ajustado BAJÓ: 0.4667 → 0.22</span>
+        <span data-tr="ja">R² は上昇: 0.60 → 0.61 &nbsp;&nbsp; しかし調整済み R² は下降: 0.4667 → 0.22</span>
       </div>
       <div class="callout" style="margin-top: 1rem; border-color: #da3633; color: #da3633;">
-        <strong>R² said "adding shoe size helped."</strong><br>
-        <strong>Adjusted R² said "no it didn't — you just added noise."</strong><br><br>
-        The penalty kicked in because p went from 1 to 2, but R² barely moved. The denominator (n − p − 1) shrank from 3 to 2, amplifying the penalty.
+        <div data-tr="en"><strong>R² said "adding shoe size helped."</strong><br><strong>Adjusted R² said "no it didn't — you just added noise."</strong><br><br>The penalty kicked in because p went from 1 to 2, but R² barely moved. The denominator (n − p − 1) shrank from 3 to 2, amplifying the penalty.</div>
+        <div data-tr="es"><strong>R² dijo "añadir la talla de zapato ayudó."</strong><br><strong>R² Ajustado dijo "no ayudó — solo añadiste ruido."</strong><br><br>La penalización se activó porque p pasó de 1 a 2, pero R² apenas se movió. El denominador (n − p − 1) se redujo de 3 a 2, amplificando la penalización.</div>
+        <div data-tr="ja"><strong>R² は「靴サイズの追加は役立った」と言った。</strong><br><strong>調整済み R² は「いいえ、役立たなかった — ノイズを追加しただけ」と言った。</strong><br><br>p が 1 から 2 になったがR² はほとんど動かなかったため、ペナルティが発動しました。分母 (n − p − 1) が 3 から 2 に減り、ペナルティが増幅されました。</div>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title purple">Example 3: What If We Add a Useful Feature?</div>
+    <div class="section-title purple">
+      <span data-tr="en">Example 3: What If We Add a Useful Feature?</span>
+      <span data-tr="es">Ejemplo 3: ¿Qué Pasa Si Añadimos una Característica Útil?</span>
+      <span data-tr="ja">例 3: 有用な特徴量を追加したらどうなる？</span>
+    </div>
     <div class="step">
-      <p class="note">Say we add "bedrooms" and R² jumps to 0.85</p>
+      <p class="note"><span data-tr="en">Say we add "bedrooms" and R² jumps to 0.85</span><span data-tr="es">Digamos que añadimos "dormitorios" y R² salta a 0.85</span><span data-tr="ja">「寝室数」を追加して R² が 0.85 に跳ね上がるとする</span></p>
       <div class="formula-box" style="border-color: #a371f7;">
         <span class="math-line">n = <span class="vp">5</span> &nbsp;&nbsp; p = <span class="vp">2</span> &nbsp;&nbsp; R² = <span class="v">0.85</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">Adj R² = 1 − [( 1 − <span class="v">0.85</span> ) × ( <span class="vp">5</span> − 1 ) / ( <span class="vp">5</span> − <span class="vp">2</span> − 1 )]</span>
+        <span class="math-line"><span data-tr="en">Adj R²</span><span data-tr="es">R² Aj</span><span data-tr="ja">調整R²</span> = 1 − [( 1 − <span class="v">0.85</span> ) × ( <span class="vp">5</span> − 1 ) / ( <span class="vp">5</span> − <span class="vp">2</span> − 1 )]</span>
         <span class="math-line">&nbsp;</span>
         <span class="math-line">       = 1 − [ <span class="v">0.15</span> × <span class="vp">4</span> / <span class="vp">2</span> ]</span>
         <span class="math-line">&nbsp;</span>
@@ -515,26 +411,30 @@
         <span class="math-line" style="font-size: 1.05rem;">       = <span class="vp" style="font-size: 1.15rem;">0.70</span></span>
       </div>
       <div class="result-box" style="border-color: #56d364; color: #56d364;">
-        R² went up: 0.60 → 0.85 &nbsp;&nbsp; AND Adjusted R² went UP: 0.4667 → 0.70 ✅
+        <span data-tr="en">R² went up: 0.60 → 0.85 &nbsp;&nbsp; AND Adjusted R² went UP: 0.4667 → 0.70 ✅</span>
+        <span data-tr="es">R² subió: 0.60 → 0.85 &nbsp;&nbsp; Y R² Ajustado TAMBIÉN SUBIÓ: 0.4667 → 0.70 ✅</span>
+        <span data-tr="ja">R² が上昇: 0.60 → 0.85 &nbsp;&nbsp; そして調整済み R² も上昇: 0.4667 → 0.70 ✅</span>
       </div>
       <div class="callout green" style="margin-top: 1rem;">
-        Both metrics agree — bedrooms is a genuinely useful feature. The R² improvement was large enough to overcome the penalty.
+        <div data-tr="en">Both metrics agree — bedrooms is a genuinely useful feature. The R² improvement was large enough to overcome the penalty.</div>
+        <div data-tr="es">Ambas métricas coinciden — dormitorios es una característica genuinamente útil. La mejora en R² fue lo suficientemente grande para superar la penalización.</div>
+        <div data-tr="ja">両方の指標が一致 — 寝室数は本当に有用な特徴量です。R² の改善がペナルティを克服するのに十分大きかった。</div>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title" style="border-left-color: #e6edf3;">Summary</div>
+    <div class="section-title" style="border-left-color: #e6edf3;"><span data-tr="en">Summary</span><span data-tr="es">Resumen</span><span data-tr="ja">まとめ</span></div>
     <div class="step">
       <div class="formula-box" style="font-size: 0.88rem;">
-        <span class="math-line" style="color:#e6edf3; font-weight:700;">When to use which:</span>
+        <span class="math-line" style="color:#e6edf3; font-weight:700;"><span data-tr="en">When to use which:</span><span data-tr="es">Cuándo usar cuál:</span><span data-tr="ja">どちらをいつ使うか:</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#58a6ff;"><strong>R²</strong> — fine when comparing models with the same number of features</span>
+        <span class="math-line" style="color:#58a6ff;"><strong>R²</strong> — <span data-tr="en">fine when comparing models with the same number of features</span><span data-tr="es">está bien al comparar modelos con el mismo número de características</span><span data-tr="ja">同じ数の特徴量を持つモデルを比較するとき問題ない</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#a371f7;"><strong>Adjusted R²</strong> — use when comparing models with different numbers of features</span>
-        <span class="math-line" style="color:#a371f7;">It tells you if that extra feature is actually earning its keep</span>
+        <span class="math-line" style="color:#a371f7;"><strong><span data-tr="en">Adjusted R²</span><span data-tr="es">R² Ajustado</span><span data-tr="ja">調整済み R²</span></strong> — <span data-tr="en">use when comparing models with different numbers of features</span><span data-tr="es">usa al comparar modelos con diferentes números de características</span><span data-tr="ja">異なる数の特徴量を持つモデルを比較するときに使う</span></span>
+        <span class="math-line" style="color:#a371f7;"><span data-tr="en">It tells you if that extra feature is actually earning its keep</span><span data-tr="es">Te dice si esa característica extra realmente está ganándose su lugar</span><span data-tr="ja">その追加の特徴量が実際に役に立っているかどうかを教えてくれる</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#7d8590;">Rule of thumb: if Adjusted R² drops when you add a feature, remove that feature.</span>
+        <span class="math-line" style="color:#7d8590;"><span data-tr="en">Rule of thumb: if Adjusted R² drops when you add a feature, remove that feature.</span><span data-tr="es">Regla general: si el R² Ajustado baja al añadir una característica, elimina esa característica.</span><span data-tr="ja">経験則: 特徴量を追加したときに調整済み R² が下がるなら、その特徴量を削除する。</span></span>
       </div>
     </div>
   </div>
@@ -548,6 +448,7 @@
     document.querySelectorAll('.iter-btn')[index].classList.add('active');
   }
 </script>
+<script src="/lang-toggle.js" defer></script>
 
 </body>
 </html>

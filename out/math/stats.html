@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistics & Probability Compendium — Texcoco Data Science</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08090c;
+    --surface: #0f1116;
+    --surface-raised: #161920;
+    --border: rgba(255,255,255,0.06);
+    --text: #d4d8e0;
+    --text-muted: #6b7280;
+    --accent: #c87533;
+    --accent-light: rgba(200,117,51,0.12);
+    --blue: #58a6ff;
+    --green: #56d364;
+    --red: #ff6b6b;
+    --purple: #a371f7;
+    --yellow: #e3b341;
+    --orange: #f0883e;
+    --teal: #39d0d8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Header ── */
+  .page-header {
+    padding: 3rem 2rem 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #f0ece4;
+    line-height: 1.15;
+  }
+  .page-header h1 .a { color: var(--accent); }
+  .page-header .sub {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    margin-top: 0.5rem;
+  }
+
+  /* ── Nav ── */
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0;
+  }
+  .nav {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    overflow-x: auto;
+  }
+  .nav a {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.3rem 0.65rem;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .nav a:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── Container ── */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 2rem 4rem; }
+
+  /* ── Section ── */
+  .section {
+    padding: 3.5rem 0 1rem;
+    scroll-margin-top: 3.5rem;
+  }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-bottom: 0.4rem;
+  }
+  .sec-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .n-red    { background: rgba(255,107,107,0.12); color: var(--red); }
+  .n-blue   { background: rgba(88,166,255,0.12); color: var(--blue); }
+  .n-green  { background: rgba(86,211,100,0.12); color: var(--green); }
+  .n-purple { background: rgba(163,113,247,0.12); color: var(--purple); }
+  .n-yellow { background: rgba(227,179,65,0.12); color: var(--yellow); }
+  .n-orange { background: rgba(240,136,62,0.12); color: var(--orange); }
+  .n-teal   { background: rgba(57,208,216,0.12); color: var(--teal); }
+  .n-accent { background: var(--accent-light); color: var(--accent); }
+
+  .sec-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #f0ece4;
+  }
+
+  .sec-desc {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    margin-bottom: 2rem;
+    max-width: 700px;
+  }
+
+  hr.sep {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* ── Cards ── */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1.5rem; }
+  .grid-1 { grid-template-columns: 1fr; }
+
+  .c {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+  }
+  .c-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.35rem;
+  }
+  .f {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.84rem;
+    line-height: 1.9;
+    color: #f0ece4;
+  }
+  .n {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    line-height: 1.5;
+  }
+
+  /* ── Callout ── */
+  .callout {
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    margin: 1.2rem 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    border: 1px solid;
+  }
+  .callout strong { display: block; margin-bottom: 0.3rem; }
+  .cl-red    { background: rgba(255,107,107,0.06); border-color: rgba(255,107,107,0.25); color: var(--red); }
+  .cl-blue   { background: rgba(88,166,255,0.06); border-color: rgba(88,166,255,0.25); color: var(--blue); }
+  .cl-green  { background: rgba(86,211,100,0.06); border-color: rgba(86,211,100,0.25); color: var(--green); }
+  .cl-purple { background: rgba(163,113,247,0.06); border-color: rgba(163,113,247,0.25); color: var(--purple); }
+  .cl-yellow { background: rgba(227,179,65,0.06); border-color: rgba(227,179,65,0.25); color: var(--yellow); }
+  .cl-orange { background: rgba(240,136,62,0.06); border-color: rgba(240,136,62,0.25); color: var(--orange); }
+  .cl-teal   { background: rgba(57,208,216,0.06); border-color: rgba(57,208,216,0.25); color: var(--teal); }
+
+  /* ── Sub-section ── */
+  .sub-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #f0ece4;
+    margin: 2rem 0 0.8rem;
+  }
+
+  /* ── Table ── */
+  .tbl { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.82rem; }
+  .tbl th, .tbl td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid var(--border); }
+  .tbl th { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); background: var(--surface); }
+  .tbl tbody tr:hover { background: var(--surface); }
+  .tbl code { font-size: 0.8rem; }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+
+  footer { text-align: center; padding: 3rem 2rem; color: var(--text-muted); font-size: 0.75rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1><span class="a">Statistics</span> & Probability Compendium</h1>
+  <p class="sub">Every concept, formula, distribution, and test you need for data science — derived, explained, and connected.</p>
+</div>
+
+<div class="nav-wrap">
+  <nav class="nav">
+    <a href="#desc">Descriptive</a>
+    <a href="#prob">Probability</a>
+    <a href="#comb">Combinatorics</a>
+    <a href="#dist">Distributions</a>
+    <a href="#clt">CLT & Sampling</a>
+    <a href="#est">Estimation</a>
+    <a href="#hyp">Hypothesis Testing</a>
+    <a href="#anova">ANOVA</a>
+    <a href="#nonparam">Nonparametric</a>
+    <a href="#bayes">Bayesian</a>
+    <a href="#info">Information Theory</a>
+    <a href="#regression">Regression</a>
+    <a href="#class">Classification</a>
+    <a href="#reg-met">Regression Metrics</a>
+    <a href="#class-met">Classification Metrics</a>
+    <a href="#regularize">Regularization</a>
+    <a href="#dimred">PCA & Dimensionality</a>
+    <a href="#ineq">Inequalities & Theorems</a>
+  </nav>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 1. DESCRIPTIVE STATISTICS                       -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="desc">
+  <div class="sec-head"><span class="sec-num n-red">01</span><span class="sec-title">Descriptive Statistics</span></div>
+  <p class="sec-desc">Summarizing data. Central tendency tells you where; dispersion tells you how spread; shape tells you the silhouette.</p>
+
+  <div class="sub-title">Central Tendency</div>
+  <div class="grid">
+    <div class="c"><div class="c-label">Arithmetic Mean</div><div class="f">μ = (1/n) Σxᵢ</div><div class="n">Sum all, divide by count. Sensitive to outliers.</div></div>
+    <div class="c"><div class="c-label">Weighted Mean</div><div class="f">x̄_w = Σwᵢxᵢ / Σwᵢ</div><div class="n">Each observation contributes proportionally to its weight.</div></div>
+    <div class="c"><div class="c-label">Geometric Mean</div><div class="f">GM = (∏xᵢ)^(1/n)</div><div class="n">For rates, ratios, growth. Always ≤ arithmetic mean.</div></div>
+    <div class="c"><div class="c-label">Harmonic Mean</div><div class="f">HM = n / Σ(1/xᵢ)</div><div class="n">For averaging rates (speed, P/E ratios). F1 score uses this.</div></div>
+    <div class="c"><div class="c-label">Median</div><div class="f">Middle value when sorted</div><div class="n">Robust to outliers. If n even: average of two middle values.</div></div>
+    <div class="c"><div class="c-label">Mode</div><div class="f">Most frequent value</div><div class="n">Only measure of central tendency for categorical data. Can have 0, 1, or many.</div></div>
+    <div class="c"><div class="c-label">Trimmed Mean</div><div class="f">Mean after removing top/bottom k%</div><div class="n">Compromise between mean (efficient) and median (robust).</div></div>
+  </div>
+
+  <div class="sub-title">Dispersion</div>
+  <div class="grid">
+    <div class="c"><div class="c-label">Range</div><div class="f">Range = max − min</div><div class="n">Simplest measure. Completely determined by two extreme values.</div></div>
+    <div class="c"><div class="c-label">Variance (population)</div><div class="f">σ² = (1/n) Σ(xᵢ − μ)²</div><div class="n">Average squared deviation. Units are squared.</div></div>
+    <div class="c"><div class="c-label">Variance (sample)</div><div class="f">s² = (1/(n−1)) Σ(xᵢ − x̄)²</div><div class="n">Bessel's correction (n−1) removes bias from using x̄ instead of μ.</div></div>
+    <div class="c"><div class="c-label">Standard Deviation</div><div class="f">σ = √σ² &nbsp; or &nbsp; s = √s²</div><div class="n">Same units as data. ~68% within ±1σ for normal distributions.</div></div>
+    <div class="c"><div class="c-label">IQR</div><div class="f">IQR = Q3 − Q1</div><div class="n">Middle 50% of data. Outliers: below Q1−1.5·IQR or above Q3+1.5·IQR.</div></div>
+    <div class="c"><div class="c-label">MAD (Median Absolute Deviation)</div><div class="f">MAD = median(|xᵢ − median(x)|)</div><div class="n">Most robust dispersion measure. Unaffected by any single outlier.</div></div>
+    <div class="c"><div class="c-label">Coefficient of Variation</div><div class="f">CV = σ / μ</div><div class="n">Relative variability. Dimensionless — compare spread across different scales.</div></div>
+    <div class="c"><div class="c-label">Standard Error</div><div class="f">SE = s / √n</div><div class="n">Std dev of the sampling distribution of the mean. Shrinks with more data.</div></div>
+  </div>
+
+  <div class="sub-title">Shape</div>
+  <div class="grid">
+    <div class="c"><div class="c-label">Skewness</div><div class="f">γ₁ = (1/n) Σ((xᵢ − μ)/σ)³</div><div class="n">0 = symmetric. Positive = right tail longer. Negative = left tail longer.</div></div>
+    <div class="c"><div class="c-label">Kurtosis</div><div class="f">γ₂ = (1/n) Σ((xᵢ − μ)/σ)⁴</div><div class="n">Normal = 3 (excess kurtosis = 0). Higher = heavier tails, more extreme outliers.</div></div>
+  </div>
+
+  <div class="sub-title">Relationship</div>
+  <div class="grid">
+    <div class="c"><div class="c-label">Covariance</div><div class="f">Cov(X,Y) = (1/(n−1)) Σ(xᵢ−x̄)(yᵢ−ȳ)</div><div class="n">Direction of linear relationship. Scale-dependent — hard to compare across datasets.</div></div>
+    <div class="c"><div class="c-label">Pearson Correlation</div><div class="f">r = Cov(X,Y) / (sₓ · sᵧ)</div><div class="n">Normalized covariance. [−1, +1]. Measures linear association only.</div></div>
+    <div class="c"><div class="c-label">Spearman Rank Correlation</div><div class="f">ρₛ = Pearson(rank(X), rank(Y))</div><div class="n">Measures monotonic (not just linear) relationship. Robust to outliers.</div></div>
+    <div class="c"><div class="c-label">Kendall's Tau</div><div class="f">τ = (concordant − discordant) / C(n,2)</div><div class="n">Proportion of concordant pairs. More robust than Spearman for small n.</div></div>
+    <div class="c"><div class="c-label">Partial Correlation</div><div class="f">r_XY·Z = (r_XY − r_XZ·r_YZ) / √((1−r²_XZ)(1−r²_YZ))</div><div class="n">Correlation between X and Y after removing the effect of Z.</div></div>
+    <div class="c"><div class="c-label">Point-Biserial Correlation</div><div class="f">Same formula as Pearson, one variable binary</div><div class="n">Correlation between a continuous and a dichotomous variable.</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 2. PROBABILITY FOUNDATIONS                      -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="prob">
+  <div class="sec-head"><span class="sec-num n-blue">02</span><span class="sec-title">Probability Foundations</span></div>
+  <p class="sec-desc">The language of uncertainty. Every ML model is, at its core, a probability machine.</p>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">Probability</div><div class="f">P(A) = |A| / |Ω|</div><div class="n">For equally likely outcomes. Always 0 ≤ P(A) ≤ 1.</div></div>
+    <div class="c"><div class="c-label">Kolmogorov Axioms</div><div class="f">1) P(A) ≥ 0<br>2) P(Ω) = 1<br>3) P(A∪B) = P(A)+P(B) if disjoint</div><div class="n">The three axioms from which all probability theory follows.</div></div>
+    <div class="c"><div class="c-label">Complement</div><div class="f">P(A') = 1 − P(A)</div></div>
+    <div class="c"><div class="c-label">Addition Rule</div><div class="f">P(A∪B) = P(A) + P(B) − P(A∩B)</div><div class="n">Inclusion-exclusion. If mutually exclusive: P(A∪B) = P(A)+P(B).</div></div>
+    <div class="c"><div class="c-label">Multiplication Rule</div><div class="f">P(A∩B) = P(A) · P(B|A)</div><div class="n">If independent: P(A∩B) = P(A) · P(B).</div></div>
+    <div class="c"><div class="c-label">Conditional Probability</div><div class="f">P(A|B) = P(A∩B) / P(B)</div><div class="n">Probability of A given B has occurred. The basis of Bayesian reasoning.</div></div>
+    <div class="c"><div class="c-label">Bayes' Theorem</div><div class="f">P(A|B) = P(B|A) · P(A) / P(B)</div><div class="n">Update beliefs with evidence. posterior ∝ likelihood × prior.</div></div>
+    <div class="c"><div class="c-label">Law of Total Probability</div><div class="f">P(B) = Σᵢ P(B|Aᵢ) · P(Aᵢ)</div><div class="n">Compute P(B) by summing over all partitions Aᵢ of sample space.</div></div>
+    <div class="c"><div class="c-label">Independence</div><div class="f">P(A∩B) = P(A) · P(B)</div><div class="n">Knowing A gives no information about B. P(A|B) = P(A).</div></div>
+    <div class="c"><div class="c-label">Conditional Independence</div><div class="f">P(A∩B|C) = P(A|C) · P(B|C)</div><div class="n">A and B independent once C is known. Key assumption of Naive Bayes.</div></div>
+    <div class="c"><div class="c-label">Expected Value</div><div class="f">E[X] = Σ xᵢ P(xᵢ) &nbsp; (discrete)<br>E[X] = ∫ x f(x) dx &nbsp; (continuous)</div><div class="n">Long-run average. Linear: E[aX+b] = aE[X]+b.</div></div>
+    <div class="c"><div class="c-label">Variance via Expectation</div><div class="f">Var(X) = E[X²] − (E[X])²</div><div class="n">Computational shortcut. Var(aX+b) = a²Var(X).</div></div>
+    <div class="c"><div class="c-label">Covariance via Expectation</div><div class="f">Cov(X,Y) = E[XY] − E[X]E[Y]</div><div class="n">If independent: Cov(X,Y) = 0. Converse is NOT true.</div></div>
+    <div class="c"><div class="c-label">Moment Generating Function</div><div class="f">M_X(t) = E[e^(tX)]</div><div class="n">k-th moment = M^(k)(0). Uniquely determines the distribution.</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 3. COMBINATORICS                                -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="comb">
+  <div class="sec-head"><span class="sec-num n-green">03</span><span class="sec-title">Combinatorics</span></div>
+  <p class="sec-desc">Counting outcomes — the machinery behind discrete probability.</p>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">Factorial</div><div class="f">n! = n × (n−1) × … × 1</div><div class="n">0! = 1 by convention. Grows explosively: 10! = 3,628,800.</div></div>
+    <div class="c"><div class="c-label">Permutations (ordered)</div><div class="f">P(n,k) = n! / (n−k)!</div><div class="n">Choose k items from n, order matters.</div></div>
+    <div class="c"><div class="c-label">Combinations (unordered)</div><div class="f">C(n,k) = n! / (k!(n−k)!)</div><div class="n">"n choose k." Order doesn't matter. C(n,k) = C(n, n−k).</div></div>
+    <div class="c"><div class="c-label">Multinomial Coefficient</div><div class="f">n! / (n₁! n₂! … nₖ!)</div><div class="n">Ways to divide n items into groups of sizes n₁, n₂, …, nₖ.</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 4. PROBABILITY DISTRIBUTIONS                    -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="dist">
+  <div class="sec-head"><span class="sec-num n-purple">04</span><span class="sec-title">Probability Distributions</span></div>
+  <p class="sec-desc">The building blocks. Every model assumption, every test statistic, every generative process maps to one of these.</p>
+
+  <div class="sub-title">Discrete Distributions</div>
+  <div class="grid">
+    <div class="c"><div class="c-label">Bernoulli</div><div class="f">P(X=1) = p, P(X=0) = 1−p</div><div class="n">Single trial, two outcomes. E = p, Var = p(1−p).</div></div>
+    <div class="c"><div class="c-label">Binomial</div><div class="f">P(X=k) = C(n,k) p^k (1−p)^(n−k)</div><div class="n">k successes in n independent trials. E = np, Var = np(1−p).</div></div>
+    <div class="c"><div class="c-label">Poisson</div><div class="f">P(X=k) = λ^k e^(−λ) / k!</div><div class="n">Counts in a fixed interval. E = Var = λ. Limit of Binomial as n→∞, p→0, np→λ.</div></div>
+    <div class="c"><div class="c-label">Geometric</div><div class="f">P(X=k) = (1−p)^(k−1) p</div><div class="n">Trials until first success. E = 1/p, Var = (1−p)/p². Memoryless.</div></div>
+    <div class="c"><div class="c-label">Negative Binomial</div><div class="f">P(X=k) = C(k−1, r−1) p^r (1−p)^(k−r)</div><div class="n">Trials until r-th success. E = r/p. Generalizes geometric (r=1).</div></div>
+    <div class="c"><div class="c-label">Hypergeometric</div><div class="f">P(X=k) = C(K,k)C(N−K,n−k) / C(N,n)</div><div class="n">Sampling without replacement. N total, K successes, draw n. E = nK/N.</div></div>
+    <div class="c"><div class="c-label">Multinomial</div><div class="f">P(x₁,…,xₖ) = (n! / ∏xᵢ!) ∏pᵢ^xᵢ</div><div class="n">k categories, n trials. Generalizes binomial. Used in NLP (bag of words).</div></div>
+    <div class="c"><div class="c-label">Discrete Uniform</div><div class="f">P(X=k) = 1/n for k=1,…,n</div><div class="n">All outcomes equally likely. Fair die: n=6. E = (n+1)/2.</div></div>
+  </div>
+
+  <div class="sub-title">Continuous Distributions</div>
+  <div class="grid">
+    <div class="c"><div class="c-label">Uniform</div><div class="f">f(x) = 1/(b−a) for a ≤ x ≤ b</div><div class="n">Constant density. E = (a+b)/2, Var = (b−a)²/12.</div></div>
+    <div class="c"><div class="c-label">Normal (Gaussian)</div><div class="f">f(x) = (1/(σ√(2π))) exp(−(x−μ)²/(2σ²))</div><div class="n">Bell curve. 68-95-99.7 rule. Sum of normals is normal. CLT target.</div></div>
+    <div class="c"><div class="c-label">Standard Normal</div><div class="f">Z = (X−μ)/σ ~ N(0,1)</div><div class="n">Any normal → standard normal via z-score. Tables, p-values live here.</div></div>
+    <div class="c"><div class="c-label">Log-Normal</div><div class="f">If ln(X) ~ N(μ,σ²), then X ~ LogN</div><div class="n">Always positive, right-skewed. Models: stock prices, income, city sizes.</div></div>
+    <div class="c"><div class="c-label">Exponential</div><div class="f">f(x) = λe^(−λx) for x ≥ 0</div><div class="n">Time between Poisson events. E = 1/λ, Var = 1/λ². Memoryless.</div></div>
+    <div class="c"><div class="c-label">Gamma</div><div class="f">f(x) = (β^α / Γ(α)) x^(α−1) e^(−βx)</div><div class="n">Sum of α independent exponentials. Generalizes exponential (α=1) and chi-square.</div></div>
+    <div class="c"><div class="c-label">Beta</div><div class="f">f(x) = x^(α−1)(1−x)^(β−1) / B(α,β)</div><div class="n">Defined on [0,1]. Perfect for modeling probabilities. Conjugate prior for Bernoulli/Binomial.</div></div>
+    <div class="c"><div class="c-label">Chi-Square (χ²)</div><div class="f">χ² ~ Gamma(k/2, 1/2)</div><div class="n">Sum of k squared standard normals. df = k. Used in goodness-of-fit, independence tests.</div></div>
+    <div class="c"><div class="c-label">Student's t</div><div class="f">t = Z / √(V/ν), V~χ²(ν)</div><div class="n">Heavier tails than normal. Approaches normal as ν→∞. Used when σ unknown.</div></div>
+    <div class="c"><div class="c-label">F-distribution</div><div class="f">F = (V₁/d₁) / (V₂/d₂)</div><div class="n">Ratio of two chi-squares. Used in ANOVA and regression F-tests.</div></div>
+    <div class="c"><div class="c-label">Weibull</div><div class="f">f(x) = (k/λ)(x/λ)^(k−1) e^(−(x/λ)^k)</div><div class="n">Flexible failure-time model. k=1 → exponential. Models lifetime, wind speed.</div></div>
+    <div class="c"><div class="c-label">Pareto</div><div class="f">f(x) = αx_m^α / x^(α+1) for x ≥ x_m</div><div class="n">Power law / heavy tail. 80-20 rule. Models wealth, city populations, file sizes.</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 5. CLT & SAMPLING                               -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="clt">
+  <div class="sec-head"><span class="sec-num n-yellow">05</span><span class="sec-title">Central Limit Theorem & Sampling</span></div>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">Central Limit Theorem</div><div class="f">x̄ ~ N(μ, σ²/n) as n → ∞</div><div class="n">Sample means approach normal regardless of population shape. Practically kicks in around n ≥ 30.</div></div>
+    <div class="c"><div class="c-label">Sampling Distribution of x̄</div><div class="f">E[x̄] = μ, &nbsp; Var(x̄) = σ²/n</div><div class="n">The mean of means equals the population mean. Variance shrinks with sample size.</div></div>
+    <div class="c"><div class="c-label">Law of Large Numbers</div><div class="f">x̄_n → μ as n → ∞</div><div class="n">Sample mean converges to population mean. Foundation of all empirical estimation.</div></div>
+    <div class="c"><div class="c-label">Bootstrap</div><div class="f">Resample with replacement B times, compute statistic each time</div><div class="n">Distribution-free inference. Get CI and SE for any statistic without assumptions.</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 6. ESTIMATION                                   -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="est">
+  <div class="sec-head"><span class="sec-num n-orange">06</span><span class="sec-title">Estimation Theory</span></div>
+  <p class="sec-desc">How to go from sample to population. Point estimates, intervals, and the properties that make an estimator good.</p>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">Maximum Likelihood Estimation</div><div class="f">θ̂_MLE = argmax_θ ∏ f(xᵢ|θ)<br>= argmax_θ Σ log f(xᵢ|θ)</div><div class="n">Find θ that makes the observed data most probable. Take the log, differentiate, set to zero.</div></div>
+    <div class="c"><div class="c-label">Method of Moments</div><div class="f">Set sample moments = population moments, solve for θ</div><div class="n">Simpler than MLE, often less efficient. Match x̄ to E[X], s² to Var(X), etc.</div></div>
+    <div class="c"><div class="c-label">MAP Estimation</div><div class="f">θ̂_MAP = argmax_θ P(θ|data)<br>= argmax_θ [log L(data|θ) + log P(θ)]</div><div class="n">MLE + prior. With uniform prior, MAP = MLE. With Gaussian prior, MAP = Ridge regression.</div></div>
+    <div class="c"><div class="c-label">Confidence Interval</div><div class="f">x̄ ± z* · (s/√n)</div><div class="n">95% CI: z*=1.96. 99%: z*=2.576. Interpretation: if you repeat the experiment ∞ times, 95% of CIs contain μ.</div></div>
+  </div>
+
+  <div class="sub-title">Properties of Estimators</div>
+  <div class="grid">
+    <div class="c"><div class="c-label">Unbiased</div><div class="f">E[θ̂] = θ</div><div class="n">On average, the estimator hits the true value.</div></div>
+    <div class="c"><div class="c-label">Consistent</div><div class="f">θ̂ → θ as n → ∞</div><div class="n">Converges to truth with more data.</div></div>
+    <div class="c"><div class="c-label">Efficient</div><div class="f">Var(θ̂) = 1/I(θ) (Cramér-Rao bound)</div><div class="n">Achieves minimum possible variance among all unbiased estimators.</div></div>
+    <div class="c"><div class="c-label">MSE of an Estimator</div><div class="f">MSE(θ̂) = Bias(θ̂)² + Var(θ̂)</div><div class="n">Total error = systematic error + random error. Sometimes biased estimators have lower MSE.</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 7. HYPOTHESIS TESTING                           -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="hyp">
+  <div class="sec-head"><span class="sec-num n-red">07</span><span class="sec-title">Hypothesis Testing</span></div>
+  <p class="sec-desc">The formal framework for deciding whether a pattern is real or just noise.</p>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">Framework</div><div class="f">H₀: null hypothesis (no effect)<br>H₁: alternative (effect exists)<br>Choose α → compute test stat → get p-value → decide</div></div>
+    <div class="c"><div class="c-label">p-value</div><div class="f">P(data ≥ observed | H₀ true)</div><div class="n">NOT the probability H₀ is true. It's how surprising the data is if H₀ were true.</div></div>
+    <div class="c"><div class="c-label">Z-test</div><div class="f">z = (x̄ − μ₀) / (σ/√n)</div><div class="n">σ known or n≥30. Tests if population mean = μ₀.</div></div>
+    <div class="c"><div class="c-label">One-sample t-test</div><div class="f">t = (x̄ − μ₀) / (s/√n), df = n−1</div><div class="n">σ unknown. Same purpose as z-test but with heavier tails.</div></div>
+    <div class="c"><div class="c-label">Two-sample t-test</div><div class="f">t = (x̄₁ − x̄₂) / √(s₁²/n₁ + s₂²/n₂)</div><div class="n">Compare means of two independent groups. Welch's version doesn't assume equal variance.</div></div>
+    <div class="c"><div class="c-label">Paired t-test</div><div class="f">t = d̄ / (s_d/√n), d = x₁−x₂</div><div class="n">Same subjects measured twice (before/after). Test if mean difference ≠ 0.</div></div>
+    <div class="c"><div class="c-label">Chi-square Goodness of Fit</div><div class="f">χ² = Σ (Oᵢ − Eᵢ)² / Eᵢ</div><div class="n">Does observed frequency match expected distribution? df = k−1.</div></div>
+    <div class="c"><div class="c-label">Chi-square Independence</div><div class="f">Same formula, applied to contingency table</div><div class="n">Are two categorical variables associated? df = (r−1)(c−1).</div></div>
+  </div>
+
+  <div class="callout cl-red">
+    <strong>Error Types</strong>
+    Type I (α): reject H₀ when it's true (false positive). You see a pattern that isn't there.<br>
+    Type II (β): fail to reject H₀ when it's false (false negative). You miss a real pattern.<br>
+    Power = 1 − β: probability of detecting a real effect. Increase with larger n, larger effect, or larger α.
+  </div>
+
+  <div class="sub-title">Multiple Testing</div>
+  <div class="grid">
+    <div class="c"><div class="c-label">Bonferroni Correction</div><div class="f">α_adjusted = α / m</div><div class="n">m = number of tests. Conservative — controls family-wise error rate.</div></div>
+    <div class="c"><div class="c-label">Benjamini-Hochberg (FDR)</div><div class="f">Rank p-values, reject if pᵢ ≤ (i/m)·α</div><div class="n">Controls false discovery rate instead of family-wise rate. Less conservative, more power.</div></div>
+    <div class="c"><div class="c-label">Effect Size (Cohen's d)</div><div class="f">d = (x̄₁ − x̄₂) / s_pooled</div><div class="n">Standardized difference. Small=0.2, Medium=0.5, Large=0.8. p-value says if; effect size says how much.</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 8. ANOVA                                        -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="anova">
+  <div class="sec-head"><span class="sec-num n-teal">08</span><span class="sec-title">ANOVA</span></div>
+  <p class="sec-desc">Comparing means across 3+ groups — because running pairwise t-tests inflates your Type I error.</p>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">One-Way ANOVA</div><div class="f">F = MS_between / MS_within<br>MS = SS / df</div><div class="n">H₀: all group means equal. Large F → at least one group differs.</div></div>
+    <div class="c"><div class="c-label">SS_between</div><div class="f">SS_B = Σ nⱼ(x̄ⱼ − x̄)²</div><div class="n">Variation explained by group membership. df = k−1.</div></div>
+    <div class="c"><div class="c-label">SS_within</div><div class="f">SS_W = ΣΣ (xᵢⱼ − x̄ⱼ)²</div><div class="n">Variation within groups (noise). df = N−k.</div></div>
+    <div class="c"><div class="c-label">Two-Way ANOVA</div><div class="f">Tests main effects of A, B, and interaction A×B</div><div class="n">Can detect if the effect of one factor depends on the level of another.</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 9. NONPARAMETRIC METHODS                        -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="nonparam">
+  <div class="sec-head"><span class="sec-num n-green">09</span><span class="sec-title">Nonparametric Methods</span></div>
+  <p class="sec-desc">When your data doesn't meet parametric assumptions — no normality required.</p>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">Mann-Whitney U</div><div class="f">U = Σ ranks of group 1 − n₁(n₁+1)/2</div><div class="n">Nonparametric alternative to two-sample t-test. Compares distributions, not just means.</div></div>
+    <div class="c"><div class="c-label">Wilcoxon Signed-Rank</div><div class="f">Rank |differences|, sum positive & negative ranks</div><div class="n">Alternative to paired t-test. Tests if median difference = 0.</div></div>
+    <div class="c"><div class="c-label">Kruskal-Wallis</div><div class="f">H = (12/(N(N+1))) Σ (Rⱼ²/nⱼ) − 3(N+1)</div><div class="n">Alternative to one-way ANOVA. Tests if k groups come from same distribution.</div></div>
+    <div class="c"><div class="c-label">Permutation Test</div><div class="f">Shuffle labels B times, compute test stat each time</div><div class="n">Exact test under H₀. No distributional assumptions. p = fraction of permutations ≥ observed.</div></div>
+    <div class="c"><div class="c-label">Kolmogorov-Smirnov</div><div class="f">D = max|F_n(x) − F(x)|</div><div class="n">Tests if sample comes from a specific distribution. Compares empirical vs theoretical CDF.</div></div>
+    <div class="c"><div class="c-label">Kernel Density Estimation</div><div class="f">f̂(x) = (1/(nh)) Σ K((x−xᵢ)/h)</div><div class="n">Smooth nonparametric density estimate. K = kernel (usually Gaussian), h = bandwidth.</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 10. BAYESIAN STATISTICS                         -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="bayes">
+  <div class="sec-head"><span class="sec-num n-accent">10</span><span class="sec-title">Bayesian Statistics</span></div>
+  <p class="sec-desc">Parameters aren't fixed unknown constants — they're random variables with distributions that update as data arrives.</p>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">Bayesian Inference</div><div class="f">P(θ|data) = P(data|θ) · P(θ) / P(data)</div><div class="n">posterior = likelihood × prior / evidence. Everything follows from this.</div></div>
+    <div class="c"><div class="c-label">Prior → Posterior</div><div class="f">posterior ∝ likelihood × prior</div><div class="n">P(data) is just a normalizing constant. Often we work with the unnormalized form.</div></div>
+    <div class="c"><div class="c-label">Conjugate Priors</div><div class="f">Beta → Bernoulli/Binomial<br>Normal → Normal (known σ)<br>Gamma → Poisson<br>Dirichlet → Multinomial</div><div class="n">Prior and posterior are in the same family → closed-form updates. No MCMC needed.</div></div>
+    <div class="c"><div class="c-label">Beta-Binomial Update</div><div class="f">Prior: Beta(α, β)<br>After k successes in n trials:<br>Posterior: Beta(α+k, β+n−k)</div><div class="n">The most important conjugate pair. Models uncertainty about probabilities (A/B testing, CTR).</div></div>
+    <div class="c"><div class="c-label">Credible Interval</div><div class="f">Find [a,b] s.t. P(a ≤ θ ≤ b | data) = 0.95</div><div class="n">Direct probability statement about θ. "There's a 95% probability θ is in this interval." (CI can't say this.)</div></div>
+    <div class="c"><div class="c-label">Bayesian vs Frequentist</div><div class="f">Bayesian: P(θ|data) — probability of parameter<br>Frequentist: P(data|θ) — probability of data</div><div class="n">Different questions, not competitors. Use whichever matches your problem.</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 11. INFORMATION THEORY                          -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="info">
+  <div class="sec-head"><span class="sec-num n-purple">11</span><span class="sec-title">Information Theory</span></div>
+  <p class="sec-desc">Quantifying uncertainty, surprise, and the information content of data. Powers decision trees, cross-entropy loss, and generative models.</p>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">Entropy</div><div class="f">H(X) = −Σ P(xᵢ) log₂ P(xᵢ)</div><div class="n">Average surprise. Max when all outcomes equally likely (uniform). 0 when outcome is certain.</div></div>
+    <div class="c"><div class="c-label">Joint Entropy</div><div class="f">H(X,Y) = −ΣΣ P(x,y) log P(x,y)</div><div class="n">Uncertainty of the joint system. H(X,Y) ≤ H(X) + H(Y), equality iff independent.</div></div>
+    <div class="c"><div class="c-label">Conditional Entropy</div><div class="f">H(X|Y) = H(X,Y) − H(Y)</div><div class="n">Remaining uncertainty about X after observing Y.</div></div>
+    <div class="c"><div class="c-label">Mutual Information</div><div class="f">I(X;Y) = H(X) − H(X|Y) = H(X) + H(Y) − H(X,Y)</div><div class="n">Information gained about X by observing Y. Symmetric: I(X;Y) = I(Y;X). 0 iff independent.</div></div>
+    <div class="c"><div class="c-label">KL Divergence</div><div class="f">D_KL(P‖Q) = Σ P(x) log(P(x)/Q(x))</div><div class="n">Information lost when Q approximates P. Not symmetric. Always ≥ 0. Used in VAEs, policy gradient.</div></div>
+    <div class="c"><div class="c-label">Cross-Entropy</div><div class="f">H(P,Q) = −Σ P(x) log Q(x)</div><div class="n">H(P,Q) = H(P) + D_KL(P‖Q). Minimizing cross-entropy = minimizing KL (since H(P) is fixed).</div></div>
+    <div class="c"><div class="c-label">Information Gain</div><div class="f">IG(Y,X) = H(Y) − H(Y|X)</div><div class="n">Reduction in entropy from splitting on feature X. Used to build decision trees (ID3/C4.5).</div></div>
+    <div class="c"><div class="c-label">Gini Impurity</div><div class="f">Gini = 1 − Σ pᵢ²</div><div class="n">Alternative to entropy for tree splits. Faster to compute (no log). Max = 0.5 (binary), 0 = pure.</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 12. REGRESSION                                  -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="regression">
+  <div class="sec-head"><span class="sec-num n-blue">12</span><span class="sec-title">Regression</span></div>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">Simple Linear Regression</div><div class="f">ŷ = β₀ + β₁x</div></div>
+    <div class="c"><div class="c-label">Multiple Linear Regression</div><div class="f">ŷ = β₀ + β₁x₁ + … + βₚxₚ</div></div>
+    <div class="c"><div class="c-label">OLS Slope</div><div class="f">β₁ = Σ(xᵢ−x̄)(yᵢ−ȳ) / Σ(xᵢ−x̄)²</div><div class="n">= Cov(X,Y) / Var(X). Closed-form solution.</div></div>
+    <div class="c"><div class="c-label">OLS Intercept</div><div class="f">β₀ = ȳ − β₁x̄</div><div class="n">Line always passes through (x̄, ȳ).</div></div>
+    <div class="c"><div class="c-label">Normal Equation</div><div class="f">β = (XᵀX)⁻¹ Xᵀy</div><div class="n">Closed-form for multiple regression. O(p³) — expensive for many features.</div></div>
+    <div class="c"><div class="c-label">Cost Function (MSE)</div><div class="f">J(β) = (1/2m) Σ(ŷᵢ − yᵢ)²</div><div class="n">The ½ makes the derivative cleaner. Gradient descent minimizes this.</div></div>
+    <div class="c"><div class="c-label">Gradient Descent Update</div><div class="f">βⱼ := βⱼ − α · (1/m) Σ(ŷᵢ−yᵢ)·xⱼᵢ</div><div class="n">α = learning rate. Repeat until convergence. Update all β simultaneously.</div></div>
+    <div class="c"><div class="c-label">Polynomial Regression</div><div class="f">ŷ = β₀ + β₁x + β₂x² + … + βₖx^k</div><div class="n">Still linear in the parameters — just use x, x², x³ as separate features.</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 13. CLASSIFICATION                              -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="class">
+  <div class="sec-head"><span class="sec-num n-red">13</span><span class="sec-title">Classification</span></div>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">Sigmoid (Logistic)</div><div class="f">σ(z) = 1 / (1 + e^(−z))</div><div class="n">Maps ℝ → (0,1). Output = probability of class 1.</div></div>
+    <div class="c"><div class="c-label">Logistic Regression</div><div class="f">P(y=1|x) = σ(βᵀx)</div><div class="n">Linear in log-odds: log(p/(1−p)) = βᵀx. Decision boundary at βᵀx = 0.</div></div>
+    <div class="c"><div class="c-label">Binary Cross-Entropy (Log Loss)</div><div class="f">J = −(1/m) Σ[yᵢ log(ŷᵢ) + (1−yᵢ) log(1−ŷᵢ)]</div><div class="n">Convex. Heavily penalizes confident wrong predictions.</div></div>
+    <div class="c"><div class="c-label">Softmax (multi-class)</div><div class="f">P(y=k|x) = e^(zₖ) / Σⱼ e^(zⱼ)</div><div class="n">Generalizes sigmoid to K classes. Outputs sum to 1.</div></div>
+    <div class="c"><div class="c-label">Naive Bayes</div><div class="f">P(y|x₁,…,xₚ) ∝ P(y) ∏ P(xⱼ|y)</div><div class="n">Assumes features independent given class. Fast, works well for text. "Naive" = the independence assumption.</div></div>
+    <div class="c"><div class="c-label">KNN</div><div class="f">Predict class of k nearest neighbors (majority vote)</div><div class="n">No training phase. k=1 overfits, large k underfits. Distance metric matters (usually Euclidean).</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 14. REGRESSION METRICS                          -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="reg-met">
+  <div class="sec-head"><span class="sec-num n-yellow">14</span><span class="sec-title">Regression Metrics</span></div>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">MAE</div><div class="f">MAE = (1/n) Σ|yᵢ − ŷᵢ|</div><div class="n">Same units as y. Robust to outliers. Not differentiable at 0.</div></div>
+    <div class="c"><div class="c-label">MSE</div><div class="f">MSE = (1/n) Σ(yᵢ − ŷᵢ)²</div><div class="n">Units = y². Punishes large errors. Differentiable everywhere.</div></div>
+    <div class="c"><div class="c-label">RMSE</div><div class="f">RMSE = √MSE</div><div class="n">Same units as y. Most reported metric. RMSE ≥ MAE always.</div></div>
+    <div class="c"><div class="c-label">MAPE</div><div class="f">MAPE = (100/n) Σ |yᵢ−ŷᵢ|/|yᵢ|</div><div class="n">Percentage error. Undefined when yᵢ=0. Scale-independent.</div></div>
+    <div class="c"><div class="c-label">R²</div><div class="f">R² = 1 − SS_res / SS_total</div><div class="n">% variance explained. 1=perfect, 0=same as mean, <0=worse than mean.</div></div>
+    <div class="c"><div class="c-label">Adjusted R²</div><div class="f">Adj R² = 1 − [(1−R²)(n−1)/(n−p−1)]</div><div class="n">Penalizes adding useless features. If Adj R² drops, remove the feature.</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 15. CLASSIFICATION METRICS                      -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="class-met">
+  <div class="sec-head"><span class="sec-num n-orange">15</span><span class="sec-title">Classification Metrics</span></div>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">Accuracy</div><div class="f">(TP+TN) / (TP+TN+FP+FN)</div><div class="n">Misleading on imbalanced data.</div></div>
+    <div class="c"><div class="c-label">Precision</div><div class="f">TP / (TP+FP)</div><div class="n">"Of predicted positives, how many are correct?" Minimize false alarms.</div></div>
+    <div class="c"><div class="c-label">Recall (Sensitivity)</div><div class="f">TP / (TP+FN)</div><div class="n">"Of actual positives, how many did I catch?" Minimize misses.</div></div>
+    <div class="c"><div class="c-label">F1 Score</div><div class="f">F1 = 2·(P·R)/(P+R)</div><div class="n">Harmonic mean of precision and recall. 0 to 1.</div></div>
+    <div class="c"><div class="c-label">Fβ Score</div><div class="f">Fβ = (1+β²)·(P·R)/(β²P+R)</div><div class="n">β>1 weights recall more, β<1 weights precision more. F1 is β=1.</div></div>
+    <div class="c"><div class="c-label">Specificity (TNR)</div><div class="f">TN / (TN+FP)</div><div class="n">"Of actual negatives, how many correctly identified?"</div></div>
+    <div class="c"><div class="c-label">AUC-ROC</div><div class="f">Area under TPR vs FPR curve</div><div class="n">0.5=random, 1.0=perfect. Threshold-independent. Probability that a random positive ranks above a random negative.</div></div>
+    <div class="c"><div class="c-label">AUC-PR</div><div class="f">Area under Precision vs Recall curve</div><div class="n">Better than AUC-ROC for highly imbalanced datasets. Focuses on the positive class.</div></div>
+    <div class="c"><div class="c-label">Log Loss</div><div class="f">−(1/n) Σ[yᵢ log(pᵢ) + (1−yᵢ)log(1−pᵢ)]</div><div class="n">Penalizes confident wrong predictions exponentially. Lower = better.</div></div>
+    <div class="c"><div class="c-label">Cohen's Kappa</div><div class="f">κ = (p₀ − pₑ) / (1 − pₑ)</div><div class="n">Agreement beyond chance. p₀=observed accuracy, pₑ=expected by chance. 0=chance, 1=perfect.</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 16. REGULARIZATION                              -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="regularize">
+  <div class="sec-head"><span class="sec-num n-teal">16</span><span class="sec-title">Regularization</span></div>
+  <p class="sec-desc">Trading a little bias for a lot of variance reduction. The antidote to overfitting.</p>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">L1 — Lasso</div><div class="f">J = MSE + λ Σ|βⱼ|</div><div class="n">Drives coefficients to exactly 0 → feature selection. Creates sparse models.</div></div>
+    <div class="c"><div class="c-label">L2 — Ridge</div><div class="f">J = MSE + λ Σβⱼ²</div><div class="n">Shrinks toward 0 but never reaches it. Handles multicollinearity. Equivalent to Gaussian prior (MAP).</div></div>
+    <div class="c"><div class="c-label">Elastic Net</div><div class="f">J = MSE + λ₁Σ|βⱼ| + λ₂Σβⱼ²</div><div class="n">Best of both: sparsity (L1) + stability (L2). Two hyperparameters.</div></div>
+    <div class="c"><div class="c-label">Dropout</div><div class="f">Randomly zero out neurons with prob p during training</div><div class="n">Neural network regularization. Forces redundancy. Like training an ensemble. p typically 0.2–0.5.</div></div>
+    <div class="c"><div class="c-label">Early Stopping</div><div class="f">Stop training when validation loss starts increasing</div><div class="n">Implicit regularization. Monitor val loss, keep best weights.</div></div>
+  </div>
+
+  <div class="callout cl-teal">
+    <strong>λ (regularization strength)</strong>
+    λ=0 → no regularization (plain OLS). λ→∞ → all coefficients→0 (underfitting). Find the sweet spot with cross-validation.
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 17. PCA & DIMENSIONALITY                        -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="dimred">
+  <div class="sec-head"><span class="sec-num n-purple">17</span><span class="sec-title">PCA & Dimensionality Reduction</span></div>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">PCA Goal</div><div class="f">Find directions of maximum variance in the data</div><div class="n">Project onto top k principal components. Reduce dimensions while preserving information.</div></div>
+    <div class="c"><div class="c-label">Steps</div><div class="f">1) Center data (subtract mean)<br>2) Compute covariance matrix C = XᵀX/(n−1)<br>3) Eigendecompose: Cv = λv<br>4) Sort by λ, keep top k eigenvectors<br>5) Project: Z = XW_k</div></div>
+    <div class="c"><div class="c-label">Variance Explained</div><div class="f">VE_k = λₖ / Σλᵢ</div><div class="n">Fraction of total variance captured by k-th component. Cumulative sum → choose k.</div></div>
+    <div class="c"><div class="c-label">SVD</div><div class="f">X = UΣVᵀ</div><div class="n">U = left singular vectors, Σ = singular values, V = right singular vectors. PCA uses V and Σ.</div></div>
+    <div class="c"><div class="c-label">Eigenvalue / Eigenvector</div><div class="f">Av = λv</div><div class="n">v = direction unchanged by A, λ = how much A stretches v. Core of PCA, spectral methods, PageRank.</div></div>
+    <div class="c"><div class="c-label">Scree Plot</div><div class="f">Plot eigenvalues in decreasing order</div><div class="n">Look for the "elbow" — where additional components stop adding meaningful variance.</div></div>
+  </div>
+
+  <div class="sub-title">Key Linear Algebra</div>
+  <div class="grid">
+    <div class="c"><div class="c-label">Dot Product</div><div class="f">a·b = Σaᵢbᵢ = |a||b|cos(θ)</div><div class="n">Scalar. Foundation of projections and similarity.</div></div>
+    <div class="c"><div class="c-label">L1 Norm (Manhattan)</div><div class="f">‖x‖₁ = Σ|xᵢ|</div><div class="n">Used in Lasso regularization.</div></div>
+    <div class="c"><div class="c-label">L2 Norm (Euclidean)</div><div class="f">‖x‖₂ = √(Σxᵢ²)</div><div class="n">Used in Ridge, KNN, cosine similarity.</div></div>
+    <div class="c"><div class="c-label">Cosine Similarity</div><div class="f">cos(θ) = (a·b) / (‖a‖‖b‖)</div><div class="n">Direction similarity, ignores magnitude. [−1,1]. Standard in NLP (word embeddings, TF-IDF).</div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 18. INEQUALITIES & THEOREMS                     -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section" id="ineq">
+  <div class="sec-head"><span class="sec-num n-accent">18</span><span class="sec-title">Key Inequalities & Theorems</span></div>
+  <p class="sec-desc">The theoretical guarantees that underpin everything above.</p>
+
+  <div class="grid">
+    <div class="c"><div class="c-label">Markov's Inequality</div><div class="f">P(X ≥ a) ≤ E[X] / a &nbsp; (X ≥ 0)</div><div class="n">Weakest bound, fewest assumptions. Only needs X ≥ 0 and E[X] exists.</div></div>
+    <div class="c"><div class="c-label">Chebyshev's Inequality</div><div class="f">P(|X−μ| ≥ kσ) ≤ 1/k²</div><div class="n">At most 1/k² of data lies more than k std devs from the mean. Any distribution.</div></div>
+    <div class="c"><div class="c-label">Jensen's Inequality</div><div class="f">f(E[X]) ≤ E[f(X)] if f is convex</div><div class="n">Convex function of expectation ≤ expectation of convex function. Used in variational inference (ELBO).</div></div>
+    <div class="c"><div class="c-label">Cramér-Rao Lower Bound</div><div class="f">Var(θ̂) ≥ 1 / I(θ)</div><div class="n">I(θ) = Fisher information. No unbiased estimator can have variance below this bound.</div></div>
+    <div class="c"><div class="c-label">Bias-Variance Decomposition</div><div class="f">E[(y−ŷ)²] = Bias²+Var+σ²</div><div class="n">Total error = (systematic error)² + estimation uncertainty + irreducible noise.</div></div>
+    <div class="c"><div class="c-label">Central Limit Theorem</div><div class="f">√n(x̄−μ)/σ → N(0,1)</div><div class="n">Standardized sample mean converges to standard normal. The reason statistics works.</div></div>
+    <div class="c"><div class="c-label">Law of Large Numbers</div><div class="f">x̄_n →ᵖ μ</div><div class="n">Weak LLN: convergence in probability. Strong LLN: almost sure convergence.</div></div>
+    <div class="c"><div class="c-label">Gauss-Markov Theorem</div><div class="f">OLS is BLUE under classical assumptions</div><div class="n">Best Linear Unbiased Estimator — minimum variance among all linear unbiased estimators. Requires: linearity, exogeneity, homoscedasticity, no multicollinearity.</div></div>
+  </div>
+</div>
+
+</div>
+
+<footer>
+  Texcoco Data Science · Statistics & Probability Compendium · Free forever
+</footer>
+
+</body>
+</html>

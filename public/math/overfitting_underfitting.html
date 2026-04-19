@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Underfitting &amp; Overfitting — A Visual Guide</title>
+<title data-tr-title
+  data-tr-en="Underfitting & Overfitting — A Visual Guide"
+  data-tr-es="Subajuste y Sobreajuste — Una Guía Visual"
+  data-tr-ja="過少適合と過学習 — 視覚的ガイド">Underfitting &amp; Overfitting — A Visual Guide</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lang-toggle.css">
 <style>
   :root {
     --bg: #0c0f14;
@@ -20,237 +24,79 @@
     --glow-good: rgba(80,208,160,0.15);
     --glow-over: rgba(224,80,112,0.15);
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    line-height: 1.75;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* ── Hero ── */
-  .hero {
-    min-height: 60vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 4rem 2rem 3rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 50% 60% at 20% 50%, var(--glow-under), transparent),
-      radial-gradient(ellipse 40% 50% at 80% 50%, var(--glow-over), transparent),
-      radial-gradient(ellipse 30% 40% at 50% 60%, var(--glow-good), transparent);
-    pointer-events: none;
-    opacity: .7;
-  }
-
-  .hero-label {
-    font-family: 'Source Code Pro', monospace;
-    font-size: .75rem;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color: var(--accent-good);
-    margin-bottom: 1rem;
-  }
-
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.4rem, 6vw, 4.5rem);
-    font-weight: 700;
-    line-height: 1.15;
-    max-width: 800px;
-  }
-
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; line-height: 1.75; -webkit-font-smoothing: antialiased; }
+  .hero { min-height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem 3rem; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 60% at 20% 50%, var(--glow-under), transparent), radial-gradient(ellipse 40% 50% at 80% 50%, var(--glow-over), transparent), radial-gradient(ellipse 30% 40% at 50% 60%, var(--glow-good), transparent); pointer-events: none; opacity: .7; }
+  .hero-label { font-family: 'Source Code Pro', monospace; font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-good); margin-bottom: 1rem; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.15; max-width: 800px; }
   .hero h1 .under { color: var(--accent-under); }
   .hero h1 .over  { color: var(--accent-over); }
-
-  .hero p {
-    max-width: 600px;
-    margin-top: 1.5rem;
-    color: var(--text-muted);
-    font-size: 1.1rem;
-  }
-
-  /* ── Container ── */
-  .container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-
-  /* ── Section ── */
+  .hero p { max-width: 600px; margin-top: 1.5rem; color: var(--text-muted); font-size: 1.1rem; }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
   section { padding: 4rem 0; }
-
   section + section { border-top: 1px solid var(--border); }
-
-  .section-badge {
-    display: inline-block;
-    font-family: 'Source Code Pro', monospace;
-    font-size: .7rem;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    padding: .35rem .9rem;
-    border-radius: 999px;
-    margin-bottom: 1rem;
-  }
+  .section-badge { display: inline-block; font-family: 'Source Code Pro', monospace; font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; padding: .35rem .9rem; border-radius: 999px; margin-bottom: 1rem; }
   .badge-under { background: var(--glow-under); color: var(--accent-under); border: 1px solid rgba(240,160,80,.25); }
   .badge-good  { background: var(--glow-good);  color: var(--accent-good);  border: 1px solid rgba(80,208,160,.25); }
   .badge-over  { background: var(--glow-over);  color: var(--accent-over);  border: 1px solid rgba(224,80,112,.25); }
-
-  h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    line-height: 1.25;
-  }
-
-  h3 {
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin: 2rem 0 .75rem;
-  }
-
+  h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.25; }
+  h3 { font-size: 1.15rem; font-weight: 600; margin: 2rem 0 .75rem; }
   p + p { margin-top: 1rem; }
-
   ul { padding-left: 1.4rem; margin-top: .75rem; }
   li { margin-bottom: .5rem; }
   li::marker { color: var(--text-muted); }
-
-  code {
-    font-family: 'Source Code Pro', monospace;
-    background: var(--surface-raised);
-    padding: .15em .4em;
-    border-radius: 4px;
-    font-size: .9em;
-  }
-
-  /* ── Diagrams ── */
-  .diagram-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
-    margin: 2.5rem 0;
-  }
-
-  .diagram-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.5rem;
-    text-align: center;
-    transition: transform .25s ease, box-shadow .25s ease;
-  }
-  .diagram-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0,0,0,.4);
-  }
-
+  code { font-family: 'Source Code Pro', monospace; background: var(--surface-raised); padding: .15em .4em; border-radius: 4px; font-size: .9em; }
+  .diagram-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin: 2.5rem 0; }
+  .diagram-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; text-align: center; transition: transform .25s ease, box-shadow .25s ease; }
+  .diagram-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.4); }
   .diagram-card svg { width: 100%; height: auto; display: block; margin-bottom: 1rem; }
-
-  .diagram-card h4 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
-    margin-bottom: .4rem;
-  }
+  .diagram-card h4 { font-family: 'Playfair Display', serif; font-size: 1.15rem; margin-bottom: .4rem; }
   .diagram-card p { font-size: .88rem; color: var(--text-muted); line-height: 1.55; }
-
-  /* ── Table ── */
-  .comparison-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 2rem 0;
-    font-size: .92rem;
-  }
-  .comparison-table th,
-  .comparison-table td {
-    padding: .85rem 1rem;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-  }
-  .comparison-table thead th {
-    font-family: 'Source Code Pro', monospace;
-    font-size: .75rem;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    background: var(--surface);
-  }
+  .comparison-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: .92rem; }
+  .comparison-table th, .comparison-table td { padding: .85rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+  .comparison-table thead th { font-family: 'Source Code Pro', monospace; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); background: var(--surface); }
   .comparison-table tbody tr:hover { background: var(--surface); }
-
-  /* ── Key-Value list ── */
   .kv { display: grid; grid-template-columns: 160px 1fr; gap: .6rem 1.5rem; margin: 1.5rem 0; }
   .kv dt { font-weight: 600; color: var(--text-muted); font-size: .88rem; text-transform: uppercase; letter-spacing: .05em; }
   .kv dd { font-size: .95rem; }
-
-  /* ── Callout ── */
-  .callout {
-    background: var(--surface);
-    border-left: 3px solid var(--accent-good);
-    border-radius: 0 12px 12px 0;
-    padding: 1.25rem 1.5rem;
-    margin: 2rem 0;
-    font-size: .95rem;
-  }
+  .callout { background: var(--surface); border-left: 3px solid var(--accent-good); border-radius: 0 12px 12px 0; padding: 1.25rem 1.5rem; margin: 2rem 0; font-size: .95rem; }
   .callout strong { color: var(--accent-good); }
-
-  /* ── Footer ── */
-  footer {
-    text-align: center;
-    padding: 3rem 2rem;
-    color: var(--text-muted);
-    font-size: .82rem;
-  }
-
-  /* ── Animations ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  footer { text-align: center; padding: 3rem 2rem; color: var(--text-muted); font-size: .82rem; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   .hero h1, .hero p, .hero-label { animation: fadeUp .8s ease both; }
   .hero-label { animation-delay: .1s; }
-  .hero h1   { animation-delay: .25s; }
-  .hero p    { animation-delay: .45s; }
-
-  @media (max-width: 600px) {
-    .kv { grid-template-columns: 1fr; }
-  }
+  .hero h1 { animation-delay: .25s; }
+  .hero p { animation-delay: .45s; }
+  @media (max-width: 600px) { .kv { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
-<!-- ════════ Hero ════════ -->
 <header class="hero">
-  <span class="hero-label">Feature Engineering · Machine Learning</span>
-  <h1><span class="under">Underfitting</span> &amp; <span class="over">Overfitting</span></h1>
-  <p>Two failure modes every model builder must understand — and the sweet spot of generalisation that sits between them.</p>
+  <span class="hero-label">
+    <span data-tr="en">Feature Engineering · Machine Learning</span>
+    <span data-tr="es">Ingeniería de Features · Aprendizaje Automático</span>
+    <span data-tr="ja">特徴量エンジニアリング · 機械学習</span>
+  </span>
+  <h1>
+    <span data-tr="en"><span class="under">Underfitting</span> &amp; <span class="over">Overfitting</span></span>
+    <span data-tr="es"><span class="under">Subajuste</span> y <span class="over">Sobreajuste</span></span>
+    <span data-tr="ja"><span class="under">過少適合</span> と <span class="over">過学習</span></span>
+  </h1>
+  <p data-tr="en">Two failure modes every model builder must understand — and the sweet spot of generalisation that sits between them.</p>
+  <p data-tr="es">Dos modos de falla que todo constructor de modelos debe entender — y el punto óptimo de generalización que se encuentra entre ellos.</p>
+  <p data-tr="ja">すべてのモデル構築者が理解しなければならない2つの失敗モード — そしてその間にある汎化の最適点。</p>
 </header>
 
-<!-- ════════ Visual Overview ════════ -->
 <div class="container">
   <section>
     <div class="diagram-row">
-
-      <!-- Underfitting diagram -->
       <div class="diagram-card">
         <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
           <rect width="280" height="200" rx="8" fill="#151921"/>
-          <!-- axes -->
           <line x1="40" y1="170" x2="260" y2="170" stroke="#2a2f3e" stroke-width="1.5"/>
           <line x1="40" y1="170" x2="40" y2="20" stroke="#2a2f3e" stroke-width="1.5"/>
-          <!-- data points (curved pattern) -->
           <circle cx="60"  cy="140" r="5" fill="#f0a050" opacity=".7"/>
           <circle cx="80"  cy="120" r="5" fill="#f0a050" opacity=".7"/>
           <circle cx="100" cy="90"  r="5" fill="#f0a050" opacity=".7"/>
@@ -261,16 +107,24 @@
           <circle cx="200" cy="110" r="5" fill="#f0a050" opacity=".7"/>
           <circle cx="220" cy="130" r="5" fill="#f0a050" opacity=".7"/>
           <circle cx="240" cy="145" r="5" fill="#f0a050" opacity=".7"/>
-          <!-- underfitting line (straight, bad fit) -->
           <line x1="50" y1="135" x2="250" y2="75" stroke="#f0a050" stroke-width="2.5" stroke-dasharray="6 3"/>
-          <text x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">features</text>
-          <text x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">target</text>
+          <text data-tr="en" x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">features</text>
+          <text data-tr="es" x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">características</text>
+          <text data-tr="ja" x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">特徴量</text>
+          <text data-tr="en" x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">target</text>
+          <text data-tr="es" x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">objetivo</text>
+          <text data-tr="ja" x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">目標</text>
         </svg>
-        <h4 style="color:var(--accent-under)">Underfitting</h4>
-        <p>A straight line forced through curved data — the model is too simple to capture the real pattern.</p>
+        <h4 style="color:var(--accent-under)">
+          <span data-tr="en">Underfitting</span>
+          <span data-tr="es">Subajuste</span>
+          <span data-tr="ja">過少適合</span>
+        </h4>
+        <p data-tr="en">A straight line forced through curved data — the model is too simple to capture the real pattern.</p>
+        <p data-tr="es">Una línea recta forzada a través de datos curvos — el modelo es demasiado simple para captar el patrón real.</p>
+        <p data-tr="ja">曲がったデータに無理矢理通した直線 — モデルが単純すぎて真のパターンを捉えられない。</p>
       </div>
 
-      <!-- Good fit diagram -->
       <div class="diagram-card">
         <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
           <rect width="280" height="200" rx="8" fill="#151921"/>
@@ -286,16 +140,24 @@
           <circle cx="200" cy="110" r="5" fill="#50d0a0" opacity=".7"/>
           <circle cx="220" cy="130" r="5" fill="#50d0a0" opacity=".7"/>
           <circle cx="240" cy="145" r="5" fill="#50d0a0" opacity=".7"/>
-          <!-- good-fit curve -->
           <path d="M55,145 Q100,40 150,55 Q200,70 245,148" fill="none" stroke="#50d0a0" stroke-width="2.5"/>
-          <text x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">features</text>
-          <text x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">target</text>
+          <text data-tr="en" x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">features</text>
+          <text data-tr="es" x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">características</text>
+          <text data-tr="ja" x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">特徴量</text>
+          <text data-tr="en" x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">target</text>
+          <text data-tr="es" x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">objetivo</text>
+          <text data-tr="ja" x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">目標</text>
         </svg>
-        <h4 style="color:var(--accent-good)">Good Fit</h4>
-        <p>A smooth curve that captures the underlying trend without chasing every individual point.</p>
+        <h4 style="color:var(--accent-good)">
+          <span data-tr="en">Good Fit</span>
+          <span data-tr="es">Buen Ajuste</span>
+          <span data-tr="ja">良い適合</span>
+        </h4>
+        <p data-tr="en">A smooth curve that captures the underlying trend without chasing every individual point.</p>
+        <p data-tr="es">Una curva suave que captura la tendencia subyacente sin perseguir cada punto individual.</p>
+        <p data-tr="ja">個々の点を追いかけることなく、背後にある傾向を捉える滑らかな曲線。</p>
       </div>
 
-      <!-- Overfitting diagram -->
       <div class="diagram-card">
         <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
           <rect width="280" height="200" rx="8" fill="#151921"/>
@@ -311,156 +173,345 @@
           <circle cx="200" cy="110" r="5" fill="#e05070" opacity=".7"/>
           <circle cx="220" cy="130" r="5" fill="#e05070" opacity=".7"/>
           <circle cx="240" cy="145" r="5" fill="#e05070" opacity=".7"/>
-          <!-- overfitting squiggly path hitting every point -->
-          <path d="M55,142 C60,140 70,138 80,120 C85,105 88,88 100,90 C108,91 112,55 120,60 C128,64 132,42 140,55 C148,68 152,50 160,65 C168,80 172,70 180,85 C188,100 192,90 200,110 C208,125 212,115 220,130 C228,140 234,135 245,148"
-              fill="none" stroke="#e05070" stroke-width="2.5"/>
-          <text x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">features</text>
-          <text x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">target</text>
+          <path d="M55,142 C60,140 70,138 80,120 C85,105 88,88 100,90 C108,91 112,55 120,60 C128,64 132,42 140,55 C148,68 152,50 160,65 C168,80 172,70 180,85 C188,100 192,90 200,110 C208,125 212,115 220,130 C228,140 234,135 245,148" fill="none" stroke="#e05070" stroke-width="2.5"/>
+          <text data-tr="en" x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">features</text>
+          <text data-tr="es" x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">características</text>
+          <text data-tr="ja" x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">特徴量</text>
+          <text data-tr="en" x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">target</text>
+          <text data-tr="es" x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">objetivo</text>
+          <text data-tr="ja" x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">目標</text>
         </svg>
-        <h4 style="color:var(--accent-over)">Overfitting</h4>
-        <p>A wildly complex curve that memorises every data point — including the noise — and fails on new data.</p>
+        <h4 style="color:var(--accent-over)">
+          <span data-tr="en">Overfitting</span>
+          <span data-tr="es">Sobreajuste</span>
+          <span data-tr="ja">過学習</span>
+        </h4>
+        <p data-tr="en">A wildly complex curve that memorises every data point — including the noise — and fails on new data.</p>
+        <p data-tr="es">Una curva extremadamente compleja que memoriza cada punto de datos — incluyendo el ruido — y falla con datos nuevos.</p>
+        <p data-tr="ja">すべてのデータ点 — ノイズも含めて — を記憶する非常に複雑な曲線。新しいデータでは失敗する。</p>
       </div>
-
     </div>
   </section>
 
-  <!-- ════════ Underfitting ════════ -->
   <section>
-    <span class="section-badge badge-under">Underfitting</span>
-    <h2>When the Model Is Too Simple</h2>
-    <p>Underfitting occurs when a model is <strong>not complex enough</strong> to capture the underlying structure of the data. It performs poorly on the training data <em>and</em> on unseen data because it never learned the real patterns in the first place.</p>
+    <span class="section-badge badge-under">
+      <span data-tr="en">Underfitting</span>
+      <span data-tr="es">Subajuste</span>
+      <span data-tr="ja">過少適合</span>
+    </span>
+    <h2>
+      <span data-tr="en">When the Model Is Too Simple</span>
+      <span data-tr="es">Cuando el Modelo Es Demasiado Simple</span>
+      <span data-tr="ja">モデルが単純すぎるとき</span>
+    </h2>
+    <p data-tr="en">Underfitting occurs when a model is <strong>not complex enough</strong> to capture the underlying structure of the data. It performs poorly on the training data <em>and</em> on unseen data because it never learned the real patterns in the first place.</p>
+    <p data-tr="es">El subajuste ocurre cuando un modelo <strong>no es lo suficientemente complejo</strong> para captar la estructura subyacente de los datos. Funciona mal tanto en los datos de entrenamiento <em>como</em> en datos no vistos porque nunca aprendió los patrones reales en primer lugar.</p>
+    <p data-tr="ja">過少適合は、モデルがデータの背後にある構造を捉えるのに<strong>十分に複雑でない</strong>場合に起こります。そもそも真のパターンを学習していないため、訓練データ<em>でも</em>未知のデータでも性能が悪くなります。</p>
 
-    <h3>Why Does It Happen?</h3>
+    <h3>
+      <span data-tr="en">Why Does It Happen?</span>
+      <span data-tr="es">¿Por Qué Ocurre?</span>
+      <span data-tr="ja">なぜ起こるのか？</span>
+    </h3>
     <ul>
-      <li><strong>Model too simple</strong> — e.g., fitting a straight line to data that follows a curve.</li>
-      <li><strong>Not enough features</strong> — important predictors are missing from the dataset.</li>
-      <li><strong>Too much regularisation</strong> — penalty terms shrink coefficients so aggressively that the model becomes trivial.</li>
-      <li><strong>Insufficient training time</strong> — the optimiser stopped before converging (common with neural networks).</li>
+      <li data-tr="en"><strong>Model too simple</strong> — e.g., fitting a straight line to data that follows a curve.</li>
+      <li data-tr="es"><strong>Modelo demasiado simple</strong> — p. ej., ajustar una línea recta a datos que siguen una curva.</li>
+      <li data-tr="ja"><strong>モデルが単純すぎる</strong> — 例: 曲線に従うデータに直線を当てはめる。</li>
+      <li data-tr="en"><strong>Not enough features</strong> — important predictors are missing from the dataset.</li>
+      <li data-tr="es"><strong>Faltan características</strong> — predictores importantes están ausentes del conjunto de datos.</li>
+      <li data-tr="ja"><strong>特徴量が不足</strong> — 重要な予測変数がデータセットから欠けている。</li>
+      <li data-tr="en"><strong>Too much regularisation</strong> — penalty terms shrink coefficients so aggressively that the model becomes trivial.</li>
+      <li data-tr="es"><strong>Demasiada regularización</strong> — los términos de penalización reducen los coeficientes tan agresivamente que el modelo se vuelve trivial.</li>
+      <li data-tr="ja"><strong>正則化が強すぎる</strong> — ペナルティ項が係数を強く縮小しすぎて、モデルが自明になる。</li>
+      <li data-tr="en"><strong>Insufficient training time</strong> — the optimiser stopped before converging (common with neural networks).</li>
+      <li data-tr="es"><strong>Tiempo de entrenamiento insuficiente</strong> — el optimizador se detuvo antes de converger (común con redes neuronales).</li>
+      <li data-tr="ja"><strong>訓練時間が不足</strong> — オプティマイザが収束する前に停止した (ニューラルネットワークでは一般的)。</li>
     </ul>
 
-    <h3>How to Detect It</h3>
+    <h3>
+      <span data-tr="en">How to Detect It</span>
+      <span data-tr="es">Cómo Detectarlo</span>
+      <span data-tr="ja">検出方法</span>
+    </h3>
     <dl class="kv">
-      <dt>Training error</dt><dd>High — the model can't even fit the data it was trained on.</dd>
-      <dt>Validation error</dt><dd>Also high — and close to the training error.</dd>
-      <dt>Learning curve</dt><dd>Both curves plateau at a high loss, adding more data doesn't help.</dd>
+      <dt>
+        <span data-tr="en">Training error</span>
+        <span data-tr="es">Error de entrenamiento</span>
+        <span data-tr="ja">訓練誤差</span>
+      </dt>
+      <dd>
+        <span data-tr="en">High — the model can't even fit the data it was trained on.</span>
+        <span data-tr="es">Alto — el modelo no puede siquiera ajustarse a los datos con los que fue entrenado.</span>
+        <span data-tr="ja">高い — モデルは訓練されたデータにすら適合できない。</span>
+      </dd>
+      <dt>
+        <span data-tr="en">Validation error</span>
+        <span data-tr="es">Error de validación</span>
+        <span data-tr="ja">検証誤差</span>
+      </dt>
+      <dd>
+        <span data-tr="en">Also high — and close to the training error.</span>
+        <span data-tr="es">También alto — y cercano al error de entrenamiento.</span>
+        <span data-tr="ja">これも高い — そして訓練誤差に近い。</span>
+      </dd>
+      <dt>
+        <span data-tr="en">Learning curve</span>
+        <span data-tr="es">Curva de aprendizaje</span>
+        <span data-tr="ja">学習曲線</span>
+      </dt>
+      <dd>
+        <span data-tr="en">Both curves plateau at a high loss, adding more data doesn't help.</span>
+        <span data-tr="es">Ambas curvas se estancan en una pérdida alta, añadir más datos no ayuda.</span>
+        <span data-tr="ja">両曲線が高い損失で停滞し、データを増やしても改善しない。</span>
+      </dd>
     </dl>
 
-    <h3>How to Fix It</h3>
+    <h3>
+      <span data-tr="en">How to Fix It</span>
+      <span data-tr="es">Cómo Corregirlo</span>
+      <span data-tr="ja">修正方法</span>
+    </h3>
     <ul>
-      <li>Use a more powerful model (e.g., switch from linear regression to a decision tree or neural network).</li>
-      <li>Add more informative features or engineer new ones.</li>
-      <li>Reduce regularisation strength.</li>
-      <li>Train longer (increase epochs, lower early-stopping patience).</li>
-      <li>Decrease learning rate and train with smaller but more precise steps.</li>
+      <li data-tr="en">Use a more powerful model (e.g., switch from linear regression to a decision tree or neural network).</li>
+      <li data-tr="es">Usa un modelo más potente (p. ej., cambia de regresión lineal a un árbol de decisión o red neuronal).</li>
+      <li data-tr="ja">より強力なモデルを使う (例: 線形回帰から決定木やニューラルネットワークに切り替える)。</li>
+      <li data-tr="en">Add more informative features or engineer new ones.</li>
+      <li data-tr="es">Añade características más informativas o crea nuevas.</li>
+      <li data-tr="ja">より情報量の多い特徴量を追加したり、新しい特徴量を設計する。</li>
+      <li data-tr="en">Reduce regularisation strength.</li>
+      <li data-tr="es">Reduce la fuerza de regularización.</li>
+      <li data-tr="ja">正則化の強度を下げる。</li>
+      <li data-tr="en">Train longer (increase epochs, lower early-stopping patience).</li>
+      <li data-tr="es">Entrena más tiempo (aumenta las épocas, reduce la paciencia del early-stopping).</li>
+      <li data-tr="ja">より長く訓練する (エポック数を増やし、early-stopping の忍耐値を下げる)。</li>
+      <li data-tr="en">Decrease learning rate and train with smaller but more precise steps.</li>
+      <li data-tr="es">Disminuye la tasa de aprendizaje y entrena con pasos más pequeños pero más precisos.</li>
+      <li data-tr="ja">学習率を下げ、より小さいがより精密なステップで訓練する。</li>
     </ul>
   </section>
 
-  <!-- ════════ Overfitting ════════ -->
   <section>
-    <span class="section-badge badge-over">Overfitting</span>
-    <h2>When the Model Memorises the Noise</h2>
-    <p>Overfitting occurs when a model is <strong>too complex</strong> relative to the amount and noisiness of the training data. It learns both the true signal and the random fluctuations (noise), achieving near-perfect training scores while failing badly on unseen data.</p>
+    <span class="section-badge badge-over">
+      <span data-tr="en">Overfitting</span>
+      <span data-tr="es">Sobreajuste</span>
+      <span data-tr="ja">過学習</span>
+    </span>
+    <h2>
+      <span data-tr="en">When the Model Memorises the Noise</span>
+      <span data-tr="es">Cuando el Modelo Memoriza el Ruido</span>
+      <span data-tr="ja">モデルがノイズを記憶するとき</span>
+    </h2>
+    <p data-tr="en">Overfitting occurs when a model is <strong>too complex</strong> relative to the amount and noisiness of the training data. It learns both the true signal and the random fluctuations (noise), achieving near-perfect training scores while failing badly on unseen data.</p>
+    <p data-tr="es">El sobreajuste ocurre cuando un modelo es <strong>demasiado complejo</strong> en relación con la cantidad y el ruido de los datos de entrenamiento. Aprende tanto la señal verdadera como las fluctuaciones aleatorias (ruido), logrando puntuaciones casi perfectas en entrenamiento mientras falla gravemente en datos no vistos.</p>
+    <p data-tr="ja">過学習は、訓練データの量とノイズに対してモデルが<strong>複雑すぎる</strong>場合に起こります。真の信号とランダムな変動 (ノイズ) の両方を学習し、訓練データではほぼ完璧なスコアを達成する一方、未知のデータではひどく失敗します。</p>
 
-    <h3>Why Does It Happen?</h3>
+    <h3>
+      <span data-tr="en">Why Does It Happen?</span>
+      <span data-tr="es">¿Por Qué Ocurre?</span>
+      <span data-tr="ja">なぜ起こるのか？</span>
+    </h3>
     <ul>
-      <li><strong>Model too complex</strong> — more parameters than the data can support (e.g., a high-degree polynomial for 10 data points).</li>
-      <li><strong>Not enough training data</strong> — small datasets make it easy for a flexible model to memorise every example.</li>
-      <li><strong>Training too long</strong> — with neural networks, continued training past the optimal point allows the model to latch onto noise.</li>
-      <li><strong>No regularisation</strong> — nothing penalises the model for growing overly complex.</li>
-      <li><strong>Noisy or mislabelled data</strong> — the model faithfully learns incorrect labels.</li>
+      <li data-tr="en"><strong>Model too complex</strong> — more parameters than the data can support (e.g., a high-degree polynomial for 10 data points).</li>
+      <li data-tr="es"><strong>Modelo demasiado complejo</strong> — más parámetros de los que los datos pueden soportar (p. ej., un polinomio de alto grado para 10 puntos de datos).</li>
+      <li data-tr="ja"><strong>モデルが複雑すぎる</strong> — データが支えられる以上のパラメータ (例: 10 個のデータ点に対する高次多項式)。</li>
+      <li data-tr="en"><strong>Not enough training data</strong> — small datasets make it easy for a flexible model to memorise every example.</li>
+      <li data-tr="es"><strong>Datos de entrenamiento insuficientes</strong> — conjuntos pequeños facilitan que un modelo flexible memorice cada ejemplo.</li>
+      <li data-tr="ja"><strong>訓練データが不足</strong> — 小さなデータセットでは柔軟なモデルがすべての例を記憶しやすい。</li>
+      <li data-tr="en"><strong>Training too long</strong> — with neural networks, continued training past the optimal point allows the model to latch onto noise.</li>
+      <li data-tr="es"><strong>Entrenamiento demasiado largo</strong> — con redes neuronales, continuar entrenando más allá del punto óptimo permite que el modelo se aferre al ruido.</li>
+      <li data-tr="ja"><strong>訓練が長すぎる</strong> — ニューラルネットワークでは、最適点を超えて訓練を続けるとモデルがノイズに固着する。</li>
+      <li data-tr="en"><strong>No regularisation</strong> — nothing penalises the model for growing overly complex.</li>
+      <li data-tr="es"><strong>Sin regularización</strong> — nada penaliza al modelo por volverse excesivamente complejo.</li>
+      <li data-tr="ja"><strong>正則化なし</strong> — モデルが過度に複雑になることを罰するものがない。</li>
+      <li data-tr="en"><strong>Noisy or mislabelled data</strong> — the model faithfully learns incorrect labels.</li>
+      <li data-tr="es"><strong>Datos ruidosos o mal etiquetados</strong> — el modelo aprende fielmente etiquetas incorrectas.</li>
+      <li data-tr="ja"><strong>ノイズの多い、または誤ラベルのデータ</strong> — モデルは誤ったラベルを忠実に学習する。</li>
     </ul>
 
-    <h3>How to Detect It</h3>
+    <h3>
+      <span data-tr="en">How to Detect It</span>
+      <span data-tr="es">Cómo Detectarlo</span>
+      <span data-tr="ja">検出方法</span>
+    </h3>
     <dl class="kv">
-      <dt>Training error</dt><dd>Very low — the model fits the training set almost perfectly.</dd>
-      <dt>Validation error</dt><dd>Much higher — a large gap between training and validation performance is the hallmark of overfitting.</dd>
-      <dt>Learning curve</dt><dd>Training loss keeps falling while validation loss rises or stalls.</dd>
+      <dt>
+        <span data-tr="en">Training error</span>
+        <span data-tr="es">Error de entrenamiento</span>
+        <span data-tr="ja">訓練誤差</span>
+      </dt>
+      <dd>
+        <span data-tr="en">Very low — the model fits the training set almost perfectly.</span>
+        <span data-tr="es">Muy bajo — el modelo se ajusta al conjunto de entrenamiento casi perfectamente.</span>
+        <span data-tr="ja">非常に低い — モデルは訓練セットにほぼ完璧に適合する。</span>
+      </dd>
+      <dt>
+        <span data-tr="en">Validation error</span>
+        <span data-tr="es">Error de validación</span>
+        <span data-tr="ja">検証誤差</span>
+      </dt>
+      <dd>
+        <span data-tr="en">Much higher — a large gap between training and validation performance is the hallmark of overfitting.</span>
+        <span data-tr="es">Mucho más alto — una gran brecha entre el rendimiento de entrenamiento y el de validación es el signo distintivo del sobreajuste.</span>
+        <span data-tr="ja">はるかに高い — 訓練と検証の性能の大きなギャップが過学習の特徴。</span>
+      </dd>
+      <dt>
+        <span data-tr="en">Learning curve</span>
+        <span data-tr="es">Curva de aprendizaje</span>
+        <span data-tr="ja">学習曲線</span>
+      </dt>
+      <dd>
+        <span data-tr="en">Training loss keeps falling while validation loss rises or stalls.</span>
+        <span data-tr="es">La pérdida de entrenamiento sigue bajando mientras que la pérdida de validación sube o se estanca.</span>
+        <span data-tr="ja">訓練損失は下がり続ける一方、検証損失は上昇または停滞する。</span>
+      </dd>
     </dl>
 
-    <h3>How to Fix It</h3>
+    <h3>
+      <span data-tr="en">How to Fix It</span>
+      <span data-tr="es">Cómo Corregirlo</span>
+      <span data-tr="ja">修正方法</span>
+    </h3>
     <ul>
-      <li>Collect more training data to make memorisation harder.</li>
-      <li>Simplify the model — fewer layers, fewer parameters, lower polynomial degree.</li>
-      <li>Apply regularisation: L1 (Lasso), L2 (Ridge), Elastic Net, or dropout for neural networks.</li>
-      <li>Use early stopping to halt training when validation loss begins to increase.</li>
-      <li>Add data augmentation to artificially increase dataset diversity.</li>
-      <li>Use cross-validation to get a more reliable estimate of generalisation performance.</li>
-      <li>Prune decision trees or reduce <code>max_depth</code>.</li>
+      <li data-tr="en">Collect more training data to make memorisation harder.</li>
+      <li data-tr="es">Recopila más datos de entrenamiento para dificultar la memorización.</li>
+      <li data-tr="ja">記憶を困難にするため、より多くの訓練データを収集する。</li>
+      <li data-tr="en">Simplify the model — fewer layers, fewer parameters, lower polynomial degree.</li>
+      <li data-tr="es">Simplifica el modelo — menos capas, menos parámetros, menor grado del polinomio.</li>
+      <li data-tr="ja">モデルを単純化する — レイヤーを減らし、パラメータを減らし、多項式の次数を下げる。</li>
+      <li data-tr="en">Apply regularisation: L1 (Lasso), L2 (Ridge), Elastic Net, or dropout for neural networks.</li>
+      <li data-tr="es">Aplica regularización: L1 (Lasso), L2 (Ridge), Elastic Net, o dropout para redes neuronales.</li>
+      <li data-tr="ja">正則化を適用する: L1 (Lasso)、L2 (Ridge)、Elastic Net、またはニューラルネットワークの dropout。</li>
+      <li data-tr="en">Use early stopping to halt training when validation loss begins to increase.</li>
+      <li data-tr="es">Usa early stopping para detener el entrenamiento cuando la pérdida de validación comience a aumentar.</li>
+      <li data-tr="ja">検証損失が増加し始めたときに訓練を止めるため early stopping を使う。</li>
+      <li data-tr="en">Add data augmentation to artificially increase dataset diversity.</li>
+      <li data-tr="es">Añade aumento de datos (data augmentation) para aumentar artificialmente la diversidad del conjunto de datos.</li>
+      <li data-tr="ja">データセットの多様性を人為的に増やすためにデータ拡張を追加する。</li>
+      <li data-tr="en">Use cross-validation to get a more reliable estimate of generalisation performance.</li>
+      <li data-tr="es">Usa validación cruzada para obtener una estimación más confiable del rendimiento de generalización.</li>
+      <li data-tr="ja">汎化性能のより信頼性の高い推定値を得るためにクロスバリデーションを使う。</li>
+      <li data-tr="en">Prune decision trees or reduce <code>max_depth</code>.</li>
+      <li data-tr="es">Poda los árboles de decisión o reduce <code>max_depth</code>.</li>
+      <li data-tr="ja">決定木を剪定するか、<code>max_depth</code> を減らす。</li>
     </ul>
   </section>
 
-  <!-- ════════ Bias–Variance ════════ -->
   <section>
-    <span class="section-badge badge-good">The Bigger Picture</span>
-    <h2>The Bias–Variance Tradeoff</h2>
-    <p>Underfitting and overfitting are two sides of the <strong>bias–variance tradeoff</strong>, one of the most important concepts in machine learning.</p>
+    <span class="section-badge badge-good">
+      <span data-tr="en">The Bigger Picture</span>
+      <span data-tr="es">El Panorama General</span>
+      <span data-tr="ja">より大きな視点</span>
+    </span>
+    <h2>
+      <span data-tr="en">The Bias–Variance Tradeoff</span>
+      <span data-tr="es">El Equilibrio Sesgo–Varianza</span>
+      <span data-tr="ja">バイアス–分散トレードオフ</span>
+    </h2>
+    <p data-tr="en">Underfitting and overfitting are two sides of the <strong>bias–variance tradeoff</strong>, one of the most important concepts in machine learning.</p>
+    <p data-tr="es">El subajuste y el sobreajuste son dos caras del <strong>equilibrio sesgo–varianza</strong>, uno de los conceptos más importantes en aprendizaje automático.</p>
+    <p data-tr="ja">過少適合と過学習は<strong>バイアス–分散トレードオフ</strong>の両面であり、機械学習で最も重要な概念の一つです。</p>
 
     <table class="comparison-table">
       <thead>
         <tr>
           <th></th>
-          <th style="color:var(--accent-under)">Underfitting</th>
-          <th style="color:var(--accent-over)">Overfitting</th>
+          <th style="color:var(--accent-under)">
+            <span data-tr="en">Underfitting</span>
+            <span data-tr="es">Subajuste</span>
+            <span data-tr="ja">過少適合</span>
+          </th>
+          <th style="color:var(--accent-over)">
+            <span data-tr="en">Overfitting</span>
+            <span data-tr="es">Sobreajuste</span>
+            <span data-tr="ja">過学習</span>
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><strong>Bias</strong></td>
-          <td>High — strong assumptions, misses patterns</td>
-          <td>Low — flexible, captures everything</td>
+          <td><strong><span data-tr="en">Bias</span><span data-tr="es">Sesgo</span><span data-tr="ja">バイアス</span></strong></td>
+          <td><span data-tr="en">High — strong assumptions, misses patterns</span><span data-tr="es">Alto — supuestos fuertes, pierde patrones</span><span data-tr="ja">高い — 強い仮定、パターンを見逃す</span></td>
+          <td><span data-tr="en">Low — flexible, captures everything</span><span data-tr="es">Bajo — flexible, captura todo</span><span data-tr="ja">低い — 柔軟、すべてを捉える</span></td>
         </tr>
         <tr>
-          <td><strong>Variance</strong></td>
-          <td>Low — stable across datasets</td>
-          <td>High — sensitive to every fluctuation</td>
+          <td><strong><span data-tr="en">Variance</span><span data-tr="es">Varianza</span><span data-tr="ja">分散</span></strong></td>
+          <td><span data-tr="en">Low — stable across datasets</span><span data-tr="es">Baja — estable entre conjuntos de datos</span><span data-tr="ja">低い — データセット間で安定</span></td>
+          <td><span data-tr="en">High — sensitive to every fluctuation</span><span data-tr="es">Alta — sensible a cada fluctuación</span><span data-tr="ja">高い — あらゆる変動に敏感</span></td>
         </tr>
         <tr>
-          <td><strong>Training error</strong></td>
-          <td>High</td>
-          <td>Very low</td>
+          <td><strong><span data-tr="en">Training error</span><span data-tr="es">Error de entrenamiento</span><span data-tr="ja">訓練誤差</span></strong></td>
+          <td><span data-tr="en">High</span><span data-tr="es">Alto</span><span data-tr="ja">高い</span></td>
+          <td><span data-tr="en">Very low</span><span data-tr="es">Muy bajo</span><span data-tr="ja">非常に低い</span></td>
         </tr>
         <tr>
-          <td><strong>Test / Val error</strong></td>
-          <td>High</td>
-          <td>High (but for different reasons)</td>
+          <td><strong><span data-tr="en">Test / Val error</span><span data-tr="es">Error de prueba / validación</span><span data-tr="ja">テスト / 検証誤差</span></strong></td>
+          <td><span data-tr="en">High</span><span data-tr="es">Alto</span><span data-tr="ja">高い</span></td>
+          <td><span data-tr="en">High (but for different reasons)</span><span data-tr="es">Alto (pero por razones diferentes)</span><span data-tr="ja">高い (しかし別の理由で)</span></td>
         </tr>
         <tr>
-          <td><strong>Model complexity</strong></td>
-          <td>Too simple</td>
-          <td>Too complex</td>
+          <td><strong><span data-tr="en">Model complexity</span><span data-tr="es">Complejidad del modelo</span><span data-tr="ja">モデルの複雑さ</span></strong></td>
+          <td><span data-tr="en">Too simple</span><span data-tr="es">Demasiado simple</span><span data-tr="ja">単純すぎる</span></td>
+          <td><span data-tr="en">Too complex</span><span data-tr="es">Demasiado complejo</span><span data-tr="ja">複雑すぎる</span></td>
         </tr>
         <tr>
-          <td><strong>Typical fix</strong></td>
-          <td>Increase complexity / features</td>
-          <td>Regularise / simplify / more data</td>
+          <td><strong><span data-tr="en">Typical fix</span><span data-tr="es">Solución típica</span><span data-tr="ja">一般的な対処法</span></strong></td>
+          <td><span data-tr="en">Increase complexity / features</span><span data-tr="es">Aumentar complejidad / características</span><span data-tr="ja">複雑さ / 特徴量を増やす</span></td>
+          <td><span data-tr="en">Regularise / simplify / more data</span><span data-tr="es">Regularizar / simplificar / más datos</span><span data-tr="ja">正則化 / 単純化 / データを増やす</span></td>
         </tr>
       </tbody>
     </table>
 
     <div class="callout">
-      <strong>Key takeaway:</strong> The goal isn't to minimise training error — it's to minimise the gap between training and validation error at the lowest possible level. A well-generalised model accepts a small amount of training error in exchange for reliable performance on data it has never seen.
+      <div data-tr="en"><strong>Key takeaway:</strong> The goal isn't to minimise training error — it's to minimise the gap between training and validation error at the lowest possible level. A well-generalised model accepts a small amount of training error in exchange for reliable performance on data it has never seen.</div>
+      <div data-tr="es"><strong>Conclusión clave:</strong> El objetivo no es minimizar el error de entrenamiento — es minimizar la brecha entre el error de entrenamiento y el de validación al nivel más bajo posible. Un modelo bien generalizado acepta un pequeño error de entrenamiento a cambio de un rendimiento confiable en datos que nunca ha visto.</div>
+      <div data-tr="ja"><strong>重要なポイント:</strong> 目標は訓練誤差を最小化することではなく、訓練誤差と検証誤差の差を可能な限り低いレベルで最小化することです。よく汎化されたモデルは、未知のデータに対する信頼性の高い性能と引き換えに、わずかな訓練誤差を受け入れます。</div>
     </div>
   </section>
 
-  <!-- ════════ Practical Tips ════════ -->
   <section>
-    <span class="section-badge badge-good">In Practice</span>
-    <h2>Practical Workflow</h2>
-    <p>When building a model, follow this iterative loop:</p>
+    <span class="section-badge badge-good">
+      <span data-tr="en">In Practice</span>
+      <span data-tr="es">En la Práctica</span>
+      <span data-tr="ja">実践において</span>
+    </span>
+    <h2>
+      <span data-tr="en">Practical Workflow</span>
+      <span data-tr="es">Flujo de Trabajo Práctico</span>
+      <span data-tr="ja">実践的ワークフロー</span>
+    </h2>
+    <p data-tr="en">When building a model, follow this iterative loop:</p>
+    <p data-tr="es">Al construir un modelo, sigue este bucle iterativo:</p>
+    <p data-tr="ja">モデルを構築するときは、この反復ループに従ってください:</p>
     <ul>
-      <li><strong>Start simple.</strong> Begin with a baseline model (e.g., logistic regression). If it underfits, you know you need more complexity.</li>
-      <li><strong>Add complexity gradually.</strong> Try richer features, more flexible algorithms, or deeper architectures one step at a time.</li>
-      <li><strong>Monitor the gap.</strong> Always compare training and validation metrics. A growing gap means overfitting is creeping in.</li>
-      <li><strong>Regularise when needed.</strong> Once overfitting appears, introduce regularisation, dropout, or data augmentation before adding more data.</li>
-      <li><strong>Use cross-validation.</strong> Especially with small datasets, k-fold CV gives a more robust picture than a single train/test split.</li>
-      <li><strong>Evaluate on a held-out test set last.</strong> Only after you've tuned everything on the validation set should you measure final performance on the test set.</li>
+      <li data-tr="en"><strong>Start simple.</strong> Begin with a baseline model (e.g., logistic regression). If it underfits, you know you need more complexity.</li>
+      <li data-tr="es"><strong>Empieza simple.</strong> Comienza con un modelo de línea base (p. ej., regresión logística). Si se subajusta, sabes que necesitas más complejidad.</li>
+      <li data-tr="ja"><strong>単純に始める。</strong> ベースラインモデル (例: ロジスティック回帰) から始める。過少適合するなら、より多くの複雑さが必要だとわかる。</li>
+      <li data-tr="en"><strong>Add complexity gradually.</strong> Try richer features, more flexible algorithms, or deeper architectures one step at a time.</li>
+      <li data-tr="es"><strong>Añade complejidad gradualmente.</strong> Prueba características más ricas, algoritmos más flexibles, o arquitecturas más profundas, un paso a la vez.</li>
+      <li data-tr="ja"><strong>徐々に複雑さを加える。</strong> より豊かな特徴量、より柔軟なアルゴリズム、より深いアーキテクチャを一歩ずつ試す。</li>
+      <li data-tr="en"><strong>Monitor the gap.</strong> Always compare training and validation metrics. A growing gap means overfitting is creeping in.</li>
+      <li data-tr="es"><strong>Monitorea la brecha.</strong> Siempre compara las métricas de entrenamiento y validación. Una brecha creciente significa que el sobreajuste se está infiltrando.</li>
+      <li data-tr="ja"><strong>ギャップを監視する。</strong> 常に訓練と検証の指標を比較する。ギャップが広がっているなら過学習が忍び寄っている。</li>
+      <li data-tr="en"><strong>Regularise when needed.</strong> Once overfitting appears, introduce regularisation, dropout, or data augmentation before adding more data.</li>
+      <li data-tr="es"><strong>Regulariza cuando sea necesario.</strong> Una vez que aparece el sobreajuste, introduce regularización, dropout, o aumento de datos antes de añadir más datos.</li>
+      <li data-tr="ja"><strong>必要なら正則化する。</strong> 過学習が現れたら、データを追加する前に正則化、dropout、またはデータ拡張を導入する。</li>
+      <li data-tr="en"><strong>Use cross-validation.</strong> Especially with small datasets, k-fold CV gives a more robust picture than a single train/test split.</li>
+      <li data-tr="es"><strong>Usa validación cruzada.</strong> Especialmente con conjuntos pequeños, la CV k-fold ofrece una imagen más robusta que una única división train/test.</li>
+      <li data-tr="ja"><strong>クロスバリデーションを使う。</strong> 特に小さなデータセットでは、k分割CVが単一の訓練/テスト分割よりも堅牢な全体像を与える。</li>
+      <li data-tr="en"><strong>Evaluate on a held-out test set last.</strong> Only after you've tuned everything on the validation set should you measure final performance on the test set.</li>
+      <li data-tr="es"><strong>Evalúa en un conjunto de prueba separado al final.</strong> Solo después de haber ajustado todo en el conjunto de validación deberías medir el rendimiento final en el conjunto de prueba.</li>
+      <li data-tr="ja"><strong>保留したテストセットで最後に評価する。</strong> 検証セットですべてを調整した後にのみ、テストセットで最終的な性能を測定する。</li>
     </ul>
   </section>
 </div>
 
 <footer>
-  Feature Engineering Series &middot; Underfitting &amp; Overfitting
+  <span data-tr="en">Feature Engineering Series · Underfitting &amp; Overfitting</span>
+  <span data-tr="es">Serie de Ingeniería de Features · Subajuste y Sobreajuste</span>
+  <span data-tr="ja">特徴量エンジニアリングシリーズ · 過少適合と過学習</span>
 </footer>
+
+<script src="/lang-toggle.js" defer></script>
 
 </body>
 </html>

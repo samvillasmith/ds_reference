@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crash Course: The Data Science Lifecycle — Texcoco</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/nav.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    line-height: 1.75;
+    padding: 2rem 1.5rem;
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    color: #e6edf3;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+  }
+
+  .subtitle {
+    color: #7d8590;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #21262d;
+    padding-bottom: 1.5rem;
+  }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1px;
+    background: #21262d;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+
+  .overview-item {
+    background: #161b22;
+    padding: 1rem 1.1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+  .overview-item:hover { background: #1c2128; }
+
+  .ov-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.3rem;
+  }
+
+  .ov-title {
+    font-size: 0.9rem;
+    color: #e6edf3;
+    font-weight: 600;
+  }
+
+  .section { margin-bottom: 3rem; }
+
+  .stage-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .stage-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-size: 1.15rem;
+    color: #e6edf3;
+    font-weight: 700;
+    padding: 0.4rem 0.8rem;
+    background: #161b22;
+    border-left: 3px solid #ff4d4d;
+    border-radius: 0 4px 4px 0;
+    flex: 1;
+  }
+
+  .s1 .section-title { border-left-color: #e5c84a; }
+  .s1 .stage-num     { color: #e5c84a; }
+  .s2 .section-title { border-left-color: #58a6ff; }
+  .s2 .stage-num     { color: #58a6ff; }
+  .s3 .section-title { border-left-color: #a371f7; }
+  .s3 .stage-num     { color: #a371f7; }
+  .s4 .section-title { border-left-color: #f0883e; }
+  .s4 .stage-num     { color: #f0883e; }
+  .s5 .section-title { border-left-color: #56d364; }
+  .s5 .stage-num     { color: #56d364; }
+  .s6 .section-title { border-left-color: #ff4d4d; }
+  .s6 .stage-num     { color: #ff4d4d; }
+  .s7 .section-title { border-left-color: #79c0ff; }
+  .s7 .stage-num     { color: #79c0ff; }
+
+  .step { margin-bottom: 1.25rem; padding-left: 1rem; }
+
+  p { margin-bottom: 0.9rem; }
+
+  .code-box {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: #c9d1d9;
+    margin: 0.75rem 0 1rem;
+    overflow-x: auto;
+    line-height: 1.6;
+  }
+
+  .code-box .cm  { color: #8b949e; }
+  .code-box .kw  { color: #ff7b72; }
+  .code-box .fn  { color: #d2a8ff; }
+  .code-box .st  { color: #a5d6ff; }
+  .code-box .nu  { color: #79c0ff; }
+  .code-box .gr  { color: #56d364; }
+
+  .callout {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    margin: 0.75rem 0 1rem;
+    font-size: 0.92rem;
+  }
+
+  .callout.warn  { border-left: 3px solid #f0883e; }
+  .callout.tip   { border-left: 3px solid #56d364; }
+  .callout.rule  { border-left: 3px solid #e5c84a; }
+
+  .callout-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+  .warn  .callout-label { color: #f0883e; }
+  .tip   .callout-label { color: #56d364; }
+  .rule  .callout-label { color: #e5c84a; }
+
+  ul, ol {
+    padding-left: 1.5rem;
+    margin-bottom: 0.9rem;
+  }
+
+  li { margin-bottom: 0.35rem; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin: 0.75rem 0 1.25rem;
+  }
+
+  th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #7d8590;
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    background: #161b22;
+    border-bottom: 1px solid #21262d;
+  }
+
+  td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid #21262d;
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #161b22; }
+
+  .tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+  }
+
+  .tag-c  { background: rgba(86,211,100,0.12);  color: #56d364; }
+  .tag-r  { background: rgba(88,166,255,0.12);  color: #58a6ff; }
+  .tag-cl { background: rgba(163,113,247,0.12); color: #a371f7; }
+
+  .loop-diagram {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #7d8590;
+    margin: 1rem 0;
+    line-height: 2.2;
+  }
+
+  .loop-diagram .active { color: #e5c84a; }
+  .loop-diagram .arrow  { color: #3d444d; }
+
+  .next-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: #21262d;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .next-card {
+    background: #161b22;
+    padding: 1.2rem 1.3rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .next-card:hover { background: #1c2128; }
+
+  .next-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7d8590;
+  }
+
+  .next-title {
+    font-size: 0.95rem;
+    color: #e6edf3;
+    font-weight: 600;
+  }
+
+  .next-arrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #c87533;
+    margin-top: 0.25rem;
+  }
+
+  @media (max-width: 600px) {
+    .overview-grid { grid-template-columns: 1fr 1fr; }
+    .next-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="/">Texcoco Data Science</a>
+  <div class="nav-links">
+    <a class="nav-cta" href="/crash-course.html">Crash Course</a>
+    <a class="nav-home" href="/#foundations">Foundations</a>
+    <a class="nav-home" href="/#feature-eng">Feature Eng</a>
+    <a class="nav-home" href="/#reference">Reference</a>
+  </div>
+</nav>
+
+<h1>The Data Science Lifecycle</h1>
+<p class="subtitle">A crash course in the full pipeline — from raw question to working model in production.</p>
+
+<!-- Overview grid -->
+<div class="overview-grid">
+  <a class="overview-item" href="#stage1">
+    <div class="ov-num" style="color:#e5c84a">01</div>
+    <div class="ov-title">Define the Problem</div>
+  </a>
+  <a class="overview-item" href="#stage2">
+    <div class="ov-num" style="color:#58a6ff">02</div>
+    <div class="ov-title">Collect the Data</div>
+  </a>
+  <a class="overview-item" href="#stage3">
+    <div class="ov-num" style="color:#a371f7">03</div>
+    <div class="ov-title">Explore (EDA)</div>
+  </a>
+  <a class="overview-item" href="#stage4">
+    <div class="ov-num" style="color:#f0883e">04</div>
+    <div class="ov-title">Prepare the Data</div>
+  </a>
+  <a class="overview-item" href="#stage5">
+    <div class="ov-num" style="color:#56d364">05</div>
+    <div class="ov-title">Build a Model</div>
+  </a>
+  <a class="overview-item" href="#stage6">
+    <div class="ov-num" style="color:#ff4d4d">06</div>
+    <div class="ov-title">Evaluate</div>
+  </a>
+  <a class="overview-item" href="#stage7">
+    <div class="ov-num" style="color:#79c0ff">07</div>
+    <div class="ov-title">Deploy & Monitor</div>
+  </a>
+</div>
+
+<!-- Stage 1 -->
+<div id="stage1" class="section s1">
+  <div class="stage-header">
+    <span class="stage-num">Stage 01</span>
+    <div class="section-title">Define the Problem</div>
+  </div>
+
+  <div class="step">
+    <p>This is the stage most beginners skip — and the one that kills the most projects. Before you touch data, you need a precise answer to one question: <strong style="color:#e6edf3">what does success look like?</strong></p>
+
+    <p>Business problems and ML problems are not the same thing. A business problem is "we are losing customers." An ML problem is "train a binary classifier to predict which customers will churn in the next 30 days, targeting F1 ≥ 0.75 on held-out data." The translation from one to the other is where data scientists earn their keep.</p>
+
+    <table>
+      <thead><tr><th>Question</th><th>ML Problem Type</th><th>Example Output</th></tr></thead>
+      <tbody>
+        <tr><td>How much?</td><td><span class="tag tag-r">Regression</span></td><td>Predicted house price: $412,000</td></tr>
+        <tr><td>Which category?</td><td><span class="tag tag-c">Classification</span></td><td>Spam or not spam</td></tr>
+        <tr><td>What groups exist?</td><td><span class="tag tag-cl">Clustering</span></td><td>3 customer segments</td></tr>
+        <tr><td>What comes next?</td><td><span class="tag tag-r">Forecasting</span></td><td>Next week's demand: 1,400 units</td></tr>
+        <tr><td>What's related?</td><td><span class="tag tag-cl">Recommendation</span></td><td>"Customers also bought…"</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout rule">
+      <div class="callout-label">Rule</div>
+      Write the problem statement in one sentence before writing any code: <em>"Predict [target] from [features] so that [stakeholder] can [action], measured by [metric]."</em>
+    </div>
+  </div>
+</div>
+
+<!-- Stage 2 -->
+<div id="stage2" class="section s2">
+  <div class="stage-header">
+    <span class="stage-num">Stage 02</span>
+    <div class="section-title">Collect the Data</div>
+  </div>
+
+  <div class="step">
+    <p>Data comes from databases, APIs, web scraping, sensors, surveys, and manual labeling. Where it comes from shapes everything downstream — including what biases you'll inherit.</p>
+
+    <table>
+      <thead><tr><th>Source</th><th>Common Format</th><th>Watch Out For</th></tr></thead>
+      <tbody>
+        <tr><td>Relational database</td><td>SQL tables / CSV export</td><td>Stale snapshots, missing joins</td></tr>
+        <tr><td>REST API</td><td>JSON</td><td>Rate limits, schema changes</td></tr>
+        <tr><td>Web scraping</td><td>HTML → parsed</td><td>Legal restrictions, fragile selectors</td></tr>
+        <tr><td>IoT / sensors</td><td>Time series, CSV</td><td>Clock drift, missing windows</td></tr>
+        <tr><td>Manual labeling</td><td>CSV with label column</td><td>Inter-annotator disagreement</td></tr>
+        <tr><td>Public datasets</td><td>CSV, Parquet, HDF5</td><td>Outdated distributions</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <div class="callout-label">Warning — Sampling Bias</div>
+      Your model learns the distribution of your training data, not the world. If your data over-represents certain groups, geographies, or time periods, your model will too — silently.
+    </div>
+
+    <p><strong style="color:#e6edf3">How much data do you need?</strong> There is no universal answer, but a rough starting point: at least 10× as many samples as features for linear models, and far more for neural networks. More importantly — more data beats a better algorithm almost every time. Collect more than you think you need.</p>
+  </div>
+</div>
+
+<!-- Stage 3 -->
+<div id="stage3" class="section s3">
+  <div class="stage-header">
+    <span class="stage-num">Stage 03</span>
+    <div class="section-title">Explore the Data (EDA)</div>
+  </div>
+
+  <div class="step">
+    <p>Exploratory Data Analysis is how you get to know your data before you trust it. The goal is simple: find the surprises now, not after you've trained a model.</p>
+
+    <p>Start with shape and types:</p>
+    <div class="code-box">
+<span class="cm"># First look</span>
+df.shape          <span class="cm"># (rows, columns)</span>
+df.dtypes         <span class="cm"># are numbers stored as strings?</span>
+df.describe()     <span class="cm"># min, max, mean, std, quartiles</span>
+df.head(<span class="nu">10</span>)      <span class="cm"># eyeball the raw data</span>
+    </div>
+
+    <p>Then missing values:</p>
+    <div class="code-box">
+df.isnull().<span class="fn">sum</span>()                        <span class="cm"># count per column</span>
+df.isnull().<span class="fn">sum</span>() / <span class="fn">len</span>(df) * <span class="nu">100</span>     <span class="cm"># as percentage</span>
+    </div>
+
+    <p>Then distributions and relationships:</p>
+    <div class="code-box">
+<span class="kw">import</span> seaborn <span class="kw">as</span> sns
+
+<span class="cm"># Distribution of a feature</span>
+sns.<span class="fn">histplot</span>(df[<span class="st">'age'</span>], bins=<span class="nu">30</span>)
+
+<span class="cm"># Correlation heatmap</span>
+sns.<span class="fn">heatmap</span>(df.corr(), annot=<span class="kw">True</span>, fmt=<span class="st">'.2f'</span>)
+
+<span class="cm"># Class balance (classification problems)</span>
+df[<span class="st">'target'</span>].<span class="fn">value_counts</span>(normalize=<span class="kw">True</span>)
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">What you're looking for</div>
+      Skewed distributions that need transformation. Correlated features that carry redundant information. Class imbalance that will fool accuracy metrics. Leaky features that encode the answer.
+    </div>
+  </div>
+</div>
+
+<!-- Stage 4 -->
+<div id="stage4" class="section s4">
+  <div class="stage-header">
+    <span class="stage-num">Stage 04</span>
+    <div class="section-title">Prepare the Data</div>
+  </div>
+
+  <div class="step">
+    <p>This is the most time-consuming stage. In real projects, data preparation consumes 60–80% of total project time. It is not glamorous. It is essential.</p>
+
+    <div class="callout warn">
+      <div class="callout-label">Critical — Split Before You Touch Anything</div>
+      Do your train/validation/test split <em>before</em> any preprocessing. If you fit a scaler or imputer on the full dataset, information from the test set leaks into your training process, and your evaluation metrics become lies.
+    </div>
+
+    <div class="code-box">
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> train_test_split
+
+X_train, X_test, y_train, y_test = <span class="fn">train_test_split</span>(
+    X, y, test_size=<span class="nu">0.2</span>, random_state=<span class="nu">42</span>, stratify=y
+)
+<span class="cm"># Now fit all preprocessing on X_train only.</span>
+<span class="cm"># Transform X_test using parameters learned from X_train.</span>
+    </div>
+
+    <p><strong style="color:#e6edf3">The preparation checklist:</strong></p>
+    <ul>
+      <li><strong>Missing values</strong> — drop rows/columns, or impute (mean/median/mode, or group-based). See the <a href="/feature_engineering/handling-missing-values.ipynb" style="color:#c87533">Handling Missing Values</a> notebook.</li>
+      <li><strong>Outliers</strong> — remove, cap at percentiles, or log-transform. See the <a href="/feature_engineering/outliers.ipynb" style="color:#c87533">Outlier Detection</a> notebook.</li>
+      <li><strong>Encoding</strong> — convert categoricals to numbers. Choice of method matters. See <a href="/feature_engineering/data-encoding.ipynb" style="color:#c87533">Data Encoding</a>.</li>
+      <li><strong>Scaling</strong> — standardize or normalize numerical features for distance-based and gradient-based models (not needed for tree-based models).</li>
+      <li><strong>Class imbalance</strong> — if your target is heavily skewed, use upsampling, downsampling, or SMOTE — on the training set only. See <a href="/feature_engineering/handling-imbalanced-datasets.ipynb" style="color:#c87533">Handling Imbalanced Datasets</a>.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Stage 5 -->
+<div id="stage5" class="section s5">
+  <div class="stage-header">
+    <span class="stage-num">Stage 05</span>
+    <div class="section-title">Build & Train a Model</div>
+  </div>
+
+  <div class="step">
+    <div class="callout rule">
+      <div class="callout-label">Rule — Always Start with a Baseline</div>
+      Before training anything complex, establish a naive baseline: mean prediction for regression, majority class for classification. If your model can't beat the baseline, nothing else matters.
+    </div>
+
+    <table>
+      <thead><tr><th>Problem Type</th><th>Good First Model</th><th>When to Go Further</th></tr></thead>
+      <tbody>
+        <tr><td>Regression</td><td>Linear Regression (OLS)</td><td>Non-linear relationships, many features</td></tr>
+        <tr><td>Classification</td><td>Logistic Regression</td><td>High-dimensional, complex boundaries</td></tr>
+        <tr><td>Either</td><td>Decision Tree</td><td>Baseline established, need more power</td></tr>
+        <tr><td>Either</td><td>Random Forest</td><td>Solid general-purpose choice</td></tr>
+        <tr><td>Either</td><td>Gradient Boosting (XGBoost)</td><td>When you need to squeeze out performance</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong style="color:#e6edf3">Cross-validation</strong> gives a more honest performance estimate than a single train/test split. Use k-fold (typically k=5 or k=10) to average performance across multiple held-out subsets.</p>
+
+    <div class="code-box">
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> cross_val_score
+<span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
+
+model = <span class="fn">RandomForestClassifier</span>(n_estimators=<span class="nu">100</span>, random_state=<span class="nu">42</span>)
+scores = <span class="fn">cross_val_score</span>(model, X_train, y_train, cv=<span class="nu">5</span>, scoring=<span class="st">'f1'</span>)
+<span class="fn">print</span>(<span class="st">f"F1: {scores.mean():.3f} ± {scores.std():.3f}"</span>)
+    </div>
+  </div>
+</div>
+
+<!-- Stage 6 -->
+<div id="stage6" class="section s6">
+  <div class="stage-header">
+    <span class="stage-num">Stage 06</span>
+    <div class="section-title">Evaluate</div>
+  </div>
+
+  <div class="step">
+    <p>Evaluation happens on data the model has never seen. The test set is sacred — evaluate on it exactly once, at the very end, after all hyperparameter decisions are locked in.</p>
+
+    <p><strong style="color:#e6edf3">Classification metrics:</strong></p>
+    <table>
+      <thead><tr><th>Metric</th><th>Answers</th><th>Use When</th></tr></thead>
+      <tbody>
+        <tr><td>Accuracy</td><td>What fraction did I get right?</td><td>Balanced classes only</td></tr>
+        <tr><td>Precision</td><td>Of predicted positives, how many are real?</td><td>False positives are costly (spam filter)</td></tr>
+        <tr><td>Recall</td><td>Of real positives, how many did I catch?</td><td>False negatives are costly (cancer detection)</td></tr>
+        <tr><td>F1</td><td>Harmonic mean of precision and recall</td><td>Imbalanced classes, both errors matter</td></tr>
+        <tr><td>ROC-AUC</td><td>How well does the score rank examples?</td><td>Threshold-independent comparison</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong style="color:#e6edf3">Regression metrics:</strong></p>
+    <table>
+      <thead><tr><th>Metric</th><th>Formula</th><th>Sensitive To</th></tr></thead>
+      <tbody>
+        <tr><td>MAE</td><td>mean(|y − ŷ|)</td><td>All errors equally</td></tr>
+        <tr><td>MSE</td><td>mean((y − ŷ)²)</td><td>Large errors heavily</td></tr>
+        <tr><td>RMSE</td><td>√MSE</td><td>Large errors, same units as y</td></tr>
+        <tr><td>R²</td><td>1 − SS_res / SS_tot</td><td>Proportion of variance explained</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">Error Analysis</div>
+      Don't just look at aggregate metrics. Look at where your model fails. Inspect the worst predictions individually — patterns in failures reveal what the model hasn't learned.
+    </div>
+  </div>
+</div>
+
+<!-- Stage 7 -->
+<div id="stage7" class="section s7">
+  <div class="stage-header">
+    <span class="stage-num">Stage 07</span>
+    <div class="section-title">Deploy & Monitor</div>
+  </div>
+
+  <div class="step">
+    <p>A model that lives only in a notebook has zero business value. Deployment means putting the model where it can receive real inputs and produce outputs that drive decisions.</p>
+
+    <p><strong style="color:#e6edf3">Serializing the model:</strong></p>
+    <div class="code-box">
+<span class="kw">import</span> joblib
+
+<span class="cm"># Save</span>
+joblib.<span class="fn">dump</span>(model, <span class="st">'model.joblib'</span>)
+
+<span class="cm"># Load</span>
+model = joblib.<span class="fn">load</span>(<span class="st">'model.joblib'</span>)
+    </div>
+
+    <p><strong style="color:#e6edf3">Serving patterns:</strong></p>
+    <ul>
+      <li><strong>Batch inference</strong> — run predictions on a dataset overnight, store results. Simple, no latency requirements.</li>
+      <li><strong>Real-time API</strong> — wrap the model in a REST endpoint (FastAPI, Flask). Returns predictions on demand in milliseconds.</li>
+    </ul>
+
+    <p><strong style="color:#e6edf3">Monitoring:</strong> Models degrade in production. Two failure modes to watch:</p>
+    <ul>
+      <li><strong>Data drift</strong> — the distribution of input features shifts over time (e.g., customer demographics change).</li>
+      <li><strong>Concept drift</strong> — the relationship between features and target changes (e.g., fraud patterns evolve).</li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-label">Warning — Models Rot</div>
+      A model trained once and never retrained is a decaying asset. Track performance metrics in production, set alert thresholds, and have a retraining pipeline ready before you deploy.
+    </div>
+  </div>
+</div>
+
+<!-- The Loop -->
+<div class="section">
+  <div class="section-title" style="border-left-color: #c87533; margin-bottom: 1rem;">The Lifecycle is a Loop</div>
+
+  <p>Data science is not a linear pipeline. Every stage feeds back into previous ones. EDA reveals that you need more data. Evaluation reveals you need different features. Monitoring reveals you need to retrain. Expect to iterate.</p>
+
+  <div class="loop-diagram">
+    <span class="active">Define</span> <span class="arrow">→</span>
+    Collect <span class="arrow">→</span>
+    Explore <span class="arrow">→</span>
+    Prepare <span class="arrow">→</span>
+    Model <span class="arrow">→</span>
+    Evaluate <span class="arrow">→</span>
+    Deploy<br>
+    <span style="color:#3d444d; font-size: 0.75rem">↑ ——————————————————————————————————————— ↓</span><br>
+    <span style="color:#3d444d; font-size: 0.7rem">retrain · refeature · recollect · redefine</span>
+  </div>
+
+  <p>The best data scientists aren't the ones who get it right the first time. They're the ones who build fast feedback loops and iterate quickly.</p>
+</div>
+
+<!-- What's Next -->
+<div class="section">
+  <div class="section-title" style="border-left-color: #c87533; margin-bottom: 1rem;">Go Deeper</div>
+  <p>Now that you have the map, explore the territory. Each link below goes deep on one part of the lifecycle.</p>
+
+  <div class="next-grid">
+    <a class="next-card" href="/math/linear_regression.html">
+      <span class="next-tag">Stage 05 · Model</span>
+      <span class="next-title">Multiple Linear Regression</span>
+      <span class="next-arrow">→ read</span>
+    </a>
+    <a class="next-card" href="/math/ols.html">
+      <span class="next-tag">Stage 05 · Model</span>
+      <span class="next-title">Ordinary Least Squares</span>
+      <span class="next-arrow">→ read</span>
+    </a>
+    <a class="next-card" href="/math/mse_mae_rmse.html">
+      <span class="next-tag">Stage 06 · Evaluate</span>
+      <span class="next-title">MSE, MAE & RMSE</span>
+      <span class="next-arrow">→ read</span>
+    </a>
+    <a class="next-card" href="/math/R_R_squared.html">
+      <span class="next-tag">Stage 06 · Evaluate</span>
+      <span class="next-title">R² and Adjusted R²</span>
+      <span class="next-arrow">→ read</span>
+    </a>
+    <a class="next-card" href="/math/overfitting_underfitting.html">
+      <span class="next-tag">Stage 05–06 · Model & Evaluate</span>
+      <span class="next-title">Underfitting & Overfitting</span>
+      <span class="next-arrow">→ read</span>
+    </a>
+    <a class="next-card" href="/math/formulas.html">
+      <span class="next-tag">Reference</span>
+      <span class="next-title">Formula Cheat Sheet</span>
+      <span class="next-arrow">→ open</span>
+    </a>
+  </div>
+</div>
+
+</body>
+</html>

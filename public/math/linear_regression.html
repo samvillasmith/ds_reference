@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Multiple Linear Regression — Step by Step</title>
+<title data-tr-title
+  data-tr-en="Multiple Linear Regression — Step by Step"
+  data-tr-es="Regresión Lineal Múltiple — Paso a Paso"
+  data-tr-ja="重回帰分析 — ステップバイステップ">Multiple Linear Regression — Step by Step</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lang-toggle.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -194,29 +198,84 @@
 </head>
 <body>
 
-<h1>Multiple Linear Regression — Step by Step</h1>
-<p class="subtitle">Same process as simple regression, but now with <span class="v2">an extra feature and an extra θ to update</span>.</p>
+<h1>
+  <span data-tr="en">Multiple Linear Regression — Step by Step</span>
+  <span data-tr="es">Regresión Lineal Múltiple — Paso a Paso</span>
+  <span data-tr="ja">重回帰分析 — ステップバイステップ</span>
+</h1>
+<p class="subtitle" data-tr="en">Same process as simple regression, but now with <span class="v2">an extra feature and an extra θ to update</span>.</p>
+<p class="subtitle" data-tr="es">Mismo proceso que la regresión simple, pero ahora con <span class="v2">una característica adicional y un θ extra para actualizar</span>.</p>
+<p class="subtitle" data-tr="ja">単回帰と同じプロセスですが、今度は<span class="v2">追加の特徴量と更新すべき追加の θ</span> があります。</p>
 
 <div class="legend">
-  <div class="legend-item"><div class="legend-dot red"></div> Value plugged in from previous step</div>
-  <div class="legend-item"><div class="legend-dot orange"></div> New — didn't exist in simple regression</div>
+  <div class="legend-item">
+    <div class="legend-dot red"></div>
+    <span data-tr="en">Value plugged in from previous step</span>
+    <span data-tr="es">Valor sustituido del paso anterior</span>
+    <span data-tr="ja">前のステップから代入した値</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot orange"></div>
+    <span data-tr="en">New — didn't exist in simple regression</span>
+    <span data-tr="es">Nuevo — no existía en la regresión simple</span>
+    <span data-tr="ja">新規 — 単回帰には存在しなかった</span>
+  </div>
 </div>
 
 <!-- SETUP -->
 <div class="section">
-  <div class="section-title">Setup — Now With 2 Features</div>
+  <div class="section-title">
+    <span data-tr="en">Setup — Now With 2 Features</span>
+    <span data-tr="es">Configuración — Ahora Con 2 Características</span>
+    <span data-tr="ja">設定 — 今度は2つの特徴量で</span>
+  </div>
   <div class="step">
 
     <div class="callout">
-      Before we had: h(x) = θ₀ + θ₁x — one input (sq ft).<br>
-      Now we add <span class="v2">bedrooms (x₂)</span> as a second input, so the model becomes:<br><br>
-      <span style="color:#e6edf3; font-family: 'JetBrains Mono', monospace;">h(x) = θ₀ + θ₁x₁ + <span class="v2">θ₂x₂</span></span><br><br>
-      Everything works the same — we just have <span class="v2">one more θ to update each iteration</span>.
+      <div data-tr="en">
+        Before we had: h(x) = θ₀ + θ₁x — one input (sq ft).<br>
+        Now we add <span class="v2">bedrooms (x₂)</span> as a second input, so the model becomes:<br><br>
+        <span style="color:#e6edf3; font-family: 'JetBrains Mono', monospace;">h(x) = θ₀ + θ₁x₁ + <span class="v2">θ₂x₂</span></span><br><br>
+        Everything works the same — we just have <span class="v2">one more θ to update each iteration</span>.
+      </div>
+      <div data-tr="es">
+        Antes teníamos: h(x) = θ₀ + θ₁x — una entrada (pies cuadrados).<br>
+        Ahora añadimos <span class="v2">dormitorios (x₂)</span> como segunda entrada, así que el modelo se vuelve:<br><br>
+        <span style="color:#e6edf3; font-family: 'JetBrains Mono', monospace;">h(x) = θ₀ + θ₁x₁ + <span class="v2">θ₂x₂</span></span><br><br>
+        Todo funciona igual — solo tenemos <span class="v2">un θ más que actualizar en cada iteración</span>.
+      </div>
+      <div data-tr="ja">
+        以前は: h(x) = θ₀ + θ₁x — 1つの入力 (平方フィート)。<br>
+        今、<span class="v2">寝室数 (x₂)</span> を2番目の入力として追加すると、モデルは次のようになります:<br><br>
+        <span style="color:#e6edf3; font-family: 'JetBrains Mono', monospace;">h(x) = θ₀ + θ₁x₁ + <span class="v2">θ₂x₂</span></span><br><br>
+        すべて同じように動きます — ただ<span class="v2">各反復で更新する θ が1つ増えただけ</span>です。
+      </div>
     </div>
 
     <table class="data-table">
       <thead>
-        <tr><th>House</th><th>Sq ft (x₁)</th><th style="color:#f0883e">Bedrooms (x₂)</th><th>Price $k (y)</th></tr>
+        <tr>
+          <th>
+            <span data-tr="en">House</span>
+            <span data-tr="es">Casa</span>
+            <span data-tr="ja">住宅</span>
+          </th>
+          <th>
+            <span data-tr="en">Sq ft (x₁)</span>
+            <span data-tr="es">Pies² (x₁)</span>
+            <span data-tr="ja">平方フィート (x₁)</span>
+          </th>
+          <th style="color:#f0883e">
+            <span data-tr="en">Bedrooms (x₂)</span>
+            <span data-tr="es">Dormitorios (x₂)</span>
+            <span data-tr="ja">寝室数 (x₂)</span>
+          </th>
+          <th>
+            <span data-tr="en">Price $k (y)</span>
+            <span data-tr="es">Precio $k (y)</span>
+            <span data-tr="ja">価格 $k (y)</span>
+          </th>
+        </tr>
       </thead>
       <tbody>
         <tr><td>1</td><td>1</td><td>1</td><td>2</td></tr>
@@ -228,60 +287,92 @@
     </table>
     <div class="formula-box">
       <span class="math-line">m = <span class="v">5</span> &nbsp; α = <span class="v">0.01</span></span>
-      <span class="math-line">Starting: θ₀ = <span class="v">0</span>, θ₁ = <span class="v">0</span>, <span class="v2">θ₂ = 0</span></span>
-      <span class="math-line">Line: h(x) = <span class="v">0</span> + <span class="v">0</span> · x₁ + <span class="v2">0</span> · x₂ = 0 for everything</span>
+      <span class="math-line">
+        <span data-tr="en">Starting</span><span data-tr="es">Inicio</span><span data-tr="ja">開始</span>: θ₀ = <span class="v">0</span>, θ₁ = <span class="v">0</span>, <span class="v2">θ₂ = 0</span>
+      </span>
+      <span class="math-line">
+        <span data-tr="en">Line</span><span data-tr="es">Línea</span><span data-tr="ja">直線</span>: h(x) = <span class="v">0</span> + <span class="v">0</span> · x₁ + <span class="v2">0</span> · x₂ = 0 <span data-tr="en">for everything</span><span data-tr="es">para todo</span><span data-tr="ja">すべて</span>
+      </span>
     </div>
   </div>
 </div>
 
 <!-- TABS -->
 <div class="iteration-nav">
-  <button class="iter-btn active" onclick="showIter(0)">Iteration 1</button>
-  <button class="iter-btn" onclick="showIter(1)">Iteration 2</button>
-  <button class="iter-btn" onclick="showIter(2)">Compare</button>
+  <button class="iter-btn active" onclick="showIter(0)">
+    <span data-tr="en">Iteration 1</span>
+    <span data-tr="es">Iteración 1</span>
+    <span data-tr="ja">反復 1</span>
+  </button>
+  <button class="iter-btn" onclick="showIter(1)">
+    <span data-tr="en">Iteration 2</span>
+    <span data-tr="es">Iteración 2</span>
+    <span data-tr="ja">反復 2</span>
+  </button>
+  <button class="iter-btn" onclick="showIter(2)">
+    <span data-tr="en">Compare</span>
+    <span data-tr="es">Comparar</span>
+    <span data-tr="ja">比較</span>
+  </button>
 </div>
 
 <!-- ITERATION 1 -->
 <div class="iteration-content active" id="iter-0">
   <div class="section">
-    <div class="section-title">Step 1 — Predict using h(x) = <span class="v">0</span> + <span class="v">0</span>·x₁ + <span class="v2">0</span>·x₂</div>
+    <div class="section-title">
+      <span data-tr="en">Step 1 — Predict using h(x) = <span class="v">0</span> + <span class="v">0</span>·x₁ + <span class="v2">0</span>·x₂</span>
+      <span data-tr="es">Paso 1 — Predecir usando h(x) = <span class="v">0</span> + <span class="v">0</span>·x₁ + <span class="v2">0</span>·x₂</span>
+      <span data-tr="ja">ステップ 1 — h(x) = <span class="v">0</span> + <span class="v">0</span>·x₁ + <span class="v2">0</span>·x₂ で予測</span>
+    </div>
     <div class="step">
       <div class="formula-box">
-        <span class="math-line">House 1: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">1</span> + <span class="v2">0</span>×<span class="v2">1</span> = <span class="v">0</span></span>
-        <span class="math-line">House 2: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">2</span> + <span class="v2">0</span>×<span class="v2">2</span> = <span class="v">0</span></span>
-        <span class="math-line">House 3: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">3</span> + <span class="v2">0</span>×<span class="v2">2</span> = <span class="v">0</span></span>
-        <span class="math-line">House 4: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">4</span> + <span class="v2">0</span>×<span class="v2">3</span> = <span class="v">0</span></span>
-        <span class="math-line">House 5: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">5</span> + <span class="v2">0</span>×<span class="v2">3</span> = <span class="v">0</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 1: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">1</span> + <span class="v2">0</span>×<span class="v2">1</span> = <span class="v">0</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 2: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">2</span> + <span class="v2">0</span>×<span class="v2">2</span> = <span class="v">0</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 3: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">3</span> + <span class="v2">0</span>×<span class="v2">2</span> = <span class="v">0</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 4: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">4</span> + <span class="v2">0</span>×<span class="v2">3</span> = <span class="v">0</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 5: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">5</span> + <span class="v2">0</span>×<span class="v2">3</span> = <span class="v">0</span></span>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title">Step 2 — Compute errors (prediction − actual)</div>
+    <div class="section-title">
+      <span data-tr="en">Step 2 — Compute errors (prediction − actual)</span>
+      <span data-tr="es">Paso 2 — Calcular errores (predicción − real)</span>
+      <span data-tr="ja">ステップ 2 — 誤差を計算 (予測 − 実際)</span>
+    </div>
     <div class="step">
       <div class="formula-box">
-        <span class="math-line">House 1: <span class="v">0</span> − <span class="v">2</span> = <span class="v">−2</span></span>
-        <span class="math-line">House 2: <span class="v">0</span> − <span class="v">4</span> = <span class="v">−4</span></span>
-        <span class="math-line">House 3: <span class="v">0</span> − <span class="v">5</span> = <span class="v">−5</span></span>
-        <span class="math-line">House 4: <span class="v">0</span> − <span class="v">4</span> = <span class="v">−4</span></span>
-        <span class="math-line">House 5: <span class="v">0</span> − <span class="v">5</span> = <span class="v">−5</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 1: <span class="v">0</span> − <span class="v">2</span> = <span class="v">−2</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 2: <span class="v">0</span> − <span class="v">4</span> = <span class="v">−4</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 3: <span class="v">0</span> − <span class="v">5</span> = <span class="v">−5</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 4: <span class="v">0</span> − <span class="v">4</span> = <span class="v">−4</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 5: <span class="v">0</span> − <span class="v">5</span> = <span class="v">−5</span></span>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title">Step 3 — Update θ₀ (same as before: multiply errors by 1)</div>
+    <div class="section-title">
+      <span data-tr="en">Step 3 — Update θ₀ (same as before: multiply errors by 1)</span>
+      <span data-tr="es">Paso 3 — Actualizar θ₀ (igual que antes: multiplicar errores por 1)</span>
+      <span data-tr="ja">ステップ 3 — θ₀ を更新 (以前と同じ: 誤差を1倍)</span>
+    </div>
     <div class="step">
       <div class="formula-box">
-        <span class="math-line">Sum of errors: <span class="v">−2</span> + <span class="v">−4</span> + <span class="v">−5</span> + <span class="v">−4</span> + <span class="v">−5</span> = <span class="v">−20</span></span>
-        <span class="math-line">Average: <span class="v">−20</span> / <span class="v">5</span> = <span class="v">−4</span></span>
+        <span class="math-line"><span data-tr="en">Sum of errors</span><span data-tr="es">Suma de errores</span><span data-tr="ja">誤差の合計</span>: <span class="v">−2</span> + <span class="v">−4</span> + <span class="v">−5</span> + <span class="v">−4</span> + <span class="v">−5</span> = <span class="v">−20</span></span>
+        <span class="math-line"><span data-tr="en">Average</span><span data-tr="es">Promedio</span><span data-tr="ja">平均</span>: <span class="v">−20</span> / <span class="v">5</span> = <span class="v">−4</span></span>
         <span class="math-line">θ₀ := <span class="v">0</span> − <span class="v">0.01</span> × <span class="v">−4</span> = <span class="v">0.04</span></span>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title">Step 4 — Update θ₁ (multiply errors by x₁)</div>
+    <div class="section-title">
+      <span data-tr="en">Step 4 — Update θ₁ (multiply errors by x₁)</span>
+      <span data-tr="es">Paso 4 — Actualizar θ₁ (multiplicar errores por x₁)</span>
+      <span data-tr="ja">ステップ 4 — θ₁ を更新 (誤差に x₁ を掛ける)</span>
+    </div>
     <div class="step">
       <div class="formula-box">
         <span class="math-line"><span class="v">−2</span> × <span class="v">1</span> = <span class="v">−2</span></span>
@@ -290,16 +381,22 @@
         <span class="math-line"><span class="v">−4</span> × <span class="v">4</span> = <span class="v">−16</span></span>
         <span class="math-line"><span class="v">−5</span> × <span class="v">5</span> = <span class="v">−25</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">Sum: <span class="v">−66</span> &nbsp; Average: <span class="v">−66</span> / <span class="v">5</span> = <span class="v">−13.2</span></span>
+        <span class="math-line"><span data-tr="en">Sum</span><span data-tr="es">Suma</span><span data-tr="ja">合計</span>: <span class="v">−66</span> &nbsp; <span data-tr="en">Average</span><span data-tr="es">Promedio</span><span data-tr="ja">平均</span>: <span class="v">−66</span> / <span class="v">5</span> = <span class="v">−13.2</span></span>
         <span class="math-line">θ₁ := <span class="v">0</span> − <span class="v">0.01</span> × <span class="v">−13.2</span> = <span class="v">0.132</span></span>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title new-step">Step 5 — Update θ₂ (NEW: multiply errors by x₂)</div>
+    <div class="section-title new-step">
+      <span data-tr="en">Step 5 — Update θ₂ (NEW: multiply errors by x₂)</span>
+      <span data-tr="es">Paso 5 — Actualizar θ₂ (NUEVO: multiplicar errores por x₂)</span>
+      <span data-tr="ja">ステップ 5 — θ₂ を更新 (新規: 誤差に x₂ を掛ける)</span>
+    </div>
     <div class="step">
-      <p class="note">This is the only new step. Same formula, just using x₂ (bedrooms) instead of x₁ (sq ft).</p>
+      <p class="note" data-tr="en">This is the only new step. Same formula, just using x₂ (bedrooms) instead of x₁ (sq ft).</p>
+      <p class="note" data-tr="es">Este es el único paso nuevo. Misma fórmula, solo usando x₂ (dormitorios) en lugar de x₁ (pies²).</p>
+      <p class="note" data-tr="ja">これが唯一の新しいステップです。同じ式で、x₁ (平方フィート) の代わりに x₂ (寝室数) を使うだけ。</p>
       <div class="formula-box" style="border-color: #f0883e;">
         <span class="math-line"><span class="v">−2</span> × <span class="v2">1</span> = <span class="v2">−2</span></span>
         <span class="math-line"><span class="v">−4</span> × <span class="v2">2</span> = <span class="v2">−8</span></span>
@@ -307,60 +404,82 @@
         <span class="math-line"><span class="v">−4</span> × <span class="v2">3</span> = <span class="v2">−12</span></span>
         <span class="math-line"><span class="v">−5</span> × <span class="v2">3</span> = <span class="v2">−15</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">Sum: <span class="v2">−47</span> &nbsp; Average: <span class="v2">−47</span> / <span class="v">5</span> = <span class="v2">−9.4</span></span>
+        <span class="math-line"><span data-tr="en">Sum</span><span data-tr="es">Suma</span><span data-tr="ja">合計</span>: <span class="v2">−47</span> &nbsp; <span data-tr="en">Average</span><span data-tr="es">Promedio</span><span data-tr="ja">平均</span>: <span class="v2">−47</span> / <span class="v">5</span> = <span class="v2">−9.4</span></span>
         <span class="math-line">θ₂ := <span class="v2">0</span> − <span class="v">0.01</span> × <span class="v2">−9.4</span> = <span class="v2">0.094</span></span>
       </div>
     </div>
   </div>
 
   <div class="result-box">
-    ✅ End of Iteration 1: θ₀ = 0.04 &nbsp;&nbsp; θ₁ = 0.132 &nbsp;&nbsp; <span style="color:#f0883e">θ₂ = 0.094</span>
+    <span data-tr="en">✅ End of Iteration 1: θ₀ = 0.04 &nbsp;&nbsp; θ₁ = 0.132 &nbsp;&nbsp; <span style="color:#f0883e">θ₂ = 0.094</span></span>
+    <span data-tr="es">✅ Fin de Iteración 1: θ₀ = 0.04 &nbsp;&nbsp; θ₁ = 0.132 &nbsp;&nbsp; <span style="color:#f0883e">θ₂ = 0.094</span></span>
+    <span data-tr="ja">✅ 反復 1 終了: θ₀ = 0.04 &nbsp;&nbsp; θ₁ = 0.132 &nbsp;&nbsp; <span style="color:#f0883e">θ₂ = 0.094</span></span>
   </div>
 </div>
 
 <!-- ITERATION 2 -->
 <div class="iteration-content" id="iter-1">
   <div class="section">
-    <div class="section-title">Step 1 — Predict using h(x) = <span class="v">0.04</span> + <span class="v">0.132</span>·x₁ + <span class="v2">0.094</span>·x₂</div>
+    <div class="section-title">
+      <span data-tr="en">Step 1 — Predict using h(x) = <span class="v">0.04</span> + <span class="v">0.132</span>·x₁ + <span class="v2">0.094</span>·x₂</span>
+      <span data-tr="es">Paso 1 — Predecir usando h(x) = <span class="v">0.04</span> + <span class="v">0.132</span>·x₁ + <span class="v2">0.094</span>·x₂</span>
+      <span data-tr="ja">ステップ 1 — h(x) = <span class="v">0.04</span> + <span class="v">0.132</span>·x₁ + <span class="v2">0.094</span>·x₂ で予測</span>
+    </div>
     <div class="step">
-      <p class="note">All three θ values come from end of Iteration 1</p>
+      <p class="note" data-tr="en">All three θ values come from end of Iteration 1</p>
+      <p class="note" data-tr="es">Los tres valores de θ vienen del final de la Iteración 1</p>
+      <p class="note" data-tr="ja">3つの θ の値はすべて反復 1 の最後から来ています</p>
       <div class="formula-box">
-        <span class="math-line">House 1: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">1</span> + <span class="v2">0.094</span>×<span class="v2">1</span> = 0.04 + 0.132 + 0.094 = <span class="v">0.266</span></span>
-        <span class="math-line">House 2: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">2</span> + <span class="v2">0.094</span>×<span class="v2">2</span> = 0.04 + 0.264 + 0.188 = <span class="v">0.492</span></span>
-        <span class="math-line">House 3: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">3</span> + <span class="v2">0.094</span>×<span class="v2">2</span> = 0.04 + 0.396 + 0.188 = <span class="v">0.624</span></span>
-        <span class="math-line">House 4: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">4</span> + <span class="v2">0.094</span>×<span class="v2">3</span> = 0.04 + 0.528 + 0.282 = <span class="v">0.850</span></span>
-        <span class="math-line">House 5: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">5</span> + <span class="v2">0.094</span>×<span class="v2">3</span> = 0.04 + 0.660 + 0.282 = <span class="v">0.982</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 1: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">1</span> + <span class="v2">0.094</span>×<span class="v2">1</span> = 0.04 + 0.132 + 0.094 = <span class="v">0.266</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 2: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">2</span> + <span class="v2">0.094</span>×<span class="v2">2</span> = 0.04 + 0.264 + 0.188 = <span class="v">0.492</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 3: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">3</span> + <span class="v2">0.094</span>×<span class="v2">2</span> = 0.04 + 0.396 + 0.188 = <span class="v">0.624</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 4: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">4</span> + <span class="v2">0.094</span>×<span class="v2">3</span> = 0.04 + 0.528 + 0.282 = <span class="v">0.850</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 5: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">5</span> + <span class="v2">0.094</span>×<span class="v2">3</span> = 0.04 + 0.660 + 0.282 = <span class="v">0.982</span></span>
       </div>
-      <p class="note">Notice: predictions are already different from simple regression because θ₂·x₂ adds a second contribution.</p>
+      <p class="note" data-tr="en">Notice: predictions are already different from simple regression because θ₂·x₂ adds a second contribution.</p>
+      <p class="note" data-tr="es">Nota: las predicciones ya son diferentes de la regresión simple porque θ₂·x₂ añade una segunda contribución.</p>
+      <p class="note" data-tr="ja">注目: θ₂·x₂ が2番目の寄与を加えるので、予測はすでに単回帰とは異なります。</p>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title">Step 2 — Compute errors</div>
+    <div class="section-title">
+      <span data-tr="en">Step 2 — Compute errors</span>
+      <span data-tr="es">Paso 2 — Calcular errores</span>
+      <span data-tr="ja">ステップ 2 — 誤差を計算</span>
+    </div>
     <div class="step">
       <div class="formula-box">
-        <span class="math-line">House 1: <span class="v">0.266</span> − <span class="v">2</span> = <span class="v">−1.734</span></span>
-        <span class="math-line">House 2: <span class="v">0.492</span> − <span class="v">4</span> = <span class="v">−3.508</span></span>
-        <span class="math-line">House 3: <span class="v">0.624</span> − <span class="v">5</span> = <span class="v">−4.376</span></span>
-        <span class="math-line">House 4: <span class="v">0.850</span> − <span class="v">4</span> = <span class="v">−3.150</span></span>
-        <span class="math-line">House 5: <span class="v">0.982</span> − <span class="v">5</span> = <span class="v">−4.018</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 1: <span class="v">0.266</span> − <span class="v">2</span> = <span class="v">−1.734</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 2: <span class="v">0.492</span> − <span class="v">4</span> = <span class="v">−3.508</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 3: <span class="v">0.624</span> − <span class="v">5</span> = <span class="v">−4.376</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 4: <span class="v">0.850</span> − <span class="v">4</span> = <span class="v">−3.150</span></span>
+        <span class="math-line"><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">住宅</span> 5: <span class="v">0.982</span> − <span class="v">5</span> = <span class="v">−4.018</span></span>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title">Step 3 — Update θ₀</div>
+    <div class="section-title">
+      <span data-tr="en">Step 3 — Update θ₀</span>
+      <span data-tr="es">Paso 3 — Actualizar θ₀</span>
+      <span data-tr="ja">ステップ 3 — θ₀ を更新</span>
+    </div>
     <div class="step">
       <div class="formula-box">
-        <span class="math-line">Sum: <span class="v">−1.734</span> + <span class="v">−3.508</span> + <span class="v">−4.376</span> + <span class="v">−3.150</span> + <span class="v">−4.018</span> = <span class="v">−16.786</span></span>
-        <span class="math-line">Average: <span class="v">−16.786</span> / <span class="v">5</span> = <span class="v">−3.3572</span></span>
+        <span class="math-line"><span data-tr="en">Sum</span><span data-tr="es">Suma</span><span data-tr="ja">合計</span>: <span class="v">−1.734</span> + <span class="v">−3.508</span> + <span class="v">−4.376</span> + <span class="v">−3.150</span> + <span class="v">−4.018</span> = <span class="v">−16.786</span></span>
+        <span class="math-line"><span data-tr="en">Average</span><span data-tr="es">Promedio</span><span data-tr="ja">平均</span>: <span class="v">−16.786</span> / <span class="v">5</span> = <span class="v">−3.3572</span></span>
         <span class="math-line">θ₀ := <span class="v">0.04</span> − <span class="v">0.01</span> × <span class="v">−3.3572</span> = <span class="v">0.0736</span></span>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title">Step 4 — Update θ₁ (errors × x₁)</div>
+    <div class="section-title">
+      <span data-tr="en">Step 4 — Update θ₁ (errors × x₁)</span>
+      <span data-tr="es">Paso 4 — Actualizar θ₁ (errores × x₁)</span>
+      <span data-tr="ja">ステップ 4 — θ₁ を更新 (誤差 × x₁)</span>
+    </div>
     <div class="step">
       <div class="formula-box">
         <span class="math-line"><span class="v">−1.734</span> × <span class="v">1</span> = <span class="v">−1.734</span></span>
@@ -369,14 +488,18 @@
         <span class="math-line"><span class="v">−3.150</span> × <span class="v">4</span> = <span class="v">−12.600</span></span>
         <span class="math-line"><span class="v">−4.018</span> × <span class="v">5</span> = <span class="v">−20.090</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">Sum: <span class="v">−54.568</span> &nbsp; Average: <span class="v">−10.9136</span></span>
+        <span class="math-line"><span data-tr="en">Sum</span><span data-tr="es">Suma</span><span data-tr="ja">合計</span>: <span class="v">−54.568</span> &nbsp; <span data-tr="en">Average</span><span data-tr="es">Promedio</span><span data-tr="ja">平均</span>: <span class="v">−10.9136</span></span>
         <span class="math-line">θ₁ := <span class="v">0.132</span> − <span class="v">0.01</span> × <span class="v">−10.9136</span> = <span class="v">0.2411</span></span>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title new-step">Step 5 — Update θ₂ (errors × x₂)</div>
+    <div class="section-title new-step">
+      <span data-tr="en">Step 5 — Update θ₂ (errors × x₂)</span>
+      <span data-tr="es">Paso 5 — Actualizar θ₂ (errores × x₂)</span>
+      <span data-tr="ja">ステップ 5 — θ₂ を更新 (誤差 × x₂)</span>
+    </div>
     <div class="step">
       <div class="formula-box" style="border-color: #f0883e;">
         <span class="math-line"><span class="v">−1.734</span> × <span class="v2">1</span> = <span class="v2">−1.734</span></span>
@@ -385,74 +508,102 @@
         <span class="math-line"><span class="v">−3.150</span> × <span class="v2">3</span> = <span class="v2">−9.450</span></span>
         <span class="math-line"><span class="v">−4.018</span> × <span class="v2">3</span> = <span class="v2">−12.054</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">Sum: <span class="v2">−39.006</span> &nbsp; Average: <span class="v2">−7.8012</span></span>
+        <span class="math-line"><span data-tr="en">Sum</span><span data-tr="es">Suma</span><span data-tr="ja">合計</span>: <span class="v2">−39.006</span> &nbsp; <span data-tr="en">Average</span><span data-tr="es">Promedio</span><span data-tr="ja">平均</span>: <span class="v2">−7.8012</span></span>
         <span class="math-line">θ₂ := <span class="v2">0.094</span> − <span class="v">0.01</span> × <span class="v2">−7.8012</span> = <span class="v2">0.1720</span></span>
       </div>
     </div>
   </div>
 
   <div class="result-box">
-    ✅ End of Iteration 2: θ₀ = 0.0736 &nbsp;&nbsp; θ₁ = 0.2411 &nbsp;&nbsp; <span style="color:#f0883e">θ₂ = 0.1720</span>
+    <span data-tr="en">✅ End of Iteration 2: θ₀ = 0.0736 &nbsp;&nbsp; θ₁ = 0.2411 &nbsp;&nbsp; <span style="color:#f0883e">θ₂ = 0.1720</span></span>
+    <span data-tr="es">✅ Fin de Iteración 2: θ₀ = 0.0736 &nbsp;&nbsp; θ₁ = 0.2411 &nbsp;&nbsp; <span style="color:#f0883e">θ₂ = 0.1720</span></span>
+    <span data-tr="ja">✅ 反復 2 終了: θ₀ = 0.0736 &nbsp;&nbsp; θ₁ = 0.2411 &nbsp;&nbsp; <span style="color:#f0883e">θ₂ = 0.1720</span></span>
   </div>
 </div>
 
 <!-- COMPARE TAB -->
 <div class="iteration-content" id="iter-2">
   <div class="section">
-    <div class="section-title">Simple vs Multiple — What Changed?</div>
+    <div class="section-title">
+      <span data-tr="en">Simple vs Multiple — What Changed?</span>
+      <span data-tr="es">Simple vs Múltiple — ¿Qué Cambió?</span>
+      <span data-tr="ja">単回帰 vs 重回帰 — 何が変わったか？</span>
+    </div>
     <div class="step">
       <div class="callout">
-        The entire algorithm is identical. The only difference is you <span class="v2">repeat the θ update step once per feature</span>.
+        <div data-tr="en">The entire algorithm is identical. The only difference is you <span class="v2">repeat the θ update step once per feature</span>.</div>
+        <div data-tr="es">El algoritmo completo es idéntico. La única diferencia es que <span class="v2">repites el paso de actualización de θ una vez por cada característica</span>.</div>
+        <div data-tr="ja">アルゴリズム全体は同一です。唯一の違いは、<span class="v2">特徴量ごとに θ の更新ステップを繰り返す</span>ことです。</div>
       </div>
 
       <div class="formula-box" style="margin-top: 1rem;">
-        <span class="math-line" style="color: #58a6ff; font-weight: 700;">Simple (1 feature):</span>
+        <span class="math-line" style="color: #58a6ff; font-weight: 700;">
+          <span data-tr="en">Simple (1 feature):</span>
+          <span data-tr="es">Simple (1 característica):</span>
+          <span data-tr="ja">単純 (1特徴量):</span>
+        </span>
         <span class="math-line">&nbsp;</span>
         <span class="math-line">h(x) = θ₀ + θ₁x</span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">Update θ₀ → errors × 1</span>
-        <span class="math-line">Update θ₁ → errors × x</span>
+        <span class="math-line"><span data-tr="en">Update θ₀ → errors × 1</span><span data-tr="es">Actualizar θ₀ → errores × 1</span><span data-tr="ja">θ₀ を更新 → 誤差 × 1</span></span>
+        <span class="math-line"><span data-tr="en">Update θ₁ → errors × x</span><span data-tr="es">Actualizar θ₁ → errores × x</span><span data-tr="ja">θ₁ を更新 → 誤差 × x</span></span>
       </div>
 
       <div class="formula-box" style="margin-top: 1rem; border-color: #f0883e;">
-        <span class="math-line" style="color: #f0883e; font-weight: 700;">Multiple (2 features):</span>
+        <span class="math-line" style="color: #f0883e; font-weight: 700;">
+          <span data-tr="en">Multiple (2 features):</span>
+          <span data-tr="es">Múltiple (2 características):</span>
+          <span data-tr="ja">重回帰 (2特徴量):</span>
+        </span>
         <span class="math-line">&nbsp;</span>
         <span class="math-line">h(x) = θ₀ + θ₁x₁ + <span class="v2">θ₂x₂</span></span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">Update θ₀ → errors × 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7d8590">← same</span></span>
-        <span class="math-line">Update θ₁ → errors × x₁ &nbsp;&nbsp;&nbsp;<span style="color:#7d8590">← same</span></span>
-        <span class="math-line">Update <span class="v2">θ₂</span> → errors × <span class="v2">x₂</span> &nbsp;&nbsp;&nbsp;<span style="color:#f0883e">← new, same pattern</span></span>
+        <span class="math-line"><span data-tr="en">Update θ₀ → errors × 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7d8590">← same</span></span><span data-tr="es">Actualizar θ₀ → errores × 1 &nbsp;<span style="color:#7d8590">← igual</span></span><span data-tr="ja">θ₀ を更新 → 誤差 × 1 &nbsp;<span style="color:#7d8590">← 同じ</span></span></span>
+        <span class="math-line"><span data-tr="en">Update θ₁ → errors × x₁ &nbsp;&nbsp;&nbsp;<span style="color:#7d8590">← same</span></span><span data-tr="es">Actualizar θ₁ → errores × x₁ &nbsp;<span style="color:#7d8590">← igual</span></span><span data-tr="ja">θ₁ を更新 → 誤差 × x₁ &nbsp;<span style="color:#7d8590">← 同じ</span></span></span>
+        <span class="math-line"><span data-tr="en">Update <span class="v2">θ₂</span> → errors × <span class="v2">x₂</span> &nbsp;&nbsp;&nbsp;<span style="color:#f0883e">← new, same pattern</span></span><span data-tr="es">Actualizar <span class="v2">θ₂</span> → errores × <span class="v2">x₂</span> &nbsp;<span style="color:#f0883e">← nuevo, mismo patrón</span></span><span data-tr="ja"><span class="v2">θ₂</span> を更新 → 誤差 × <span class="v2">x₂</span> &nbsp;<span style="color:#f0883e">← 新規、同じパターン</span></span></span>
       </div>
 
       <div class="formula-box" style="margin-top: 1rem; border-color: #a371f7;">
-        <span class="math-line" style="color: #a371f7; font-weight: 700;">n features? Same thing, just keep going:</span>
+        <span class="math-line" style="color: #a371f7; font-weight: 700;">
+          <span data-tr="en">n features? Same thing, just keep going:</span>
+          <span data-tr="es">¿n características? Lo mismo, solo sigue:</span>
+          <span data-tr="ja">n 個の特徴量？同じことを続けるだけ:</span>
+        </span>
         <span class="math-line">&nbsp;</span>
         <span class="math-line">h(x) = θ₀ + θ₁x₁ + θ₂x₂ + θ₃x₃ + ... + θₙxₙ</span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">Update θ₀ → errors × 1</span>
-        <span class="math-line">Update θ₁ → errors × x₁</span>
-        <span class="math-line">Update θ₂ → errors × x₂</span>
-        <span class="math-line">Update θ₃ → errors × x₃</span>
+        <span class="math-line"><span data-tr="en">Update θ₀ → errors × 1</span><span data-tr="es">Actualizar θ₀ → errores × 1</span><span data-tr="ja">θ₀ を更新 → 誤差 × 1</span></span>
+        <span class="math-line"><span data-tr="en">Update θ₁ → errors × x₁</span><span data-tr="es">Actualizar θ₁ → errores × x₁</span><span data-tr="ja">θ₁ を更新 → 誤差 × x₁</span></span>
+        <span class="math-line"><span data-tr="en">Update θ₂ → errors × x₂</span><span data-tr="es">Actualizar θ₂ → errores × x₂</span><span data-tr="ja">θ₂ を更新 → 誤差 × x₂</span></span>
+        <span class="math-line"><span data-tr="en">Update θ₃ → errors × x₃</span><span data-tr="es">Actualizar θ₃ → errores × x₃</span><span data-tr="ja">θ₃ を更新 → 誤差 × x₃</span></span>
         <span class="math-line" style="color:#7d8590">&nbsp; ⋮</span>
-        <span class="math-line">Update θₙ → errors × xₙ</span>
+        <span class="math-line"><span data-tr="en">Update θₙ → errors × xₙ</span><span data-tr="es">Actualizar θₙ → errores × xₙ</span><span data-tr="ja">θₙ を更新 → 誤差 × xₙ</span></span>
       </div>
 
       <div class="pattern-box" style="margin-top: 1.5rem;">
-        <span style="color: #56d364; font-weight: 700; font-size: 1rem;">The general update rule for any θⱼ:</span>
+        <span style="color: #56d364; font-weight: 700; font-size: 1rem;">
+          <span data-tr="en">The general update rule for any θⱼ:</span>
+          <span data-tr="es">La regla general de actualización para cualquier θⱼ:</span>
+          <span data-tr="ja">任意の θⱼ に対する一般的な更新規則:</span>
+        </span>
         <div style="margin-top: 0.8rem; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; line-height: 2.2;">
           <span class="math-line">θⱼ := <span class="v">θⱼ</span> − <span class="v">α</span> · (1/<span class="v">m</span>) · Σ( h(x⁽ⁱ⁾) − y⁽ⁱ⁾ ) · <span class="v2">xⱼ⁽ⁱ⁾</span></span>
           <span class="math-line">&nbsp;</span>
-          <span class="math-line" style="color:#7d8590">where xⱼ is the j-th feature</span>
-          <span class="math-line" style="color:#7d8590">and x₀ = 1 always (that's why θ₀ multiplies by 1)</span>
+          <span class="math-line" style="color:#7d8590"><span data-tr="en">where xⱼ is the j-th feature</span><span data-tr="es">donde xⱼ es la j-ésima característica</span><span data-tr="ja">ここで xⱼ は j 番目の特徴量</span></span>
+          <span class="math-line" style="color:#7d8590"><span data-tr="en">and x₀ = 1 always (that's why θ₀ multiplies by 1)</span><span data-tr="es">y x₀ = 1 siempre (por eso θ₀ multiplica por 1)</span><span data-tr="ja">そして x₀ = 1 は常に成り立つ (だから θ₀ は1を掛ける)</span></span>
         </div>
       </div>
 
       <div class="formula-box" style="margin-top: 1.5rem; border-color: #238636;">
-        <span class="math-line" style="color: #56d364; font-weight: 700;">Bottom line:</span>
+        <span class="math-line" style="color: #56d364; font-weight: 700;">
+          <span data-tr="en">Bottom line:</span>
+          <span data-tr="es">En resumen:</span>
+          <span data-tr="ja">要点:</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color: #e6edf3;">Adding more features doesn't change the algorithm.</span>
-        <span class="math-line" style="color: #e6edf3;">It just adds more θ values to update each iteration.</span>
-        <span class="math-line" style="color: #e6edf3;">Each θ update uses the exact same formula.</span>
+        <span class="math-line" style="color: #e6edf3;"><span data-tr="en">Adding more features doesn't change the algorithm.</span><span data-tr="es">Añadir más características no cambia el algoritmo.</span><span data-tr="ja">特徴量を増やしてもアルゴリズムは変わりません。</span></span>
+        <span class="math-line" style="color: #e6edf3;"><span data-tr="en">It just adds more θ values to update each iteration.</span><span data-tr="es">Solo añade más valores de θ para actualizar en cada iteración.</span><span data-tr="ja">各反復で更新する θ の値が増えるだけです。</span></span>
+        <span class="math-line" style="color: #e6edf3;"><span data-tr="en">Each θ update uses the exact same formula.</span><span data-tr="es">Cada actualización de θ usa exactamente la misma fórmula.</span><span data-tr="ja">各 θ の更新は全く同じ式を使います。</span></span>
       </div>
     </div>
   </div>
@@ -466,6 +617,7 @@
     document.querySelectorAll('.iter-btn')[index].classList.add('active');
   }
 </script>
+<script src="/lang-toggle.js" defer></script>
 
 </body>
 </html>
