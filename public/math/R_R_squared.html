@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R² and Adjusted R² — Step by Step</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    line-height: 1.75;
+    padding: 2rem 1.5rem;
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  h1 { font-size: 1.8rem; color: #e6edf3; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
+
+  .subtitle {
+    color: #7d8590;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #21262d;
+    padding-bottom: 1.5rem;
+  }
+
+  .v { color: #ff4d4d; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+  .v2 { color: #f0883e; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+  .vg { color: #56d364; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+  .vb { color: #58a6ff; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+  .vp { color: #a371f7; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+
+  .section { margin-bottom: 2.5rem; }
+
+  .section-title {
+    font-size: 1.1rem;
+    color: #e6edf3;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding: 0.4rem 0.8rem;
+    background: #161b22;
+    border-left: 3px solid #ff4d4d;
+    border-radius: 0 4px 4px 0;
+  }
+  .section-title.green { border-left-color: #56d364; }
+  .section-title.blue { border-left-color: #58a6ff; }
+  .section-title.orange { border-left-color: #f0883e; }
+  .section-title.purple { border-left-color: #a371f7; }
+
+  .step { margin-bottom: 1.5rem; padding-left: 1rem; }
+
+  .formula-box {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin: 0.5rem 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 2;
+    overflow-x: auto;
+  }
+
+  .math-line { display: block; padding: 2px 0; }
+
+  .result-box {
+    background: #0f1d0f;
+    border: 1px solid #238636;
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    margin-top: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    color: #56d364;
+    font-weight: 700;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+  }
+
+  .data-table th {
+    background: #161b22;
+    color: #8b949e;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.5rem 0.7rem;
+    border-bottom: 2px solid #30363d;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .data-table td {
+    padding: 0.4rem 0.7rem;
+    border-bottom: 1px solid #21262d;
+  }
+
+  .note {
+    color: #7d8590;
+    font-size: 0.88rem;
+    font-style: italic;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .callout {
+    background: #1a1500;
+    border: 1px solid #f0883e;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    color: #f0883e;
+  }
+  .callout.blue { background: #0d1520; border-color: #58a6ff; color: #58a6ff; }
+  .callout.green { background: #0f1d0f; border-color: #56d364; color: #56d364; }
+  .callout.purple { background: #160d20; border-color: #a371f7; color: #a371f7; }
+
+  .iteration-nav {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .iter-btn {
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.88rem;
+    transition: all 0.2s;
+  }
+  .iter-btn:hover { border-color: #ff4d4d; color: #ff4d4d; }
+  .iter-btn.active { background: #ff4d4d; border-color: #ff4d4d; color: #fff; font-weight: 700; }
+
+  .iteration-content { display: none; }
+  .iteration-content.active { display: block; }
+
+  .legend {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.82rem;
+    margin-bottom: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .scale-bar {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+  }
+  .scale-track {
+    height: 12px;
+    border-radius: 6px;
+    background: linear-gradient(to right, #da3633, #f0883e, #e3b341, #56d364);
+    position: relative;
+    margin: 0.5rem 0;
+  }
+  .scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #7d8590;
+  }
+  .scale-marker {
+    position: absolute;
+    top: -6px;
+    width: 3px;
+    height: 24px;
+    background: #e6edf3;
+    border-radius: 2px;
+  }
+  .scale-marker-label {
+    position: absolute;
+    top: -24px;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #e6edf3;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<h1>R² and Adjusted R²</h1>
+<p class="subtitle">How good is your regression line? R² answers that question with a single number.</p>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#ff4d4d"></div> plugged-in value</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#56d364"></div> SS<sub>res</sub> (residual)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#58a6ff"></div> SS<sub>total</sub></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a371f7"></div> Adjusted R²</div>
+</div>
+
+<div class="iteration-nav">
+  <button class="iter-btn active" onclick="showIter(0)">The Idea</button>
+  <button class="iter-btn" onclick="showIter(1)">SS<sub>total</sub></button>
+  <button class="iter-btn" onclick="showIter(2)">SS<sub>res</sub></button>
+  <button class="iter-btn" onclick="showIter(3)">R²</button>
+  <button class="iter-btn" onclick="showIter(4)">Adjusted R²</button>
+</div>
+
+<!-- TAB 0: THE IDEA -->
+<div class="iteration-content active" id="iter-0">
+  <div class="section">
+    <div class="section-title">What R² Measures</div>
+    <div class="step">
+      <div class="callout blue">
+        R² answers: <strong>"How much better is my regression line than just guessing the average every time?"</strong>
+      </div>
+
+      <p style="margin: 1rem 0;">You have two ways to "predict" a value:</p>
+
+      <div class="formula-box">
+        <span class="math-line" style="color:#58a6ff; font-weight:700;">Dumb model: always guess the average (ȳ)</span>
+        <span class="math-line" style="color:#7d8590;">→ Ignores x entirely. Just says "the average price is $4k" for every house.</span>
+        <span class="math-line" style="color:#7d8590;">→ The errors from this model = SS<sub>total</sub></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#56d364; font-weight:700;">Your model: use the regression line (ŷ)</span>
+        <span class="math-line" style="color:#7d8590;">→ Uses x to make a prediction. h(x) = θ₀ + θ₁x</span>
+        <span class="math-line" style="color:#7d8590;">→ The errors from this model = SS<sub>res</sub></span>
+      </div>
+
+      <div class="formula-box" style="margin-top: 1rem; border-color: #ff4d4d;">
+        <span class="math-line" style="color:#e6edf3; font-weight:700; font-size: 1rem;">R² = 1 − SS<sub>res</sub> / SS<sub>total</sub></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#7d8590;">= 1 − (your model's errors) / (dumb model's errors)</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#7d8590;">If your model is perfect → SS<sub>res</sub> = 0 → R² = 1</span>
+        <span class="math-line" style="color:#7d8590;">If your model = just the average → SS<sub>res</sub> = SS<sub>total</sub> → R² = 0</span>
+        <span class="math-line" style="color:#7d8590;">If your model is worse than the average → R² &lt; 0 (yes, it can go negative)</span>
+      </div>
+
+      <div class="scale-bar">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #e6edf3; margin-bottom: 0.4rem;">R² scale:</div>
+        <div class="scale-track">
+          <div class="scale-marker" style="left: 0%"><div class="scale-marker-label">0</div></div>
+          <div class="scale-marker" style="left: 100%"><div class="scale-marker-label">1.0</div></div>
+        </div>
+        <div class="scale-labels" style="margin-top: 0.6rem;">
+          <span>Useless (no better<br>than guessing avg)</span>
+          <span style="text-align: center;">Decent</span>
+          <span style="text-align: right;">Perfect fit<br>(every point on line)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Same Dataset as Before</div>
+    <div class="step">
+      <table class="data-table">
+        <thead>
+          <tr><th>House</th><th>Sq ft (x)</th><th>Price $k (y)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>1</td><td>2</td></tr>
+          <tr><td>2</td><td>2</td><td>4</td></tr>
+          <tr><td>3</td><td>3</td><td>5</td></tr>
+          <tr><td>4</td><td>4</td><td>4</td></tr>
+          <tr><td>5</td><td>5</td><td>5</td></tr>
+        </tbody>
+      </table>
+      <div class="formula-box">
+        <span class="math-line">Best-fit line (from gradient descent): h(x) = <span class="v">2.2</span> + <span class="v">0.6</span>x</span>
+        <span class="math-line">Average of all y values: ȳ = (<span class="v">2</span>+<span class="v">4</span>+<span class="v">5</span>+<span class="v">4</span>+<span class="v">5</span>) / <span class="v">5</span> = <span class="vb">4.0</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 1: SS_TOTAL -->
+<div class="iteration-content" id="iter-1">
+  <div class="section">
+    <div class="section-title blue">SS<sub>total</sub> — How Bad is the "Dumb Model" (Just Guess the Average)?</div>
+    <div class="step">
+      <div class="callout blue">
+        SS<sub>total</sub> = Σ(yᵢ − ȳ)² — square the distance from each actual value to the average.
+      </div>
+
+      <p class="note">The average is ȳ = <span class="vb">4.0</span>. How far is each house from that?</p>
+
+      <div class="formula-box" style="border-color: #58a6ff;">
+        <span class="math-line" style="color:#58a6ff; font-weight:700;">For each house: (actual price − average)²</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">House 1: (<span class="v">2</span> − <span class="vb">4.0</span>)² = (−2.0)² = <span class="vb">4.00</span></span>
+        <span class="math-line">House 2: (<span class="v">4</span> − <span class="vb">4.0</span>)² = (0.0)²  = <span class="vb">0.00</span></span>
+        <span class="math-line">House 3: (<span class="v">5</span> − <span class="vb">4.0</span>)² = (1.0)²  = <span class="vb">1.00</span></span>
+        <span class="math-line">House 4: (<span class="v">4</span> − <span class="vb">4.0</span>)² = (0.0)²  = <span class="vb">0.00</span></span>
+        <span class="math-line">House 5: (<span class="v">5</span> − <span class="vb">4.0</span>)² = (1.0)²  = <span class="vb">1.00</span></span>
+      </div>
+
+      <div class="result-box" style="border-color: #58a6ff; color: #58a6ff;">
+        SS<sub>total</sub> = 4.00 + 0.00 + 1.00 + 0.00 + 1.00 = 6.00
+      </div>
+
+      <p class="note" style="margin-top: 0.8rem;">This is the total variance in your data. It's the baseline — if your regression line can't beat this, it's useless.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2: SS_RES -->
+<div class="iteration-content" id="iter-2">
+  <div class="section">
+    <div class="section-title green">SS<sub>res</sub> — How Bad is Your Regression Line?</div>
+    <div class="step">
+      <div class="callout green">
+        SS<sub>res</sub> = Σ(yᵢ − ŷᵢ)² — square the distance from each actual value to the prediction.
+      </div>
+
+      <p class="note">First, get the predictions from h(x) = <span class="v">2.2</span> + <span class="v">0.6</span>x:</p>
+
+      <div class="formula-box" style="border-color: #56d364;">
+        <span class="math-line" style="color:#56d364; font-weight:700;">Predictions:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">House 1: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">1</span> = <span class="vg">2.8</span></span>
+        <span class="math-line">House 2: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">2</span> = <span class="vg">3.4</span></span>
+        <span class="math-line">House 3: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">3</span> = <span class="vg">4.0</span></span>
+        <span class="math-line">House 4: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">4</span> = <span class="vg">4.6</span></span>
+        <span class="math-line">House 5: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">5</span> = <span class="vg">5.2</span></span>
+      </div>
+
+      <p class="note" style="margin-top: 0.8rem;">Now compute (actual − predicted)² for each:</p>
+
+      <div class="formula-box" style="border-color: #56d364;">
+        <span class="math-line" style="color:#56d364; font-weight:700;">Squared residuals:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">House 1: (<span class="v">2</span> − <span class="vg">2.8</span>)² = (−0.8)² = <span class="vg">0.64</span></span>
+        <span class="math-line">House 2: (<span class="v">4</span> − <span class="vg">3.4</span>)² = (+0.6)² = <span class="vg">0.36</span></span>
+        <span class="math-line">House 3: (<span class="v">5</span> − <span class="vg">4.0</span>)² = (+1.0)² = <span class="vg">1.00</span></span>
+        <span class="math-line">House 4: (<span class="v">4</span> − <span class="vg">4.6</span>)² = (−0.6)² = <span class="vg">0.36</span></span>
+        <span class="math-line">House 5: (<span class="v">5</span> − <span class="vg">5.2</span>)² = (−0.2)² = <span class="vg">0.04</span></span>
+      </div>
+
+      <div class="result-box">
+        SS<sub>res</sub> = 0.64 + 0.36 + 1.00 + 0.36 + 0.04 = 2.40
+      </div>
+
+      <div class="formula-box" style="margin-top: 1rem; border-color: #7d8590;">
+        <span class="math-line" style="color:#7d8590;">Compare: SS<sub>total</sub> = <span class="vb">6.00</span> vs SS<sub>res</sub> = <span class="vg">2.40</span></span>
+        <span class="math-line" style="color:#7d8590;">Your line's errors (2.40) are less than the average's errors (6.00) — good sign!</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3: R² -->
+<div class="iteration-content" id="iter-3">
+  <div class="section">
+    <div class="section-title">R² — Plug It In</div>
+    <div class="step">
+      <div class="formula-box" style="border-color: #ff4d4d; font-size: 0.9rem;">
+        <span class="math-line" style="color:#e6edf3; font-weight:700; font-size: 1rem;">R² = 1 − SS<sub>res</sub> / SS<sub>total</sub></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">R² = 1 − <span class="vg">2.40</span> / <span class="vb">6.00</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">R² = 1 − <span class="v">0.40</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="font-size: 1.1rem;">R² = <span class="v" style="font-size: 1.2rem;">0.60</span></span>
+      </div>
+
+      <div class="scale-bar" style="margin-top: 1.5rem;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #e6edf3; margin-bottom: 0.4rem;">Where 0.60 falls:</div>
+        <div class="scale-track">
+          <div class="scale-marker" style="left: 0%"><div class="scale-marker-label">0</div></div>
+          <div class="scale-marker" style="left: 60%; background: #ff4d4d;"><div class="scale-marker-label" style="color:#ff4d4d;">0.60 ←</div></div>
+          <div class="scale-marker" style="left: 100%"><div class="scale-marker-label">1.0</div></div>
+        </div>
+        <div class="scale-labels" style="margin-top: 0.6rem;">
+          <span>Useless</span>
+          <span style="text-align: right;">Perfect</span>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: 1.5rem;">
+        <strong>How to read this:</strong><br>
+        R² = 0.60 means your regression line explains <strong>60%</strong> of the variance in house prices.<br>
+        The remaining 40% is unexplained — noise, missing features, randomness.
+      </div>
+
+      <div class="formula-box" style="margin-top: 1rem;">
+        <span class="math-line" style="color:#e6edf3; font-weight:700;">Another way to think about it:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#7d8590;">Your model reduced the total error from <span class="vb">6.00</span> down to <span class="vg">2.40</span></span>
+        <span class="math-line" style="color:#7d8590;">That's a 60% reduction — so R² = 0.60</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title" style="border-left-color: #e3b341;">But R² Has a Problem...</div>
+    <div class="step">
+      <div class="callout" style="border-color: #e3b341; color: #e3b341;">
+        <strong>R² always goes up (or stays the same) when you add more features</strong> — even useless ones.<br><br>
+        Add "house color" as a feature? R² goes up.<br>
+        Add "owner's shoe size"? R² goes up.<br>
+        Add random noise? R² still goes up.<br><br>
+        It can never go down because more parameters = more freedom to fit the data.<br>
+        This doesn't mean the model is actually better — it might be overfitting.
+      </div>
+      <p class="note">This is why Adjusted R² exists →</p>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4: ADJUSTED R² -->
+<div class="iteration-content" id="iter-4">
+  <div class="section">
+    <div class="section-title purple">Adjusted R² — Penalizes Extra Features</div>
+    <div class="step">
+      <div class="callout purple">
+        Adjusted R² adds a penalty for each feature you add. If a new feature doesn't improve the model enough to justify its existence, Adjusted R² goes <strong>down</strong>.
+      </div>
+
+      <div class="formula-box" style="border-color: #a371f7; font-size: 0.9rem;">
+        <span class="math-line" style="color:#e6edf3; font-weight:700; font-size: 1rem;">Adjusted R² = 1 − [(1 − R²) × (n − 1) / (n − p − 1)]</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#7d8590;">where:</span>
+        <span class="math-line" style="color:#a371f7;">n = number of data points</span>
+        <span class="math-line" style="color:#a371f7;">p = number of features</span>
+        <span class="math-line" style="color:#a371f7;">R² = the regular R² we just computed</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title purple">Example 1: Simple Regression (1 feature)</div>
+    <div class="step">
+      <p class="note">h(x) = 2.2 + 0.6x — just using sq ft</p>
+      <div class="formula-box" style="border-color: #a371f7;">
+        <span class="math-line">n = <span class="vp">5</span> (data points) &nbsp;&nbsp; p = <span class="vp">1</span> (features) &nbsp;&nbsp; R² = <span class="v">0.60</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">Adj R² = 1 − [( 1 − <span class="v">0.60</span> ) × ( <span class="vp">5</span> − 1 ) / ( <span class="vp">5</span> − <span class="vp">1</span> − 1 )]</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">       = 1 − [ <span class="v">0.40</span> × <span class="vp">4</span> / <span class="vp">3</span> ]</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">       = 1 − [ <span class="v">1.60</span> / <span class="vp">3</span> ]</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">       = 1 − <span class="v">0.5333</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="font-size: 1.05rem;">       = <span class="vp" style="font-size: 1.15rem;">0.4667</span></span>
+      </div>
+      <div class="result-box" style="border-color: #a371f7; color: #a371f7;">
+        R² = 0.60 → Adjusted R² = 0.4667 &nbsp;&nbsp; (lower, because small dataset)
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title purple">Example 2: What If We Add a Useless Feature?</div>
+    <div class="step">
+      <p class="note">Say we add "owner's shoe size" and R² barely increases to 0.61</p>
+      <div class="formula-box" style="border-color: #a371f7;">
+        <span class="math-line">n = <span class="vp">5</span> &nbsp;&nbsp; p = <span class="vp">2</span> (now 2 features) &nbsp;&nbsp; R² = <span class="v">0.61</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">Adj R² = 1 − [( 1 − <span class="v">0.61</span> ) × ( <span class="vp">5</span> − 1 ) / ( <span class="vp">5</span> − <span class="vp">2</span> − 1 )]</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">       = 1 − [ <span class="v">0.39</span> × <span class="vp">4</span> / <span class="vp">2</span> ]</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">       = 1 − [ <span class="v">1.56</span> / <span class="vp">2</span> ]</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">       = 1 − <span class="v">0.78</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="font-size: 1.05rem;">       = <span class="vp" style="font-size: 1.15rem;">0.22</span></span>
+      </div>
+      <div class="result-box" style="border-color: #da3633; color: #da3633;">
+        R² went up: 0.60 → 0.61 &nbsp;&nbsp; but Adjusted R² went DOWN: 0.4667 → 0.22
+      </div>
+      <div class="callout" style="margin-top: 1rem; border-color: #da3633; color: #da3633;">
+        <strong>R² said "adding shoe size helped."</strong><br>
+        <strong>Adjusted R² said "no it didn't — you just added noise."</strong><br><br>
+        The penalty kicked in because p went from 1 to 2, but R² barely moved. The denominator (n − p − 1) shrank from 3 to 2, amplifying the penalty.
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title purple">Example 3: What If We Add a Useful Feature?</div>
+    <div class="step">
+      <p class="note">Say we add "bedrooms" and R² jumps to 0.85</p>
+      <div class="formula-box" style="border-color: #a371f7;">
+        <span class="math-line">n = <span class="vp">5</span> &nbsp;&nbsp; p = <span class="vp">2</span> &nbsp;&nbsp; R² = <span class="v">0.85</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">Adj R² = 1 − [( 1 − <span class="v">0.85</span> ) × ( <span class="vp">5</span> − 1 ) / ( <span class="vp">5</span> − <span class="vp">2</span> − 1 )]</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">       = 1 − [ <span class="v">0.15</span> × <span class="vp">4</span> / <span class="vp">2</span> ]</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">       = 1 − <span class="v">0.30</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="font-size: 1.05rem;">       = <span class="vp" style="font-size: 1.15rem;">0.70</span></span>
+      </div>
+      <div class="result-box" style="border-color: #56d364; color: #56d364;">
+        R² went up: 0.60 → 0.85 &nbsp;&nbsp; AND Adjusted R² went UP: 0.4667 → 0.70 ✅
+      </div>
+      <div class="callout green" style="margin-top: 1rem;">
+        Both metrics agree — bedrooms is a genuinely useful feature. The R² improvement was large enough to overcome the penalty.
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title" style="border-left-color: #e6edf3;">Summary</div>
+    <div class="step">
+      <div class="formula-box" style="font-size: 0.88rem;">
+        <span class="math-line" style="color:#e6edf3; font-weight:700;">When to use which:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#58a6ff;"><strong>R²</strong> — fine when comparing models with the same number of features</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#a371f7;"><strong>Adjusted R²</strong> — use when comparing models with different numbers of features</span>
+        <span class="math-line" style="color:#a371f7;">It tells you if that extra feature is actually earning its keep</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#7d8590;">Rule of thumb: if Adjusted R² drops when you add a feature, remove that feature.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showIter(index) {
+    document.querySelectorAll('.iteration-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.iter-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('iter-' + index).classList.add('active');
+    document.querySelectorAll('.iter-btn')[index].classList.add('active');
+  }
+</script>
+
+</body>
+</html>

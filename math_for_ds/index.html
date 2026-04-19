@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Texcoco Data Science</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08090c;
+    --surface: #0f1116;
+    --surface-raised: #161920;
+    --border: rgba(255,255,255,0.06);
+    --text: #d4d8e0;
+    --text-muted: #6b7280;
+    --accent: #c87533;
+    --accent-light: rgba(200,117,51,0.12);
+    --accent-glow: rgba(200,117,51,0.06);
+    --stone: #a3937b;
+    --obsidian: #2a2520;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 45%, var(--accent-glow), transparent),
+      radial-gradient(ellipse 30% 50% at 20% 60%, rgba(163,147,123,0.04), transparent),
+      radial-gradient(ellipse 25% 35% at 80% 55%, rgba(200,117,51,0.03), transparent);
+    pointer-events: none;
+  }
+
+  /* Glyph */
+  .glyph {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.2s forwards;
+  }
+
+  .glyph svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: #f0ece4;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.4s forwards;
+  }
+
+  .hero-title .accent {
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--stone);
+    margin-top: 1rem;
+    max-width: 520px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.6s forwards;
+  }
+
+  .hero-line {
+    width: 60px;
+    height: 1px;
+    background: var(--accent);
+    margin: 2rem auto;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.8s forwards;
+  }
+
+  .hero-desc {
+    max-width: 560px;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 1s ease 1s forwards;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0;
+    animation: fadeIn 1s ease 1.4s forwards;
+  }
+  .scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 28px;
+    background: linear-gradient(to bottom, var(--text-muted), transparent);
+    margin: 0.5rem auto 0;
+  }
+
+  /* ── Container ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+  /* ── Section ── */
+  .section {
+    padding: 5rem 0 3rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #f0ece4;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .section-desc {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── Course Grid ── */
+  .grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .card {
+    background: var(--surface);
+    padding: 1.8rem 1.6rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .card:hover { background: var(--surface-raised); }
+
+  .card-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    display: inline-block;
+    width: fit-content;
+  }
+  .tag-fe { background: rgba(200,117,51,0.15); color: var(--accent); }
+  .tag-math { background: rgba(88,166,255,0.12); color: #58a6ff; }
+  .tag-ref { background: rgba(86,211,100,0.12); color: #56d364; }
+  .tag-stats { background: rgba(163,113,247,0.12); color: #a371f7; }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #f0ece4;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .card-arrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    margin-top: auto;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: all 0.25s ease;
+  }
+  .card:hover .card-arrow { opacity: 1; transform: translateX(0); }
+
+  /* ── Span-full ── */
+  .span-full { grid-column: 1 / -1; }
+
+  /* ── Philosophy ── */
+  .philosophy {
+    padding: 5rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .phil-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .phil-item h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #f0ece4;
+    margin-bottom: 0.4rem;
+  }
+
+  .phil-item p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .phil-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.6rem;
+  }
+
+  /* ── Footer ── */
+  footer {
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+  footer .foot-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--stone);
+    margin-bottom: 0.3rem;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .phil-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .hero-title { font-size: 2.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ HERO ════════ -->
+<header class="hero">
+  <div class="glyph">
+    <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+      <!-- Stylized dike / water level glyph — Nezahualcóyotl's engineering -->
+      <line x1="10" y1="60" x2="70" y2="60" stroke="#c87533" stroke-width="1.5" opacity="0.4"/>
+      <line x1="10" y1="50" x2="70" y2="50" stroke="#c87533" stroke-width="1" opacity="0.2"/>
+      <line x1="10" y1="40" x2="70" y2="40" stroke="#c87533" stroke-width="1" opacity="0.2"/>
+      <!-- Rising bars — data columns -->
+      <rect x="18" y="35" width="6" height="25" rx="1" fill="#c87533" opacity="0.3"/>
+      <rect x="28" y="25" width="6" height="35" rx="1" fill="#c87533" opacity="0.5"/>
+      <rect x="38" y="18" width="6" height="42" rx="1" fill="#c87533" opacity="0.7"/>
+      <rect x="48" y="28" width="6" height="32" rx="1" fill="#c87533" opacity="0.5"/>
+      <rect x="58" y="22" width="6" height="38" rx="1" fill="#c87533" opacity="0.6"/>
+      <!-- Trend line -->
+      <polyline points="21,35 31,25 41,18 51,28 61,22" fill="none" stroke="#f0ece4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+    </svg>
+  </div>
+
+  <h1 class="hero-title">
+    <span class="accent">Texcoco</span><br>Data Science
+  </h1>
+
+  <p class="hero-sub">
+    Systematic observation. Engineered solutions. Evidence over assumption.
+  </p>
+
+  <div class="hero-line"></div>
+
+  <p class="hero-desc">
+    Free, no-nonsense data science education — from the math that powers every model
+    to the engineering that makes it work. Named for the intellectual capital of the
+    Triple Alliance, where the philosopher-engineer Nezahualcóyotl built systems
+    from observed data five centuries before the term existed.
+  </p>
+
+  <div class="scroll-hint">explore</div>
+</header>
+
+<!-- ════════ FOUNDATIONS ════════ -->
+<div class="container">
+
+  <section class="section">
+    <div class="section-label">Mathematics & Theory</div>
+    <div class="section-title">The Foundations</div>
+    <p class="section-desc">The math behind every algorithm. No hand-waving — every formula derived step by step with worked examples.</p>
+
+    <div class="grid grid-2">
+      <a class="card" href="math_for_ds/linear_regression.html">
+        <span class="card-tag tag-math">Math</span>
+        <span class="card-title">Multiple Linear Regression</span>
+        <span class="card-desc">Gradient descent, step by step. Simple regression first, then adding features — same algorithm, one more θ to update.</span>
+        <span class="card-arrow">→ read</span>
+      </a>
+
+      <a class="card" href="math_for_ds/ols.html">
+        <span class="card-tag tag-math">Math</span>
+        <span class="card-title">Ordinary Least Squares</span>
+        <span class="card-desc">The closed-form solution. Assumptions, diagnostics, strengths, limitations — and when to use it vs gradient descent.</span>
+        <span class="card-arrow">→ read</span>
+      </a>
+
+      <a class="card" href="math_for_ds/R_R_squared.html">
+        <span class="card-tag tag-math">Math</span>
+        <span class="card-title">R² and Adjusted R²</span>
+        <span class="card-desc">How good is your line? SS_total vs SS_res, what R² actually measures, and why Adjusted R² exists.</span>
+        <span class="card-arrow">→ read</span>
+      </a>
+
+      <a class="card" href="math_for_ds/mse_mae_rmse.html">
+        <span class="card-tag tag-math">Math</span>
+        <span class="card-title">MSE, MAE & RMSE</span>
+        <span class="card-desc">Three error metrics, three personalities. When to use which — and why raw errors cancel to zero.</span>
+        <span class="card-arrow">→ read</span>
+      </a>
+
+      <a class="card span-full" href="math_for_ds/overfitting_underfitting.html">
+        <span class="card-tag tag-math">Math</span>
+        <span class="card-title">Underfitting & Overfitting</span>
+        <span class="card-desc">The bias-variance tradeoff visualized. Too simple, too complex, and the sweet spot of generalization.</span>
+        <span class="card-arrow">→ read</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ════════ FEATURE ENGINEERING ════════ -->
+  <section class="section">
+    <div class="section-label">Applied Techniques</div>
+    <div class="section-title">Feature Engineering</div>
+    <p class="section-desc">Preparing data for models. Every notebook runs end-to-end with real datasets and includes a conclusion with practical guidance.</p>
+
+    <div class="grid grid-2">
+      <a class="card" href="feature_engineering/handling-missing-values.ipynb">
+        <span class="card-tag tag-fe">Feature Eng</span>
+        <span class="card-title">Handling Missing Values</span>
+        <span class="card-desc">MCAR, MAR, MNAR. Mean, median, mode imputation — and when to drop vs fill. Titanic dataset walkthrough.</span>
+        <span class="card-arrow">→ notebook</span>
+      </a>
+
+      <a class="card" href="feature_engineering/outliers.ipynb">
+        <span class="card-tag tag-fe">Feature Eng</span>
+        <span class="card-title">Outlier Detection</span>
+        <span class="card-desc">IQR method and the 5-number summary. Box plots for visual detection. When to remove, cap, or investigate.</span>
+        <span class="card-arrow">→ notebook</span>
+      </a>
+
+      <a class="card" href="feature_engineering/data-encoding.ipynb">
+        <span class="card-tag tag-fe">Feature Eng</span>
+        <span class="card-title">Data Encoding</span>
+        <span class="card-desc">One-Hot, Label, and Ordinal Encoding. Sparse vs dense. When each method helps or hurts your model.</span>
+        <span class="card-arrow">→ notebook</span>
+      </a>
+
+      <a class="card" href="feature_engineering/target-guided-ordina-encoding.ipynb">
+        <span class="card-tag tag-fe">Feature Eng</span>
+        <span class="card-title">Target Guided Ordinal Encoding</span>
+        <span class="card-desc">Encoding high-cardinality categoricals using target means. One column, maximum signal — but watch for leakage.</span>
+        <span class="card-arrow">→ notebook</span>
+      </a>
+
+      <a class="card span-full" href="feature_engineering/handling-imbalanced-datasets.ipynb">
+        <span class="card-tag tag-fe">Feature Eng</span>
+        <span class="card-title">Handling Imbalanced Datasets</span>
+        <span class="card-desc">Upsampling, downsampling, and SMOTE. Synthetic minority samples that fill the feature space naturally.</span>
+        <span class="card-arrow">→ notebook</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ════════ REFERENCES ════════ -->
+  <section class="section">
+    <div class="section-label">Quick Reference</div>
+    <div class="section-title">Reference Guides</div>
+    <p class="section-desc">Bookmark these. Every formula, every metric, every distribution — on a single page.</p>
+
+    <div class="grid grid-2">
+      <a class="card" href="ds_cheatsheet.html">
+        <span class="card-tag tag-ref">Reference</span>
+        <span class="card-title">Formula Cheat Sheet</span>
+        <span class="card-desc">13 sections from descriptive stats through bias-variance. Every formula you need on one page with sticky navigation.</span>
+        <span class="card-arrow">→ open</span>
+      </a>
+
+      <a class="card" href="stats_probability_guide.html">
+        <span class="card-tag tag-stats">Reference</span>
+        <span class="card-title">Statistics & Probability Compendium</span>
+        <span class="card-desc">The comprehensive reference. Every distribution, every test, every theorem — with formulas, intuition, and when to use each.</span>
+        <span class="card-arrow">→ open</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ════════ PHILOSOPHY ════════ -->
+  <section class="philosophy">
+    <div class="section-label">Principles</div>
+    <div class="section-title">How We Teach</div>
+
+    <div class="phil-grid">
+      <div class="phil-item">
+        <div class="phil-num">01</div>
+        <h3>Show the derivation</h3>
+        <p>No magic. Every formula is derived from first principles with every step visible. If you can follow the algebra, you own the concept.</p>
+      </div>
+      <div class="phil-item">
+        <div class="phil-num">02</div>
+        <h3>Numbers before notation</h3>
+        <p>Work through a concrete example first, then generalize. Five data points and a calculator beat abstract theory every time.</p>
+      </div>
+      <div class="phil-item">
+        <div class="phil-num">03</div>
+        <h3>Free, forever</h3>
+        <p>No paywalls, no premium tiers, no login walls. Knowledge that's locked away isn't knowledge — it's a product. This is not a product.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="foot-name">Texcoco Data Science</div>
+  <div>Systematic observation · Engineered solutions · Evidence over assumption</div>
+</footer>
+
+</body>
+</html>

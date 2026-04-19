@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundational Data Science — Formula Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    line-height: 1.75;
+    padding: 2rem 1.5rem 4rem;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 2rem;
+    color: #e6edf3;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.5px;
+  }
+
+  .subtitle {
+    color: #7d8590;
+    font-size: 0.92rem;
+    margin-bottom: 1.8rem;
+    border-bottom: 1px solid #21262d;
+    padding-bottom: 1.5rem;
+  }
+
+  /* ── Nav ── */
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+    position: sticky;
+    top: 0;
+    background: #0d1117;
+    padding: 0.6rem 0;
+    z-index: 10;
+    border-bottom: 1px solid #21262d;
+  }
+  .nav a {
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: #8b949e;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.15s;
+  }
+  .nav a:hover { border-color: #58a6ff; color: #58a6ff; }
+
+  /* ── Colors ── */
+  .v  { color: #ff4d4d; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.88em; }
+  .vg { color: #56d364; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.88em; }
+  .vb { color: #58a6ff; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.88em; }
+  .vo { color: #f0883e; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.88em; }
+  .vp { color: #a371f7; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.88em; }
+  .vy { color: #e3b341; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.88em; }
+
+  /* ── Section ── */
+  .section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 4rem;
+  }
+
+  .section-title {
+    font-size: 1.15rem;
+    color: #e6edf3;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    padding: 0.5rem 0.9rem;
+    background: #161b22;
+    border-left: 3px solid #ff4d4d;
+    border-radius: 0 4px 4px 0;
+  }
+  .section-title.green  { border-left-color: #56d364; }
+  .section-title.blue   { border-left-color: #58a6ff; }
+  .section-title.orange { border-left-color: #f0883e; }
+  .section-title.purple { border-left-color: #a371f7; }
+  .section-title.yellow { border-left-color: #e3b341; }
+
+  /* ── Formula card ── */
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 0.4rem;
+  }
+
+  .formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    line-height: 2;
+    color: #e6edf3;
+  }
+
+  .note {
+    font-size: 0.82rem;
+    color: #7d8590;
+    margin-top: 0.3rem;
+    line-height: 1.5;
+  }
+
+  /* ── Two-column grid ── */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  /* ── Separator ── */
+  .sep {
+    border: none;
+    border-top: 1px solid #21262d;
+    margin: 2.5rem 0;
+  }
+
+  /* ── Callout ── */
+  .callout {
+    background: #1a1500;
+    border: 1px solid #f0883e;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.88rem;
+    color: #f0883e;
+  }
+  .callout.blue   { background: #0d1520; border-color: #58a6ff; color: #58a6ff; }
+  .callout.green  { background: #0f1d0f; border-color: #56d364; color: #56d364; }
+  .callout.purple { background: #160d20; border-color: #a371f7; color: #a371f7; }
+</style>
+</head>
+<body>
+
+<h1>Foundational Data Science</h1>
+<p class="subtitle">Every formula you need — from descriptive stats through regression, classification, and model evaluation.</p>
+
+<nav class="nav">
+  <a href="#stats">Descriptive Stats</a>
+  <a href="#probability">Probability</a>
+  <a href="#distributions">Distributions</a>
+  <a href="#hypothesis">Hypothesis Testing</a>
+  <a href="#regression">Linear Regression</a>
+  <a href="#gradient">Gradient Descent</a>
+  <a href="#reg-metrics">Regression Metrics</a>
+  <a href="#logistic">Logistic Regression</a>
+  <a href="#class-metrics">Classification Metrics</a>
+  <a href="#regularization">Regularization</a>
+  <a href="#info-theory">Information Theory</a>
+  <a href="#linalg">Linear Algebra</a>
+  <a href="#bias-variance">Bias–Variance</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- DESCRIPTIVE STATISTICS                      -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="stats">
+  <div class="section-title">1 · Descriptive Statistics</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Mean (average)</div>
+      <div class="formula">μ = (1/n) × Σxᵢ</div>
+      <div class="note">Sum all values, divide by count.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Median</div>
+      <div class="formula">Middle value when sorted</div>
+      <div class="note">If n is even: average of the two middle values.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Mode</div>
+      <div class="formula">Most frequently occurring value</div>
+      <div class="note">Can have 0, 1, or multiple modes.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Range</div>
+      <div class="formula">Range = max − min</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Variance (population)</div>
+      <div class="formula">σ² = (1/n) × Σ(xᵢ − μ)²</div>
+      <div class="note">Average squared deviation from the mean.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Variance (sample)</div>
+      <div class="formula">s² = (1/(n−1)) × Σ(xᵢ − x̄)²</div>
+      <div class="note">Bessel's correction: divide by n−1 for unbiased estimate.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Standard Deviation</div>
+      <div class="formula">σ = √σ² &nbsp;&nbsp; (population)<br>s = √s² &nbsp;&nbsp; (sample)</div>
+      <div class="note">Same units as the original data.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Standard Error of the Mean</div>
+      <div class="formula">SE = s / √n</div>
+      <div class="note">How much the sample mean varies from sample to sample.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Covariance</div>
+      <div class="formula">Cov(X,Y) = (1/(n−1)) × Σ(xᵢ − x̄)(yᵢ − ȳ)</div>
+      <div class="note">Positive = move together. Negative = move opposite. Scale-dependent.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Pearson Correlation</div>
+      <div class="formula">r = Cov(X,Y) / (sₓ × sᵧ)</div>
+      <div class="note">Normalized covariance. Range: [−1, +1]. Scale-independent.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">IQR (Interquartile Range)</div>
+      <div class="formula">IQR = Q3 − Q1</div>
+      <div class="note">Outlier bounds: [Q1 − 1.5·IQR, Q3 + 1.5·IQR]</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Z-Score (standardization)</div>
+      <div class="formula">z = (x − μ) / σ</div>
+      <div class="note">How many std deviations x is from the mean.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PROBABILITY                                 -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="probability">
+  <div class="section-title blue">2 · Probability</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Basic Probability</div>
+      <div class="formula">P(A) = favorable outcomes / total outcomes</div>
+      <div class="note">Always between 0 and 1.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Complement</div>
+      <div class="formula">P(A') = 1 − P(A)</div>
+      <div class="note">Probability of A NOT happening.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Addition Rule</div>
+      <div class="formula">P(A ∪ B) = P(A) + P(B) − P(A ∩ B)</div>
+      <div class="note">If mutually exclusive: P(A ∪ B) = P(A) + P(B)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Multiplication Rule</div>
+      <div class="formula">P(A ∩ B) = P(A) × P(B|A)</div>
+      <div class="note">If independent: P(A ∩ B) = P(A) × P(B)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Conditional Probability</div>
+      <div class="formula">P(A|B) = P(A ∩ B) / P(B)</div>
+      <div class="note">Probability of A given B has occurred.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Bayes' Theorem</div>
+      <div class="formula">P(A|B) = P(B|A) × P(A) / P(B)</div>
+      <div class="note">Update beliefs with evidence. Foundation of Naive Bayes.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Law of Total Probability</div>
+      <div class="formula">P(B) = Σ P(B|Aᵢ) × P(Aᵢ)</div>
+      <div class="note">Sum over all partitions of the sample space.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Expected Value</div>
+      <div class="formula">E[X] = Σ xᵢ × P(xᵢ)</div>
+      <div class="note">Weighted average of all possible outcomes.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- DISTRIBUTIONS                               -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="distributions">
+  <div class="section-title green">3 · Key Distributions</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Normal (Gaussian)</div>
+      <div class="formula">f(x) = (1 / (σ√(2π))) × e^(−(x−μ)² / (2σ²))</div>
+      <div class="note">Bell curve. 68% within ±1σ, 95% within ±2σ, 99.7% within ±3σ.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Bernoulli</div>
+      <div class="formula">P(X=1) = p &nbsp;&nbsp; P(X=0) = 1−p</div>
+      <div class="note">Single coin flip. Mean = p, Var = p(1−p).</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Binomial</div>
+      <div class="formula">P(X=k) = C(n,k) × p^k × (1−p)^(n−k)</div>
+      <div class="note">k successes in n independent trials. Mean = np, Var = np(1−p).</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Poisson</div>
+      <div class="formula">P(X=k) = (λ^k × e^(−λ)) / k!</div>
+      <div class="note">Count of events in fixed interval. Mean = Var = λ.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Uniform (continuous)</div>
+      <div class="formula">f(x) = 1 / (b − a) &nbsp;&nbsp; for a ≤ x ≤ b</div>
+      <div class="note">Equal probability everywhere. Mean = (a+b)/2.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Exponential</div>
+      <div class="formula">f(x) = λ × e^(−λx) &nbsp;&nbsp; for x ≥ 0</div>
+      <div class="note">Time between Poisson events. Mean = 1/λ.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- HYPOTHESIS TESTING                          -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="hypothesis">
+  <div class="section-title orange">4 · Hypothesis Testing</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Z-Test Statistic</div>
+      <div class="formula">z = (x̄ − μ₀) / (σ / √n)</div>
+      <div class="note">When population σ is known (or n ≥ 30).</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">T-Test Statistic</div>
+      <div class="formula">t = (x̄ − μ₀) / (s / √n)</div>
+      <div class="note">When population σ is unknown. Uses t-distribution with n−1 df.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Two-Sample T-Test</div>
+      <div class="formula">t = (x̄₁ − x̄₂) / √(s₁²/n₁ + s₂²/n₂)</div>
+      <div class="note">Compare means of two independent groups.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Chi-Square Statistic</div>
+      <div class="formula">χ² = Σ (Oᵢ − Eᵢ)² / Eᵢ</div>
+      <div class="note">O = observed, E = expected. Tests categorical associations.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Confidence Interval</div>
+      <div class="formula">x̄ ± z* × (s / √n)</div>
+      <div class="note">95% CI: z* = 1.96. 99% CI: z* = 2.576.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">p-value</div>
+      <div class="formula">P(data ≥ observed | H₀ is true)</div>
+      <div class="note">If p &lt; α (usually 0.05), reject H₀.</div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:1rem;">
+    <strong>Type I error (α):</strong> rejecting H₀ when it's actually true (false positive).<br>
+    <strong>Type II error (β):</strong> failing to reject H₀ when it's actually false (false negative).<br>
+    <strong>Power = 1 − β:</strong> probability of correctly rejecting a false H₀.
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- LINEAR REGRESSION                           -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="regression">
+  <div class="section-title">5 · Linear Regression</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Simple Linear Regression</div>
+      <div class="formula">ŷ = θ₀ + θ₁x</div>
+      <div class="note">θ₀ = intercept, θ₁ = slope.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Multiple Linear Regression</div>
+      <div class="formula">ŷ = θ₀ + θ₁x₁ + θ₂x₂ + … + θₚxₚ</div>
+      <div class="note">p features, p+1 parameters.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">OLS Slope (simple)</div>
+      <div class="formula">θ₁ = Σ(xᵢ − x̄)(yᵢ − ȳ) / Σ(xᵢ − x̄)²</div>
+      <div class="note">Closed-form solution. Also: θ₁ = Cov(X,Y) / Var(X).</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">OLS Intercept (simple)</div>
+      <div class="formula">θ₀ = ȳ − θ₁x̄</div>
+      <div class="note">The line always passes through (x̄, ȳ).</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Normal Equation (matrix)</div>
+      <div class="formula">θ = (XᵀX)⁻¹ Xᵀy</div>
+      <div class="note">Closed-form solution for multiple regression. O(n³) — slow for large p.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Cost Function (MSE)</div>
+      <div class="formula">J(θ) = (1/2m) × Σ(h(xⁱ) − yⁱ)²</div>
+      <div class="note">The ½ is for cleaner derivatives. m = number of samples.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- GRADIENT DESCENT                            -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="gradient">
+  <div class="section-title purple">6 · Gradient Descent</div>
+
+  <div class="card">
+    <div class="card-label">Update Rule (general)</div>
+    <div class="formula">θⱼ := θⱼ − α × ∂J(θ)/∂θⱼ</div>
+    <div class="note">α = learning rate. Repeat until convergence. Update ALL θ simultaneously.</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Gradient for θ₀</div>
+      <div class="formula">∂J/∂θ₀ = (1/m) × Σ(h(xⁱ) − yⁱ)</div>
+      <div class="note">Error × 1 (since x₀ = 1 always).</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Gradient for θⱼ (j ≥ 1)</div>
+      <div class="formula">∂J/∂θⱼ = (1/m) × Σ(h(xⁱ) − yⁱ) × xⱼⁱ</div>
+      <div class="note">Error × the feature value for that parameter.</div>
+    </div>
+  </div>
+
+  <div class="callout purple" style="margin-top:1rem;">
+    <strong>Variants:</strong><br>
+    <strong>Batch GD:</strong> uses all m samples per update (slow but stable).<br>
+    <strong>Stochastic GD:</strong> uses 1 random sample per update (fast but noisy).<br>
+    <strong>Mini-batch GD:</strong> uses a batch of b samples (best of both worlds).
+  </div>
+
+  <div class="card" style="margin-top:1rem;">
+    <div class="card-label">Feature Scaling (Min-Max)</div>
+    <div class="formula">x' = (x − min) / (max − min)</div>
+    <div class="note">Scales to [0, 1]. Helps GD converge faster when features have different ranges.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Feature Scaling (Standardization)</div>
+    <div class="formula">x' = (x − μ) / σ</div>
+    <div class="note">Mean 0, std 1. Preferred when data has outliers.</div>
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- REGRESSION METRICS                          -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="reg-metrics">
+  <div class="section-title yellow">7 · Regression Metrics</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">MAE — Mean Absolute Error</div>
+      <div class="formula">MAE = (1/n) × Σ|yᵢ − ŷᵢ|</div>
+      <div class="note">Same units as y. Robust to outliers. Not differentiable at 0.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">MSE — Mean Squared Error</div>
+      <div class="formula">MSE = (1/n) × Σ(yᵢ − ŷᵢ)²</div>
+      <div class="note">Units are y². Punishes large errors more. Differentiable.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">RMSE — Root Mean Squared Error</div>
+      <div class="formula">RMSE = √MSE</div>
+      <div class="note">Same units as y. Most commonly reported metric.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">SS<sub>total</sub></div>
+      <div class="formula">SS<sub>total</sub> = Σ(yᵢ − ȳ)²</div>
+      <div class="note">Total variance in the data. Baseline: how bad is guessing the mean?</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">SS<sub>res</sub> (residual)</div>
+      <div class="formula">SS<sub>res</sub> = Σ(yᵢ − ŷᵢ)²</div>
+      <div class="note">Variance your model can't explain. Smaller = better.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">R² — Coefficient of Determination</div>
+      <div class="formula">R² = 1 − SS<sub>res</sub> / SS<sub>total</sub></div>
+      <div class="note">% of variance explained. 1 = perfect, 0 = no better than mean, &lt;0 = worse.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Adjusted R²</div>
+      <div class="formula">Adj R² = 1 − [(1−R²)(n−1) / (n−p−1)]</div>
+      <div class="note">n = samples, p = features. Penalizes adding useless features.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">MAPE</div>
+      <div class="formula">MAPE = (100/n) × Σ|yᵢ − ŷᵢ| / |yᵢ|</div>
+      <div class="note">Percentage error. Undefined when yᵢ = 0.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- LOGISTIC REGRESSION                         -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="logistic">
+  <div class="section-title">8 · Logistic Regression</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Sigmoid Function</div>
+      <div class="formula">σ(z) = 1 / (1 + e^(−z))</div>
+      <div class="note">Maps any real number to (0, 1). Output = probability.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Hypothesis</div>
+      <div class="formula">h(x) = σ(θᵀx) = 1 / (1 + e^(−θᵀx))</div>
+      <div class="note">P(y=1|x; θ). Classify as 1 if h(x) ≥ 0.5.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Log Loss (Binary Cross-Entropy)</div>
+      <div class="formula">J(θ) = −(1/m) × Σ[ yⁱ log(hⁱ) + (1−yⁱ) log(1−hⁱ) ]</div>
+      <div class="note">Convex cost function for logistic regression. Heavily penalizes confident wrong predictions.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Decision Boundary</div>
+      <div class="formula">θᵀx = 0</div>
+      <div class="note">Where σ(z) = 0.5. Linear boundary in feature space.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Odds</div>
+      <div class="formula">odds = p / (1 − p)</div>
+      <div class="note">Ratio of success to failure probability.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Log-Odds (Logit)</div>
+      <div class="formula">log(p / (1−p)) = θ₀ + θ₁x₁ + … + θₚxₚ</div>
+      <div class="note">Logistic regression is linear in log-odds space.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem;">
+    <div class="card-label">Softmax (multi-class)</div>
+    <div class="formula">P(y=k|x) = e^(zₖ) / Σⱼ e^(zⱼ)</div>
+    <div class="note">Generalizes sigmoid to K classes. Outputs sum to 1.</div>
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- CLASSIFICATION METRICS                      -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="class-metrics">
+  <div class="section-title green">9 · Classification Metrics</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Accuracy</div>
+      <div class="formula">Accuracy = (TP + TN) / (TP + TN + FP + FN)</div>
+      <div class="note">Misleading on imbalanced data. 95% accuracy means nothing if 95% of data is one class.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Precision</div>
+      <div class="formula">Precision = TP / (TP + FP)</div>
+      <div class="note">"Of everything I called positive, how many actually were?" Minimize false alarms.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Recall (Sensitivity / TPR)</div>
+      <div class="formula">Recall = TP / (TP + FN)</div>
+      <div class="note">"Of all actual positives, how many did I catch?" Minimize misses.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">F1 Score</div>
+      <div class="formula">F1 = 2 × (Precision × Recall) / (Precision + Recall)</div>
+      <div class="note">Harmonic mean. Balances precision and recall. Range: [0, 1].</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Specificity (TNR)</div>
+      <div class="formula">Specificity = TN / (TN + FP)</div>
+      <div class="note">"Of all actual negatives, how many did I correctly identify?"</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">False Positive Rate</div>
+      <div class="formula">FPR = FP / (FP + TN) = 1 − Specificity</div>
+      <div class="note">X-axis of the ROC curve.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">AUC-ROC</div>
+      <div class="formula">Area under the ROC curve (TPR vs FPR)</div>
+      <div class="note">0.5 = random guess. 1.0 = perfect separation. Threshold-independent.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Log Loss (multi-class)</div>
+      <div class="formula">−(1/n) × ΣΣ yᵢₖ × log(pᵢₖ)</div>
+      <div class="note">Lower is better. Penalizes confident wrong predictions harshly.</div>
+    </div>
+  </div>
+
+  <div class="callout green" style="margin-top:1rem;">
+    <strong>Confusion Matrix:</strong><br>
+    TP = true positive, TN = true negative, FP = false positive (Type I), FN = false negative (Type II).<br>
+    All classification metrics are derived from these four numbers.
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- REGULARIZATION                              -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="regularization">
+  <div class="section-title orange">10 · Regularization</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">L1 — Lasso</div>
+      <div class="formula">J(θ) = MSE + λ × Σ|θⱼ|</div>
+      <div class="note">Drives coefficients to exactly 0 → automatic feature selection. Sparse models.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">L2 — Ridge</div>
+      <div class="formula">J(θ) = MSE + λ × Σθⱼ²</div>
+      <div class="note">Shrinks coefficients toward 0 but never exactly 0. Handles multicollinearity.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Elastic Net</div>
+      <div class="formula">J(θ) = MSE + λ₁Σ|θⱼ| + λ₂Σθⱼ²</div>
+      <div class="note">Combines L1 and L2. Best of both: sparsity + stability.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Dropout (neural networks)</div>
+      <div class="formula">During training: randomly set each neuron to 0 with probability p</div>
+      <div class="note">Forces redundancy. Acts like an ensemble. Typically p = 0.2–0.5.</div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:1rem;">
+    <strong>λ (lambda)</strong> = regularization strength.<br>
+    λ = 0 → no regularization (back to plain OLS).<br>
+    λ → ∞ → all coefficients → 0 (underfitting).<br>
+    Find the sweet spot with cross-validation.
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- INFORMATION THEORY                          -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="info-theory">
+  <div class="section-title purple">11 · Information Theory</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Entropy</div>
+      <div class="formula">H(X) = −Σ P(xᵢ) × log₂P(xᵢ)</div>
+      <div class="note">Measure of uncertainty/disorder. Max when all outcomes equally likely. Used in decision trees.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Gini Impurity</div>
+      <div class="formula">Gini = 1 − Σ pᵢ²</div>
+      <div class="note">Alternative to entropy for decision trees. 0 = pure, 0.5 = max impurity (binary).</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Information Gain</div>
+      <div class="formula">IG = H(parent) − Σ(nₖ/n) × H(childₖ)</div>
+      <div class="note">Reduction in entropy from a split. Higher = better split.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">KL Divergence</div>
+      <div class="formula">D_KL(P‖Q) = Σ P(x) × log(P(x)/Q(x))</div>
+      <div class="note">How different Q is from P. Not symmetric: D(P‖Q) ≠ D(Q‖P).</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Cross-Entropy</div>
+      <div class="formula">H(P,Q) = −Σ P(x) × log Q(x)</div>
+      <div class="note">H(P,Q) = H(P) + D_KL(P‖Q). Used as loss function in classification.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Mutual Information</div>
+      <div class="formula">I(X;Y) = H(X) − H(X|Y)</div>
+      <div class="note">How much knowing Y reduces uncertainty about X. 0 = independent.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- LINEAR ALGEBRA                              -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="linalg">
+  <div class="section-title blue">12 · Linear Algebra Essentials</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Dot Product</div>
+      <div class="formula">a · b = Σ aᵢbᵢ = |a||b|cos(θ)</div>
+      <div class="note">Scalar result. Foundation of matrix multiplication and projections.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Matrix Multiplication</div>
+      <div class="formula">C = AB &nbsp;&nbsp; where Cᵢⱼ = Σ Aᵢₖ Bₖⱼ</div>
+      <div class="note">A is (m×n), B is (n×p) → C is (m×p). Not commutative: AB ≠ BA.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Transpose</div>
+      <div class="formula">(Aᵀ)ᵢⱼ = Aⱼᵢ</div>
+      <div class="note">Swap rows and columns. (AB)ᵀ = BᵀAᵀ.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Inverse</div>
+      <div class="formula">A⁻¹A = AA⁻¹ = I</div>
+      <div class="note">Only exists if det(A) ≠ 0 (square, full rank).</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">L1 Norm (Manhattan)</div>
+      <div class="formula">‖x‖₁ = Σ|xᵢ|</div>
+      <div class="note">Sum of absolute values. Used in Lasso regularization.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">L2 Norm (Euclidean)</div>
+      <div class="formula">‖x‖₂ = √(Σ xᵢ²)</div>
+      <div class="note">Straight-line distance. Used in Ridge, KNN, and cosine similarity.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Cosine Similarity</div>
+      <div class="formula">cos(θ) = (a · b) / (‖a‖₂ × ‖b‖₂)</div>
+      <div class="note">Measures direction similarity, ignores magnitude. Range: [−1, 1]. Common in NLP.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Eigendecomposition</div>
+      <div class="formula">Av = λv</div>
+      <div class="note">v = eigenvector (direction preserved), λ = eigenvalue (scaling factor). Core of PCA.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- BIAS–VARIANCE                               -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="bias-variance">
+  <div class="section-title yellow">13 · Bias–Variance Tradeoff</div>
+
+  <div class="card">
+    <div class="card-label">Total Error Decomposition</div>
+    <div class="formula">E[(y − ŷ)²] = Bias(ŷ)² + Var(ŷ) + σ²</div>
+    <div class="note">σ² = irreducible noise. You can only reduce bias and variance — and reducing one tends to increase the other.</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Bias</div>
+      <div class="formula">Bias(ŷ) = E[ŷ] − y_true</div>
+      <div class="note">How far the average prediction is from the truth. High bias = underfitting (too simple).</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Variance</div>
+      <div class="formula">Var(ŷ) = E[(ŷ − E[ŷ])²]</div>
+      <div class="note">How much predictions change across different training sets. High variance = overfitting (too complex).</div>
+    </div>
+  </div>
+
+  <div class="callout blue" style="margin-top:1rem;">
+    <strong>The goal:</strong> minimize total error, not just one component.<br>
+    • Simple models → high bias, low variance (underfitting)<br>
+    • Complex models → low bias, high variance (overfitting)<br>
+    • Sweet spot → moderate bias, moderate variance (generalization)
+  </div>
+
+  <div class="grid-2" style="margin-top:1rem;">
+    <div class="card">
+      <div class="card-label">K-Fold Cross-Validation</div>
+      <div class="formula">Split data into K folds. Train on K−1, test on 1. Rotate K times. Average scores.</div>
+      <div class="note">Typical K = 5 or 10. Gives reliable estimate of generalization performance.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Train/Test Split</div>
+      <div class="formula">Typical: 80% train / 20% test<br>Or: 60% train / 20% val / 20% test</div>
+      <div class="note">Never evaluate on training data. Never tune hyperparameters on test data.</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

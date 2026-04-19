@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Underfitting &amp; Overfitting — A Visual Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0f14;
+    --surface: #151921;
+    --surface-raised: #1c2130;
+    --text: #e4e6eb;
+    --text-muted: #8b90a0;
+    --accent-under: #f0a050;
+    --accent-good: #50d0a0;
+    --accent-over: #e05070;
+    --border: rgba(255,255,255,0.06);
+    --glow-under: rgba(240,160,80,0.15);
+    --glow-good: rgba(80,208,160,0.15);
+    --glow-over: rgba(224,80,112,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 60% at 20% 50%, var(--glow-under), transparent),
+      radial-gradient(ellipse 40% 50% at 80% 50%, var(--glow-over), transparent),
+      radial-gradient(ellipse 30% 40% at 50% 60%, var(--glow-good), transparent);
+    pointer-events: none;
+    opacity: .7;
+  }
+
+  .hero-label {
+    font-family: 'Source Code Pro', monospace;
+    font-size: .75rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--accent-good);
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    max-width: 800px;
+  }
+
+  .hero h1 .under { color: var(--accent-under); }
+  .hero h1 .over  { color: var(--accent-over); }
+
+  .hero p {
+    max-width: 600px;
+    margin-top: 1.5rem;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+  }
+
+  /* ── Container ── */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ── Section ── */
+  section { padding: 4rem 0; }
+
+  section + section { border-top: 1px solid var(--border); }
+
+  .section-badge {
+    display: inline-block;
+    font-family: 'Source Code Pro', monospace;
+    font-size: .7rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    padding: .35rem .9rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+  }
+  .badge-under { background: var(--glow-under); color: var(--accent-under); border: 1px solid rgba(240,160,80,.25); }
+  .badge-good  { background: var(--glow-good);  color: var(--accent-good);  border: 1px solid rgba(80,208,160,.25); }
+  .badge-over  { background: var(--glow-over);  color: var(--accent-over);  border: 1px solid rgba(224,80,112,.25); }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 2rem 0 .75rem;
+  }
+
+  p + p { margin-top: 1rem; }
+
+  ul { padding-left: 1.4rem; margin-top: .75rem; }
+  li { margin-bottom: .5rem; }
+  li::marker { color: var(--text-muted); }
+
+  code {
+    font-family: 'Source Code Pro', monospace;
+    background: var(--surface-raised);
+    padding: .15em .4em;
+    border-radius: 4px;
+    font-size: .9em;
+  }
+
+  /* ── Diagrams ── */
+  .diagram-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+
+  .diagram-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .diagram-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,.4);
+  }
+
+  .diagram-card svg { width: 100%; height: auto; display: block; margin-bottom: 1rem; }
+
+  .diagram-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    margin-bottom: .4rem;
+  }
+  .diagram-card p { font-size: .88rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* ── Table ── */
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: .92rem;
+  }
+  .comparison-table th,
+  .comparison-table td {
+    padding: .85rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .comparison-table thead th {
+    font-family: 'Source Code Pro', monospace;
+    font-size: .75rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--surface);
+  }
+  .comparison-table tbody tr:hover { background: var(--surface); }
+
+  /* ── Key-Value list ── */
+  .kv { display: grid; grid-template-columns: 160px 1fr; gap: .6rem 1.5rem; margin: 1.5rem 0; }
+  .kv dt { font-weight: 600; color: var(--text-muted); font-size: .88rem; text-transform: uppercase; letter-spacing: .05em; }
+  .kv dd { font-size: .95rem; }
+
+  /* ── Callout ── */
+  .callout {
+    background: var(--surface);
+    border-left: 3px solid var(--accent-good);
+    border-radius: 0 12px 12px 0;
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    font-size: .95rem;
+  }
+  .callout strong { color: var(--accent-good); }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-muted);
+    font-size: .82rem;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero h1, .hero p, .hero-label { animation: fadeUp .8s ease both; }
+  .hero-label { animation-delay: .1s; }
+  .hero h1   { animation-delay: .25s; }
+  .hero p    { animation-delay: .45s; }
+
+  @media (max-width: 600px) {
+    .kv { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ Hero ════════ -->
+<header class="hero">
+  <span class="hero-label">Feature Engineering · Machine Learning</span>
+  <h1><span class="under">Underfitting</span> &amp; <span class="over">Overfitting</span></h1>
+  <p>Two failure modes every model builder must understand — and the sweet spot of generalisation that sits between them.</p>
+</header>
+
+<!-- ════════ Visual Overview ════════ -->
+<div class="container">
+  <section>
+    <div class="diagram-row">
+
+      <!-- Underfitting diagram -->
+      <div class="diagram-card">
+        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="280" height="200" rx="8" fill="#151921"/>
+          <!-- axes -->
+          <line x1="40" y1="170" x2="260" y2="170" stroke="#2a2f3e" stroke-width="1.5"/>
+          <line x1="40" y1="170" x2="40" y2="20" stroke="#2a2f3e" stroke-width="1.5"/>
+          <!-- data points (curved pattern) -->
+          <circle cx="60"  cy="140" r="5" fill="#f0a050" opacity=".7"/>
+          <circle cx="80"  cy="120" r="5" fill="#f0a050" opacity=".7"/>
+          <circle cx="100" cy="90"  r="5" fill="#f0a050" opacity=".7"/>
+          <circle cx="120" cy="60"  r="5" fill="#f0a050" opacity=".7"/>
+          <circle cx="140" cy="55"  r="5" fill="#f0a050" opacity=".7"/>
+          <circle cx="160" cy="65"  r="5" fill="#f0a050" opacity=".7"/>
+          <circle cx="180" cy="85"  r="5" fill="#f0a050" opacity=".7"/>
+          <circle cx="200" cy="110" r="5" fill="#f0a050" opacity=".7"/>
+          <circle cx="220" cy="130" r="5" fill="#f0a050" opacity=".7"/>
+          <circle cx="240" cy="145" r="5" fill="#f0a050" opacity=".7"/>
+          <!-- underfitting line (straight, bad fit) -->
+          <line x1="50" y1="135" x2="250" y2="75" stroke="#f0a050" stroke-width="2.5" stroke-dasharray="6 3"/>
+          <text x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">features</text>
+          <text x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">target</text>
+        </svg>
+        <h4 style="color:var(--accent-under)">Underfitting</h4>
+        <p>A straight line forced through curved data — the model is too simple to capture the real pattern.</p>
+      </div>
+
+      <!-- Good fit diagram -->
+      <div class="diagram-card">
+        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="280" height="200" rx="8" fill="#151921"/>
+          <line x1="40" y1="170" x2="260" y2="170" stroke="#2a2f3e" stroke-width="1.5"/>
+          <line x1="40" y1="170" x2="40" y2="20" stroke="#2a2f3e" stroke-width="1.5"/>
+          <circle cx="60"  cy="140" r="5" fill="#50d0a0" opacity=".7"/>
+          <circle cx="80"  cy="120" r="5" fill="#50d0a0" opacity=".7"/>
+          <circle cx="100" cy="90"  r="5" fill="#50d0a0" opacity=".7"/>
+          <circle cx="120" cy="60"  r="5" fill="#50d0a0" opacity=".7"/>
+          <circle cx="140" cy="55"  r="5" fill="#50d0a0" opacity=".7"/>
+          <circle cx="160" cy="65"  r="5" fill="#50d0a0" opacity=".7"/>
+          <circle cx="180" cy="85"  r="5" fill="#50d0a0" opacity=".7"/>
+          <circle cx="200" cy="110" r="5" fill="#50d0a0" opacity=".7"/>
+          <circle cx="220" cy="130" r="5" fill="#50d0a0" opacity=".7"/>
+          <circle cx="240" cy="145" r="5" fill="#50d0a0" opacity=".7"/>
+          <!-- good-fit curve -->
+          <path d="M55,145 Q100,40 150,55 Q200,70 245,148" fill="none" stroke="#50d0a0" stroke-width="2.5"/>
+          <text x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">features</text>
+          <text x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">target</text>
+        </svg>
+        <h4 style="color:var(--accent-good)">Good Fit</h4>
+        <p>A smooth curve that captures the underlying trend without chasing every individual point.</p>
+      </div>
+
+      <!-- Overfitting diagram -->
+      <div class="diagram-card">
+        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="280" height="200" rx="8" fill="#151921"/>
+          <line x1="40" y1="170" x2="260" y2="170" stroke="#2a2f3e" stroke-width="1.5"/>
+          <line x1="40" y1="170" x2="40" y2="20" stroke="#2a2f3e" stroke-width="1.5"/>
+          <circle cx="60"  cy="140" r="5" fill="#e05070" opacity=".7"/>
+          <circle cx="80"  cy="120" r="5" fill="#e05070" opacity=".7"/>
+          <circle cx="100" cy="90"  r="5" fill="#e05070" opacity=".7"/>
+          <circle cx="120" cy="60"  r="5" fill="#e05070" opacity=".7"/>
+          <circle cx="140" cy="55"  r="5" fill="#e05070" opacity=".7"/>
+          <circle cx="160" cy="65"  r="5" fill="#e05070" opacity=".7"/>
+          <circle cx="180" cy="85"  r="5" fill="#e05070" opacity=".7"/>
+          <circle cx="200" cy="110" r="5" fill="#e05070" opacity=".7"/>
+          <circle cx="220" cy="130" r="5" fill="#e05070" opacity=".7"/>
+          <circle cx="240" cy="145" r="5" fill="#e05070" opacity=".7"/>
+          <!-- overfitting squiggly path hitting every point -->
+          <path d="M55,142 C60,140 70,138 80,120 C85,105 88,88 100,90 C108,91 112,55 120,60 C128,64 132,42 140,55 C148,68 152,50 160,65 C168,80 172,70 180,85 C188,100 192,90 200,110 C208,125 212,115 220,130 C228,140 234,135 245,148"
+              fill="none" stroke="#e05070" stroke-width="2.5"/>
+          <text x="140" y="192" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace">features</text>
+          <text x="18" y="95" text-anchor="middle" fill="#8b90a0" font-size="10" font-family="Source Code Pro, monospace" transform="rotate(-90 18 95)">target</text>
+        </svg>
+        <h4 style="color:var(--accent-over)">Overfitting</h4>
+        <p>A wildly complex curve that memorises every data point — including the noise — and fails on new data.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════ Underfitting ════════ -->
+  <section>
+    <span class="section-badge badge-under">Underfitting</span>
+    <h2>When the Model Is Too Simple</h2>
+    <p>Underfitting occurs when a model is <strong>not complex enough</strong> to capture the underlying structure of the data. It performs poorly on the training data <em>and</em> on unseen data because it never learned the real patterns in the first place.</p>
+
+    <h3>Why Does It Happen?</h3>
+    <ul>
+      <li><strong>Model too simple</strong> — e.g., fitting a straight line to data that follows a curve.</li>
+      <li><strong>Not enough features</strong> — important predictors are missing from the dataset.</li>
+      <li><strong>Too much regularisation</strong> — penalty terms shrink coefficients so aggressively that the model becomes trivial.</li>
+      <li><strong>Insufficient training time</strong> — the optimiser stopped before converging (common with neural networks).</li>
+    </ul>
+
+    <h3>How to Detect It</h3>
+    <dl class="kv">
+      <dt>Training error</dt><dd>High — the model can't even fit the data it was trained on.</dd>
+      <dt>Validation error</dt><dd>Also high — and close to the training error.</dd>
+      <dt>Learning curve</dt><dd>Both curves plateau at a high loss, adding more data doesn't help.</dd>
+    </dl>
+
+    <h3>How to Fix It</h3>
+    <ul>
+      <li>Use a more powerful model (e.g., switch from linear regression to a decision tree or neural network).</li>
+      <li>Add more informative features or engineer new ones.</li>
+      <li>Reduce regularisation strength.</li>
+      <li>Train longer (increase epochs, lower early-stopping patience).</li>
+      <li>Decrease learning rate and train with smaller but more precise steps.</li>
+    </ul>
+  </section>
+
+  <!-- ════════ Overfitting ════════ -->
+  <section>
+    <span class="section-badge badge-over">Overfitting</span>
+    <h2>When the Model Memorises the Noise</h2>
+    <p>Overfitting occurs when a model is <strong>too complex</strong> relative to the amount and noisiness of the training data. It learns both the true signal and the random fluctuations (noise), achieving near-perfect training scores while failing badly on unseen data.</p>
+
+    <h3>Why Does It Happen?</h3>
+    <ul>
+      <li><strong>Model too complex</strong> — more parameters than the data can support (e.g., a high-degree polynomial for 10 data points).</li>
+      <li><strong>Not enough training data</strong> — small datasets make it easy for a flexible model to memorise every example.</li>
+      <li><strong>Training too long</strong> — with neural networks, continued training past the optimal point allows the model to latch onto noise.</li>
+      <li><strong>No regularisation</strong> — nothing penalises the model for growing overly complex.</li>
+      <li><strong>Noisy or mislabelled data</strong> — the model faithfully learns incorrect labels.</li>
+    </ul>
+
+    <h3>How to Detect It</h3>
+    <dl class="kv">
+      <dt>Training error</dt><dd>Very low — the model fits the training set almost perfectly.</dd>
+      <dt>Validation error</dt><dd>Much higher — a large gap between training and validation performance is the hallmark of overfitting.</dd>
+      <dt>Learning curve</dt><dd>Training loss keeps falling while validation loss rises or stalls.</dd>
+    </dl>
+
+    <h3>How to Fix It</h3>
+    <ul>
+      <li>Collect more training data to make memorisation harder.</li>
+      <li>Simplify the model — fewer layers, fewer parameters, lower polynomial degree.</li>
+      <li>Apply regularisation: L1 (Lasso), L2 (Ridge), Elastic Net, or dropout for neural networks.</li>
+      <li>Use early stopping to halt training when validation loss begins to increase.</li>
+      <li>Add data augmentation to artificially increase dataset diversity.</li>
+      <li>Use cross-validation to get a more reliable estimate of generalisation performance.</li>
+      <li>Prune decision trees or reduce <code>max_depth</code>.</li>
+    </ul>
+  </section>
+
+  <!-- ════════ Bias–Variance ════════ -->
+  <section>
+    <span class="section-badge badge-good">The Bigger Picture</span>
+    <h2>The Bias–Variance Tradeoff</h2>
+    <p>Underfitting and overfitting are two sides of the <strong>bias–variance tradeoff</strong>, one of the most important concepts in machine learning.</p>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th style="color:var(--accent-under)">Underfitting</th>
+          <th style="color:var(--accent-over)">Overfitting</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Bias</strong></td>
+          <td>High — strong assumptions, misses patterns</td>
+          <td>Low — flexible, captures everything</td>
+        </tr>
+        <tr>
+          <td><strong>Variance</strong></td>
+          <td>Low — stable across datasets</td>
+          <td>High — sensitive to every fluctuation</td>
+        </tr>
+        <tr>
+          <td><strong>Training error</strong></td>
+          <td>High</td>
+          <td>Very low</td>
+        </tr>
+        <tr>
+          <td><strong>Test / Val error</strong></td>
+          <td>High</td>
+          <td>High (but for different reasons)</td>
+        </tr>
+        <tr>
+          <td><strong>Model complexity</strong></td>
+          <td>Too simple</td>
+          <td>Too complex</td>
+        </tr>
+        <tr>
+          <td><strong>Typical fix</strong></td>
+          <td>Increase complexity / features</td>
+          <td>Regularise / simplify / more data</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Key takeaway:</strong> The goal isn't to minimise training error — it's to minimise the gap between training and validation error at the lowest possible level. A well-generalised model accepts a small amount of training error in exchange for reliable performance on data it has never seen.
+    </div>
+  </section>
+
+  <!-- ════════ Practical Tips ════════ -->
+  <section>
+    <span class="section-badge badge-good">In Practice</span>
+    <h2>Practical Workflow</h2>
+    <p>When building a model, follow this iterative loop:</p>
+    <ul>
+      <li><strong>Start simple.</strong> Begin with a baseline model (e.g., logistic regression). If it underfits, you know you need more complexity.</li>
+      <li><strong>Add complexity gradually.</strong> Try richer features, more flexible algorithms, or deeper architectures one step at a time.</li>
+      <li><strong>Monitor the gap.</strong> Always compare training and validation metrics. A growing gap means overfitting is creeping in.</li>
+      <li><strong>Regularise when needed.</strong> Once overfitting appears, introduce regularisation, dropout, or data augmentation before adding more data.</li>
+      <li><strong>Use cross-validation.</strong> Especially with small datasets, k-fold CV gives a more robust picture than a single train/test split.</li>
+      <li><strong>Evaluate on a held-out test set last.</strong> Only after you've tuned everything on the validation set should you measure final performance on the test set.</li>
+    </ul>
+  </section>
+</div>
+
+<footer>
+  Feature Engineering Series &middot; Underfitting &amp; Overfitting
+</footer>
+
+</body>
+</html>

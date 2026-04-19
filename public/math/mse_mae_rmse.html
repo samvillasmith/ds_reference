@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MSE, MAE & RMSE — Step by Step</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    line-height: 1.75;
+    padding: 2rem 1.5rem;
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  h1 { font-size: 1.8rem; color: #e6edf3; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
+
+  .subtitle {
+    color: #7d8590;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #21262d;
+    padding-bottom: 1.5rem;
+  }
+
+  .v { color: #ff4d4d; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+  .vg { color: #56d364; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+  .vb { color: #58a6ff; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+  .vo { color: #f0883e; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+  .vp { color: #a371f7; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+  .vy { color: #e3b341; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+
+  .section { margin-bottom: 2.5rem; }
+
+  .section-title {
+    font-size: 1.1rem;
+    color: #e6edf3;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding: 0.4rem 0.8rem;
+    background: #161b22;
+    border-left: 3px solid #ff4d4d;
+    border-radius: 0 4px 4px 0;
+  }
+  .section-title.green { border-left-color: #56d364; }
+  .section-title.blue { border-left-color: #58a6ff; }
+  .section-title.orange { border-left-color: #f0883e; }
+  .section-title.purple { border-left-color: #a371f7; }
+  .section-title.yellow { border-left-color: #e3b341; }
+
+  .step { margin-bottom: 1.5rem; padding-left: 1rem; }
+
+  .formula-box {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin: 0.5rem 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 2;
+    overflow-x: auto;
+  }
+
+  .math-line { display: block; padding: 2px 0; }
+
+  .result-box {
+    background: #0f1d0f;
+    border: 1px solid #238636;
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    margin-top: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    color: #56d364;
+    font-weight: 700;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+  }
+
+  .data-table th {
+    background: #161b22;
+    color: #8b949e;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.5rem 0.7rem;
+    border-bottom: 2px solid #30363d;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .data-table td {
+    padding: 0.4rem 0.7rem;
+    border-bottom: 1px solid #21262d;
+  }
+
+  .note {
+    color: #7d8590;
+    font-size: 0.88rem;
+    font-style: italic;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .callout {
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  .callout.red { background: #1d0d0d; border: 1px solid #da3633; color: #ff6b6b; }
+  .callout.blue { background: #0d1520; border: 1px solid #58a6ff; color: #58a6ff; }
+  .callout.green { background: #0f1d0f; border: 1px solid #56d364; color: #56d364; }
+  .callout.orange { background: #1a1500; border: 1px solid #f0883e; color: #f0883e; }
+  .callout.purple { background: #160d20; border: 1px solid #a371f7; color: #a371f7; }
+  .callout.yellow { background: #1a1800; border: 1px solid #e3b341; color: #e3b341; }
+
+  .iteration-nav {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .iter-btn {
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.88rem;
+    transition: all 0.2s;
+  }
+  .iter-btn:hover { border-color: #ff4d4d; color: #ff4d4d; }
+  .iter-btn.active { background: #ff4d4d; border-color: #ff4d4d; color: #fff; font-weight: 700; }
+
+  .iteration-content { display: none; }
+  .iteration-content.active { display: block; }
+
+  .legend {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.82rem;
+    margin-bottom: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .compare-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.8rem;
+    margin: 1rem 0;
+  }
+  .compare-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .compare-card .metric-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
+  .compare-card .metric-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+  }
+  .compare-card .metric-unit {
+    font-size: 0.78rem;
+    color: #7d8590;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  @media (max-width: 600px) {
+    .compare-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1>MSE, MAE & RMSE</h1>
+<p class="subtitle">Three ways to measure how wrong your model is — each with a different personality.</p>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#ff4d4d"></div> plugged in</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#56d364"></div> MAE</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#58a6ff"></div> MSE</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a371f7"></div> RMSE</div>
+</div>
+
+<div class="iteration-nav">
+  <button class="iter-btn active" onclick="showIter(0)">The Errors</button>
+  <button class="iter-btn" onclick="showIter(1)">MAE</button>
+  <button class="iter-btn" onclick="showIter(2)">MSE</button>
+  <button class="iter-btn" onclick="showIter(3)">RMSE</button>
+  <button class="iter-btn" onclick="showIter(4)">Compare All</button>
+</div>
+
+<!-- TAB 0: THE ERRORS -->
+<div class="iteration-content active" id="iter-0">
+  <div class="section">
+    <div class="section-title">Same Dataset, Same Line</div>
+    <div class="step">
+      <p class="note">Best-fit line from gradient descent: h(x) = <span class="v">2.2</span> + <span class="v">0.6</span>x</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>House</th>
+            <th>x (sq ft)</th>
+            <th>y (actual)</th>
+            <th>ŷ (predicted)</th>
+            <th>error (y − ŷ)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><span class="v">1</span></td>
+            <td><span class="v">2</span></td>
+            <td><span class="v">2.8</span></td>
+            <td><span class="v">−0.8</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><span class="v">2</span></td>
+            <td><span class="v">4</span></td>
+            <td><span class="v">3.4</span></td>
+            <td><span class="v">+0.6</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><span class="v">3</span></td>
+            <td><span class="v">5</span></td>
+            <td><span class="v">4.0</span></td>
+            <td><span class="v">+1.0</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><span class="v">4</span></td>
+            <td><span class="v">4</span></td>
+            <td><span class="v">4.6</span></td>
+            <td><span class="v">−0.6</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><span class="v">5</span></td>
+            <td><span class="v">5</span></td>
+            <td><span class="v">5.2</span></td>
+            <td><span class="v">−0.2</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="formula-box">
+        <span class="math-line" style="color:#e6edf3; font-weight:700;">How predictions were computed:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">House 1: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">1</span> = <span class="v">2.8</span></span>
+        <span class="math-line">House 2: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">2</span> = <span class="v">3.4</span></span>
+        <span class="math-line">House 3: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">3</span> = <span class="v">4.0</span></span>
+        <span class="math-line">House 4: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">4</span> = <span class="v">4.6</span></span>
+        <span class="math-line">House 5: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">5</span> = <span class="v">5.2</span></span>
+      </div>
+
+      <div class="callout red">
+        <strong>The problem with raw errors:</strong> they cancel out.<br><br>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:0.85rem;">
+          −0.8 + 0.6 + 1.0 + −0.6 + −0.2 = <strong>0.0</strong>
+        </span><br><br>
+        The negatives and positives cancel perfectly. Sum = 0. That doesn't mean the model is perfect — it means raw errors are useless as a metric. We need to get rid of the signs.
+      </div>
+
+      <div class="formula-box" style="border-color: #e3b341;">
+        <span class="math-line" style="color:#e3b341; font-weight:700;">Two ways to kill the sign:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#56d364;">① Take absolute value → |error| → that's MAE</span>
+        <span class="math-line" style="color:#58a6ff;">② Square the error → error² → that's MSE</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 1: MAE -->
+<div class="iteration-content" id="iter-1">
+  <div class="section">
+    <div class="section-title green">MAE — Mean Absolute Error</div>
+    <div class="step">
+      <div class="callout green">
+        <strong>MAE = (1/n) × Σ|yᵢ − ŷᵢ|</strong><br><br>
+        Take each error, drop the sign (absolute value), average them. Done.
+      </div>
+
+      <div class="formula-box" style="border-color: #56d364;">
+        <span class="math-line" style="color:#56d364; font-weight:700;">Step 1 — Take absolute value of each error:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">House 1: |<span class="v">−0.8</span>| = <span class="vg">0.8</span></span>
+        <span class="math-line">House 2: |<span class="v">+0.6</span>| = <span class="vg">0.6</span></span>
+        <span class="math-line">House 3: |<span class="v">+1.0</span>| = <span class="vg">1.0</span></span>
+        <span class="math-line">House 4: |<span class="v">−0.6</span>| = <span class="vg">0.6</span></span>
+        <span class="math-line">House 5: |<span class="v">−0.2</span>| = <span class="vg">0.2</span></span>
+      </div>
+
+      <div class="formula-box" style="border-color: #56d364;">
+        <span class="math-line" style="color:#56d364; font-weight:700;">Step 2 — Average them:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">MAE = ( <span class="vg">0.8</span> + <span class="vg">0.6</span> + <span class="vg">1.0</span> + <span class="vg">0.6</span> + <span class="vg">0.2</span> ) / <span class="v">5</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">    = <span class="vg">3.2</span> / <span class="v">5</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="font-size: 1.05rem;">    = <span class="vg" style="font-size:1.2rem;">0.64</span></span>
+      </div>
+
+      <div class="result-box">
+        MAE = 0.64 → "On average, predictions are off by $0.64k ($640)"
+      </div>
+
+      <div class="formula-box" style="margin-top: 1rem;">
+        <span class="math-line" style="color:#e6edf3; font-weight:700;">Why use MAE?</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#7d8590;">✓ Easy to understand — it's in the same units as y ($k)</span>
+        <span class="math-line" style="color:#7d8590;">✓ Treats all errors equally — a $1k miss counts the same everywhere</span>
+        <span class="math-line" style="color:#7d8590;">✓ Robust to outliers — one huge error doesn't dominate</span>
+        <span class="math-line" style="color:#7d8590;">✗ Not differentiable at 0 — harder to use in gradient descent</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2: MSE -->
+<div class="iteration-content" id="iter-2">
+  <div class="section">
+    <div class="section-title blue">MSE — Mean Squared Error</div>
+    <div class="step">
+      <div class="callout blue">
+        <strong>MSE = (1/n) × Σ(yᵢ − ŷᵢ)²</strong><br><br>
+        Take each error, square it, average them. Squaring kills the sign AND punishes big errors more.
+      </div>
+
+      <div class="formula-box" style="border-color: #58a6ff;">
+        <span class="math-line" style="color:#58a6ff; font-weight:700;">Step 1 — Square each error:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">House 1: (<span class="v">−0.8</span>)² = <span class="vb">0.64</span></span>
+        <span class="math-line">House 2: (<span class="v">+0.6</span>)² = <span class="vb">0.36</span></span>
+        <span class="math-line">House 3: (<span class="v">+1.0</span>)² = <span class="vb">1.00</span></span>
+        <span class="math-line">House 4: (<span class="v">−0.6</span>)² = <span class="vb">0.36</span></span>
+        <span class="math-line">House 5: (<span class="v">−0.2</span>)² = <span class="vb">0.04</span></span>
+      </div>
+
+      <div class="formula-box" style="border-color: #58a6ff;">
+        <span class="math-line" style="color:#58a6ff; font-weight:700;">Step 2 — Average them:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">MSE = ( <span class="vb">0.64</span> + <span class="vb">0.36</span> + <span class="vb">1.00</span> + <span class="vb">0.36</span> + <span class="vb">0.04</span> ) / <span class="v">5</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">    = <span class="vb">2.40</span> / <span class="v">5</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="font-size: 1.05rem;">    = <span class="vb" style="font-size:1.2rem;">0.48</span></span>
+      </div>
+
+      <div class="result-box" style="border-color: #58a6ff; color: #58a6ff;">
+        MSE = 0.48 → "Average squared error is 0.48"
+      </div>
+
+      <div class="callout orange" style="margin-top: 1rem;">
+        <strong>Notice the units problem:</strong><br><br>
+        Your y is in <strong>$k</strong>. You squared the errors, so MSE is in <strong>$k²</strong>.<br>
+        What's "$0.48 thousand-dollars-squared"? It doesn't mean anything intuitive.<br><br>
+        This is why RMSE exists →
+      </div>
+
+      <div class="formula-box" style="margin-top: 1rem;">
+        <span class="math-line" style="color:#e6edf3; font-weight:700;">Why use MSE?</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#7d8590;">✓ Differentiable everywhere — perfect for gradient descent</span>
+        <span class="math-line" style="color:#7d8590;">✓ Punishes large errors more — a 2.0 error costs 4× more than a 1.0 error</span>
+        <span class="math-line" style="color:#7d8590;">✓ This is what the cost function J(θ) is based on</span>
+        <span class="math-line" style="color:#7d8590;">✗ Units are squared — not directly interpretable</span>
+        <span class="math-line" style="color:#7d8590;">✗ Sensitive to outliers — one huge error can dominate</span>
+      </div>
+
+      <div class="formula-box" style="margin-top: 1rem; border-color: #e3b341;">
+        <span class="math-line" style="color:#e3b341; font-weight:700;">How squaring punishes big errors:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#7d8590;">Error of 0.2 → squared = 0.04 &nbsp;(tiny)</span>
+        <span class="math-line" style="color:#7d8590;">Error of 1.0 → squared = 1.00 &nbsp;(25× bigger!)</span>
+        <span class="math-line" style="color:#7d8590;">Error of 5.0 → squared = 25.0 &nbsp;(625× bigger!)</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#e3b341;">The bigger the miss, the more MSE cares about it.</span>
+        <span class="math-line" style="color:#e3b341;">MAE would treat these proportionally: 0.2, 1.0, 5.0.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3: RMSE -->
+<div class="iteration-content" id="iter-3">
+  <div class="section">
+    <div class="section-title purple">RMSE — Root Mean Squared Error</div>
+    <div class="step">
+      <div class="callout purple">
+        <strong>RMSE = √MSE</strong><br><br>
+        That's it. Take MSE and square-root it. This undoes the squaring so units make sense again.
+      </div>
+
+      <div class="formula-box" style="border-color: #a371f7;">
+        <span class="math-line" style="color:#a371f7; font-weight:700;">Just one step — take the square root of MSE:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">RMSE = √<span class="vb">MSE</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">     = √<span class="vb">0.48</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="font-size: 1.05rem;">     = <span class="vp" style="font-size:1.2rem;">0.6928</span></span>
+      </div>
+
+      <div class="result-box" style="border-color: #a371f7; color: #a371f7;">
+        RMSE = 0.6928 → "Predictions are off by ~$0.69k ($693) on average"
+      </div>
+
+      <div class="formula-box" style="margin-top: 1rem;">
+        <span class="math-line" style="color:#e6edf3; font-weight:700;">Or expand the full formula:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">RMSE = √[ (1/n) × Σ(yᵢ − ŷᵢ)² ]</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">     = √[ (<span class="vb">0.64</span> + <span class="vb">0.36</span> + <span class="vb">1.00</span> + <span class="vb">0.36</span> + <span class="vb">0.04</span>) / <span class="v">5</span> ]</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">     = √[ <span class="vb">2.40</span> / <span class="v">5</span> ]</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">     = √<span class="vb">0.48</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">     = <span class="vp">0.6928</span></span>
+      </div>
+
+      <div class="formula-box" style="margin-top: 1rem;">
+        <span class="math-line" style="color:#e6edf3; font-weight:700;">Why use RMSE?</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#7d8590;">✓ Same units as y ($k) — directly interpretable</span>
+        <span class="math-line" style="color:#7d8590;">✓ Still punishes big errors more (from the squaring inside)</span>
+        <span class="math-line" style="color:#7d8590;">✓ Most commonly reported metric in ML papers</span>
+        <span class="math-line" style="color:#7d8590;">✗ Still sensitive to outliers (like MSE)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4: COMPARE -->
+<div class="iteration-content" id="iter-4">
+  <div class="section">
+    <div class="section-title yellow">All Three Side by Side</div>
+    <div class="step">
+
+      <div class="compare-row">
+        <div class="compare-card" style="border-color: #56d364;">
+          <div class="metric-name" style="color:#56d364;">MAE</div>
+          <div class="metric-value" style="color:#56d364;">0.64</div>
+          <div class="metric-unit">$k (same as y)</div>
+        </div>
+        <div class="compare-card" style="border-color: #58a6ff;">
+          <div class="metric-name" style="color:#58a6ff;">MSE</div>
+          <div class="metric-value" style="color:#58a6ff;">0.48</div>
+          <div class="metric-unit">$k² (squared units)</div>
+        </div>
+        <div class="compare-card" style="border-color: #a371f7;">
+          <div class="metric-name" style="color:#a371f7;">RMSE</div>
+          <div class="metric-value" style="color:#a371f7;">0.6928</div>
+          <div class="metric-unit">$k (same as y)</div>
+        </div>
+      </div>
+
+      <div class="formula-box" style="margin-top: 1.5rem; border-color: #e3b341;">
+        <span class="math-line" style="color:#e3b341; font-weight:700;">Why is RMSE > MAE?</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#7d8590;">RMSE is always ≥ MAE. The squaring step amplifies larger errors,</span>
+        <span class="math-line" style="color:#7d8590;">so the average gets pulled up. The bigger the gap between</span>
+        <span class="math-line" style="color:#7d8590;">RMSE and MAE, the more variance in your errors (some big, some small).</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#e3b341;">If RMSE ≈ MAE → errors are all similar sizes</span>
+        <span class="math-line" style="color:#e3b341;">If RMSE >> MAE → a few big errors are dragging it up</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title yellow">How They're Related</div>
+    <div class="step">
+      <div class="formula-box">
+        <span class="math-line" style="color:#e6edf3; font-weight:700;">The chain:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#56d364;">MAE  = avg of |errors|           &nbsp;&nbsp;→ simple average</span>
+        <span class="math-line" style="color:#58a6ff;">MSE  = avg of errors²            &nbsp;&nbsp;→ square first, then average</span>
+        <span class="math-line" style="color:#a371f7;">RMSE = √(avg of errors²)         → square, average, then undo the square</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#7d8590;">MSE and RMSE contain the same information — RMSE is just</span>
+        <span class="math-line" style="color:#7d8590;">MSE in human-readable units.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title yellow">When to Use Which</div>
+    <div class="step">
+      <div class="formula-box" style="font-size: 0.85rem;">
+        <span class="math-line" style="color:#56d364; font-weight:700;">Use MAE when:</span>
+        <span class="math-line" style="color:#7d8590;">• You want a simple "how far off am I on average?" answer</span>
+        <span class="math-line" style="color:#7d8590;">• You have outliers and don't want them to dominate</span>
+        <span class="math-line" style="color:#7d8590;">• All errors matter equally regardless of size</span>
+        <span class="math-line" style="color:#7d8590;">• Example: predicting delivery time — off by 5 min is 5× worse than 1 min</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#58a6ff; font-weight:700;">Use MSE when:</span>
+        <span class="math-line" style="color:#7d8590;">• You're training a model (it's the cost function)</span>
+        <span class="math-line" style="color:#7d8590;">• You need smooth gradients for optimization</span>
+        <span class="math-line" style="color:#7d8590;">• Big errors should be punished disproportionately</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color:#a371f7; font-weight:700;">Use RMSE when:</span>
+        <span class="math-line" style="color:#7d8590;">• You want MSE's properties but in interpretable units</span>
+        <span class="math-line" style="color:#7d8590;">• Reporting results to someone who needs to understand them</span>
+        <span class="math-line" style="color:#7d8590;">• Example: "our model is off by ~$693 on average" (RMSE)</span>
+        <span class="math-line" style="color:#7d8590;">&nbsp;&nbsp;vs "the mean squared error is 0.48" (MSE) — which is clearer?</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title yellow">Quick Reference — All Formulas</div>
+    <div class="step">
+      <div class="formula-box" style="font-size: 0.9rem; line-height: 2.5;">
+        <span class="math-line"><span class="vg">MAE</span>  = (1/n) × Σ |yᵢ − ŷᵢ|</span>
+        <span class="math-line"><span class="vb">MSE</span>  = (1/n) × Σ (yᵢ − ŷᵢ)²</span>
+        <span class="math-line"><span class="vp">RMSE</span> = √[ (1/n) × Σ (yᵢ − ŷᵢ)² ] &nbsp; = &nbsp; √MSE</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showIter(index) {
+    document.querySelectorAll('.iteration-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.iter-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('iter-' + index).classList.add('active');
+    document.querySelectorAll('.iter-btn')[index].classList.add('active');
+  }
+</script>
+
+</body>
+</html>

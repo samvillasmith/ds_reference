@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=JetBrains+Mono:wght@400&display=swap');
+
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 52px;
+  background: rgba(13,17,23,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #21262d;
+  margin: -2rem -1.5rem 2rem;
+}
+
+.nav-brand {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #f0ece4;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
+.nav-brand:hover { color: #c87533; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.nav-links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7d8590;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: #c87533; }
+
+.nav-links .nav-cta {
+  color: #c87533;
+  border: 1px solid rgba(200,117,51,0.35);
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-links .nav-cta:hover {
+  background: rgba(200,117,51,0.12);
+  color: #c87533;
+}
+
+@media (max-width: 600px) {
+  .site-nav { padding: 0 1rem; }
+  .nav-links { gap: 1rem; }
+  .nav-links .nav-home { display: none; }
+}

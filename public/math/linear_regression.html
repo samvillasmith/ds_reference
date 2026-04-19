@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multiple Linear Regression — Step by Step</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    line-height: 1.75;
+    padding: 2rem 1.5rem;
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    color: #e6edf3;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+  }
+
+  .subtitle {
+    color: #7d8590;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #21262d;
+    padding-bottom: 1.5rem;
+  }
+
+  .v { color: #ff4d4d; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+  .v2 { color: #f0883e; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+  .new { color: #56d364; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+
+  .section { margin-bottom: 2.5rem; }
+
+  .section-title {
+    font-size: 1.1rem;
+    color: #e6edf3;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding: 0.4rem 0.8rem;
+    background: #161b22;
+    border-left: 3px solid #ff4d4d;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .section-title.new-step {
+    border-left-color: #f0883e;
+  }
+
+  .step { margin-bottom: 1.5rem; padding-left: 1rem; }
+
+  .formula-box {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin: 0.5rem 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 2;
+    overflow-x: auto;
+  }
+
+  .math-line { display: block; padding: 2px 0; }
+
+  .result-box {
+    background: #0f1d0f;
+    border: 1px solid #238636;
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    margin-top: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    color: #56d364;
+    font-weight: 700;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+  }
+
+  .data-table th {
+    background: #161b22;
+    color: #8b949e;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.5rem 0.7rem;
+    border-bottom: 2px solid #30363d;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .data-table td {
+    padding: 0.4rem 0.7rem;
+    border-bottom: 1px solid #21262d;
+  }
+
+  .note {
+    color: #7d8590;
+    font-size: 0.88rem;
+    font-style: italic;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .iteration-nav {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .iter-btn {
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+
+  .iter-btn:hover { border-color: #ff4d4d; color: #ff4d4d; }
+  .iter-btn.active { background: #ff4d4d; border-color: #ff4d4d; color: #fff; font-weight: 700; }
+
+  .iteration-content { display: none; }
+  .iteration-content.active { display: block; }
+
+  .legend {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .legend-dot.red { background: #ff4d4d; }
+  .legend-dot.orange { background: #f0883e; }
+  .legend-dot.green { background: #56d364; }
+
+  .callout {
+    background: #1a1500;
+    border: 1px solid #f0883e;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    color: #f0883e;
+  }
+
+  .pattern-box {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-top: 1rem;
+    line-height: 2;
+  }
+
+  .pattern-step {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin: 0.3rem 0;
+  }
+
+  .pattern-num {
+    color: #ff4d4d;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    min-width: 1.2rem;
+  }
+</style>
+</head>
+<body>
+
+<h1>Multiple Linear Regression — Step by Step</h1>
+<p class="subtitle">Same process as simple regression, but now with <span class="v2">an extra feature and an extra θ to update</span>.</p>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot red"></div> Value plugged in from previous step</div>
+  <div class="legend-item"><div class="legend-dot orange"></div> New — didn't exist in simple regression</div>
+</div>
+
+<!-- SETUP -->
+<div class="section">
+  <div class="section-title">Setup — Now With 2 Features</div>
+  <div class="step">
+
+    <div class="callout">
+      Before we had: h(x) = θ₀ + θ₁x — one input (sq ft).<br>
+      Now we add <span class="v2">bedrooms (x₂)</span> as a second input, so the model becomes:<br><br>
+      <span style="color:#e6edf3; font-family: 'JetBrains Mono', monospace;">h(x) = θ₀ + θ₁x₁ + <span class="v2">θ₂x₂</span></span><br><br>
+      Everything works the same — we just have <span class="v2">one more θ to update each iteration</span>.
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>House</th><th>Sq ft (x₁)</th><th style="color:#f0883e">Bedrooms (x₂)</th><th>Price $k (y)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>1</td><td>1</td><td>2</td></tr>
+        <tr><td>2</td><td>2</td><td>2</td><td>4</td></tr>
+        <tr><td>3</td><td>3</td><td>2</td><td>5</td></tr>
+        <tr><td>4</td><td>4</td><td>3</td><td>4</td></tr>
+        <tr><td>5</td><td>5</td><td>3</td><td>5</td></tr>
+      </tbody>
+    </table>
+    <div class="formula-box">
+      <span class="math-line">m = <span class="v">5</span> &nbsp; α = <span class="v">0.01</span></span>
+      <span class="math-line">Starting: θ₀ = <span class="v">0</span>, θ₁ = <span class="v">0</span>, <span class="v2">θ₂ = 0</span></span>
+      <span class="math-line">Line: h(x) = <span class="v">0</span> + <span class="v">0</span> · x₁ + <span class="v2">0</span> · x₂ = 0 for everything</span>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="iteration-nav">
+  <button class="iter-btn active" onclick="showIter(0)">Iteration 1</button>
+  <button class="iter-btn" onclick="showIter(1)">Iteration 2</button>
+  <button class="iter-btn" onclick="showIter(2)">Compare</button>
+</div>
+
+<!-- ITERATION 1 -->
+<div class="iteration-content active" id="iter-0">
+  <div class="section">
+    <div class="section-title">Step 1 — Predict using h(x) = <span class="v">0</span> + <span class="v">0</span>·x₁ + <span class="v2">0</span>·x₂</div>
+    <div class="step">
+      <div class="formula-box">
+        <span class="math-line">House 1: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">1</span> + <span class="v2">0</span>×<span class="v2">1</span> = <span class="v">0</span></span>
+        <span class="math-line">House 2: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">2</span> + <span class="v2">0</span>×<span class="v2">2</span> = <span class="v">0</span></span>
+        <span class="math-line">House 3: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">3</span> + <span class="v2">0</span>×<span class="v2">2</span> = <span class="v">0</span></span>
+        <span class="math-line">House 4: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">4</span> + <span class="v2">0</span>×<span class="v2">3</span> = <span class="v">0</span></span>
+        <span class="math-line">House 5: h = <span class="v">0</span> + <span class="v">0</span>×<span class="v">5</span> + <span class="v2">0</span>×<span class="v2">3</span> = <span class="v">0</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Step 2 — Compute errors (prediction − actual)</div>
+    <div class="step">
+      <div class="formula-box">
+        <span class="math-line">House 1: <span class="v">0</span> − <span class="v">2</span> = <span class="v">−2</span></span>
+        <span class="math-line">House 2: <span class="v">0</span> − <span class="v">4</span> = <span class="v">−4</span></span>
+        <span class="math-line">House 3: <span class="v">0</span> − <span class="v">5</span> = <span class="v">−5</span></span>
+        <span class="math-line">House 4: <span class="v">0</span> − <span class="v">4</span> = <span class="v">−4</span></span>
+        <span class="math-line">House 5: <span class="v">0</span> − <span class="v">5</span> = <span class="v">−5</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Step 3 — Update θ₀ (same as before: multiply errors by 1)</div>
+    <div class="step">
+      <div class="formula-box">
+        <span class="math-line">Sum of errors: <span class="v">−2</span> + <span class="v">−4</span> + <span class="v">−5</span> + <span class="v">−4</span> + <span class="v">−5</span> = <span class="v">−20</span></span>
+        <span class="math-line">Average: <span class="v">−20</span> / <span class="v">5</span> = <span class="v">−4</span></span>
+        <span class="math-line">θ₀ := <span class="v">0</span> − <span class="v">0.01</span> × <span class="v">−4</span> = <span class="v">0.04</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Step 4 — Update θ₁ (multiply errors by x₁)</div>
+    <div class="step">
+      <div class="formula-box">
+        <span class="math-line"><span class="v">−2</span> × <span class="v">1</span> = <span class="v">−2</span></span>
+        <span class="math-line"><span class="v">−4</span> × <span class="v">2</span> = <span class="v">−8</span></span>
+        <span class="math-line"><span class="v">−5</span> × <span class="v">3</span> = <span class="v">−15</span></span>
+        <span class="math-line"><span class="v">−4</span> × <span class="v">4</span> = <span class="v">−16</span></span>
+        <span class="math-line"><span class="v">−5</span> × <span class="v">5</span> = <span class="v">−25</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">Sum: <span class="v">−66</span> &nbsp; Average: <span class="v">−66</span> / <span class="v">5</span> = <span class="v">−13.2</span></span>
+        <span class="math-line">θ₁ := <span class="v">0</span> − <span class="v">0.01</span> × <span class="v">−13.2</span> = <span class="v">0.132</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title new-step">Step 5 — Update θ₂ (NEW: multiply errors by x₂)</div>
+    <div class="step">
+      <p class="note">This is the only new step. Same formula, just using x₂ (bedrooms) instead of x₁ (sq ft).</p>
+      <div class="formula-box" style="border-color: #f0883e;">
+        <span class="math-line"><span class="v">−2</span> × <span class="v2">1</span> = <span class="v2">−2</span></span>
+        <span class="math-line"><span class="v">−4</span> × <span class="v2">2</span> = <span class="v2">−8</span></span>
+        <span class="math-line"><span class="v">−5</span> × <span class="v2">2</span> = <span class="v2">−10</span></span>
+        <span class="math-line"><span class="v">−4</span> × <span class="v2">3</span> = <span class="v2">−12</span></span>
+        <span class="math-line"><span class="v">−5</span> × <span class="v2">3</span> = <span class="v2">−15</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">Sum: <span class="v2">−47</span> &nbsp; Average: <span class="v2">−47</span> / <span class="v">5</span> = <span class="v2">−9.4</span></span>
+        <span class="math-line">θ₂ := <span class="v2">0</span> − <span class="v">0.01</span> × <span class="v2">−9.4</span> = <span class="v2">0.094</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-box">
+    ✅ End of Iteration 1: θ₀ = 0.04 &nbsp;&nbsp; θ₁ = 0.132 &nbsp;&nbsp; <span style="color:#f0883e">θ₂ = 0.094</span>
+  </div>
+</div>
+
+<!-- ITERATION 2 -->
+<div class="iteration-content" id="iter-1">
+  <div class="section">
+    <div class="section-title">Step 1 — Predict using h(x) = <span class="v">0.04</span> + <span class="v">0.132</span>·x₁ + <span class="v2">0.094</span>·x₂</div>
+    <div class="step">
+      <p class="note">All three θ values come from end of Iteration 1</p>
+      <div class="formula-box">
+        <span class="math-line">House 1: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">1</span> + <span class="v2">0.094</span>×<span class="v2">1</span> = 0.04 + 0.132 + 0.094 = <span class="v">0.266</span></span>
+        <span class="math-line">House 2: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">2</span> + <span class="v2">0.094</span>×<span class="v2">2</span> = 0.04 + 0.264 + 0.188 = <span class="v">0.492</span></span>
+        <span class="math-line">House 3: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">3</span> + <span class="v2">0.094</span>×<span class="v2">2</span> = 0.04 + 0.396 + 0.188 = <span class="v">0.624</span></span>
+        <span class="math-line">House 4: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">4</span> + <span class="v2">0.094</span>×<span class="v2">3</span> = 0.04 + 0.528 + 0.282 = <span class="v">0.850</span></span>
+        <span class="math-line">House 5: <span class="v">0.04</span> + <span class="v">0.132</span>×<span class="v">5</span> + <span class="v2">0.094</span>×<span class="v2">3</span> = 0.04 + 0.660 + 0.282 = <span class="v">0.982</span></span>
+      </div>
+      <p class="note">Notice: predictions are already different from simple regression because θ₂·x₂ adds a second contribution.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Step 2 — Compute errors</div>
+    <div class="step">
+      <div class="formula-box">
+        <span class="math-line">House 1: <span class="v">0.266</span> − <span class="v">2</span> = <span class="v">−1.734</span></span>
+        <span class="math-line">House 2: <span class="v">0.492</span> − <span class="v">4</span> = <span class="v">−3.508</span></span>
+        <span class="math-line">House 3: <span class="v">0.624</span> − <span class="v">5</span> = <span class="v">−4.376</span></span>
+        <span class="math-line">House 4: <span class="v">0.850</span> − <span class="v">4</span> = <span class="v">−3.150</span></span>
+        <span class="math-line">House 5: <span class="v">0.982</span> − <span class="v">5</span> = <span class="v">−4.018</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Step 3 — Update θ₀</div>
+    <div class="step">
+      <div class="formula-box">
+        <span class="math-line">Sum: <span class="v">−1.734</span> + <span class="v">−3.508</span> + <span class="v">−4.376</span> + <span class="v">−3.150</span> + <span class="v">−4.018</span> = <span class="v">−16.786</span></span>
+        <span class="math-line">Average: <span class="v">−16.786</span> / <span class="v">5</span> = <span class="v">−3.3572</span></span>
+        <span class="math-line">θ₀ := <span class="v">0.04</span> − <span class="v">0.01</span> × <span class="v">−3.3572</span> = <span class="v">0.0736</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Step 4 — Update θ₁ (errors × x₁)</div>
+    <div class="step">
+      <div class="formula-box">
+        <span class="math-line"><span class="v">−1.734</span> × <span class="v">1</span> = <span class="v">−1.734</span></span>
+        <span class="math-line"><span class="v">−3.508</span> × <span class="v">2</span> = <span class="v">−7.016</span></span>
+        <span class="math-line"><span class="v">−4.376</span> × <span class="v">3</span> = <span class="v">−13.128</span></span>
+        <span class="math-line"><span class="v">−3.150</span> × <span class="v">4</span> = <span class="v">−12.600</span></span>
+        <span class="math-line"><span class="v">−4.018</span> × <span class="v">5</span> = <span class="v">−20.090</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">Sum: <span class="v">−54.568</span> &nbsp; Average: <span class="v">−10.9136</span></span>
+        <span class="math-line">θ₁ := <span class="v">0.132</span> − <span class="v">0.01</span> × <span class="v">−10.9136</span> = <span class="v">0.2411</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title new-step">Step 5 — Update θ₂ (errors × x₂)</div>
+    <div class="step">
+      <div class="formula-box" style="border-color: #f0883e;">
+        <span class="math-line"><span class="v">−1.734</span> × <span class="v2">1</span> = <span class="v2">−1.734</span></span>
+        <span class="math-line"><span class="v">−3.508</span> × <span class="v2">2</span> = <span class="v2">−7.016</span></span>
+        <span class="math-line"><span class="v">−4.376</span> × <span class="v2">2</span> = <span class="v2">−8.752</span></span>
+        <span class="math-line"><span class="v">−3.150</span> × <span class="v2">3</span> = <span class="v2">−9.450</span></span>
+        <span class="math-line"><span class="v">−4.018</span> × <span class="v2">3</span> = <span class="v2">−12.054</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">Sum: <span class="v2">−39.006</span> &nbsp; Average: <span class="v2">−7.8012</span></span>
+        <span class="math-line">θ₂ := <span class="v2">0.094</span> − <span class="v">0.01</span> × <span class="v2">−7.8012</span> = <span class="v2">0.1720</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-box">
+    ✅ End of Iteration 2: θ₀ = 0.0736 &nbsp;&nbsp; θ₁ = 0.2411 &nbsp;&nbsp; <span style="color:#f0883e">θ₂ = 0.1720</span>
+  </div>
+</div>
+
+<!-- COMPARE TAB -->
+<div class="iteration-content" id="iter-2">
+  <div class="section">
+    <div class="section-title">Simple vs Multiple — What Changed?</div>
+    <div class="step">
+      <div class="callout">
+        The entire algorithm is identical. The only difference is you <span class="v2">repeat the θ update step once per feature</span>.
+      </div>
+
+      <div class="formula-box" style="margin-top: 1rem;">
+        <span class="math-line" style="color: #58a6ff; font-weight: 700;">Simple (1 feature):</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">h(x) = θ₀ + θ₁x</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">Update θ₀ → errors × 1</span>
+        <span class="math-line">Update θ₁ → errors × x</span>
+      </div>
+
+      <div class="formula-box" style="margin-top: 1rem; border-color: #f0883e;">
+        <span class="math-line" style="color: #f0883e; font-weight: 700;">Multiple (2 features):</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">h(x) = θ₀ + θ₁x₁ + <span class="v2">θ₂x₂</span></span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">Update θ₀ → errors × 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7d8590">← same</span></span>
+        <span class="math-line">Update θ₁ → errors × x₁ &nbsp;&nbsp;&nbsp;<span style="color:#7d8590">← same</span></span>
+        <span class="math-line">Update <span class="v2">θ₂</span> → errors × <span class="v2">x₂</span> &nbsp;&nbsp;&nbsp;<span style="color:#f0883e">← new, same pattern</span></span>
+      </div>
+
+      <div class="formula-box" style="margin-top: 1rem; border-color: #a371f7;">
+        <span class="math-line" style="color: #a371f7; font-weight: 700;">n features? Same thing, just keep going:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">h(x) = θ₀ + θ₁x₁ + θ₂x₂ + θ₃x₃ + ... + θₙxₙ</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line">Update θ₀ → errors × 1</span>
+        <span class="math-line">Update θ₁ → errors × x₁</span>
+        <span class="math-line">Update θ₂ → errors × x₂</span>
+        <span class="math-line">Update θ₃ → errors × x₃</span>
+        <span class="math-line" style="color:#7d8590">&nbsp; ⋮</span>
+        <span class="math-line">Update θₙ → errors × xₙ</span>
+      </div>
+
+      <div class="pattern-box" style="margin-top: 1.5rem;">
+        <span style="color: #56d364; font-weight: 700; font-size: 1rem;">The general update rule for any θⱼ:</span>
+        <div style="margin-top: 0.8rem; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; line-height: 2.2;">
+          <span class="math-line">θⱼ := <span class="v">θⱼ</span> − <span class="v">α</span> · (1/<span class="v">m</span>) · Σ( h(x⁽ⁱ⁾) − y⁽ⁱ⁾ ) · <span class="v2">xⱼ⁽ⁱ⁾</span></span>
+          <span class="math-line">&nbsp;</span>
+          <span class="math-line" style="color:#7d8590">where xⱼ is the j-th feature</span>
+          <span class="math-line" style="color:#7d8590">and x₀ = 1 always (that's why θ₀ multiplies by 1)</span>
+        </div>
+      </div>
+
+      <div class="formula-box" style="margin-top: 1.5rem; border-color: #238636;">
+        <span class="math-line" style="color: #56d364; font-weight: 700;">Bottom line:</span>
+        <span class="math-line">&nbsp;</span>
+        <span class="math-line" style="color: #e6edf3;">Adding more features doesn't change the algorithm.</span>
+        <span class="math-line" style="color: #e6edf3;">It just adds more θ values to update each iteration.</span>
+        <span class="math-line" style="color: #e6edf3;">Each θ update uses the exact same formula.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showIter(index) {
+    document.querySelectorAll('.iteration-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.iter-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('iter-' + index).classList.add('active');
+    document.querySelectorAll('.iter-btn')[index].classList.add('active');
+  }
+</script>
+
+</body>
+</html>
