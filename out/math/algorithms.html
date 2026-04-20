@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-tr-title
+  data-tr-en="Essential ML Algorithms — Texcoco Data Science"
+  data-tr-es="Algoritmos Esenciales de ML — Texcoco Ciencia de Datos"
+  data-tr-ja="必須の機械学習アルゴリズム — テクスココ データサイエンス">Essential ML Algorithms — Texcoco Data Science</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lang-toggle.css">
+<style>
+  :root {
+    --bg: #08090c;
+    --surface: #0f1116;
+    --surface-raised: #161920;
+    --border: rgba(255,255,255,0.06);
+    --text: #d4d8e0;
+    --text-muted: #6b7280;
+    --accent: #c87533;
+    --accent-light: rgba(200,117,51,0.12);
+    --blue: #58a6ff;
+    --green: #56d364;
+    --red: #ff6b6b;
+    --purple: #a371f7;
+    --yellow: #e3b341;
+    --orange: #f0883e;
+    --teal: #39d0d8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page-header {
+    padding: 3rem 2rem 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #f0ece4;
+    line-height: 1.15;
+  }
+  .page-header h1 .a { color: var(--accent); }
+  .page-header .sub {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    margin-top: 0.5rem;
+    max-width: 720px;
+  }
+
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0;
+  }
+  .nav {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    overflow-x: auto;
+  }
+  .nav a {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.3rem 0.65rem;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .nav a:hover { border-color: var(--accent); color: var(--accent); }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 2rem 4rem; }
+
+  .section {
+    padding: 3rem 0 1rem;
+    scroll-margin-top: 3.5rem;
+  }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-bottom: 0.3rem;
+    flex-wrap: wrap;
+  }
+  .sec-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .n-red    { background: rgba(255,107,107,0.12); color: var(--red); }
+  .n-blue   { background: rgba(88,166,255,0.12); color: var(--blue); }
+  .n-green  { background: rgba(86,211,100,0.12); color: var(--green); }
+  .n-purple { background: rgba(163,113,247,0.12); color: var(--purple); }
+  .n-yellow { background: rgba(227,179,65,0.12); color: var(--yellow); }
+  .n-orange { background: rgba(240,136,62,0.12); color: var(--orange); }
+  .n-teal   { background: rgba(57,208,216,0.12); color: var(--teal); }
+  .n-accent { background: var(--accent-light); color: var(--accent); }
+
+  .sec-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #f0ece4;
+  }
+
+  .chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0 1.2rem;
+  }
+  .row-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+  }
+  .block .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.45rem;
+  }
+  .block p {
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  .block.when .label { color: var(--green); }
+  .block.when { border-left: 2px solid var(--green); }
+  .block.avoid .label { color: var(--red); }
+  .block.avoid { border-left: 2px solid var(--red); }
+  .block.how .label { color: var(--blue); }
+  .block.how { border-left: 2px solid var(--blue); }
+
+  .intuition {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin: 0.8rem 0 1rem;
+  }
+  .intuition p { font-size: 0.92rem; line-height: 1.65; }
+
+  pre.code {
+    background: #0b0d11;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: #c9d1d9;
+    margin: 0.5rem 0 1.2rem;
+  }
+  pre.code .cm { color: #8b949e; }
+  pre.code .kw { color: #ff7b72; }
+  pre.code .fn { color: #d2a8ff; }
+  pre.code .st { color: #a5d6ff; }
+  pre.code .nu { color: #79c0ff; }
+  pre.code .cl { color: #ffa657; }
+
+  .tbl { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.82rem; }
+  .tbl th, .tbl td { padding: 0.55rem 0.8rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .tbl th { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); background: var(--surface); }
+  .tbl tbody tr:hover td { background: var(--surface); }
+  .tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.12rem 0.45rem;
+    border-radius: 3px;
+  }
+  .tag-r  { background: rgba(88,166,255,0.12);  color: var(--blue); }
+  .tag-c  { background: rgba(86,211,100,0.12);  color: var(--green); }
+  .tag-u  { background: rgba(163,113,247,0.12); color: var(--purple); }
+  .tag-dr { background: rgba(227,179,65,0.12);  color: var(--yellow); }
+
+  hr.sep {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 720px) {
+    .row, .row-3 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>
+    <span class="a"><span data-tr="en">Essential</span><span data-tr="es">Algoritmos</span><span data-tr="ja">必須</span></span>
+    <span data-tr="en"> ML Algorithms</span>
+    <span data-tr="es"> Esenciales de ML</span>
+    <span data-tr="ja">機械学習アルゴリズム</span>
+  </h1>
+  <p class="sub">
+    <span data-tr="en">The twelve algorithms that cover ~90% of real-world problems. What each one does, when to reach for it, when to skip it, and a working implementation in scikit-learn.</span>
+    <span data-tr="es">Los doce algoritmos que cubren ~90% de los problemas reales. Qué hace cada uno, cuándo usarlo, cuándo evitarlo, y una implementación funcional en scikit-learn.</span>
+    <span data-tr="ja">実世界の問題の約 90% をカバーする 12 のアルゴリズム。何をし、いつ使い、いつ避け、scikit-learn でどう動かすか。</span>
+  </p>
+</div>
+
+<div class="nav-wrap">
+  <nav class="nav">
+    <a href="#overview"><span data-tr="en">Overview</span><span data-tr="es">Resumen</span><span data-tr="ja">概要</span></a>
+    <a href="#linreg"><span data-tr="en">Linear Regression</span><span data-tr="es">Regresión Lineal</span><span data-tr="ja">線形回帰</span></a>
+    <a href="#logreg"><span data-tr="en">Logistic Regression</span><span data-tr="es">Regresión Logística</span><span data-tr="ja">ロジスティック回帰</span></a>
+    <a href="#knn">KNN</a>
+    <a href="#nb">Naive Bayes</a>
+    <a href="#svm">SVM</a>
+    <a href="#tree"><span data-tr="en">Decision Tree</span><span data-tr="es">Árbol de Decisión</span><span data-tr="ja">決定木</span></a>
+    <a href="#rf">Random Forest</a>
+    <a href="#gb">Gradient Boosting</a>
+    <a href="#kmeans">K-Means</a>
+    <a href="#dbscan">DBSCAN</a>
+    <a href="#pca">PCA</a>
+    <a href="#nn"><span data-tr="en">Neural Network</span><span data-tr="es">Red Neuronal</span><span data-tr="ja">ニューラルネット</span></a>
+    <a href="#cheatsheet"><span data-tr="en">Cheat Sheet</span><span data-tr="es">Hoja Resumen</span><span data-tr="ja">チートシート</span></a>
+  </nav>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- OVERVIEW TABLE                              -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="overview">
+  <div class="sec-head"><span class="sec-num n-accent">00</span><span class="sec-title">
+    <span data-tr="en">The Landscape</span>
+    <span data-tr="es">El Panorama</span>
+    <span data-tr="ja">全体像</span>
+  </span></div>
+  <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem;">
+    <span data-tr="en">Three families: supervised (labels), unsupervised (no labels), and dimensionality reduction. The algorithm picks you — not the other way around — based on problem shape and data size.</span>
+    <span data-tr="es">Tres familias: supervisado (con etiquetas), no supervisado (sin etiquetas), y reducción de dimensión. El algoritmo te elige a ti — no al revés — según la forma del problema y el tamaño de los datos.</span>
+    <span data-tr="ja">3 つの系統: 教師あり (ラベルあり)、教師なし (ラベルなし)、次元削減。問題の形とデータ量がアルゴリズムを選ぶ — 逆ではない。</span>
+  </p>
+
+  <table class="tbl">
+    <thead><tr>
+      <th><span data-tr="en">Algorithm</span><span data-tr="es">Algoritmo</span><span data-tr="ja">アルゴリズム</span></th>
+      <th><span data-tr="en">Task</span><span data-tr="es">Tarea</span><span data-tr="ja">タスク</span></th>
+      <th><span data-tr="en">Strength</span><span data-tr="es">Fortaleza</span><span data-tr="ja">強み</span></th>
+      <th><span data-tr="en">Weakness</span><span data-tr="es">Debilidad</span><span data-tr="ja">弱み</span></th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><span data-tr="en">Linear Regression</span><span data-tr="es">Regresión Lineal</span><span data-tr="ja">線形回帰</span></td>
+        <td><span class="tag tag-r"><span data-tr="en">Regression</span><span data-tr="es">Regresión</span><span data-tr="ja">回帰</span></span></td>
+        <td><span data-tr="en">Interpretable, fast, closed-form</span><span data-tr="es">Interpretable, rápida, forma cerrada</span><span data-tr="ja">解釈性、高速、閉形式</span></td>
+        <td><span data-tr="en">Only captures linear patterns</span><span data-tr="es">Solo captura patrones lineales</span><span data-tr="ja">線形パターンしか捉えられない</span></td>
+      </tr>
+      <tr>
+        <td><span data-tr="en">Logistic Regression</span><span data-tr="es">Regresión Logística</span><span data-tr="ja">ロジスティック回帰</span></td>
+        <td><span class="tag tag-c"><span data-tr="en">Classification</span><span data-tr="es">Clasificación</span><span data-tr="ja">分類</span></span></td>
+        <td><span data-tr="en">Probabilistic, interpretable, baseline</span><span data-tr="es">Probabilística, interpretable, línea base</span><span data-tr="ja">確率的、解釈性、ベースライン</span></td>
+        <td><span data-tr="en">Linear decision boundary only</span><span data-tr="es">Solo frontera de decisión lineal</span><span data-tr="ja">決定境界が線形のみ</span></td>
+      </tr>
+      <tr>
+        <td>KNN</td>
+        <td><span class="tag tag-r">R</span> <span class="tag tag-c">C</span></td>
+        <td><span data-tr="en">No training, nonlinear, simple</span><span data-tr="es">Sin entrenamiento, no lineal, simple</span><span data-tr="ja">訓練不要、非線形、単純</span></td>
+        <td><span data-tr="en">Slow at predict time, curse of dimensionality</span><span data-tr="es">Lento al predecir, maldición de la dimensionalidad</span><span data-tr="ja">予測が遅い、次元の呪い</span></td>
+      </tr>
+      <tr>
+        <td>Naive Bayes</td>
+        <td><span class="tag tag-c"><span data-tr="en">Classification</span><span data-tr="es">Clasificación</span><span data-tr="ja">分類</span></span></td>
+        <td><span data-tr="en">Fast on text, handles many features</span><span data-tr="es">Rápido en texto, maneja muchas características</span><span data-tr="ja">テキストで高速、多特徴量でも有効</span></td>
+        <td><span data-tr="en">Assumes features independent (often false)</span><span data-tr="es">Asume independencia entre variables (a menudo falso)</span><span data-tr="ja">特徴量独立を仮定 (通常は成り立たない)</span></td>
+      </tr>
+      <tr>
+        <td>SVM</td>
+        <td><span class="tag tag-c">C</span> <span class="tag tag-r">R</span></td>
+        <td><span data-tr="en">Strong in high dimensions, kernel trick</span><span data-tr="es">Fuerte en alta dimensión, truco del kernel</span><span data-tr="ja">高次元で強い、カーネルトリック</span></td>
+        <td><span data-tr="en">Slow on large datasets, needs tuning</span><span data-tr="es">Lento en datos grandes, necesita ajuste</span><span data-tr="ja">大規模データで遅い、調整が必要</span></td>
+      </tr>
+      <tr>
+        <td><span data-tr="en">Decision Tree</span><span data-tr="es">Árbol de Decisión</span><span data-tr="ja">決定木</span></td>
+        <td><span class="tag tag-r">R</span> <span class="tag tag-c">C</span></td>
+        <td><span data-tr="en">Interpretable, no scaling needed</span><span data-tr="es">Interpretable, sin necesidad de escalar</span><span data-tr="ja">解釈可能、スケーリング不要</span></td>
+        <td><span data-tr="en">Overfits easily — use ensembles</span><span data-tr="es">Sobreajusta fácilmente — usa ensembles</span><span data-tr="ja">過学習しやすい — アンサンブル化が必要</span></td>
+      </tr>
+      <tr>
+        <td>Random Forest</td>
+        <td><span class="tag tag-r">R</span> <span class="tag tag-c">C</span></td>
+        <td><span data-tr="en">Robust, handles mixed data, few knobs</span><span data-tr="es">Robusto, maneja datos mixtos, pocos parámetros</span><span data-tr="ja">堅牢、混在データに対応、調整少</span></td>
+        <td><span data-tr="en">Memory-heavy, slower than boosting</span><span data-tr="es">Uso alto de memoria, más lento que boosting</span><span data-tr="ja">メモリ消費大、ブースティングより遅い</span></td>
+      </tr>
+      <tr>
+        <td>Gradient Boosting</td>
+        <td><span class="tag tag-r">R</span> <span class="tag tag-c">C</span></td>
+        <td><span data-tr="en">State-of-the-art on tabular data</span><span data-tr="es">Estado del arte en datos tabulares</span><span data-tr="ja">表形式データで最先端</span></td>
+        <td><span data-tr="en">Sensitive to hyperparameters, can overfit</span><span data-tr="es">Sensible a hiperparámetros, puede sobreajustar</span><span data-tr="ja">ハイパーパラメータに敏感、過学習しうる</span></td>
+      </tr>
+      <tr>
+        <td>K-Means</td>
+        <td><span class="tag tag-u"><span data-tr="en">Clustering</span><span data-tr="es">Agrupamiento</span><span data-tr="ja">クラスタリング</span></span></td>
+        <td><span data-tr="en">Fast, scalable, simple</span><span data-tr="es">Rápido, escalable, simple</span><span data-tr="ja">高速、スケーラブル、単純</span></td>
+        <td><span data-tr="en">Must specify k, assumes spherical clusters</span><span data-tr="es">Debes especificar k, asume clusters esféricos</span><span data-tr="ja">k の指定必要、球状クラスタを仮定</span></td>
+      </tr>
+      <tr>
+        <td>DBSCAN</td>
+        <td><span class="tag tag-u"><span data-tr="en">Clustering</span><span data-tr="es">Agrupamiento</span><span data-tr="ja">クラスタリング</span></span></td>
+        <td><span data-tr="en">Finds arbitrary shapes, detects outliers</span><span data-tr="es">Encuentra formas arbitrarias, detecta atípicos</span><span data-tr="ja">任意形状を発見、外れ値も検出</span></td>
+        <td><span data-tr="en">Struggles with varying densities</span><span data-tr="es">Tiene problemas con densidades variables</span><span data-tr="ja">密度が異なるクラスタに弱い</span></td>
+      </tr>
+      <tr>
+        <td>PCA</td>
+        <td><span class="tag tag-dr"><span data-tr="en">Dim. Reduction</span><span data-tr="es">Reducción Dim.</span><span data-tr="ja">次元削減</span></span></td>
+        <td><span data-tr="en">Removes redundancy, enables visualization</span><span data-tr="es">Elimina redundancia, permite visualización</span><span data-tr="ja">冗長性を除去、可視化を可能に</span></td>
+        <td><span data-tr="en">Linear only, components hard to interpret</span><span data-tr="es">Solo lineal, componentes difíciles de interpretar</span><span data-tr="ja">線形のみ、成分の解釈が難しい</span></td>
+      </tr>
+      <tr>
+        <td><span data-tr="en">Neural Network</span><span data-tr="es">Red Neuronal</span><span data-tr="ja">ニューラルネット</span></td>
+        <td><span class="tag tag-r">R</span> <span class="tag tag-c">C</span></td>
+        <td><span data-tr="en">Universal approximator, excels on images/text</span><span data-tr="es">Aproximador universal, destaca en imágenes/texto</span><span data-tr="ja">普遍近似、画像・テキストで優秀</span></td>
+        <td><span data-tr="en">Needs lots of data, compute, and patience</span><span data-tr="es">Requiere muchos datos, cómputo y paciencia</span><span data-tr="ja">大量のデータ、計算、忍耐が必要</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 1. LINEAR REGRESSION                        -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="linreg">
+  <div class="sec-head">
+    <span class="sec-num n-blue">01</span>
+    <span class="sec-title">
+      <span data-tr="en">Linear Regression</span>
+      <span data-tr="es">Regresión Lineal</span>
+      <span data-tr="ja">線形回帰</span>
+    </span>
+    <span class="chip"><span data-tr="en">Supervised · Regression</span><span data-tr="es">Supervisado · Regresión</span><span data-tr="ja">教師あり · 回帰</span></span>
+  </div>
+
+  <div class="intuition">
+    <p>
+      <span data-tr="en"><strong>What it does.</strong> Fits the straight line (or hyperplane) that minimizes squared distance to the data points. The one equation every data scientist writes first: <em>ŷ = β₀ + β₁x₁ + … + βₚxₚ</em>.</span>
+      <span data-tr="es"><strong>Qué hace.</strong> Ajusta la recta (o hiperplano) que minimiza la distancia al cuadrado a los puntos. La ecuación que todo científico de datos escribe primero: <em>ŷ = β₀ + β₁x₁ + … + βₚxₚ</em>.</span>
+      <span data-tr="ja"><strong>何をするか。</strong> データ点までの二乗距離を最小化する直線 (または超平面) を当てはめる。データサイエンティストが最初に書く式: <em>ŷ = β₀ + β₁x₁ + … + βₚxₚ</em>。</span>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="block when">
+      <div class="label"><span data-tr="en">Use when</span><span data-tr="es">Úsalo cuando</span><span data-tr="ja">使う場面</span></div>
+      <p>
+        <span data-tr="en">You need a fast, interpretable baseline. Relationships look approximately linear. Stakeholders need to read the coefficients ("each extra year adds $2,400").</span>
+        <span data-tr="es">Necesitas una línea base rápida e interpretable. Las relaciones parecen aproximadamente lineales. Los interesados necesitan leer los coeficientes ("cada año extra suma $2,400").</span>
+        <span data-tr="ja">高速で解釈可能なベースラインが必要。関係がほぼ線形に見える。関係者が係数を読む必要がある (「年次が 1 年増えると $2,400 増加」)。</span>
+      </p>
+    </div>
+    <div class="block avoid">
+      <div class="label"><span data-tr="en">Avoid when</span><span data-tr="es">Evítalo cuando</span><span data-tr="ja">避ける場面</span></div>
+      <p>
+        <span data-tr="en">Relationships are nonlinear, features are heavily correlated (use Ridge), or you have many more features than observations (use Lasso or a regularized model).</span>
+        <span data-tr="es">Las relaciones son no lineales, las variables están muy correlacionadas (usa Ridge), o tienes muchas más variables que observaciones (usa Lasso o un modelo regularizado).</span>
+        <span data-tr="ja">関係が非線形、特徴量が強く相関している (Ridge を使う)、観測数より特徴量が多い (Lasso や正則化モデルを使う)。</span>
+      </p>
+    </div>
+  </div>
+
+  <pre class="code"><span class="kw">from</span> sklearn.linear_model <span class="kw">import</span> LinearRegression, Ridge
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> train_test_split
+<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> r2_score, mean_squared_error
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+X_train, X_test, y_train, y_test = <span class="fn">train_test_split</span>(X, y, test_size=<span class="nu">0.2</span>, random_state=<span class="nu">42</span>)
+
+model = <span class="cl">LinearRegression</span>()             <span class="cm"># or Ridge(alpha=1.0) for L2 regularization</span>
+model.<span class="fn">fit</span>(X_train, y_train)
+
+y_pred = model.<span class="fn">predict</span>(X_test)
+<span class="fn">print</span>(<span class="st">f"R²   = {r2_score(y_test, y_pred):.3f}"</span>)
+<span class="fn">print</span>(<span class="st">f"RMSE = {np.sqrt(mean_squared_error(y_test, y_pred)):.3f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Coef = {dict(zip(feature_names, model.coef_))}"</span>)
+</pre>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 2. LOGISTIC REGRESSION                      -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="logreg">
+  <div class="sec-head">
+    <span class="sec-num n-green">02</span>
+    <span class="sec-title">
+      <span data-tr="en">Logistic Regression</span>
+      <span data-tr="es">Regresión Logística</span>
+      <span data-tr="ja">ロジスティック回帰</span>
+    </span>
+    <span class="chip"><span data-tr="en">Supervised · Classification</span><span data-tr="es">Supervisado · Clasificación</span><span data-tr="ja">教師あり · 分類</span></span>
+  </div>
+
+  <div class="intuition">
+    <p>
+      <span data-tr="en"><strong>What it does.</strong> Squashes a linear combination through the sigmoid function to output probabilities in (0, 1). Despite the name, this is a classifier — the "regression" is in log-odds space.</span>
+      <span data-tr="es"><strong>Qué hace.</strong> Pasa una combinación lineal por la sigmoide para producir probabilidades en (0, 1). A pesar del nombre, es un clasificador — la "regresión" es en el espacio log-odds.</span>
+      <span data-tr="ja"><strong>何をするか。</strong> 線形結合をシグモイドに通し、(0, 1) の確率を出力する。名前に反して分類器 — 「回帰」は対数オッズ空間での話。</span>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="block when">
+      <div class="label"><span data-tr="en">Use when</span><span data-tr="es">Úsalo cuando</span><span data-tr="ja">使う場面</span></div>
+      <p>
+        <span data-tr="en">Binary or multi-class classification with interpretable coefficients. You need calibrated probabilities (not just labels). Baseline for any classification project.</span>
+        <span data-tr="es">Clasificación binaria o multi-clase con coeficientes interpretables. Necesitas probabilidades calibradas (no solo etiquetas). Línea base para cualquier proyecto de clasificación.</span>
+        <span data-tr="ja">解釈可能な係数が必要な二値・多クラス分類。ラベルだけでなく較正された確率が必要。分類プロジェクトのベースライン。</span>
+      </p>
+    </div>
+    <div class="block avoid">
+      <div class="label"><span data-tr="en">Avoid when</span><span data-tr="es">Evítalo cuando</span><span data-tr="ja">避ける場面</span></div>
+      <p>
+        <span data-tr="en">Classes aren't linearly separable in feature space and you don't want to engineer polynomial/interaction features. Use trees or a nonlinear kernel SVM instead.</span>
+        <span data-tr="es">Las clases no son linealmente separables y no quieres ingeniar características polinómicas/interacciones. Usa árboles o SVM con kernel no lineal.</span>
+        <span data-tr="ja">特徴空間でクラスが線形分離できず、多項式・交互作用特徴量を作りたくないとき。木や非線形カーネル SVM を使う。</span>
+      </p>
+    </div>
+  </div>
+
+  <pre class="code"><span class="kw">from</span> sklearn.linear_model <span class="kw">import</span> LogisticRegression
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler
+<span class="kw">from</span> sklearn.pipeline <span class="kw">import</span> make_pipeline
+<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> classification_report, roc_auc_score
+
+model = <span class="fn">make_pipeline</span>(
+    <span class="cl">StandardScaler</span>(),                        <span class="cm"># sigmoid is scale-sensitive</span>
+    <span class="cl">LogisticRegression</span>(max_iter=<span class="nu">1000</span>, C=<span class="nu">1.0</span>)   <span class="cm"># C = 1/λ, smaller = more regularization</span>
+)
+model.<span class="fn">fit</span>(X_train, y_train)
+
+probs = model.<span class="fn">predict_proba</span>(X_test)[:, <span class="nu">1</span>]
+preds = model.<span class="fn">predict</span>(X_test)
+<span class="fn">print</span>(<span class="fn">classification_report</span>(y_test, preds))
+<span class="fn">print</span>(<span class="st">f"AUC-ROC = {roc_auc_score(y_test, probs):.3f}"</span>)
+</pre>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 3. KNN                                      -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="knn">
+  <div class="sec-head">
+    <span class="sec-num n-purple">03</span>
+    <span class="sec-title">
+      <span data-tr="en">K-Nearest Neighbors (KNN)</span>
+      <span data-tr="es">K Vecinos Más Cercanos (KNN)</span>
+      <span data-tr="ja">k 近傍法 (KNN)</span>
+    </span>
+    <span class="chip"><span data-tr="en">Supervised · Lazy Learner</span><span data-tr="es">Supervisado · Perezoso</span><span data-tr="ja">教師あり · 怠惰学習</span></span>
+  </div>
+
+  <div class="intuition">
+    <p>
+      <span data-tr="en"><strong>What it does.</strong> No training at all. To predict a new point, find the k training points closest to it and vote (classification) or average (regression). The entire dataset <em>is</em> the model.</span>
+      <span data-tr="es"><strong>Qué hace.</strong> No hay entrenamiento. Para predecir un punto nuevo, encuentra los k puntos de entrenamiento más cercanos y vota (clasificación) o promedia (regresión). Todo el dataset <em>es</em> el modelo.</span>
+      <span data-tr="ja"><strong>何をするか。</strong> 訓練をしない。新しい点を予測するには、最も近い k 個の訓練点を見つけて投票 (分類) または平均 (回帰)。データセット全体がモデルそのもの。</span>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="block when">
+      <div class="label"><span data-tr="en">Use when</span><span data-tr="es">Úsalo cuando</span><span data-tr="ja">使う場面</span></div>
+      <p>
+        <span data-tr="en">Small-to-medium datasets with meaningful distance metrics. You want a nonlinear, nonparametric baseline. Recommendation systems ("users like you also bought…").</span>
+        <span data-tr="es">Datasets pequeños a medianos con métricas de distancia significativas. Quieres una línea base no lineal y no paramétrica. Sistemas de recomendación ("usuarios como tú también compraron…").</span>
+        <span data-tr="ja">意味のある距離指標がある中小規模データセット。非線形・ノンパラメトリックなベースラインが欲しい。推薦システム (「あなたに似たユーザーは…」)。</span>
+      </p>
+    </div>
+    <div class="block avoid">
+      <div class="label"><span data-tr="en">Avoid when</span><span data-tr="es">Evítalo cuando</span><span data-tr="ja">避ける場面</span></div>
+      <p>
+        <span data-tr="en">High-dimensional data (curse of dimensionality: distances become meaningless), huge datasets (prediction is O(n)), or latency-critical systems.</span>
+        <span data-tr="es">Datos de alta dimensión (maldición de la dimensionalidad: las distancias pierden significado), datasets enormes (predicción O(n)), o sistemas con latencia crítica.</span>
+        <span data-tr="ja">高次元データ (次元の呪い: 距離が意味を失う)、巨大データセット (予測が O(n))、レイテンシ重視のシステム。</span>
+      </p>
+    </div>
+  </div>
+
+  <pre class="code"><span class="kw">from</span> sklearn.neighbors <span class="kw">import</span> KNeighborsClassifier
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler
+<span class="kw">from</span> sklearn.pipeline <span class="kw">import</span> make_pipeline
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> GridSearchCV
+
+pipe = <span class="fn">make_pipeline</span>(
+    <span class="cl">StandardScaler</span>(),                     <span class="cm"># distance depends on scale — always scale!</span>
+    <span class="cl">KNeighborsClassifier</span>(weights=<span class="st">"distance"</span>)
+)
+
+grid = <span class="fn">GridSearchCV</span>(pipe, {<span class="st">"kneighborsclassifier__n_neighbors"</span>: [<span class="nu">3</span>, <span class="nu">5</span>, <span class="nu">7</span>, <span class="nu">11</span>, <span class="nu">21</span>]}, cv=<span class="nu">5</span>)
+grid.<span class="fn">fit</span>(X_train, y_train)
+
+<span class="fn">print</span>(<span class="st">f"Best k = {grid.best_params_}"</span>)
+<span class="fn">print</span>(<span class="st">f"Test accuracy = {grid.score(X_test, y_test):.3f}"</span>)
+</pre>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 4. NAIVE BAYES                              -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="nb">
+  <div class="sec-head">
+    <span class="sec-num n-yellow">04</span>
+    <span class="sec-title">Naive Bayes</span>
+    <span class="chip"><span data-tr="en">Supervised · Classification</span><span data-tr="es">Supervisado · Clasificación</span><span data-tr="ja">教師あり · 分類</span></span>
+  </div>
+
+  <div class="intuition">
+    <p>
+      <span data-tr="en"><strong>What it does.</strong> Applies Bayes' theorem with a "naive" assumption: all features are independent given the class. That assumption is usually wrong — and yet it works remarkably well, especially for text. Training is a single pass: count frequencies.</span>
+      <span data-tr="es"><strong>Qué hace.</strong> Aplica el teorema de Bayes con un supuesto "ingenuo": todas las variables son independientes dada la clase. El supuesto suele ser falso — y aun así funciona sorprendentemente bien, especialmente en texto. El entrenamiento es una pasada: contar frecuencias.</span>
+      <span data-tr="ja"><strong>何をするか。</strong> 「素朴な」仮定 (クラスが与えられれば全特徴量は独立) のもとベイズの定理を適用。通常この仮定は成り立たないが、特にテキストでは驚くほどうまく動く。訓練は頻度を数える 1 パスのみ。</span>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="block when">
+      <div class="label"><span data-tr="en">Use when</span><span data-tr="es">Úsalo cuando</span><span data-tr="ja">使う場面</span></div>
+      <p>
+        <span data-tr="en">Text classification (spam, sentiment, topics). Very large feature counts. You need blazing-fast training and inference, and can tolerate imperfect probability calibration.</span>
+        <span data-tr="es">Clasificación de texto (spam, sentimiento, temas). Muchísimas características. Necesitas entrenamiento e inferencia ultrarrápidos y toleras una calibración imperfecta.</span>
+        <span data-tr="ja">テキスト分類 (スパム、感情、トピック)。特徴量が非常に多い。超高速の訓練・推論が必要で、確率の較正が完璧でなくてもよい。</span>
+      </p>
+    </div>
+    <div class="block avoid">
+      <div class="label"><span data-tr="en">Avoid when</span><span data-tr="es">Evítalo cuando</span><span data-tr="ja">避ける場面</span></div>
+      <p>
+        <span data-tr="en">Features are strongly dependent (Naive Bayes will double-count the evidence). Probability estimates need to be trusted for ranking or thresholding.</span>
+        <span data-tr="es">Las variables son muy dependientes entre sí (Naive Bayes contará dos veces la evidencia). Las probabilidades deben ser confiables para rankear o fijar umbrales.</span>
+        <span data-tr="ja">特徴量が強く依存している (証拠を二重カウントする)。ランキングや閾値設定で確率を信頼する必要があるとき。</span>
+      </p>
+    </div>
+  </div>
+
+  <pre class="code"><span class="kw">from</span> sklearn.feature_extraction.text <span class="kw">import</span> TfidfVectorizer
+<span class="kw">from</span> sklearn.naive_bayes <span class="kw">import</span> MultinomialNB
+<span class="kw">from</span> sklearn.pipeline <span class="kw">import</span> make_pipeline
+
+<span class="cm"># Classic text classification setup: TF-IDF + Multinomial Naive Bayes</span>
+model = <span class="fn">make_pipeline</span>(
+    <span class="cl">TfidfVectorizer</span>(ngram_range=(<span class="nu">1</span>, <span class="nu">2</span>), min_df=<span class="nu">2</span>),
+    <span class="cl">MultinomialNB</span>(alpha=<span class="nu">0.1</span>)                 <span class="cm"># alpha = Laplace smoothing</span>
+)
+model.<span class="fn">fit</span>(X_train_text, y_train)
+
+<span class="fn">print</span>(<span class="st">f"Test accuracy = {model.score(X_test_text, y_test):.3f}"</span>)
+</pre>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 5. SVM                                      -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="svm">
+  <div class="sec-head">
+    <span class="sec-num n-orange">05</span>
+    <span class="sec-title">
+      <span data-tr="en">Support Vector Machine (SVM)</span>
+      <span data-tr="es">Máquina de Vectores de Soporte (SVM)</span>
+      <span data-tr="ja">サポートベクターマシン (SVM)</span>
+    </span>
+    <span class="chip"><span data-tr="en">Supervised · Classification/Regression</span><span data-tr="es">Supervisado · Clasificación/Regresión</span><span data-tr="ja">教師あり · 分類/回帰</span></span>
+  </div>
+
+  <div class="intuition">
+    <p>
+      <span data-tr="en"><strong>What it does.</strong> Finds the maximum-margin hyperplane separating classes. Only the boundary points ("support vectors") matter. With the kernel trick, draws nonlinear boundaries by implicitly mapping to a higher-dimensional space — no need to compute that space.</span>
+      <span data-tr="es"><strong>Qué hace.</strong> Encuentra el hiperplano de máximo margen que separa las clases. Solo importan los puntos frontera ("vectores de soporte"). Con el truco del kernel, dibuja fronteras no lineales mapeando implícitamente a un espacio superior — sin calcularlo.</span>
+      <span data-tr="ja"><strong>何をするか。</strong> クラスを分離する最大マージン超平面を見つける。境界上の点 (「サポートベクター」) だけが重要。カーネルトリックにより、高次元空間へ暗黙的に写像して非線形境界を引く — その空間を実際に計算する必要はない。</span>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="block when">
+      <div class="label"><span data-tr="en">Use when</span><span data-tr="es">Úsalo cuando</span><span data-tr="ja">使う場面</span></div>
+      <p>
+        <span data-tr="en">Mid-size datasets with many features (text, genomics, bioinformatics). Clear margin between classes. You're willing to tune C and kernel parameters.</span>
+        <span data-tr="es">Datasets medianos con muchas características (texto, genómica, bioinformática). Margen claro entre clases. Estás dispuesto a ajustar C y los parámetros del kernel.</span>
+        <span data-tr="ja">多数の特徴量を持つ中規模データセット (テキスト、ゲノミクス、バイオインフォマティクス)。クラス間に明確なマージンがある。C とカーネルパラメータの調整を厭わない。</span>
+      </p>
+    </div>
+    <div class="block avoid">
+      <div class="label"><span data-tr="en">Avoid when</span><span data-tr="es">Evítalo cuando</span><span data-tr="ja">避ける場面</span></div>
+      <p>
+        <span data-tr="en">Massive datasets (training is O(n²) to O(n³)). Highly imbalanced classes without weighting. You need calibrated probabilities without extra work (Platt scaling is not free).</span>
+        <span data-tr="es">Datasets masivos (entrenamiento O(n²)–O(n³)). Clases muy desbalanceadas sin ponderar. Necesitas probabilidades calibradas sin trabajo extra (Platt scaling no es gratis).</span>
+        <span data-tr="ja">巨大データセット (訓練が O(n²)〜O(n³))。重み付けなしの強い不均衡クラス。追加作業なしに較正された確率が必要 (Platt スケーリングは無料ではない)。</span>
+      </p>
+    </div>
+  </div>
+
+  <pre class="code"><span class="kw">from</span> sklearn.svm <span class="kw">import</span> SVC
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler
+<span class="kw">from</span> sklearn.pipeline <span class="kw">import</span> make_pipeline
+
+model = <span class="fn">make_pipeline</span>(
+    <span class="cl">StandardScaler</span>(),
+    <span class="cl">SVC</span>(kernel=<span class="st">"rbf"</span>, C=<span class="nu">1.0</span>, gamma=<span class="st">"scale"</span>, probability=<span class="kw">True</span>)
+)
+model.<span class="fn">fit</span>(X_train, y_train)
+
+<span class="fn">print</span>(<span class="st">f"Test accuracy = {model.score(X_test, y_test):.3f}"</span>)
+<span class="cm"># kernel options: "linear" (no kernel trick), "rbf" (default nonlinear), "poly"</span>
+<span class="cm"># Rule of thumb: start with linear. Upgrade to RBF only if linear underfits.</span>
+</pre>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 6. DECISION TREE                            -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="tree">
+  <div class="sec-head">
+    <span class="sec-num n-green">06</span>
+    <span class="sec-title">
+      <span data-tr="en">Decision Tree</span>
+      <span data-tr="es">Árbol de Decisión</span>
+      <span data-tr="ja">決定木</span>
+    </span>
+    <span class="chip"><span data-tr="en">Supervised · Regression/Classification</span><span data-tr="es">Supervisado · Regresión/Clasificación</span><span data-tr="ja">教師あり · 回帰/分類</span></span>
+  </div>
+
+  <div class="intuition">
+    <p>
+      <span data-tr="en"><strong>What it does.</strong> Recursively splits the feature space along one feature at a time, picking the split that most reduces impurity (Gini or entropy for classification, variance for regression). You can print the tree and read the rules out loud.</span>
+      <span data-tr="es"><strong>Qué hace.</strong> Divide recursivamente el espacio de características eligiendo, en cada paso, la división que más reduce la impureza (Gini o entropía para clasificación, varianza para regresión). Puedes imprimir el árbol y leer las reglas en voz alta.</span>
+      <span data-tr="ja"><strong>何をするか。</strong> 特徴空間を 1 つの特徴量で再帰的に分割し、不純度 (分類では Gini やエントロピー、回帰では分散) を最も減らす分割を選ぶ。木を出力してルールをそのまま読める。</span>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="block when">
+      <div class="label"><span data-tr="en">Use when</span><span data-tr="es">Úsalo cuando</span><span data-tr="ja">使う場面</span></div>
+      <p>
+        <span data-tr="en">Interpretability is critical (regulated industries, stakeholders who need to audit decisions). Features are on wildly different scales. Mix of numerical and categorical features with no preprocessing.</span>
+        <span data-tr="es">La interpretabilidad es crítica (industrias reguladas, interesados que necesitan auditar decisiones). Características en escalas muy distintas. Mezcla de numéricas y categóricas sin preprocesamiento.</span>
+        <span data-tr="ja">解釈性が重要 (規制産業、意思決定の監査が必要な関係者)。特徴量のスケールが大きく異なる。前処理なしで数値とカテゴリが混在する。</span>
+      </p>
+    </div>
+    <div class="block avoid">
+      <div class="label"><span data-tr="en">Avoid when</span><span data-tr="es">Evítalo cuando</span><span data-tr="ja">避ける場面</span></div>
+      <p>
+        <span data-tr="en">You need high accuracy — a single tree almost always overfits. Reach for Random Forest or Gradient Boosting instead. Decision trees alone are rarely a production choice.</span>
+        <span data-tr="es">Necesitas alta precisión — un árbol único casi siempre sobreajusta. Usa Random Forest o Gradient Boosting. Los árboles solos rara vez son opción de producción.</span>
+        <span data-tr="ja">高い精度が必要 — 単一の木はほぼ必ず過学習する。Random Forest や勾配ブースティングを使う。単独の決定木は本番ではほぼ使われない。</span>
+      </p>
+    </div>
+  </div>
+
+  <pre class="code"><span class="kw">from</span> sklearn.tree <span class="kw">import</span> DecisionTreeClassifier, export_text
+
+model = <span class="cl">DecisionTreeClassifier</span>(
+    max_depth=<span class="nu">5</span>,                <span class="cm"># cap depth to prevent overfitting</span>
+    min_samples_leaf=<span class="nu">20</span>,         <span class="cm"># every leaf must have ≥ 20 samples</span>
+    criterion=<span class="st">"gini"</span>,          <span class="cm"># or "entropy"</span>
+    random_state=<span class="nu">42</span>
+)
+model.<span class="fn">fit</span>(X_train, y_train)
+
+<span class="fn">print</span>(<span class="fn">export_text</span>(model, feature_names=feature_names))   <span class="cm"># human-readable rules</span>
+<span class="fn">print</span>(<span class="st">f"Test accuracy = {model.score(X_test, y_test):.3f}"</span>)
+</pre>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 7. RANDOM FOREST                            -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="rf">
+  <div class="sec-head">
+    <span class="sec-num n-teal">07</span>
+    <span class="sec-title">Random Forest</span>
+    <span class="chip"><span data-tr="en">Supervised · Ensemble</span><span data-tr="es">Supervisado · Ensemble</span><span data-tr="ja">教師あり · アンサンブル</span></span>
+  </div>
+
+  <div class="intuition">
+    <p>
+      <span data-tr="en"><strong>What it does.</strong> Trains hundreds of deep decision trees, each on a bootstrap sample of rows with a random subset of features. At predict time, all trees vote (classification) or average (regression). Variance reduction without raising bias — the magic of bagging.</span>
+      <span data-tr="es"><strong>Qué hace.</strong> Entrena cientos de árboles profundos, cada uno con una muestra bootstrap y un subconjunto aleatorio de variables. Al predecir, todos los árboles votan (clasificación) o promedian (regresión). Reducción de varianza sin aumentar el sesgo — la magia del bagging.</span>
+      <span data-tr="ja"><strong>何をするか。</strong> 数百の深い決定木を、行のブートストラップ標本とランダムな特徴量部分集合で訓練する。予測時は全木が投票 (分類) または平均 (回帰) する。バイアスを上げずに分散を減らす — バギングの魔法。</span>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="block when">
+      <div class="label"><span data-tr="en">Use when</span><span data-tr="es">Úsalo cuando</span><span data-tr="ja">使う場面</span></div>
+      <p>
+        <span data-tr="en">Strong default on tabular data. Mixed feature types. You have little time to tune and need something that works out of the box. Feature importance comes free.</span>
+        <span data-tr="es">Opción por defecto sólida en datos tabulares. Tipos de variables mixtos. Poco tiempo para ajustar y necesitas algo que funcione sin configuración. La importancia de variables es gratis.</span>
+        <span data-tr="ja">表形式データで強力なデフォルト。混在型特徴量。調整の時間が少なく、そのままで動くものが必要。特徴量重要度が無料で得られる。</span>
+      </p>
+    </div>
+    <div class="block avoid">
+      <div class="label"><span data-tr="en">Avoid when</span><span data-tr="es">Evítalo cuando</span><span data-tr="ja">避ける場面</span></div>
+      <p>
+        <span data-tr="en">Maximum predictive performance required (boosting usually wins). Memory is tight. Model size matters for deployment. Very large datasets where training cost dominates.</span>
+        <span data-tr="es">Se requiere máxima performance predictiva (el boosting suele ganar). Memoria ajustada. El tamaño del modelo importa para el deployment. Datasets muy grandes donde el costo de entrenamiento manda.</span>
+        <span data-tr="ja">最大の予測性能が必要 (ブースティングが勝つことが多い)。メモリがタイト。デプロイでモデルサイズが重要。訓練コストが支配する超大規模データセット。</span>
+      </p>
+    </div>
+  </div>
+
+  <pre class="code"><span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
+<span class="kw">import</span> pandas <span class="kw">as</span> pd
+
+model = <span class="cl">RandomForestClassifier</span>(
+    n_estimators=<span class="nu">500</span>,        <span class="cm"># more trees = more stable, slower</span>
+    max_depth=<span class="kw">None</span>,          <span class="cm"># let trees grow fully</span>
+    min_samples_leaf=<span class="nu">2</span>,
+    max_features=<span class="st">"sqrt"</span>,       <span class="cm"># √p features per split (classic default)</span>
+    n_jobs=-<span class="nu">1</span>,                <span class="cm"># use all CPU cores</span>
+    random_state=<span class="nu">42</span>
+)
+model.<span class="fn">fit</span>(X_train, y_train)
+
+<span class="fn">print</span>(<span class="st">f"Test accuracy = {model.score(X_test, y_test):.3f}"</span>)
+
+<span class="cm"># Feature importance — which variables matter?</span>
+importance = <span class="fn">pd.Series</span>(model.feature_importances_, index=feature_names).<span class="fn">sort_values</span>(ascending=<span class="kw">False</span>)
+<span class="fn">print</span>(importance.<span class="fn">head</span>(<span class="nu">10</span>))
+</pre>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 8. GRADIENT BOOSTING                        -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="gb">
+  <div class="sec-head">
+    <span class="sec-num n-red">08</span>
+    <span class="sec-title">
+      <span data-tr="en">Gradient Boosting (XGBoost / LightGBM)</span>
+      <span data-tr="es">Gradient Boosting (XGBoost / LightGBM)</span>
+      <span data-tr="ja">勾配ブースティング (XGBoost / LightGBM)</span>
+    </span>
+    <span class="chip"><span data-tr="en">Supervised · Ensemble</span><span data-tr="es">Supervisado · Ensemble</span><span data-tr="ja">教師あり · アンサンブル</span></span>
+  </div>
+
+  <div class="intuition">
+    <p>
+      <span data-tr="en"><strong>What it does.</strong> Builds trees sequentially — each new tree fits the residual errors of the current ensemble. Small, shallow trees added one at a time with a learning rate. The state of the art for tabular data; wins most Kaggle competitions.</span>
+      <span data-tr="es"><strong>Qué hace.</strong> Construye árboles en secuencia — cada nuevo árbol se ajusta a los errores residuales del ensemble actual. Árboles pequeños y poco profundos añadidos con una tasa de aprendizaje. Estado del arte en datos tabulares; gana la mayoría de competencias de Kaggle.</span>
+      <span data-tr="ja"><strong>何をするか。</strong> 木を逐次的に構築 — 各新木は現在のアンサンブルの残差を当てはめる。小さく浅い木を学習率とともに 1 本ずつ追加。表形式データで最先端、Kaggle コンペの多くを制する。</span>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="block when">
+      <div class="label"><span data-tr="en">Use when</span><span data-tr="es">Úsalo cuando</span><span data-tr="ja">使う場面</span></div>
+      <p>
+        <span data-tr="en">Maximum accuracy on structured/tabular data. You have time to tune learning rate, depth, and regularization. Features are a mix of numerical and categorical.</span>
+        <span data-tr="es">Máxima precisión en datos estructurados/tabulares. Tiempo para ajustar tasa de aprendizaje, profundidad y regularización. Mezcla de variables numéricas y categóricas.</span>
+        <span data-tr="ja">構造化・表形式データで最高精度。学習率・深さ・正則化を調整する時間がある。数値とカテゴリが混在した特徴量。</span>
+      </p>
+    </div>
+    <div class="block avoid">
+      <div class="label"><span data-tr="en">Avoid when</span><span data-tr="es">Evítalo cuando</span><span data-tr="ja">避ける場面</span></div>
+      <p>
+        <span data-tr="en">Images, audio, or raw text — use neural networks. Small datasets (&lt;1000 rows) — it'll overfit without very heavy regularization. Extreme interpretability requirements.</span>
+        <span data-tr="es">Imágenes, audio o texto crudo — usa redes neuronales. Datasets pequeños (&lt;1000 filas) — sobreajusta sin regularización fuerte. Requisitos extremos de interpretabilidad.</span>
+        <span data-tr="ja">画像、音声、生テキスト — ニューラルネットを使う。小さいデータセット (&lt;1000 行) — 強い正則化なしでは過学習する。極めて高い解釈性が要求される場合。</span>
+      </p>
+    </div>
+  </div>
+
+  <pre class="code"><span class="kw">from</span> xgboost <span class="kw">import</span> XGBClassifier
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> train_test_split
+
+X_tr, X_val, y_tr, y_val = <span class="fn">train_test_split</span>(X_train, y_train, test_size=<span class="nu">0.15</span>, random_state=<span class="nu">0</span>)
+
+model = <span class="cl">XGBClassifier</span>(
+    n_estimators=<span class="nu">2000</span>,
+    learning_rate=<span class="nu">0.05</span>,          <span class="cm"># small η + many trees → smoother convergence</span>
+    max_depth=<span class="nu">6</span>,
+    subsample=<span class="nu">0.8</span>,               <span class="cm"># row sampling — adds stochasticity</span>
+    colsample_bytree=<span class="nu">0.8</span>,        <span class="cm"># column sampling — decorrelates trees</span>
+    reg_lambda=<span class="nu">1.0</span>,               <span class="cm"># L2 on leaf weights</span>
+    eval_metric=<span class="st">"logloss"</span>,
+    early_stopping_rounds=<span class="nu">50</span>,     <span class="cm"># stop when val loss hasn't improved in 50 rounds</span>
+    random_state=<span class="nu">42</span>
+)
+model.<span class="fn">fit</span>(X_tr, y_tr, eval_set=[(X_val, y_val)], verbose=<span class="kw">False</span>)
+
+<span class="fn">print</span>(<span class="st">f"Best iteration = {model.best_iteration}"</span>)
+<span class="fn">print</span>(<span class="st">f"Test accuracy  = {model.score(X_test, y_test):.3f}"</span>)
+</pre>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 9. K-MEANS                                  -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="kmeans">
+  <div class="sec-head">
+    <span class="sec-num n-blue">09</span>
+    <span class="sec-title">K-Means</span>
+    <span class="chip"><span data-tr="en">Unsupervised · Clustering</span><span data-tr="es">No Supervisado · Agrupamiento</span><span data-tr="ja">教師なし · クラスタリング</span></span>
+  </div>
+
+  <div class="intuition">
+    <p>
+      <span data-tr="en"><strong>What it does.</strong> Partitions points into k clusters by alternating two steps: (1) assign each point to its nearest centroid, (2) recompute centroids as the mean of assigned points. Repeat until assignments stop changing. Fast and simple — but you must choose k.</span>
+      <span data-tr="es"><strong>Qué hace.</strong> Divide los puntos en k clusters alternando dos pasos: (1) asigna cada punto al centroide más cercano, (2) recalcula centroides como la media de los asignados. Repite hasta que las asignaciones no cambien. Rápido y simple — pero debes elegir k.</span>
+      <span data-tr="ja"><strong>何をするか。</strong> 2 ステップを交互に: (1) 各点を最も近い重心に割り当て、(2) 割り当てられた点の平均として重心を更新。割り当てが変わらなくなるまで繰り返す。高速で単純 — ただし k の指定が必要。</span>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="block when">
+      <div class="label"><span data-tr="en">Use when</span><span data-tr="es">Úsalo cuando</span><span data-tr="ja">使う場面</span></div>
+      <p>
+        <span data-tr="en">Customer segmentation, color quantization, document grouping. Clusters are roughly spherical and similar in size. You have a guess (or a business answer) for k.</span>
+        <span data-tr="es">Segmentación de clientes, cuantización de color, agrupamiento de documentos. Clusters aproximadamente esféricos y de tamaño similar. Tienes una idea (o razón de negocio) para k.</span>
+        <span data-tr="ja">顧客セグメンテーション、色量子化、文書グルーピング。クラスタがほぼ球状でサイズが似ている。k の当たり (またはビジネス上の答え) がある。</span>
+      </p>
+    </div>
+    <div class="block avoid">
+      <div class="label"><span data-tr="en">Avoid when</span><span data-tr="es">Evítalo cuando</span><span data-tr="ja">避ける場面</span></div>
+      <p>
+        <span data-tr="en">Clusters have irregular shapes, varying densities, or outliers (use DBSCAN). Features are not scaled — K-Means is distance-based and will dominate on large-scale features.</span>
+        <span data-tr="es">Los clusters tienen formas irregulares, densidades variables o atípicos (usa DBSCAN). Variables sin escalar — K-Means es sensible a la escala.</span>
+        <span data-tr="ja">クラスタの形が不規則、密度が異なる、外れ値がある (DBSCAN を使う)。特徴量が未スケーリング — K-Means は距離ベースでスケール大の特徴量が支配する。</span>
+      </p>
+    </div>
+  </div>
+
+  <pre class="code"><span class="kw">from</span> sklearn.cluster <span class="kw">import</span> KMeans
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler
+<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> silhouette_score
+
+X_scaled = <span class="cl">StandardScaler</span>().<span class="fn">fit_transform</span>(X)     <span class="cm"># always scale before K-Means</span>
+
+<span class="cm"># Pick k via the elbow / silhouette — don't just guess</span>
+<span class="kw">for</span> k <span class="kw">in</span> [<span class="nu">2</span>, <span class="nu">3</span>, <span class="nu">4</span>, <span class="nu">5</span>, <span class="nu">6</span>, <span class="nu">7</span>, <span class="nu">8</span>]:
+    km = <span class="cl">KMeans</span>(n_clusters=k, n_init=<span class="nu">10</span>, random_state=<span class="nu">42</span>).<span class="fn">fit</span>(X_scaled)
+    <span class="fn">print</span>(<span class="st">f"k={k}  inertia={km.inertia_:.1f}  silhouette={silhouette_score(X_scaled, km.labels_):.3f}"</span>)
+
+<span class="cm"># Final model with chosen k</span>
+model = <span class="cl">KMeans</span>(n_clusters=<span class="nu">4</span>, n_init=<span class="nu">10</span>, random_state=<span class="nu">42</span>).<span class="fn">fit</span>(X_scaled)
+labels = model.labels_
+</pre>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 10. DBSCAN                                  -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="dbscan">
+  <div class="sec-head">
+    <span class="sec-num n-purple">10</span>
+    <span class="sec-title">DBSCAN</span>
+    <span class="chip"><span data-tr="en">Unsupervised · Density Clustering</span><span data-tr="es">No Supervisado · Agrup. por Densidad</span><span data-tr="ja">教師なし · 密度クラスタリング</span></span>
+  </div>
+
+  <div class="intuition">
+    <p>
+      <span data-tr="en"><strong>What it does.</strong> Groups points that are packed densely together, marks lone points as noise. You don't specify k — instead you set ε (neighborhood radius) and min_samples (density threshold). Discovers arbitrarily shaped clusters.</span>
+      <span data-tr="es"><strong>Qué hace.</strong> Agrupa puntos densamente empacados, marca los aislados como ruido. No especificas k — fijas ε (radio de vecindad) y min_samples (umbral de densidad). Descubre clusters de formas arbitrarias.</span>
+      <span data-tr="ja"><strong>何をするか。</strong> 密集した点群をクラスタに、孤立点をノイズとしてマーク。k を指定する代わりに ε (近傍半径) と min_samples (密度閾値) を設定。任意形状のクラスタを発見する。</span>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="block when">
+      <div class="label"><span data-tr="en">Use when</span><span data-tr="es">Úsalo cuando</span><span data-tr="ja">使う場面</span></div>
+      <p>
+        <span data-tr="en">Clusters are non-convex (crescents, rings, blobs of varied shapes). You don't know k ahead of time. Outlier detection is a goal — DBSCAN labels them as -1.</span>
+        <span data-tr="es">Clusters no convexos (crecientes, anillos, formas variadas). No sabes k de antemano. La detección de atípicos es un objetivo — DBSCAN los etiqueta como -1.</span>
+        <span data-tr="ja">非凸クラスタ (三日月、リング、多様な形状)。k が事前に分からない。外れ値検出が目的 — DBSCAN は -1 としてラベル付けする。</span>
+      </p>
+    </div>
+    <div class="block avoid">
+      <div class="label"><span data-tr="en">Avoid when</span><span data-tr="es">Evítalo cuando</span><span data-tr="ja">避ける場面</span></div>
+      <p>
+        <span data-tr="en">Clusters have very different densities — one ε won't work for all. High-dimensional data where distances concentrate and density becomes meaningless.</span>
+        <span data-tr="es">Los clusters tienen densidades muy distintas — un solo ε no servirá. Datos de alta dimensión donde las distancias se concentran y la densidad pierde significado.</span>
+        <span data-tr="ja">クラスタの密度が大きく異なる — 単一の ε では対応できない。距離が集中して密度が意味を失う高次元データ。</span>
+      </p>
+    </div>
+  </div>
+
+  <pre class="code"><span class="kw">from</span> sklearn.cluster <span class="kw">import</span> DBSCAN
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+X_scaled = <span class="cl">StandardScaler</span>().<span class="fn">fit_transform</span>(X)
+
+model = <span class="cl">DBSCAN</span>(eps=<span class="nu">0.5</span>, min_samples=<span class="nu">10</span>).<span class="fn">fit</span>(X_scaled)
+labels = model.labels_
+
+n_clusters = <span class="fn">len</span>(<span class="fn">set</span>(labels)) - (<span class="nu">1</span> <span class="kw">if</span> -<span class="nu">1</span> <span class="kw">in</span> labels <span class="kw">else</span> <span class="nu">0</span>)
+n_noise    = <span class="fn">list</span>(labels).<span class="fn">count</span>(-<span class="nu">1</span>)
+<span class="fn">print</span>(<span class="st">f"Clusters found = {n_clusters}"</span>)
+<span class="fn">print</span>(<span class="st">f"Noise points   = {n_noise} ({n_noise / len(labels):.1%})"</span>)
+
+<span class="cm"># Rule of thumb for eps: plot k-distance graph (kth nearest neighbor sorted) and look for the elbow.</span>
+</pre>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 11. PCA                                     -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="pca">
+  <div class="sec-head">
+    <span class="sec-num n-yellow">11</span>
+    <span class="sec-title">PCA</span>
+    <span class="chip"><span data-tr="en">Unsupervised · Dimensionality Reduction</span><span data-tr="es">No Supervisado · Reducción de Dimensión</span><span data-tr="ja">教師なし · 次元削減</span></span>
+  </div>
+
+  <div class="intuition">
+    <p>
+      <span data-tr="en"><strong>What it does.</strong> Finds the orthogonal directions of maximum variance in your data (principal components), then projects onto the top k of them. You compress p features into k &lt; p while keeping most of the variance.</span>
+      <span data-tr="es"><strong>Qué hace.</strong> Encuentra las direcciones ortogonales de máxima varianza (componentes principales) y proyecta sobre las k primeras. Comprimes p variables en k &lt; p conservando la mayor parte de la varianza.</span>
+      <span data-tr="ja"><strong>何をするか。</strong> データの最大分散方向 (主成分) を直交軸として見つけ、上位 k 個に射影する。分散の大部分を保ちながら p 個の特徴量を k &lt; p に圧縮する。</span>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="block when">
+      <div class="label"><span data-tr="en">Use when</span><span data-tr="es">Úsalo cuando</span><span data-tr="ja">使う場面</span></div>
+      <p>
+        <span data-tr="en">Too many features, strong multicollinearity. You want to visualize high-dimensional data in 2D/3D. Speeding up downstream models. Denoising (keep top components, drop the rest).</span>
+        <span data-tr="es">Demasiadas variables, multicolinealidad fuerte. Quieres visualizar datos de alta dimensión en 2D/3D. Acelerar modelos posteriores. Eliminar ruido (conserva los componentes principales, descarta el resto).</span>
+        <span data-tr="ja">特徴量が多すぎる、強い多重共線性。高次元データを 2D/3D で可視化したい。下流モデルを高速化したい。ノイズ除去 (上位成分を残して残りを捨てる)。</span>
+      </p>
+    </div>
+    <div class="block avoid">
+      <div class="label"><span data-tr="en">Avoid when</span><span data-tr="es">Evítalo cuando</span><span data-tr="ja">避ける場面</span></div>
+      <p>
+        <span data-tr="en">Features are categorical. Nonlinear structure matters (try t-SNE or UMAP for visualization, autoencoders for compression). Interpretability of original features is required.</span>
+        <span data-tr="es">Variables categóricas. La estructura no lineal importa (usa t-SNE o UMAP para visualizar, autoencoders para comprimir). Se requiere interpretar las variables originales.</span>
+        <span data-tr="ja">カテゴリ特徴量。非線形構造が重要 (可視化には t-SNE や UMAP、圧縮にはオートエンコーダ)。元の特徴量の解釈が必要。</span>
+      </p>
+    </div>
+  </div>
+
+  <pre class="code"><span class="kw">from</span> sklearn.decomposition <span class="kw">import</span> PCA
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+X_scaled = <span class="cl">StandardScaler</span>().<span class="fn">fit_transform</span>(X)    <span class="cm"># PCA is scale-sensitive</span>
+
+pca = <span class="cl">PCA</span>(n_components=<span class="nu">0.95</span>)                  <span class="cm"># keep enough components for 95% variance</span>
+X_reduced = pca.<span class="fn">fit_transform</span>(X_scaled)
+
+<span class="fn">print</span>(<span class="st">f"Original  = {X.shape[1]} dims"</span>)
+<span class="fn">print</span>(<span class="st">f"Reduced   = {X_reduced.shape[1]} dims"</span>)
+<span class="fn">print</span>(<span class="st">f"Variance explained per component: {np.round(pca.explained_variance_ratio_, 3)}"</span>)
+<span class="fn">print</span>(<span class="st">f"Cumulative: {np.round(np.cumsum(pca.explained_variance_ratio_), 3)}"</span>)
+</pre>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 12. NEURAL NETWORK                          -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="nn">
+  <div class="sec-head">
+    <span class="sec-num n-orange">12</span>
+    <span class="sec-title">
+      <span data-tr="en">Neural Network (MLP)</span>
+      <span data-tr="es">Red Neuronal (MLP)</span>
+      <span data-tr="ja">ニューラルネット (MLP)</span>
+    </span>
+    <span class="chip"><span data-tr="en">Supervised · Deep Learning</span><span data-tr="es">Supervisado · Aprendizaje Profundo</span><span data-tr="ja">教師あり · 深層学習</span></span>
+  </div>
+
+  <div class="intuition">
+    <p>
+      <span data-tr="en"><strong>What it does.</strong> Stacks linear transformations and nonlinear activations (ReLU, tanh, sigmoid) into layers. Trained via backpropagation — compute gradient of loss w.r.t. every weight, update by stochastic gradient descent. Universal approximator: enough hidden units can represent any continuous function.</span>
+      <span data-tr="es"><strong>Qué hace.</strong> Apila transformaciones lineales y activaciones no lineales (ReLU, tanh, sigmoide) en capas. Entrenada por retropropagación — gradiente de la pérdida respecto a cada peso, actualizado por descenso de gradiente estocástico. Aproximador universal: con suficientes unidades, puede representar cualquier función continua.</span>
+      <span data-tr="ja"><strong>何をするか。</strong> 線形変換と非線形活性化 (ReLU、tanh、シグモイド) を層として積み重ねる。誤差逆伝播で訓練 — 損失の各重みに対する勾配を計算し、確率的勾配降下で更新。普遍近似: 隠れユニットが十分にあればどんな連続関数も表現できる。</span>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="block when">
+      <div class="label"><span data-tr="en">Use when</span><span data-tr="es">Úsalo cuando</span><span data-tr="ja">使う場面</span></div>
+      <p>
+        <span data-tr="en">Images (CNNs), sequences/text (Transformers, RNNs), audio, and any problem with lots of training data. Patterns are genuinely nonlinear and feature engineering is painful.</span>
+        <span data-tr="es">Imágenes (CNN), secuencias/texto (Transformers, RNN), audio, y cualquier problema con muchos datos. Los patrones son genuinamente no lineales y la ingeniería de características es dolorosa.</span>
+        <span data-tr="ja">画像 (CNN)、系列/テキスト (Transformer、RNN)、音声、訓練データが大量にある問題。パターンが本当に非線形で、特徴量エンジニアリングが苦行のとき。</span>
+      </p>
+    </div>
+    <div class="block avoid">
+      <div class="label"><span data-tr="en">Avoid when</span><span data-tr="es">Evítalo cuando</span><span data-tr="ja">避ける場面</span></div>
+      <p>
+        <span data-tr="en">Small tabular datasets — gradient boosting will beat you with 1% of the compute. You need interpretability. You can't afford GPU time or patience for hyperparameter tuning.</span>
+        <span data-tr="es">Datasets tabulares pequeños — gradient boosting te gana con 1% del cómputo. Necesitas interpretabilidad. No puedes pagar GPU ni tener paciencia para ajustar hiperparámetros.</span>
+        <span data-tr="ja">小規模な表形式データセット — 勾配ブースティングが計算量 1% で勝つ。解釈性が必要。GPU 時間やハイパーパラメータ調整の忍耐がない。</span>
+      </p>
+    </div>
+  </div>
+
+  <pre class="code"><span class="cm"># Simple MLP with sklearn — quick baseline for nonlinear classification</span>
+<span class="kw">from</span> sklearn.neural_network <span class="kw">import</span> MLPClassifier
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler
+<span class="kw">from</span> sklearn.pipeline <span class="kw">import</span> make_pipeline
+
+model = <span class="fn">make_pipeline</span>(
+    <span class="cl">StandardScaler</span>(),
+    <span class="cl">MLPClassifier</span>(
+        hidden_layer_sizes=(<span class="nu">64</span>, <span class="nu">32</span>),   <span class="cm"># two hidden layers</span>
+        activation=<span class="st">"relu"</span>,
+        alpha=<span class="nu">1e-4</span>,                   <span class="cm"># L2 regularization</span>
+        learning_rate_init=<span class="nu">1e-3</span>,
+        max_iter=<span class="nu">200</span>,
+        early_stopping=<span class="kw">True</span>,           <span class="cm"># stop when val score stops improving</span>
+        random_state=<span class="nu">42</span>
+    )
+)
+model.<span class="fn">fit</span>(X_train, y_train)
+<span class="fn">print</span>(<span class="st">f"Test accuracy = {model.score(X_test, y_test):.3f}"</span>)
+
+<span class="cm"># ── For real deep learning, use PyTorch or TensorFlow/Keras ──</span>
+<span class="cm">#   import torch; import torch.nn as nn</span>
+<span class="cm">#   class MLP(nn.Module):</span>
+<span class="cm">#       def __init__(self): super().__init__(); self.net = nn.Sequential(</span>
+<span class="cm">#           nn.Linear(p, 64), nn.ReLU(), nn.Linear(64, 32), nn.ReLU(), nn.Linear(32, n_classes))</span>
+<span class="cm">#       def forward(self, x): return self.net(x)</span>
+</pre>
+</div>
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- CHEAT SHEET                                 -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="cheatsheet">
+  <div class="sec-head">
+    <span class="sec-num n-accent">13</span>
+    <span class="sec-title">
+      <span data-tr="en">Picking an Algorithm — Cheat Sheet</span>
+      <span data-tr="es">Elegir un Algoritmo — Hoja Resumen</span>
+      <span data-tr="ja">アルゴリズム選びのチートシート</span>
+    </span>
+  </div>
+
+  <div class="intuition">
+    <p>
+      <span data-tr="en">When in doubt, follow this order. Most real problems are solved at step 2 or 3.</span>
+      <span data-tr="es">Cuando dudes, sigue este orden. La mayoría de los problemas reales se resuelven en el paso 2 o 3.</span>
+      <span data-tr="ja">迷ったらこの順で試す。現実の問題の多くはステップ 2 または 3 で解決する。</span>
+    </p>
+  </div>
+
+  <table class="tbl">
+    <thead><tr>
+      <th><span data-tr="en">Step</span><span data-tr="es">Paso</span><span data-tr="ja">手順</span></th>
+      <th><span data-tr="en">Do This</span><span data-tr="es">Haz Esto</span><span data-tr="ja">することは</span></th>
+      <th><span data-tr="en">Reason</span><span data-tr="es">Razón</span><span data-tr="ja">理由</span></th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><span data-tr="en">Establish a naive baseline</span><span data-tr="es">Establece una línea base ingenua</span><span data-tr="ja">素朴なベースラインを作る</span></td>
+        <td><span data-tr="en">Predict the mean (regression) or majority class (classification). If you can't beat this, nothing else matters.</span><span data-tr="es">Predice la media (regresión) o la clase mayoritaria (clasificación). Si no le ganas, nada más importa.</span><span data-tr="ja">平均 (回帰) や多数派クラス (分類) を予測。これに勝てないなら他は無意味。</span></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><span data-tr="en">Fit a linear / logistic model</span><span data-tr="es">Ajusta un modelo lineal / logístico</span><span data-tr="ja">線形 / ロジスティックモデルを当てはめる</span></td>
+        <td><span data-tr="en">Interpretable, fast, sets your second baseline. Surprisingly often, this is enough.</span><span data-tr="es">Interpretable, rápido, establece tu segunda línea base. Sorprendentemente, a menudo esto basta.</span><span data-tr="ja">解釈可能で高速、2 つ目のベースライン。意外にもこれで十分な場合が多い。</span></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><span data-tr="en">Fit Random Forest</span><span data-tr="es">Ajusta Random Forest</span><span data-tr="ja">Random Forest を当てはめる</span></td>
+        <td><span data-tr="en">Works out of the box on tabular data. If RF doesn't improve on linear — the signal is weak or features aren't informative.</span><span data-tr="es">Funciona de inmediato en datos tabulares. Si RF no mejora al lineal — la señal es débil o las variables no son informativas.</span><span data-tr="ja">表形式データでは設定なしで動く。線形を超えなければシグナルが弱いか特徴量が情報を持たない。</span></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><span data-tr="en">Fit XGBoost / LightGBM</span><span data-tr="es">Ajusta XGBoost / LightGBM</span><span data-tr="ja">XGBoost / LightGBM を当てはめる</span></td>
+        <td><span data-tr="en">Usually the winner on tabular data. Tune learning rate, max_depth, n_estimators with early stopping.</span><span data-tr="es">Suele ganar en datos tabulares. Ajusta tasa de aprendizaje, max_depth, n_estimators con early stopping.</span><span data-tr="ja">表形式データでは通常勝者。学習率、max_depth、n_estimators を early stopping で調整。</span></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><span data-tr="en">Reach for neural networks</span><span data-tr="es">Recurre a redes neuronales</span><span data-tr="ja">ニューラルネットに手を伸ばす</span></td>
+        <td><span data-tr="en">Only if data is unstructured (images, text, audio) or you have millions of rows where boosting saturates.</span><span data-tr="es">Solo si los datos son no estructurados (imágenes, texto, audio) o tienes millones de filas donde el boosting se satura.</span><span data-tr="ja">非構造化データ (画像・テキスト・音声) か、ブースティングが飽和する数百万行がある場合のみ。</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="intuition" style="border-left: 2px solid var(--accent); margin-top: 1.5rem;">
+    <p>
+      <span data-tr="en"><strong>The real secret.</strong> Better features almost always beat a fancier algorithm. Before you reach for the next model, ask: is there a feature I haven't engineered yet? More data I can collect? A leak I haven't noticed? The algorithm matters less than most beginners think.</span>
+      <span data-tr="es"><strong>El secreto real.</strong> Mejores características casi siempre le ganan a un algoritmo más sofisticado. Antes de saltar al siguiente modelo, pregunta: ¿hay una variable que aún no he construido? ¿Más datos que podría recolectar? ¿Una fuga que no he notado? El algoritmo importa menos de lo que los principiantes creen.</span>
+      <span data-tr="ja"><strong>本当の秘訣。</strong> 優れた特徴量はほぼ必ず凝ったアルゴリズムに勝つ。次のモデルに手を出す前に問う: 作っていない特徴量はないか？ 集められるデータは残っていないか？ 気づいていないリークはないか？ アルゴリズムの重要度は初心者が思うより低い。</span>
+    </p>
+  </div>
+</div>
+
+</div>
+
+<footer>
+  <span data-tr="en">Texcoco Data Science · Essential ML Algorithms · Free forever</span>
+  <span data-tr="es">Texcoco Ciencia de Datos · Algoritmos Esenciales de ML · Gratis para siempre</span>
+  <span data-tr="ja">テクスココ データサイエンス · 必須機械学習アルゴリズム · 永久無料</span>
+</footer>
+
+<script src="/lang-toggle.js" defer></script>
+</body>
+</html>

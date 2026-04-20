@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Foundational Data Science — Formula Cheat Sheet</title>
+<title data-tr-title
+  data-tr-en="Foundational Data Science — Formula Cheat Sheet"
+  data-tr-es="Ciencia de Datos Fundamental — Hoja de Fórmulas"
+  data-tr-ja="データサイエンスの基礎 — 数式チートシート">Foundational Data Science — Formula Cheat Sheet</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lang-toggle.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -33,7 +37,6 @@
     padding-bottom: 1.5rem;
   }
 
-  /* ── Nav ── */
   .nav {
     display: flex;
     flex-wrap: wrap;
@@ -59,7 +62,6 @@
   }
   .nav a:hover { border-color: #58a6ff; color: #58a6ff; }
 
-  /* ── Colors ── */
   .v  { color: #ff4d4d; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.88em; }
   .vg { color: #56d364; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.88em; }
   .vb { color: #58a6ff; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.88em; }
@@ -67,7 +69,6 @@
   .vp { color: #a371f7; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.88em; }
   .vy { color: #e3b341; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.88em; }
 
-  /* ── Section ── */
   .section {
     margin-bottom: 3rem;
     scroll-margin-top: 4rem;
@@ -89,7 +90,6 @@
   .section-title.purple { border-left-color: #a371f7; }
   .section-title.yellow { border-left-color: #e3b341; }
 
-  /* ── Formula card ── */
   .card {
     background: #161b22;
     border: 1px solid #30363d;
@@ -121,7 +121,6 @@
     line-height: 1.5;
   }
 
-  /* ── Two-column grid ── */
   .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -132,14 +131,12 @@
     .grid-2 { grid-template-columns: 1fr; }
   }
 
-  /* ── Separator ── */
   .sep {
     border: none;
     border-top: 1px solid #21262d;
     margin: 2.5rem 0;
   }
 
-  /* ── Callout ── */
   .callout {
     background: #1a1500;
     border: 1px solid #f0883e;
@@ -156,733 +153,765 @@
 </head>
 <body>
 
-<h1>Foundational Data Science</h1>
-<p class="subtitle">Every formula you need — from descriptive stats through regression, classification, and model evaluation.</p>
+<h1>
+  <span data-tr="en">Foundational Data Science</span>
+  <span data-tr="es">Ciencia de Datos Fundamental</span>
+  <span data-tr="ja">データサイエンスの基礎</span>
+</h1>
+<p class="subtitle">
+  <span data-tr="en">Every formula you need — from descriptive stats through regression, classification, and model evaluation.</span>
+  <span data-tr="es">Cada fórmula que necesitas — desde estadística descriptiva hasta regresión, clasificación y evaluación de modelos.</span>
+  <span data-tr="ja">必要な全ての数式 — 記述統計から回帰、分類、モデル評価まで。</span>
+</p>
 
 <nav class="nav">
-  <a href="#stats">Descriptive Stats</a>
-  <a href="#probability">Probability</a>
-  <a href="#distributions">Distributions</a>
-  <a href="#hypothesis">Hypothesis Testing</a>
-  <a href="#regression">Linear Regression</a>
-  <a href="#gradient">Gradient Descent</a>
-  <a href="#reg-metrics">Regression Metrics</a>
-  <a href="#logistic">Logistic Regression</a>
-  <a href="#class-metrics">Classification Metrics</a>
-  <a href="#regularization">Regularization</a>
-  <a href="#info-theory">Information Theory</a>
-  <a href="#linalg">Linear Algebra</a>
-  <a href="#bias-variance">Bias–Variance</a>
+  <a href="#stats"><span data-tr="en">Descriptive Stats</span><span data-tr="es">Estadística Descriptiva</span><span data-tr="ja">記述統計</span></a>
+  <a href="#probability"><span data-tr="en">Probability</span><span data-tr="es">Probabilidad</span><span data-tr="ja">確率</span></a>
+  <a href="#distributions"><span data-tr="en">Distributions</span><span data-tr="es">Distribuciones</span><span data-tr="ja">分布</span></a>
+  <a href="#hypothesis"><span data-tr="en">Hypothesis Testing</span><span data-tr="es">Pruebas de Hipótesis</span><span data-tr="ja">仮説検定</span></a>
+  <a href="#regression"><span data-tr="en">Linear Regression</span><span data-tr="es">Regresión Lineal</span><span data-tr="ja">線形回帰</span></a>
+  <a href="#gradient"><span data-tr="en">Gradient Descent</span><span data-tr="es">Descenso de Gradiente</span><span data-tr="ja">勾配降下法</span></a>
+  <a href="#reg-metrics"><span data-tr="en">Regression Metrics</span><span data-tr="es">Métricas de Regresión</span><span data-tr="ja">回帰指標</span></a>
+  <a href="#logistic"><span data-tr="en">Logistic Regression</span><span data-tr="es">Regresión Logística</span><span data-tr="ja">ロジスティック回帰</span></a>
+  <a href="#class-metrics"><span data-tr="en">Classification Metrics</span><span data-tr="es">Métricas de Clasificación</span><span data-tr="ja">分類指標</span></a>
+  <a href="#regularization"><span data-tr="en">Regularization</span><span data-tr="es">Regularización</span><span data-tr="ja">正則化</span></a>
+  <a href="#info-theory"><span data-tr="en">Information Theory</span><span data-tr="es">Teoría de Info.</span><span data-tr="ja">情報理論</span></a>
+  <a href="#linalg"><span data-tr="en">Linear Algebra</span><span data-tr="es">Álgebra Lineal</span><span data-tr="ja">線形代数</span></a>
+  <a href="#bias-variance"><span data-tr="en">Bias–Variance</span><span data-tr="es">Sesgo–Varianza</span><span data-tr="ja">バイアス–分散</span></a>
 </nav>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- DESCRIPTIVE STATISTICS                      -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- 1 · DESCRIPTIVE STATISTICS -->
 <div class="section" id="stats">
-  <div class="section-title">1 · Descriptive Statistics</div>
+  <div class="section-title">
+    <span data-tr="en">1 · Descriptive Statistics</span>
+    <span data-tr="es">1 · Estadística Descriptiva</span>
+    <span data-tr="ja">1 · 記述統計</span>
+  </div>
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-label">Mean (average)</div>
+      <div class="card-label"><span data-tr="en">Mean (average)</span><span data-tr="es">Media (promedio)</span><span data-tr="ja">平均</span></div>
       <div class="formula">μ = (1/n) × Σxᵢ</div>
-      <div class="note">Sum all values, divide by count.</div>
+      <div class="note"><span data-tr="en">Sum all values, divide by count.</span><span data-tr="es">Suma todos los valores, divide por la cantidad.</span><span data-tr="ja">全ての値を合計し、個数で割る。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Median</div>
-      <div class="formula">Middle value when sorted</div>
-      <div class="note">If n is even: average of the two middle values.</div>
+      <div class="card-label"><span data-tr="en">Median</span><span data-tr="es">Mediana</span><span data-tr="ja">中央値</span></div>
+      <div class="formula"><span data-tr="en">Middle value when sorted</span><span data-tr="es">Valor central cuando está ordenado</span><span data-tr="ja">ソート時の中央値</span></div>
+      <div class="note"><span data-tr="en">If n is even: average of the two middle values.</span><span data-tr="es">Si n es par: promedio de los dos valores centrales.</span><span data-tr="ja">n が偶数なら: 中央2値の平均。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Mode</div>
-      <div class="formula">Most frequently occurring value</div>
-      <div class="note">Can have 0, 1, or multiple modes.</div>
+      <div class="card-label"><span data-tr="en">Mode</span><span data-tr="es">Moda</span><span data-tr="ja">最頻値</span></div>
+      <div class="formula"><span data-tr="en">Most frequently occurring value</span><span data-tr="es">Valor que ocurre con más frecuencia</span><span data-tr="ja">最も頻繁に現れる値</span></div>
+      <div class="note"><span data-tr="en">Can have 0, 1, or multiple modes.</span><span data-tr="es">Puede tener 0, 1 o múltiples modas.</span><span data-tr="ja">0、1、または複数の最頻値を持ちうる。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Range</div>
+      <div class="card-label"><span data-tr="en">Range</span><span data-tr="es">Rango</span><span data-tr="ja">範囲</span></div>
       <div class="formula">Range = max − min</div>
     </div>
 
     <div class="card">
-      <div class="card-label">Variance (population)</div>
+      <div class="card-label"><span data-tr="en">Variance (population)</span><span data-tr="es">Varianza (poblacional)</span><span data-tr="ja">分散 (母集団)</span></div>
       <div class="formula">σ² = (1/n) × Σ(xᵢ − μ)²</div>
-      <div class="note">Average squared deviation from the mean.</div>
+      <div class="note"><span data-tr="en">Average squared deviation from the mean.</span><span data-tr="es">Desviación cuadrada promedio respecto a la media.</span><span data-tr="ja">平均からの二乗偏差の平均。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Variance (sample)</div>
+      <div class="card-label"><span data-tr="en">Variance (sample)</span><span data-tr="es">Varianza (muestral)</span><span data-tr="ja">分散 (標本)</span></div>
       <div class="formula">s² = (1/(n−1)) × Σ(xᵢ − x̄)²</div>
-      <div class="note">Bessel's correction: divide by n−1 for unbiased estimate.</div>
+      <div class="note"><span data-tr="en">Bessel's correction: divide by n−1 for unbiased estimate.</span><span data-tr="es">Corrección de Bessel: divide entre n−1 para estimador insesgado.</span><span data-tr="ja">ベッセル補正: 不偏推定のため n−1 で割る。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Standard Deviation</div>
-      <div class="formula">σ = √σ² &nbsp;&nbsp; (population)<br>s = √s² &nbsp;&nbsp; (sample)</div>
-      <div class="note">Same units as the original data.</div>
+      <div class="card-label"><span data-tr="en">Standard Deviation</span><span data-tr="es">Desviación Estándar</span><span data-tr="ja">標準偏差</span></div>
+      <div class="formula">σ = √σ² &nbsp;&nbsp; <span data-tr="en">(population)</span><span data-tr="es">(poblacional)</span><span data-tr="ja">(母集団)</span><br>s = √s² &nbsp;&nbsp; <span data-tr="en">(sample)</span><span data-tr="es">(muestral)</span><span data-tr="ja">(標本)</span></div>
+      <div class="note"><span data-tr="en">Same units as the original data.</span><span data-tr="es">Mismas unidades que los datos originales.</span><span data-tr="ja">元データと同じ単位。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Standard Error of the Mean</div>
+      <div class="card-label"><span data-tr="en">Standard Error of the Mean</span><span data-tr="es">Error Estándar de la Media</span><span data-tr="ja">平均の標準誤差</span></div>
       <div class="formula">SE = s / √n</div>
-      <div class="note">How much the sample mean varies from sample to sample.</div>
+      <div class="note"><span data-tr="en">How much the sample mean varies from sample to sample.</span><span data-tr="es">Cuánto varía la media muestral entre muestras.</span><span data-tr="ja">標本平均が標本間でどれだけ変動するか。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Covariance</div>
+      <div class="card-label"><span data-tr="en">Covariance</span><span data-tr="es">Covarianza</span><span data-tr="ja">共分散</span></div>
       <div class="formula">Cov(X,Y) = (1/(n−1)) × Σ(xᵢ − x̄)(yᵢ − ȳ)</div>
-      <div class="note">Positive = move together. Negative = move opposite. Scale-dependent.</div>
+      <div class="note"><span data-tr="en">Positive = move together. Negative = move opposite. Scale-dependent.</span><span data-tr="es">Positiva = se mueven juntos. Negativa = opuestos. Depende de la escala.</span><span data-tr="ja">正 = 同方向に動く。負 = 逆方向。スケール依存。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Pearson Correlation</div>
+      <div class="card-label"><span data-tr="en">Pearson Correlation</span><span data-tr="es">Correlación de Pearson</span><span data-tr="ja">ピアソン相関</span></div>
       <div class="formula">r = Cov(X,Y) / (sₓ × sᵧ)</div>
-      <div class="note">Normalized covariance. Range: [−1, +1]. Scale-independent.</div>
+      <div class="note"><span data-tr="en">Normalized covariance. Range: [−1, +1]. Scale-independent.</span><span data-tr="es">Covarianza normalizada. Rango: [−1, +1]. Independiente de escala.</span><span data-tr="ja">正規化共分散。範囲: [−1, +1]。スケール非依存。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">IQR (Interquartile Range)</div>
+      <div class="card-label"><span data-tr="en">IQR (Interquartile Range)</span><span data-tr="es">IQR (Rango Intercuartílico)</span><span data-tr="ja">IQR (四分位範囲)</span></div>
       <div class="formula">IQR = Q3 − Q1</div>
-      <div class="note">Outlier bounds: [Q1 − 1.5·IQR, Q3 + 1.5·IQR]</div>
+      <div class="note"><span data-tr="en">Outlier bounds: [Q1 − 1.5·IQR, Q3 + 1.5·IQR]</span><span data-tr="es">Límites de atípicos: [Q1 − 1.5·IQR, Q3 + 1.5·IQR]</span><span data-tr="ja">外れ値境界: [Q1 − 1.5·IQR, Q3 + 1.5·IQR]</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Z-Score (standardization)</div>
+      <div class="card-label"><span data-tr="en">Z-Score (standardization)</span><span data-tr="es">Puntaje Z (estandarización)</span><span data-tr="ja">Zスコア (標準化)</span></div>
       <div class="formula">z = (x − μ) / σ</div>
-      <div class="note">How many std deviations x is from the mean.</div>
+      <div class="note"><span data-tr="en">How many std deviations x is from the mean.</span><span data-tr="es">Cuántas desviaciones estándar está x de la media.</span><span data-tr="ja">x が平均から何標準偏差分離れているか。</span></div>
     </div>
   </div>
 </div>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- PROBABILITY                                 -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- 2 · PROBABILITY -->
 <div class="section" id="probability">
-  <div class="section-title blue">2 · Probability</div>
+  <div class="section-title blue">
+    <span data-tr="en">2 · Probability</span>
+    <span data-tr="es">2 · Probabilidad</span>
+    <span data-tr="ja">2 · 確率</span>
+  </div>
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-label">Basic Probability</div>
-      <div class="formula">P(A) = favorable outcomes / total outcomes</div>
-      <div class="note">Always between 0 and 1.</div>
+      <div class="card-label"><span data-tr="en">Basic Probability</span><span data-tr="es">Probabilidad Básica</span><span data-tr="ja">基本確率</span></div>
+      <div class="formula">P(A) = <span data-tr="en">favorable outcomes / total outcomes</span><span data-tr="es">resultados favorables / resultados totales</span><span data-tr="ja">好ましい結果 / 全結果</span></div>
+      <div class="note"><span data-tr="en">Always between 0 and 1.</span><span data-tr="es">Siempre entre 0 y 1.</span><span data-tr="ja">常に 0 と 1 の間。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Complement</div>
+      <div class="card-label"><span data-tr="en">Complement</span><span data-tr="es">Complemento</span><span data-tr="ja">余事象</span></div>
       <div class="formula">P(A') = 1 − P(A)</div>
-      <div class="note">Probability of A NOT happening.</div>
+      <div class="note"><span data-tr="en">Probability of A NOT happening.</span><span data-tr="es">Probabilidad de que A NO ocurra.</span><span data-tr="ja">A が起こらない確率。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Addition Rule</div>
+      <div class="card-label"><span data-tr="en">Addition Rule</span><span data-tr="es">Regla de la Suma</span><span data-tr="ja">加法定理</span></div>
       <div class="formula">P(A ∪ B) = P(A) + P(B) − P(A ∩ B)</div>
-      <div class="note">If mutually exclusive: P(A ∪ B) = P(A) + P(B)</div>
+      <div class="note"><span data-tr="en">If mutually exclusive: P(A ∪ B) = P(A) + P(B)</span><span data-tr="es">Si son mutuamente excluyentes: P(A ∪ B) = P(A) + P(B)</span><span data-tr="ja">排反なら: P(A ∪ B) = P(A) + P(B)</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Multiplication Rule</div>
+      <div class="card-label"><span data-tr="en">Multiplication Rule</span><span data-tr="es">Regla de la Multiplicación</span><span data-tr="ja">乗法定理</span></div>
       <div class="formula">P(A ∩ B) = P(A) × P(B|A)</div>
-      <div class="note">If independent: P(A ∩ B) = P(A) × P(B)</div>
+      <div class="note"><span data-tr="en">If independent: P(A ∩ B) = P(A) × P(B)</span><span data-tr="es">Si son independientes: P(A ∩ B) = P(A) × P(B)</span><span data-tr="ja">独立なら: P(A ∩ B) = P(A) × P(B)</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Conditional Probability</div>
+      <div class="card-label"><span data-tr="en">Conditional Probability</span><span data-tr="es">Probabilidad Condicional</span><span data-tr="ja">条件付き確率</span></div>
       <div class="formula">P(A|B) = P(A ∩ B) / P(B)</div>
-      <div class="note">Probability of A given B has occurred.</div>
+      <div class="note"><span data-tr="en">Probability of A given B has occurred.</span><span data-tr="es">Probabilidad de A dado que B ocurrió.</span><span data-tr="ja">B が起きたもとでの A の確率。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Bayes' Theorem</div>
+      <div class="card-label"><span data-tr="en">Bayes' Theorem</span><span data-tr="es">Teorema de Bayes</span><span data-tr="ja">ベイズの定理</span></div>
       <div class="formula">P(A|B) = P(B|A) × P(A) / P(B)</div>
-      <div class="note">Update beliefs with evidence. Foundation of Naive Bayes.</div>
+      <div class="note"><span data-tr="en">Update beliefs with evidence. Foundation of Naive Bayes.</span><span data-tr="es">Actualiza creencias con evidencia. Base del Naive Bayes.</span><span data-tr="ja">証拠で信念を更新。ナイーブベイズの基盤。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Law of Total Probability</div>
+      <div class="card-label"><span data-tr="en">Law of Total Probability</span><span data-tr="es">Ley de Probabilidad Total</span><span data-tr="ja">全確率の定理</span></div>
       <div class="formula">P(B) = Σ P(B|Aᵢ) × P(Aᵢ)</div>
-      <div class="note">Sum over all partitions of the sample space.</div>
+      <div class="note"><span data-tr="en">Sum over all partitions of the sample space.</span><span data-tr="es">Suma sobre todas las particiones del espacio muestral.</span><span data-tr="ja">標本空間の全分割にわたる和。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Expected Value</div>
+      <div class="card-label"><span data-tr="en">Expected Value</span><span data-tr="es">Valor Esperado</span><span data-tr="ja">期待値</span></div>
       <div class="formula">E[X] = Σ xᵢ × P(xᵢ)</div>
-      <div class="note">Weighted average of all possible outcomes.</div>
+      <div class="note"><span data-tr="en">Weighted average of all possible outcomes.</span><span data-tr="es">Promedio ponderado de todos los resultados posibles.</span><span data-tr="ja">全ての可能な結果の加重平均。</span></div>
     </div>
   </div>
 </div>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- DISTRIBUTIONS                               -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- 3 · DISTRIBUTIONS -->
 <div class="section" id="distributions">
-  <div class="section-title green">3 · Key Distributions</div>
+  <div class="section-title green">
+    <span data-tr="en">3 · Key Distributions</span>
+    <span data-tr="es">3 · Distribuciones Clave</span>
+    <span data-tr="ja">3 · 主要な分布</span>
+  </div>
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-label">Normal (Gaussian)</div>
+      <div class="card-label"><span data-tr="en">Normal (Gaussian)</span><span data-tr="es">Normal (Gaussiana)</span><span data-tr="ja">正規 (ガウス)</span></div>
       <div class="formula">f(x) = (1 / (σ√(2π))) × e^(−(x−μ)² / (2σ²))</div>
-      <div class="note">Bell curve. 68% within ±1σ, 95% within ±2σ, 99.7% within ±3σ.</div>
+      <div class="note"><span data-tr="en">Bell curve. 68% within ±1σ, 95% within ±2σ, 99.7% within ±3σ.</span><span data-tr="es">Curva de campana. 68% dentro de ±1σ, 95% dentro de ±2σ, 99.7% dentro de ±3σ.</span><span data-tr="ja">ベル曲線。±1σ内に68%、±2σ内に95%、±3σ内に99.7%。</span></div>
     </div>
 
     <div class="card">
       <div class="card-label">Bernoulli</div>
       <div class="formula">P(X=1) = p &nbsp;&nbsp; P(X=0) = 1−p</div>
-      <div class="note">Single coin flip. Mean = p, Var = p(1−p).</div>
+      <div class="note"><span data-tr="en">Single coin flip. Mean = p, Var = p(1−p).</span><span data-tr="es">Un solo lanzamiento. Media = p, Var = p(1−p).</span><span data-tr="ja">1回のコイン投げ。平均 = p、分散 = p(1−p)。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Binomial</div>
+      <div class="card-label"><span data-tr="en">Binomial</span><span data-tr="es">Binomial</span><span data-tr="ja">二項分布</span></div>
       <div class="formula">P(X=k) = C(n,k) × p^k × (1−p)^(n−k)</div>
-      <div class="note">k successes in n independent trials. Mean = np, Var = np(1−p).</div>
+      <div class="note"><span data-tr="en">k successes in n independent trials. Mean = np, Var = np(1−p).</span><span data-tr="es">k éxitos en n ensayos independientes. Media = np, Var = np(1−p).</span><span data-tr="ja">n 回の独立試行で k 回成功。平均 = np、分散 = np(1−p)。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Poisson</div>
+      <div class="card-label"><span data-tr="en">Poisson</span><span data-tr="es">Poisson</span><span data-tr="ja">ポアソン分布</span></div>
       <div class="formula">P(X=k) = (λ^k × e^(−λ)) / k!</div>
-      <div class="note">Count of events in fixed interval. Mean = Var = λ.</div>
+      <div class="note"><span data-tr="en">Count of events in fixed interval. Mean = Var = λ.</span><span data-tr="es">Conteo de eventos en un intervalo fijo. Media = Var = λ.</span><span data-tr="ja">固定区間でのイベント回数。平均 = 分散 = λ。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Uniform (continuous)</div>
-      <div class="formula">f(x) = 1 / (b − a) &nbsp;&nbsp; for a ≤ x ≤ b</div>
-      <div class="note">Equal probability everywhere. Mean = (a+b)/2.</div>
+      <div class="card-label"><span data-tr="en">Uniform (continuous)</span><span data-tr="es">Uniforme (continua)</span><span data-tr="ja">一様分布 (連続)</span></div>
+      <div class="formula">f(x) = 1 / (b − a) &nbsp;&nbsp; <span data-tr="en">for a ≤ x ≤ b</span><span data-tr="es">para a ≤ x ≤ b</span><span data-tr="ja">a ≤ x ≤ b のとき</span></div>
+      <div class="note"><span data-tr="en">Equal probability everywhere. Mean = (a+b)/2.</span><span data-tr="es">Probabilidad igual en todas partes. Media = (a+b)/2.</span><span data-tr="ja">どこでも確率が等しい。平均 = (a+b)/2。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Exponential</div>
-      <div class="formula">f(x) = λ × e^(−λx) &nbsp;&nbsp; for x ≥ 0</div>
-      <div class="note">Time between Poisson events. Mean = 1/λ.</div>
+      <div class="card-label"><span data-tr="en">Exponential</span><span data-tr="es">Exponencial</span><span data-tr="ja">指数分布</span></div>
+      <div class="formula">f(x) = λ × e^(−λx) &nbsp;&nbsp; <span data-tr="en">for x ≥ 0</span><span data-tr="es">para x ≥ 0</span><span data-tr="ja">x ≥ 0 のとき</span></div>
+      <div class="note"><span data-tr="en">Time between Poisson events. Mean = 1/λ.</span><span data-tr="es">Tiempo entre eventos de Poisson. Media = 1/λ.</span><span data-tr="ja">ポアソンイベント間の時間。平均 = 1/λ。</span></div>
     </div>
   </div>
 </div>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- HYPOTHESIS TESTING                          -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- 4 · HYPOTHESIS TESTING -->
 <div class="section" id="hypothesis">
-  <div class="section-title orange">4 · Hypothesis Testing</div>
+  <div class="section-title orange">
+    <span data-tr="en">4 · Hypothesis Testing</span>
+    <span data-tr="es">4 · Pruebas de Hipótesis</span>
+    <span data-tr="ja">4 · 仮説検定</span>
+  </div>
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-label">Z-Test Statistic</div>
+      <div class="card-label"><span data-tr="en">Z-Test Statistic</span><span data-tr="es">Estadístico Z</span><span data-tr="ja">Z検定統計量</span></div>
       <div class="formula">z = (x̄ − μ₀) / (σ / √n)</div>
-      <div class="note">When population σ is known (or n ≥ 30).</div>
+      <div class="note"><span data-tr="en">When population σ is known (or n ≥ 30).</span><span data-tr="es">Cuando la σ poblacional es conocida (o n ≥ 30).</span><span data-tr="ja">母標準偏差 σ が既知のとき (または n ≥ 30)。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">T-Test Statistic</div>
+      <div class="card-label"><span data-tr="en">T-Test Statistic</span><span data-tr="es">Estadístico T</span><span data-tr="ja">T検定統計量</span></div>
       <div class="formula">t = (x̄ − μ₀) / (s / √n)</div>
-      <div class="note">When population σ is unknown. Uses t-distribution with n−1 df.</div>
+      <div class="note"><span data-tr="en">When population σ is unknown. Uses t-distribution with n−1 df.</span><span data-tr="es">Cuando σ poblacional es desconocida. Usa distribución t con n−1 gl.</span><span data-tr="ja">母標準偏差が未知のとき。自由度 n−1 の t 分布を使用。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Two-Sample T-Test</div>
+      <div class="card-label"><span data-tr="en">Two-Sample T-Test</span><span data-tr="es">T-Test de Dos Muestras</span><span data-tr="ja">2標本T検定</span></div>
       <div class="formula">t = (x̄₁ − x̄₂) / √(s₁²/n₁ + s₂²/n₂)</div>
-      <div class="note">Compare means of two independent groups.</div>
+      <div class="note"><span data-tr="en">Compare means of two independent groups.</span><span data-tr="es">Compara medias de dos grupos independientes.</span><span data-tr="ja">2つの独立したグループの平均を比較。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Chi-Square Statistic</div>
+      <div class="card-label"><span data-tr="en">Chi-Square Statistic</span><span data-tr="es">Estadístico Chi-Cuadrado</span><span data-tr="ja">カイ二乗統計量</span></div>
       <div class="formula">χ² = Σ (Oᵢ − Eᵢ)² / Eᵢ</div>
-      <div class="note">O = observed, E = expected. Tests categorical associations.</div>
+      <div class="note"><span data-tr="en">O = observed, E = expected. Tests categorical associations.</span><span data-tr="es">O = observado, E = esperado. Prueba asociaciones categóricas.</span><span data-tr="ja">O = 観測値、E = 期待値。カテゴリの関連を検定。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Confidence Interval</div>
+      <div class="card-label"><span data-tr="en">Confidence Interval</span><span data-tr="es">Intervalo de Confianza</span><span data-tr="ja">信頼区間</span></div>
       <div class="formula">x̄ ± z* × (s / √n)</div>
-      <div class="note">95% CI: z* = 1.96. 99% CI: z* = 2.576.</div>
+      <div class="note"><span data-tr="en">95% CI: z* = 1.96. 99% CI: z* = 2.576.</span><span data-tr="es">IC 95%: z* = 1.96. IC 99%: z* = 2.576.</span><span data-tr="ja">95% CI: z* = 1.96。99% CI: z* = 2.576。</span></div>
     </div>
 
     <div class="card">
       <div class="card-label">p-value</div>
-      <div class="formula">P(data ≥ observed | H₀ is true)</div>
-      <div class="note">If p &lt; α (usually 0.05), reject H₀.</div>
+      <div class="formula"><span data-tr="en">P(data ≥ observed | H₀ is true)</span><span data-tr="es">P(datos ≥ observado | H₀ es verdadera)</span><span data-tr="ja">P(データ ≥ 観測値 | H₀ が真)</span></div>
+      <div class="note"><span data-tr="en">If p &lt; α (usually 0.05), reject H₀.</span><span data-tr="es">Si p &lt; α (usualmente 0.05), rechazar H₀.</span><span data-tr="ja">p &lt; α (通常 0.05) なら、H₀ を棄却。</span></div>
     </div>
   </div>
 
   <div class="callout" style="margin-top:1rem;">
-    <strong>Type I error (α):</strong> rejecting H₀ when it's actually true (false positive).<br>
-    <strong>Type II error (β):</strong> failing to reject H₀ when it's actually false (false negative).<br>
-    <strong>Power = 1 − β:</strong> probability of correctly rejecting a false H₀.
+    <span data-tr="en"><strong>Type I error (α):</strong> rejecting H₀ when it's actually true (false positive).<br><strong>Type II error (β):</strong> failing to reject H₀ when it's actually false (false negative).<br><strong>Power = 1 − β:</strong> probability of correctly rejecting a false H₀.</span>
+    <span data-tr="es"><strong>Error Tipo I (α):</strong> rechazar H₀ cuando es verdadera (falso positivo).<br><strong>Error Tipo II (β):</strong> no rechazar H₀ cuando es falsa (falso negativo).<br><strong>Potencia = 1 − β:</strong> probabilidad de rechazar correctamente una H₀ falsa.</span>
+    <span data-tr="ja"><strong>第一種の過誤 (α):</strong> H₀ が真なのに棄却 (偽陽性)。<br><strong>第二種の過誤 (β):</strong> H₀ が偽なのに棄却失敗 (偽陰性)。<br><strong>検出力 = 1 − β:</strong> 偽の H₀ を正しく棄却する確率。</span>
   </div>
 </div>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- LINEAR REGRESSION                           -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- 5 · LINEAR REGRESSION -->
 <div class="section" id="regression">
-  <div class="section-title">5 · Linear Regression</div>
+  <div class="section-title">
+    <span data-tr="en">5 · Linear Regression</span>
+    <span data-tr="es">5 · Regresión Lineal</span>
+    <span data-tr="ja">5 · 線形回帰</span>
+  </div>
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-label">Simple Linear Regression</div>
+      <div class="card-label"><span data-tr="en">Simple Linear Regression</span><span data-tr="es">Regresión Lineal Simple</span><span data-tr="ja">単回帰</span></div>
       <div class="formula">ŷ = θ₀ + θ₁x</div>
-      <div class="note">θ₀ = intercept, θ₁ = slope.</div>
+      <div class="note"><span data-tr="en">θ₀ = intercept, θ₁ = slope.</span><span data-tr="es">θ₀ = intercepto, θ₁ = pendiente.</span><span data-tr="ja">θ₀ = 切片、θ₁ = 傾き。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Multiple Linear Regression</div>
+      <div class="card-label"><span data-tr="en">Multiple Linear Regression</span><span data-tr="es">Regresión Lineal Múltiple</span><span data-tr="ja">重回帰</span></div>
       <div class="formula">ŷ = θ₀ + θ₁x₁ + θ₂x₂ + … + θₚxₚ</div>
-      <div class="note">p features, p+1 parameters.</div>
+      <div class="note"><span data-tr="en">p features, p+1 parameters.</span><span data-tr="es">p características, p+1 parámetros.</span><span data-tr="ja">特徴量 p 個、パラメータ p+1 個。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">OLS Slope (simple)</div>
+      <div class="card-label"><span data-tr="en">OLS Slope (simple)</span><span data-tr="es">Pendiente OLS (simple)</span><span data-tr="ja">OLS 傾き (単回帰)</span></div>
       <div class="formula">θ₁ = Σ(xᵢ − x̄)(yᵢ − ȳ) / Σ(xᵢ − x̄)²</div>
-      <div class="note">Closed-form solution. Also: θ₁ = Cov(X,Y) / Var(X).</div>
+      <div class="note"><span data-tr="en">Closed-form solution. Also: θ₁ = Cov(X,Y) / Var(X).</span><span data-tr="es">Solución de forma cerrada. También: θ₁ = Cov(X,Y) / Var(X).</span><span data-tr="ja">閉形式解。また: θ₁ = Cov(X,Y) / Var(X)。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">OLS Intercept (simple)</div>
+      <div class="card-label"><span data-tr="en">OLS Intercept (simple)</span><span data-tr="es">Intercepto OLS (simple)</span><span data-tr="ja">OLS 切片 (単回帰)</span></div>
       <div class="formula">θ₀ = ȳ − θ₁x̄</div>
-      <div class="note">The line always passes through (x̄, ȳ).</div>
+      <div class="note"><span data-tr="en">The line always passes through (x̄, ȳ).</span><span data-tr="es">La línea siempre pasa por (x̄, ȳ).</span><span data-tr="ja">直線は常に (x̄, ȳ) を通る。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Normal Equation (matrix)</div>
+      <div class="card-label"><span data-tr="en">Normal Equation (matrix)</span><span data-tr="es">Ecuación Normal (matricial)</span><span data-tr="ja">正規方程式 (行列)</span></div>
       <div class="formula">θ = (XᵀX)⁻¹ Xᵀy</div>
-      <div class="note">Closed-form solution for multiple regression. O(n³) — slow for large p.</div>
+      <div class="note"><span data-tr="en">Closed-form solution for multiple regression. O(n³) — slow for large p.</span><span data-tr="es">Solución de forma cerrada para regresión múltiple. O(n³) — lenta para p grande.</span><span data-tr="ja">重回帰の閉形式解。O(n³) — p が大きいと遅い。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Cost Function (MSE)</div>
+      <div class="card-label"><span data-tr="en">Cost Function (MSE)</span><span data-tr="es">Función de Costo (MSE)</span><span data-tr="ja">コスト関数 (MSE)</span></div>
       <div class="formula">J(θ) = (1/2m) × Σ(h(xⁱ) − yⁱ)²</div>
-      <div class="note">The ½ is for cleaner derivatives. m = number of samples.</div>
+      <div class="note"><span data-tr="en">The ½ is for cleaner derivatives. m = number of samples.</span><span data-tr="es">El ½ es para derivadas más limpias. m = número de muestras.</span><span data-tr="ja">½ は微分をきれいにするため。m = サンプル数。</span></div>
     </div>
   </div>
 </div>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- GRADIENT DESCENT                            -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- 6 · GRADIENT DESCENT -->
 <div class="section" id="gradient">
-  <div class="section-title purple">6 · Gradient Descent</div>
+  <div class="section-title purple">
+    <span data-tr="en">6 · Gradient Descent</span>
+    <span data-tr="es">6 · Descenso de Gradiente</span>
+    <span data-tr="ja">6 · 勾配降下法</span>
+  </div>
 
   <div class="card">
-    <div class="card-label">Update Rule (general)</div>
+    <div class="card-label"><span data-tr="en">Update Rule (general)</span><span data-tr="es">Regla de Actualización (general)</span><span data-tr="ja">更新則 (一般)</span></div>
     <div class="formula">θⱼ := θⱼ − α × ∂J(θ)/∂θⱼ</div>
-    <div class="note">α = learning rate. Repeat until convergence. Update ALL θ simultaneously.</div>
+    <div class="note"><span data-tr="en">α = learning rate. Repeat until convergence. Update ALL θ simultaneously.</span><span data-tr="es">α = tasa de aprendizaje. Repetir hasta converger. Actualiza TODOS los θ simultáneamente.</span><span data-tr="ja">α = 学習率。収束まで繰り返し。全ての θ を同時に更新。</span></div>
   </div>
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-label">Gradient for θ₀</div>
+      <div class="card-label"><span data-tr="en">Gradient for θ₀</span><span data-tr="es">Gradiente para θ₀</span><span data-tr="ja">θ₀ の勾配</span></div>
       <div class="formula">∂J/∂θ₀ = (1/m) × Σ(h(xⁱ) − yⁱ)</div>
-      <div class="note">Error × 1 (since x₀ = 1 always).</div>
+      <div class="note"><span data-tr="en">Error × 1 (since x₀ = 1 always).</span><span data-tr="es">Error × 1 (porque x₀ = 1 siempre).</span><span data-tr="ja">誤差 × 1 (x₀ は常に 1)。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Gradient for θⱼ (j ≥ 1)</div>
+      <div class="card-label"><span data-tr="en">Gradient for θⱼ (j ≥ 1)</span><span data-tr="es">Gradiente para θⱼ (j ≥ 1)</span><span data-tr="ja">θⱼ の勾配 (j ≥ 1)</span></div>
       <div class="formula">∂J/∂θⱼ = (1/m) × Σ(h(xⁱ) − yⁱ) × xⱼⁱ</div>
-      <div class="note">Error × the feature value for that parameter.</div>
+      <div class="note"><span data-tr="en">Error × the feature value for that parameter.</span><span data-tr="es">Error × el valor de la característica para ese parámetro.</span><span data-tr="ja">誤差 × そのパラメータに対応する特徴量の値。</span></div>
     </div>
   </div>
 
   <div class="callout purple" style="margin-top:1rem;">
-    <strong>Variants:</strong><br>
-    <strong>Batch GD:</strong> uses all m samples per update (slow but stable).<br>
-    <strong>Stochastic GD:</strong> uses 1 random sample per update (fast but noisy).<br>
-    <strong>Mini-batch GD:</strong> uses a batch of b samples (best of both worlds).
+    <span data-tr="en"><strong>Variants:</strong><br><strong>Batch GD:</strong> uses all m samples per update (slow but stable).<br><strong>Stochastic GD:</strong> uses 1 random sample per update (fast but noisy).<br><strong>Mini-batch GD:</strong> uses a batch of b samples (best of both worlds).</span>
+    <span data-tr="es"><strong>Variantes:</strong><br><strong>GD por lotes:</strong> usa las m muestras por actualización (lento pero estable).<br><strong>GD Estocástico:</strong> usa 1 muestra aleatoria por actualización (rápido pero ruidoso).<br><strong>GD Mini-batch:</strong> usa un lote de b muestras (lo mejor de ambos).</span>
+    <span data-tr="ja"><strong>バリアント:</strong><br><strong>バッチ GD:</strong> 1 回の更新で m サンプル全てを使う (遅いが安定)。<br><strong>確率的 GD:</strong> 1 回の更新でランダム 1 サンプル (速いがノイジー)。<br><strong>ミニバッチ GD:</strong> b サンプルのバッチ (両者の良いとこ取り)。</span>
   </div>
 
   <div class="card" style="margin-top:1rem;">
-    <div class="card-label">Feature Scaling (Min-Max)</div>
+    <div class="card-label"><span data-tr="en">Feature Scaling (Min-Max)</span><span data-tr="es">Escalado de Características (Min-Max)</span><span data-tr="ja">特徴量スケーリング (Min-Max)</span></div>
     <div class="formula">x' = (x − min) / (max − min)</div>
-    <div class="note">Scales to [0, 1]. Helps GD converge faster when features have different ranges.</div>
+    <div class="note"><span data-tr="en">Scales to [0, 1]. Helps GD converge faster when features have different ranges.</span><span data-tr="es">Escala a [0, 1]. Ayuda a GD a converger más rápido cuando las características tienen rangos distintos.</span><span data-tr="ja">[0, 1] にスケール。特徴量のレンジが異なるとき GD の収束を速くする。</span></div>
   </div>
 
   <div class="card">
-    <div class="card-label">Feature Scaling (Standardization)</div>
+    <div class="card-label"><span data-tr="en">Feature Scaling (Standardization)</span><span data-tr="es">Escalado (Estandarización)</span><span data-tr="ja">特徴量スケーリング (標準化)</span></div>
     <div class="formula">x' = (x − μ) / σ</div>
-    <div class="note">Mean 0, std 1. Preferred when data has outliers.</div>
+    <div class="note"><span data-tr="en">Mean 0, std 1. Preferred when data has outliers.</span><span data-tr="es">Media 0, desviación 1. Preferido cuando los datos tienen valores atípicos.</span><span data-tr="ja">平均 0、標準偏差 1。外れ値があるときに好まれる。</span></div>
   </div>
 </div>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- REGRESSION METRICS                          -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- 7 · REGRESSION METRICS -->
 <div class="section" id="reg-metrics">
-  <div class="section-title yellow">7 · Regression Metrics</div>
+  <div class="section-title yellow">
+    <span data-tr="en">7 · Regression Metrics</span>
+    <span data-tr="es">7 · Métricas de Regresión</span>
+    <span data-tr="ja">7 · 回帰指標</span>
+  </div>
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-label">MAE — Mean Absolute Error</div>
+      <div class="card-label"><span data-tr="en">MAE — Mean Absolute Error</span><span data-tr="es">MAE — Error Absoluto Medio</span><span data-tr="ja">MAE — 平均絶対誤差</span></div>
       <div class="formula">MAE = (1/n) × Σ|yᵢ − ŷᵢ|</div>
-      <div class="note">Same units as y. Robust to outliers. Not differentiable at 0.</div>
+      <div class="note"><span data-tr="en">Same units as y. Robust to outliers. Not differentiable at 0.</span><span data-tr="es">Mismas unidades que y. Robusto a atípicos. No diferenciable en 0.</span><span data-tr="ja">y と同じ単位。外れ値に強い。0 で微分不可能。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">MSE — Mean Squared Error</div>
+      <div class="card-label"><span data-tr="en">MSE — Mean Squared Error</span><span data-tr="es">MSE — Error Cuadrático Medio</span><span data-tr="ja">MSE — 平均二乗誤差</span></div>
       <div class="formula">MSE = (1/n) × Σ(yᵢ − ŷᵢ)²</div>
-      <div class="note">Units are y². Punishes large errors more. Differentiable.</div>
+      <div class="note"><span data-tr="en">Units are y². Punishes large errors more. Differentiable.</span><span data-tr="es">Unidades son y². Castiga más los errores grandes. Diferenciable.</span><span data-tr="ja">単位は y²。大きな誤差をより重く罰する。微分可能。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">RMSE — Root Mean Squared Error</div>
+      <div class="card-label"><span data-tr="en">RMSE — Root Mean Squared Error</span><span data-tr="es">RMSE — Raíz del Error Cuadrático Medio</span><span data-tr="ja">RMSE — 二乗平均平方根誤差</span></div>
       <div class="formula">RMSE = √MSE</div>
-      <div class="note">Same units as y. Most commonly reported metric.</div>
+      <div class="note"><span data-tr="en">Same units as y. Most commonly reported metric.</span><span data-tr="es">Mismas unidades que y. La métrica más reportada.</span><span data-tr="ja">y と同じ単位。最も一般に報告される指標。</span></div>
     </div>
 
     <div class="card">
       <div class="card-label">SS<sub>total</sub></div>
       <div class="formula">SS<sub>total</sub> = Σ(yᵢ − ȳ)²</div>
-      <div class="note">Total variance in the data. Baseline: how bad is guessing the mean?</div>
+      <div class="note"><span data-tr="en">Total variance in the data. Baseline: how bad is guessing the mean?</span><span data-tr="es">Varianza total en los datos. Línea base: ¿qué tan mal es adivinar la media?</span><span data-tr="ja">データの全分散。ベースライン: 平均値を当てるのがどれほど悪いか？</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">SS<sub>res</sub> (residual)</div>
+      <div class="card-label">SS<sub>res</sub> <span data-tr="en">(residual)</span><span data-tr="es">(residual)</span><span data-tr="ja">(残差)</span></div>
       <div class="formula">SS<sub>res</sub> = Σ(yᵢ − ŷᵢ)²</div>
-      <div class="note">Variance your model can't explain. Smaller = better.</div>
+      <div class="note"><span data-tr="en">Variance your model can't explain. Smaller = better.</span><span data-tr="es">Varianza que tu modelo no puede explicar. Menor = mejor.</span><span data-tr="ja">モデルが説明できない分散。小さいほど良い。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">R² — Coefficient of Determination</div>
+      <div class="card-label"><span data-tr="en">R² — Coefficient of Determination</span><span data-tr="es">R² — Coeficiente de Determinación</span><span data-tr="ja">R² — 決定係数</span></div>
       <div class="formula">R² = 1 − SS<sub>res</sub> / SS<sub>total</sub></div>
-      <div class="note">% of variance explained. 1 = perfect, 0 = no better than mean, &lt;0 = worse.</div>
+      <div class="note"><span data-tr="en">% of variance explained. 1 = perfect, 0 = no better than mean, &lt;0 = worse.</span><span data-tr="es">% de varianza explicada. 1 = perfecto, 0 = igual que la media, &lt;0 = peor.</span><span data-tr="ja">説明された分散の割合。1 = 完璧、0 = 平均と同等、&lt;0 = 平均より悪い。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Adjusted R²</div>
+      <div class="card-label"><span data-tr="en">Adjusted R²</span><span data-tr="es">R² Ajustado</span><span data-tr="ja">調整済み R²</span></div>
       <div class="formula">Adj R² = 1 − [(1−R²)(n−1) / (n−p−1)]</div>
-      <div class="note">n = samples, p = features. Penalizes adding useless features.</div>
+      <div class="note"><span data-tr="en">n = samples, p = features. Penalizes adding useless features.</span><span data-tr="es">n = muestras, p = características. Penaliza añadir características inútiles.</span><span data-tr="ja">n = サンプル数、p = 特徴量数。無用な特徴量の追加を罰する。</span></div>
     </div>
 
     <div class="card">
       <div class="card-label">MAPE</div>
       <div class="formula">MAPE = (100/n) × Σ|yᵢ − ŷᵢ| / |yᵢ|</div>
-      <div class="note">Percentage error. Undefined when yᵢ = 0.</div>
+      <div class="note"><span data-tr="en">Percentage error. Undefined when yᵢ = 0.</span><span data-tr="es">Error porcentual. Indefinido cuando yᵢ = 0.</span><span data-tr="ja">パーセント誤差。yᵢ = 0 のとき未定義。</span></div>
     </div>
   </div>
 </div>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- LOGISTIC REGRESSION                         -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- 8 · LOGISTIC REGRESSION -->
 <div class="section" id="logistic">
-  <div class="section-title">8 · Logistic Regression</div>
+  <div class="section-title">
+    <span data-tr="en">8 · Logistic Regression</span>
+    <span data-tr="es">8 · Regresión Logística</span>
+    <span data-tr="ja">8 · ロジスティック回帰</span>
+  </div>
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-label">Sigmoid Function</div>
+      <div class="card-label"><span data-tr="en">Sigmoid Function</span><span data-tr="es">Función Sigmoide</span><span data-tr="ja">シグモイド関数</span></div>
       <div class="formula">σ(z) = 1 / (1 + e^(−z))</div>
-      <div class="note">Maps any real number to (0, 1). Output = probability.</div>
+      <div class="note"><span data-tr="en">Maps any real number to (0, 1). Output = probability.</span><span data-tr="es">Mapea cualquier número real a (0, 1). Salida = probabilidad.</span><span data-tr="ja">任意の実数を (0, 1) に写す。出力 = 確率。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Hypothesis</div>
+      <div class="card-label"><span data-tr="en">Hypothesis</span><span data-tr="es">Hipótesis</span><span data-tr="ja">仮説</span></div>
       <div class="formula">h(x) = σ(θᵀx) = 1 / (1 + e^(−θᵀx))</div>
-      <div class="note">P(y=1|x; θ). Classify as 1 if h(x) ≥ 0.5.</div>
+      <div class="note"><span data-tr="en">P(y=1|x; θ). Classify as 1 if h(x) ≥ 0.5.</span><span data-tr="es">P(y=1|x; θ). Clasifica como 1 si h(x) ≥ 0.5.</span><span data-tr="ja">P(y=1|x; θ)。h(x) ≥ 0.5 なら 1 に分類。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Log Loss (Binary Cross-Entropy)</div>
+      <div class="card-label"><span data-tr="en">Log Loss (Binary Cross-Entropy)</span><span data-tr="es">Log Loss (Entropía Cruzada Binaria)</span><span data-tr="ja">Log Loss (二値交差エントロピー)</span></div>
       <div class="formula">J(θ) = −(1/m) × Σ[ yⁱ log(hⁱ) + (1−yⁱ) log(1−hⁱ) ]</div>
-      <div class="note">Convex cost function for logistic regression. Heavily penalizes confident wrong predictions.</div>
+      <div class="note"><span data-tr="en">Convex cost function for logistic regression. Heavily penalizes confident wrong predictions.</span><span data-tr="es">Función de costo convexa para regresión logística. Castiga fuerte predicciones erróneas confiadas.</span><span data-tr="ja">ロジスティック回帰の凸コスト関数。自信のある誤予測を強く罰する。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Decision Boundary</div>
+      <div class="card-label"><span data-tr="en">Decision Boundary</span><span data-tr="es">Frontera de Decisión</span><span data-tr="ja">決定境界</span></div>
       <div class="formula">θᵀx = 0</div>
-      <div class="note">Where σ(z) = 0.5. Linear boundary in feature space.</div>
+      <div class="note"><span data-tr="en">Where σ(z) = 0.5. Linear boundary in feature space.</span><span data-tr="es">Donde σ(z) = 0.5. Frontera lineal en el espacio de características.</span><span data-tr="ja">σ(z) = 0.5 となる点。特徴量空間での線形境界。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Odds</div>
+      <div class="card-label"><span data-tr="en">Odds</span><span data-tr="es">Momios</span><span data-tr="ja">オッズ</span></div>
       <div class="formula">odds = p / (1 − p)</div>
-      <div class="note">Ratio of success to failure probability.</div>
+      <div class="note"><span data-tr="en">Ratio of success to failure probability.</span><span data-tr="es">Razón de probabilidad de éxito a fracaso.</span><span data-tr="ja">成功確率と失敗確率の比。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Log-Odds (Logit)</div>
+      <div class="card-label"><span data-tr="en">Log-Odds (Logit)</span><span data-tr="es">Log-Momios (Logit)</span><span data-tr="ja">対数オッズ (ロジット)</span></div>
       <div class="formula">log(p / (1−p)) = θ₀ + θ₁x₁ + … + θₚxₚ</div>
-      <div class="note">Logistic regression is linear in log-odds space.</div>
+      <div class="note"><span data-tr="en">Logistic regression is linear in log-odds space.</span><span data-tr="es">La regresión logística es lineal en el espacio de log-momios.</span><span data-tr="ja">ロジスティック回帰は対数オッズ空間で線形。</span></div>
     </div>
   </div>
 
   <div class="card" style="margin-top:1rem;">
-    <div class="card-label">Softmax (multi-class)</div>
+    <div class="card-label"><span data-tr="en">Softmax (multi-class)</span><span data-tr="es">Softmax (multi-clase)</span><span data-tr="ja">ソフトマックス (多クラス)</span></div>
     <div class="formula">P(y=k|x) = e^(zₖ) / Σⱼ e^(zⱼ)</div>
-    <div class="note">Generalizes sigmoid to K classes. Outputs sum to 1.</div>
+    <div class="note"><span data-tr="en">Generalizes sigmoid to K classes. Outputs sum to 1.</span><span data-tr="es">Generaliza la sigmoide a K clases. Las salidas suman 1.</span><span data-tr="ja">シグモイドを K クラスに一般化。出力の合計は 1。</span></div>
   </div>
 </div>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- CLASSIFICATION METRICS                      -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- 9 · CLASSIFICATION METRICS -->
 <div class="section" id="class-metrics">
-  <div class="section-title green">9 · Classification Metrics</div>
+  <div class="section-title green">
+    <span data-tr="en">9 · Classification Metrics</span>
+    <span data-tr="es">9 · Métricas de Clasificación</span>
+    <span data-tr="ja">9 · 分類指標</span>
+  </div>
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-label">Accuracy</div>
+      <div class="card-label"><span data-tr="en">Accuracy</span><span data-tr="es">Exactitud</span><span data-tr="ja">正解率</span></div>
       <div class="formula">Accuracy = (TP + TN) / (TP + TN + FP + FN)</div>
-      <div class="note">Misleading on imbalanced data. 95% accuracy means nothing if 95% of data is one class.</div>
+      <div class="note"><span data-tr="en">Misleading on imbalanced data. 95% accuracy means nothing if 95% of data is one class.</span><span data-tr="es">Engañoso en datos desbalanceados. 95% de accuracy no significa nada si 95% de los datos son una clase.</span><span data-tr="ja">不均衡データでは誤解を招く。データの 95% が一クラスなら 95% の正解率は無意味。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Precision</div>
+      <div class="card-label"><span data-tr="en">Precision</span><span data-tr="es">Precisión</span><span data-tr="ja">適合率</span></div>
       <div class="formula">Precision = TP / (TP + FP)</div>
-      <div class="note">"Of everything I called positive, how many actually were?" Minimize false alarms.</div>
+      <div class="note"><span data-tr="en">"Of everything I called positive, how many actually were?" Minimize false alarms.</span><span data-tr="es">"De todo lo que llamé positivo, ¿cuántos lo eran?" Minimizar falsas alarmas.</span><span data-tr="ja">「陽性と呼んだもののうち実際に陽性はいくつ？」誤報を最小化。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Recall (Sensitivity / TPR)</div>
+      <div class="card-label"><span data-tr="en">Recall (Sensitivity / TPR)</span><span data-tr="es">Recall (Sensibilidad / TPR)</span><span data-tr="ja">再現率 (感度 / TPR)</span></div>
       <div class="formula">Recall = TP / (TP + FN)</div>
-      <div class="note">"Of all actual positives, how many did I catch?" Minimize misses.</div>
+      <div class="note"><span data-tr="en">"Of all actual positives, how many did I catch?" Minimize misses.</span><span data-tr="es">"De todos los positivos reales, ¿cuántos atrapé?" Minimizar los fallados.</span><span data-tr="ja">「実際の陽性のうち、いくつ捉えたか？」見落としを最小化。</span></div>
     </div>
 
     <div class="card">
       <div class="card-label">F1 Score</div>
       <div class="formula">F1 = 2 × (Precision × Recall) / (Precision + Recall)</div>
-      <div class="note">Harmonic mean. Balances precision and recall. Range: [0, 1].</div>
+      <div class="note"><span data-tr="en">Harmonic mean. Balances precision and recall. Range: [0, 1].</span><span data-tr="es">Media armónica. Balancea precisión y recall. Rango: [0, 1].</span><span data-tr="ja">調和平均。適合率と再現率のバランス。範囲: [0, 1]。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Specificity (TNR)</div>
+      <div class="card-label"><span data-tr="en">Specificity (TNR)</span><span data-tr="es">Especificidad (TNR)</span><span data-tr="ja">特異度 (TNR)</span></div>
       <div class="formula">Specificity = TN / (TN + FP)</div>
-      <div class="note">"Of all actual negatives, how many did I correctly identify?"</div>
+      <div class="note"><span data-tr="en">"Of all actual negatives, how many did I correctly identify?"</span><span data-tr="es">"De todos los negativos reales, ¿cuántos identifiqué correctamente?"</span><span data-tr="ja">「実際の陰性のうち、いくつを正しく特定したか？」</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">False Positive Rate</div>
+      <div class="card-label"><span data-tr="en">False Positive Rate</span><span data-tr="es">Tasa de Falsos Positivos</span><span data-tr="ja">偽陽性率</span></div>
       <div class="formula">FPR = FP / (FP + TN) = 1 − Specificity</div>
-      <div class="note">X-axis of the ROC curve.</div>
+      <div class="note"><span data-tr="en">X-axis of the ROC curve.</span><span data-tr="es">Eje X de la curva ROC.</span><span data-tr="ja">ROC 曲線の X 軸。</span></div>
     </div>
 
     <div class="card">
       <div class="card-label">AUC-ROC</div>
-      <div class="formula">Area under the ROC curve (TPR vs FPR)</div>
-      <div class="note">0.5 = random guess. 1.0 = perfect separation. Threshold-independent.</div>
+      <div class="formula"><span data-tr="en">Area under the ROC curve (TPR vs FPR)</span><span data-tr="es">Área bajo la curva ROC (TPR vs FPR)</span><span data-tr="ja">ROC 曲線下の面積 (TPR 対 FPR)</span></div>
+      <div class="note"><span data-tr="en">0.5 = random guess. 1.0 = perfect separation. Threshold-independent.</span><span data-tr="es">0.5 = adivinanza aleatoria. 1.0 = separación perfecta. Independiente del umbral.</span><span data-tr="ja">0.5 = ランダム推測。1.0 = 完全分離。閾値非依存。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Log Loss (multi-class)</div>
+      <div class="card-label"><span data-tr="en">Log Loss (multi-class)</span><span data-tr="es">Log Loss (multi-clase)</span><span data-tr="ja">Log Loss (多クラス)</span></div>
       <div class="formula">−(1/n) × ΣΣ yᵢₖ × log(pᵢₖ)</div>
-      <div class="note">Lower is better. Penalizes confident wrong predictions harshly.</div>
+      <div class="note"><span data-tr="en">Lower is better. Penalizes confident wrong predictions harshly.</span><span data-tr="es">Menor es mejor. Castiga duramente predicciones confiadas erróneas.</span><span data-tr="ja">低いほど良い。自信のある誤予測を厳しく罰する。</span></div>
     </div>
   </div>
 
   <div class="callout green" style="margin-top:1rem;">
-    <strong>Confusion Matrix:</strong><br>
-    TP = true positive, TN = true negative, FP = false positive (Type I), FN = false negative (Type II).<br>
-    All classification metrics are derived from these four numbers.
+    <span data-tr="en"><strong>Confusion Matrix:</strong><br>TP = true positive, TN = true negative, FP = false positive (Type I), FN = false negative (Type II).<br>All classification metrics are derived from these four numbers.</span>
+    <span data-tr="es"><strong>Matriz de Confusión:</strong><br>TP = verdadero positivo, TN = verdadero negativo, FP = falso positivo (Tipo I), FN = falso negativo (Tipo II).<br>Todas las métricas de clasificación se derivan de estos cuatro números.</span>
+    <span data-tr="ja"><strong>混同行列:</strong><br>TP = 真陽性、TN = 真陰性、FP = 偽陽性 (第一種)、FN = 偽陰性 (第二種)。<br>全ての分類指標はこの 4 つの数値から導かれる。</span>
   </div>
 </div>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- REGULARIZATION                              -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- 10 · REGULARIZATION -->
 <div class="section" id="regularization">
-  <div class="section-title orange">10 · Regularization</div>
+  <div class="section-title orange">
+    <span data-tr="en">10 · Regularization</span>
+    <span data-tr="es">10 · Regularización</span>
+    <span data-tr="ja">10 · 正則化</span>
+  </div>
 
   <div class="grid-2">
     <div class="card">
       <div class="card-label">L1 — Lasso</div>
       <div class="formula">J(θ) = MSE + λ × Σ|θⱼ|</div>
-      <div class="note">Drives coefficients to exactly 0 → automatic feature selection. Sparse models.</div>
+      <div class="note"><span data-tr="en">Drives coefficients to exactly 0 → automatic feature selection. Sparse models.</span><span data-tr="es">Lleva coeficientes exactamente a 0 → selección automática de características. Modelos dispersos.</span><span data-tr="ja">係数を正確に 0 にする → 自動特徴量選択。スパースモデル。</span></div>
     </div>
 
     <div class="card">
       <div class="card-label">L2 — Ridge</div>
       <div class="formula">J(θ) = MSE + λ × Σθⱼ²</div>
-      <div class="note">Shrinks coefficients toward 0 but never exactly 0. Handles multicollinearity.</div>
+      <div class="note"><span data-tr="en">Shrinks coefficients toward 0 but never exactly 0. Handles multicollinearity.</span><span data-tr="es">Encoge coeficientes hacia 0 pero nunca exactamente 0. Maneja multicolinealidad.</span><span data-tr="ja">係数を 0 に近づけるが 0 にはしない。多重共線性に対処。</span></div>
     </div>
 
     <div class="card">
       <div class="card-label">Elastic Net</div>
       <div class="formula">J(θ) = MSE + λ₁Σ|θⱼ| + λ₂Σθⱼ²</div>
-      <div class="note">Combines L1 and L2. Best of both: sparsity + stability.</div>
+      <div class="note"><span data-tr="en">Combines L1 and L2. Best of both: sparsity + stability.</span><span data-tr="es">Combina L1 y L2. Lo mejor de ambos: dispersión + estabilidad.</span><span data-tr="ja">L1 と L2 の組み合わせ。両者の良いとこ: スパース性 + 安定性。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Dropout (neural networks)</div>
-      <div class="formula">During training: randomly set each neuron to 0 with probability p</div>
-      <div class="note">Forces redundancy. Acts like an ensemble. Typically p = 0.2–0.5.</div>
+      <div class="card-label"><span data-tr="en">Dropout (neural networks)</span><span data-tr="es">Dropout (redes neuronales)</span><span data-tr="ja">ドロップアウト (ニューラルネット)</span></div>
+      <div class="formula"><span data-tr="en">During training: randomly set each neuron to 0 with probability p</span><span data-tr="es">Durante el entrenamiento: pon cada neurona a 0 aleatoriamente con probabilidad p</span><span data-tr="ja">訓練中: 各ニューロンを確率 p でランダムに 0 にする</span></div>
+      <div class="note"><span data-tr="en">Forces redundancy. Acts like an ensemble. Typically p = 0.2–0.5.</span><span data-tr="es">Fuerza redundancia. Actúa como un ensemble. Típicamente p = 0.2–0.5.</span><span data-tr="ja">冗長性を強制。アンサンブルのように働く。通常 p = 0.2〜0.5。</span></div>
     </div>
   </div>
 
   <div class="callout" style="margin-top:1rem;">
-    <strong>λ (lambda)</strong> = regularization strength.<br>
-    λ = 0 → no regularization (back to plain OLS).<br>
-    λ → ∞ → all coefficients → 0 (underfitting).<br>
-    Find the sweet spot with cross-validation.
+    <span data-tr="en"><strong>λ (lambda)</strong> = regularization strength.<br>λ = 0 → no regularization (back to plain OLS).<br>λ → ∞ → all coefficients → 0 (underfitting).<br>Find the sweet spot with cross-validation.</span>
+    <span data-tr="es"><strong>λ (lambda)</strong> = fuerza de regularización.<br>λ = 0 → sin regularización (OLS plano).<br>λ → ∞ → todos los coeficientes → 0 (subajuste).<br>Encuentra el punto óptimo con validación cruzada.</span>
+    <span data-tr="ja"><strong>λ (ラムダ)</strong> = 正則化の強さ。<br>λ = 0 → 正則化なし (通常の OLS)。<br>λ → ∞ → 全ての係数 → 0 (過少適合)。<br>交差検証で最適点を見つける。</span>
   </div>
 </div>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- INFORMATION THEORY                          -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- 11 · INFORMATION THEORY -->
 <div class="section" id="info-theory">
-  <div class="section-title purple">11 · Information Theory</div>
+  <div class="section-title purple">
+    <span data-tr="en">11 · Information Theory</span>
+    <span data-tr="es">11 · Teoría de la Información</span>
+    <span data-tr="ja">11 · 情報理論</span>
+  </div>
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-label">Entropy</div>
+      <div class="card-label"><span data-tr="en">Entropy</span><span data-tr="es">Entropía</span><span data-tr="ja">エントロピー</span></div>
       <div class="formula">H(X) = −Σ P(xᵢ) × log₂P(xᵢ)</div>
-      <div class="note">Measure of uncertainty/disorder. Max when all outcomes equally likely. Used in decision trees.</div>
+      <div class="note"><span data-tr="en">Measure of uncertainty/disorder. Max when all outcomes equally likely. Used in decision trees.</span><span data-tr="es">Medida de incertidumbre/desorden. Máxima cuando todos los resultados son igualmente probables. Se usa en árboles de decisión.</span><span data-tr="ja">不確実性/無秩序の尺度。全ての結果が等確率のとき最大。決定木で使用。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Gini Impurity</div>
+      <div class="card-label"><span data-tr="en">Gini Impurity</span><span data-tr="es">Impureza Gini</span><span data-tr="ja">ジニ不純度</span></div>
       <div class="formula">Gini = 1 − Σ pᵢ²</div>
-      <div class="note">Alternative to entropy for decision trees. 0 = pure, 0.5 = max impurity (binary).</div>
+      <div class="note"><span data-tr="en">Alternative to entropy for decision trees. 0 = pure, 0.5 = max impurity (binary).</span><span data-tr="es">Alternativa a la entropía para árboles. 0 = puro, 0.5 = máx impureza (binario).</span><span data-tr="ja">決定木でエントロピーの代替。0 = 純粋、0.5 = 最大不純度 (二値)。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Information Gain</div>
+      <div class="card-label"><span data-tr="en">Information Gain</span><span data-tr="es">Ganancia de Información</span><span data-tr="ja">情報利得</span></div>
       <div class="formula">IG = H(parent) − Σ(nₖ/n) × H(childₖ)</div>
-      <div class="note">Reduction in entropy from a split. Higher = better split.</div>
+      <div class="note"><span data-tr="en">Reduction in entropy from a split. Higher = better split.</span><span data-tr="es">Reducción de entropía por una división. Mayor = mejor división.</span><span data-tr="ja">分割によるエントロピー減少。大きいほど良い分割。</span></div>
     </div>
 
     <div class="card">
       <div class="card-label">KL Divergence</div>
       <div class="formula">D_KL(P‖Q) = Σ P(x) × log(P(x)/Q(x))</div>
-      <div class="note">How different Q is from P. Not symmetric: D(P‖Q) ≠ D(Q‖P).</div>
+      <div class="note"><span data-tr="en">How different Q is from P. Not symmetric: D(P‖Q) ≠ D(Q‖P).</span><span data-tr="es">Qué tan diferente es Q de P. No simétrica: D(P‖Q) ≠ D(Q‖P).</span><span data-tr="ja">Q が P からどれだけ異なるか。非対称: D(P‖Q) ≠ D(Q‖P)。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Cross-Entropy</div>
+      <div class="card-label"><span data-tr="en">Cross-Entropy</span><span data-tr="es">Entropía Cruzada</span><span data-tr="ja">交差エントロピー</span></div>
       <div class="formula">H(P,Q) = −Σ P(x) × log Q(x)</div>
-      <div class="note">H(P,Q) = H(P) + D_KL(P‖Q). Used as loss function in classification.</div>
+      <div class="note"><span data-tr="en">H(P,Q) = H(P) + D_KL(P‖Q). Used as loss function in classification.</span><span data-tr="es">H(P,Q) = H(P) + D_KL(P‖Q). Se usa como función de pérdida en clasificación.</span><span data-tr="ja">H(P,Q) = H(P) + D_KL(P‖Q)。分類の損失関数として使用。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Mutual Information</div>
+      <div class="card-label"><span data-tr="en">Mutual Information</span><span data-tr="es">Información Mutua</span><span data-tr="ja">相互情報量</span></div>
       <div class="formula">I(X;Y) = H(X) − H(X|Y)</div>
-      <div class="note">How much knowing Y reduces uncertainty about X. 0 = independent.</div>
+      <div class="note"><span data-tr="en">How much knowing Y reduces uncertainty about X. 0 = independent.</span><span data-tr="es">Cuánto reduce el conocer Y la incertidumbre sobre X. 0 = independientes.</span><span data-tr="ja">Y を知ることで X の不確実性がどれだけ減るか。0 = 独立。</span></div>
     </div>
   </div>
 </div>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- LINEAR ALGEBRA                              -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- 12 · LINEAR ALGEBRA -->
 <div class="section" id="linalg">
-  <div class="section-title blue">12 · Linear Algebra Essentials</div>
+  <div class="section-title blue">
+    <span data-tr="en">12 · Linear Algebra Essentials</span>
+    <span data-tr="es">12 · Esenciales de Álgebra Lineal</span>
+    <span data-tr="ja">12 · 線形代数の要点</span>
+  </div>
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-label">Dot Product</div>
+      <div class="card-label"><span data-tr="en">Dot Product</span><span data-tr="es">Producto Punto</span><span data-tr="ja">内積</span></div>
       <div class="formula">a · b = Σ aᵢbᵢ = |a||b|cos(θ)</div>
-      <div class="note">Scalar result. Foundation of matrix multiplication and projections.</div>
+      <div class="note"><span data-tr="en">Scalar result. Foundation of matrix multiplication and projections.</span><span data-tr="es">Resultado escalar. Base de la multiplicación de matrices y proyecciones.</span><span data-tr="ja">スカラー結果。行列積と射影の基盤。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Matrix Multiplication</div>
-      <div class="formula">C = AB &nbsp;&nbsp; where Cᵢⱼ = Σ Aᵢₖ Bₖⱼ</div>
-      <div class="note">A is (m×n), B is (n×p) → C is (m×p). Not commutative: AB ≠ BA.</div>
+      <div class="card-label"><span data-tr="en">Matrix Multiplication</span><span data-tr="es">Multiplicación de Matrices</span><span data-tr="ja">行列の積</span></div>
+      <div class="formula">C = AB &nbsp;&nbsp; <span data-tr="en">where Cᵢⱼ = Σ Aᵢₖ Bₖⱼ</span><span data-tr="es">donde Cᵢⱼ = Σ Aᵢₖ Bₖⱼ</span><span data-tr="ja">ここで Cᵢⱼ = Σ Aᵢₖ Bₖⱼ</span></div>
+      <div class="note"><span data-tr="en">A is (m×n), B is (n×p) → C is (m×p). Not commutative: AB ≠ BA.</span><span data-tr="es">A es (m×n), B es (n×p) → C es (m×p). No conmutativa: AB ≠ BA.</span><span data-tr="ja">A は (m×n)、B は (n×p) → C は (m×p)。非可換: AB ≠ BA。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Transpose</div>
+      <div class="card-label"><span data-tr="en">Transpose</span><span data-tr="es">Transpuesta</span><span data-tr="ja">転置</span></div>
       <div class="formula">(Aᵀ)ᵢⱼ = Aⱼᵢ</div>
-      <div class="note">Swap rows and columns. (AB)ᵀ = BᵀAᵀ.</div>
+      <div class="note"><span data-tr="en">Swap rows and columns. (AB)ᵀ = BᵀAᵀ.</span><span data-tr="es">Intercambia filas y columnas. (AB)ᵀ = BᵀAᵀ.</span><span data-tr="ja">行と列を入れ替え。(AB)ᵀ = BᵀAᵀ。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Inverse</div>
+      <div class="card-label"><span data-tr="en">Inverse</span><span data-tr="es">Inversa</span><span data-tr="ja">逆行列</span></div>
       <div class="formula">A⁻¹A = AA⁻¹ = I</div>
-      <div class="note">Only exists if det(A) ≠ 0 (square, full rank).</div>
+      <div class="note"><span data-tr="en">Only exists if det(A) ≠ 0 (square, full rank).</span><span data-tr="es">Solo existe si det(A) ≠ 0 (cuadrada, rango completo).</span><span data-tr="ja">det(A) ≠ 0 のときのみ存在 (正方、フルランク)。</span></div>
     </div>
 
     <div class="card">
       <div class="card-label">L1 Norm (Manhattan)</div>
       <div class="formula">‖x‖₁ = Σ|xᵢ|</div>
-      <div class="note">Sum of absolute values. Used in Lasso regularization.</div>
+      <div class="note"><span data-tr="en">Sum of absolute values. Used in Lasso regularization.</span><span data-tr="es">Suma de valores absolutos. Usada en regularización Lasso.</span><span data-tr="ja">絶対値の和。Lasso 正則化で使用。</span></div>
     </div>
 
     <div class="card">
       <div class="card-label">L2 Norm (Euclidean)</div>
       <div class="formula">‖x‖₂ = √(Σ xᵢ²)</div>
-      <div class="note">Straight-line distance. Used in Ridge, KNN, and cosine similarity.</div>
+      <div class="note"><span data-tr="en">Straight-line distance. Used in Ridge, KNN, and cosine similarity.</span><span data-tr="es">Distancia en línea recta. Usada en Ridge, KNN y similitud coseno.</span><span data-tr="ja">直線距離。Ridge、KNN、コサイン類似度で使用。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Cosine Similarity</div>
+      <div class="card-label"><span data-tr="en">Cosine Similarity</span><span data-tr="es">Similitud Coseno</span><span data-tr="ja">コサイン類似度</span></div>
       <div class="formula">cos(θ) = (a · b) / (‖a‖₂ × ‖b‖₂)</div>
-      <div class="note">Measures direction similarity, ignores magnitude. Range: [−1, 1]. Common in NLP.</div>
+      <div class="note"><span data-tr="en">Measures direction similarity, ignores magnitude. Range: [−1, 1]. Common in NLP.</span><span data-tr="es">Mide similitud de dirección, ignora magnitud. Rango: [−1, 1]. Común en NLP.</span><span data-tr="ja">方向の類似度を測定、大きさは無視。範囲: [−1, 1]。NLP で一般的。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Eigendecomposition</div>
+      <div class="card-label"><span data-tr="en">Eigendecomposition</span><span data-tr="es">Descomposición Espectral</span><span data-tr="ja">固有分解</span></div>
       <div class="formula">Av = λv</div>
-      <div class="note">v = eigenvector (direction preserved), λ = eigenvalue (scaling factor). Core of PCA.</div>
+      <div class="note"><span data-tr="en">v = eigenvector (direction preserved), λ = eigenvalue (scaling factor). Core of PCA.</span><span data-tr="es">v = autovector (dirección preservada), λ = autovalor (factor de escala). Núcleo de PCA.</span><span data-tr="ja">v = 固有ベクトル (方向が保存)、λ = 固有値 (スケール係数)。PCA の中核。</span></div>
     </div>
   </div>
 </div>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- BIAS–VARIANCE                               -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- 13 · BIAS–VARIANCE -->
 <div class="section" id="bias-variance">
-  <div class="section-title yellow">13 · Bias–Variance Tradeoff</div>
+  <div class="section-title yellow">
+    <span data-tr="en">13 · Bias–Variance Tradeoff</span>
+    <span data-tr="es">13 · Compromiso Sesgo–Varianza</span>
+    <span data-tr="ja">13 · バイアス–分散トレードオフ</span>
+  </div>
 
   <div class="card">
-    <div class="card-label">Total Error Decomposition</div>
+    <div class="card-label"><span data-tr="en">Total Error Decomposition</span><span data-tr="es">Descomposición del Error Total</span><span data-tr="ja">総誤差の分解</span></div>
     <div class="formula">E[(y − ŷ)²] = Bias(ŷ)² + Var(ŷ) + σ²</div>
-    <div class="note">σ² = irreducible noise. You can only reduce bias and variance — and reducing one tends to increase the other.</div>
+    <div class="note"><span data-tr="en">σ² = irreducible noise. You can only reduce bias and variance — and reducing one tends to increase the other.</span><span data-tr="es">σ² = ruido irreducible. Solo puedes reducir sesgo y varianza — y reducir uno tiende a aumentar el otro.</span><span data-tr="ja">σ² = 削減不能なノイズ。バイアスと分散しか減らせず、一方を減らすと他方が増える傾向がある。</span></div>
   </div>
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-label">Bias</div>
+      <div class="card-label"><span data-tr="en">Bias</span><span data-tr="es">Sesgo</span><span data-tr="ja">バイアス</span></div>
       <div class="formula">Bias(ŷ) = E[ŷ] − y_true</div>
-      <div class="note">How far the average prediction is from the truth. High bias = underfitting (too simple).</div>
+      <div class="note"><span data-tr="en">How far the average prediction is from the truth. High bias = underfitting (too simple).</span><span data-tr="es">Qué tan lejos está la predicción promedio de la verdad. Alto sesgo = subajuste (demasiado simple).</span><span data-tr="ja">平均予測が真値からどれだけ離れているか。高バイアス = 過少適合 (単純すぎる)。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Variance</div>
+      <div class="card-label"><span data-tr="en">Variance</span><span data-tr="es">Varianza</span><span data-tr="ja">分散</span></div>
       <div class="formula">Var(ŷ) = E[(ŷ − E[ŷ])²]</div>
-      <div class="note">How much predictions change across different training sets. High variance = overfitting (too complex).</div>
+      <div class="note"><span data-tr="en">How much predictions change across different training sets. High variance = overfitting (too complex).</span><span data-tr="es">Cuánto cambian las predicciones entre conjuntos de entrenamiento. Alta varianza = sobreajuste (demasiado complejo).</span><span data-tr="ja">訓練セットによって予測がどれだけ変わるか。高分散 = 過学習 (複雑すぎる)。</span></div>
     </div>
   </div>
 
   <div class="callout blue" style="margin-top:1rem;">
-    <strong>The goal:</strong> minimize total error, not just one component.<br>
-    • Simple models → high bias, low variance (underfitting)<br>
-    • Complex models → low bias, high variance (overfitting)<br>
-    • Sweet spot → moderate bias, moderate variance (generalization)
+    <span data-tr="en"><strong>The goal:</strong> minimize total error, not just one component.<br>• Simple models → high bias, low variance (underfitting)<br>• Complex models → low bias, high variance (overfitting)<br>• Sweet spot → moderate bias, moderate variance (generalization)</span>
+    <span data-tr="es"><strong>La meta:</strong> minimizar el error total, no solo un componente.<br>• Modelos simples → alto sesgo, baja varianza (subajuste)<br>• Modelos complejos → bajo sesgo, alta varianza (sobreajuste)<br>• Punto óptimo → sesgo moderado, varianza moderada (generalización)</span>
+    <span data-tr="ja"><strong>目標:</strong> 一つの成分だけでなく総誤差を最小化。<br>• 単純なモデル → 高バイアス、低分散 (過少適合)<br>• 複雑なモデル → 低バイアス、高分散 (過学習)<br>• 最適点 → 中程度のバイアスと分散 (汎化)</span>
   </div>
 
   <div class="grid-2" style="margin-top:1rem;">
     <div class="card">
-      <div class="card-label">K-Fold Cross-Validation</div>
-      <div class="formula">Split data into K folds. Train on K−1, test on 1. Rotate K times. Average scores.</div>
-      <div class="note">Typical K = 5 or 10. Gives reliable estimate of generalization performance.</div>
+      <div class="card-label"><span data-tr="en">K-Fold Cross-Validation</span><span data-tr="es">Validación Cruzada K-Fold</span><span data-tr="ja">K分割交差検証</span></div>
+      <div class="formula"><span data-tr="en">Split data into K folds. Train on K−1, test on 1. Rotate K times. Average scores.</span><span data-tr="es">Divide los datos en K pliegues. Entrena en K−1, prueba en 1. Rota K veces. Promedia puntajes.</span><span data-tr="ja">データを K 個の分割に分ける。K−1 で訓練し 1 でテスト。K 回回して平均を取る。</span></div>
+      <div class="note"><span data-tr="en">Typical K = 5 or 10. Gives reliable estimate of generalization performance.</span><span data-tr="es">K típico = 5 o 10. Da una estimación confiable del rendimiento de generalización.</span><span data-tr="ja">通常 K = 5 または 10。汎化性能の信頼できる推定。</span></div>
     </div>
 
     <div class="card">
-      <div class="card-label">Train/Test Split</div>
-      <div class="formula">Typical: 80% train / 20% test<br>Or: 60% train / 20% val / 20% test</div>
-      <div class="note">Never evaluate on training data. Never tune hyperparameters on test data.</div>
+      <div class="card-label"><span data-tr="en">Train/Test Split</span><span data-tr="es">División Train/Test</span><span data-tr="ja">訓練/テスト分割</span></div>
+      <div class="formula"><span data-tr="en">Typical: 80% train / 20% test<br>Or: 60% train / 20% val / 20% test</span><span data-tr="es">Típico: 80% train / 20% test<br>O: 60% train / 20% val / 20% test</span><span data-tr="ja">通常: 80% 訓練 / 20% テスト<br>あるいは: 60% 訓練 / 20% 検証 / 20% テスト</span></div>
+      <div class="note"><span data-tr="en">Never evaluate on training data. Never tune hyperparameters on test data.</span><span data-tr="es">Nunca evalúes con datos de entrenamiento. Nunca ajustes hiperparámetros con datos de prueba.</span><span data-tr="ja">訓練データで評価しない。テストデータでハイパーパラメータ調整しない。</span></div>
     </div>
   </div>
 </div>
 
+<script src="/lang-toggle.js" defer></script>
 </body>
 </html>

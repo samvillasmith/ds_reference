@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crash Course: The Data Science Lifecycle — Texcoco</title>
+<title data-tr-title
+  data-tr-en="Crash Course: The Data Science Lifecycle — Texcoco"
+  data-tr-es="Curso Acelerado: El Ciclo de Vida de la Ciencia de Datos — Texcoco"
+  data-tr-ja="速習コース: データサイエンスのライフサイクル — テクスココ">Crash Course: The Data Science Lifecycle — Texcoco</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/nav.css">
+<link rel="stylesheet" href="/lang-toggle.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -276,76 +280,176 @@
 <body>
 
 <nav class="site-nav">
-  <a class="nav-brand" href="/">Texcoco Data Science</a>
+  <a class="nav-brand" href="/">
+    <span data-tr="en">Texcoco Data Science</span>
+    <span data-tr="es">Texcoco Ciencia de Datos</span>
+    <span data-tr="ja">テクスココ データサイエンス</span>
+  </a>
   <div class="nav-links">
-    <a class="nav-cta" href="/crash-course.html">Crash Course</a>
-    <a class="nav-home" href="/#foundations">Foundations</a>
-    <a class="nav-home" href="/#feature-eng">Feature Eng</a>
-    <a class="nav-home" href="/#reference">Reference</a>
+    <a class="nav-cta" href="/crash-course">
+      <span data-tr="en">Crash Course</span>
+      <span data-tr="es">Curso Acelerado</span>
+      <span data-tr="ja">速習コース</span>
+    </a>
+    <a class="nav-home" href="/#foundations">
+      <span data-tr="en">Foundations</span>
+      <span data-tr="es">Fundamentos</span>
+      <span data-tr="ja">基礎</span>
+    </a>
+    <a class="nav-home" href="/#feature-eng">
+      <span data-tr="en">Feature Eng</span>
+      <span data-tr="es">Ing. Features</span>
+      <span data-tr="ja">特徴量エンジ</span>
+    </a>
+    <a class="nav-home" href="/#reference">
+      <span data-tr="en">Reference</span>
+      <span data-tr="es">Referencia</span>
+      <span data-tr="ja">リファレンス</span>
+    </a>
   </div>
 </nav>
 
-<h1>The Data Science Lifecycle</h1>
-<p class="subtitle">A crash course in the full pipeline — from raw question to working model in production.</p>
+<h1>
+  <span data-tr="en">The Data Science Lifecycle</span>
+  <span data-tr="es">El Ciclo de Vida de la Ciencia de Datos</span>
+  <span data-tr="ja">データサイエンスのライフサイクル</span>
+</h1>
+<p class="subtitle">
+  <span data-tr="en">A crash course in the full pipeline — from raw question to working model in production.</span>
+  <span data-tr="es">Un curso acelerado del pipeline completo — desde la pregunta cruda hasta el modelo funcionando en producción.</span>
+  <span data-tr="ja">パイプライン全体の速習コース — 素の疑問から本番環境で動くモデルまで。</span>
+</p>
 
 <!-- Overview grid -->
 <div class="overview-grid">
   <a class="overview-item" href="#stage1">
     <div class="ov-num" style="color:#e5c84a">01</div>
-    <div class="ov-title">Define the Problem</div>
+    <div class="ov-title">
+      <span data-tr="en">Define the Problem</span>
+      <span data-tr="es">Definir el Problema</span>
+      <span data-tr="ja">問題を定義する</span>
+    </div>
   </a>
   <a class="overview-item" href="#stage2">
     <div class="ov-num" style="color:#58a6ff">02</div>
-    <div class="ov-title">Collect the Data</div>
+    <div class="ov-title">
+      <span data-tr="en">Collect the Data</span>
+      <span data-tr="es">Recolectar los Datos</span>
+      <span data-tr="ja">データを収集する</span>
+    </div>
   </a>
   <a class="overview-item" href="#stage3">
     <div class="ov-num" style="color:#a371f7">03</div>
-    <div class="ov-title">Explore (EDA)</div>
+    <div class="ov-title">
+      <span data-tr="en">Explore (EDA)</span>
+      <span data-tr="es">Explorar (EDA)</span>
+      <span data-tr="ja">探索 (EDA)</span>
+    </div>
   </a>
   <a class="overview-item" href="#stage4">
     <div class="ov-num" style="color:#f0883e">04</div>
-    <div class="ov-title">Prepare the Data</div>
+    <div class="ov-title">
+      <span data-tr="en">Prepare the Data</span>
+      <span data-tr="es">Preparar los Datos</span>
+      <span data-tr="ja">データを準備する</span>
+    </div>
   </a>
   <a class="overview-item" href="#stage5">
     <div class="ov-num" style="color:#56d364">05</div>
-    <div class="ov-title">Build a Model</div>
+    <div class="ov-title">
+      <span data-tr="en">Build a Model</span>
+      <span data-tr="es">Construir un Modelo</span>
+      <span data-tr="ja">モデルを構築する</span>
+    </div>
   </a>
   <a class="overview-item" href="#stage6">
     <div class="ov-num" style="color:#ff4d4d">06</div>
-    <div class="ov-title">Evaluate</div>
+    <div class="ov-title">
+      <span data-tr="en">Evaluate</span>
+      <span data-tr="es">Evaluar</span>
+      <span data-tr="ja">評価する</span>
+    </div>
   </a>
   <a class="overview-item" href="#stage7">
     <div class="ov-num" style="color:#79c0ff">07</div>
-    <div class="ov-title">Deploy & Monitor</div>
+    <div class="ov-title">
+      <span data-tr="en">Deploy &amp; Monitor</span>
+      <span data-tr="es">Desplegar y Monitorear</span>
+      <span data-tr="ja">デプロイと監視</span>
+    </div>
   </a>
 </div>
 
 <!-- Stage 1 -->
 <div id="stage1" class="section s1">
   <div class="stage-header">
-    <span class="stage-num">Stage 01</span>
-    <div class="section-title">Define the Problem</div>
+    <span class="stage-num">
+      <span data-tr="en">Stage 01</span>
+      <span data-tr="es">Etapa 01</span>
+      <span data-tr="ja">段階 01</span>
+    </span>
+    <div class="section-title">
+      <span data-tr="en">Define the Problem</span>
+      <span data-tr="es">Definir el Problema</span>
+      <span data-tr="ja">問題を定義する</span>
+    </div>
   </div>
 
   <div class="step">
-    <p>This is the stage most beginners skip — and the one that kills the most projects. Before you touch data, you need a precise answer to one question: <strong style="color:#e6edf3">what does success look like?</strong></p>
+    <p>
+      <span data-tr="en">This is the stage most beginners skip — and the one that kills the most projects. Before you touch data, you need a precise answer to one question: <strong style="color:#e6edf3">what does success look like?</strong></span>
+      <span data-tr="es">Esta es la etapa que la mayoría de principiantes omite — y la que mata más proyectos. Antes de tocar datos, necesitas una respuesta precisa a una pregunta: <strong style="color:#e6edf3">¿cómo se ve el éxito?</strong></span>
+      <span data-tr="ja">これは多くの初心者がスキップする段階で、最も多くのプロジェクトを殺す段階でもあります。データに触れる前に、一つの質問に対する正確な答えが必要です: <strong style="color:#e6edf3">成功とはどのような姿か？</strong></span>
+    </p>
 
-    <p>Business problems and ML problems are not the same thing. A business problem is "we are losing customers." An ML problem is "train a binary classifier to predict which customers will churn in the next 30 days, targeting F1 ≥ 0.75 on held-out data." The translation from one to the other is where data scientists earn their keep.</p>
+    <p>
+      <span data-tr="en">Business problems and ML problems are not the same thing. A business problem is "we are losing customers." An ML problem is "train a binary classifier to predict which customers will churn in the next 30 days, targeting F1 ≥ 0.75 on held-out data." The translation from one to the other is where data scientists earn their keep.</span>
+      <span data-tr="es">Los problemas de negocio y los problemas de ML no son lo mismo. Un problema de negocio es "estamos perdiendo clientes". Un problema de ML es "entrenar un clasificador binario para predecir qué clientes se irán en los próximos 30 días, con meta F1 ≥ 0.75 en datos retenidos". La traducción entre uno y otro es donde los científicos de datos se ganan el sustento.</span>
+      <span data-tr="ja">ビジネス課題とML課題は同じものではありません。ビジネス課題は「顧客が離れている」です。ML課題は「今後30日以内にどの顧客が離脱するかを予測する二値分類器を訓練し、検証データでF1 ≥ 0.75を目指す」です。一方から他方への翻訳こそ、データサイエンティストの腕の見せ所です。</span>
+    </p>
 
     <table>
-      <thead><tr><th>Question</th><th>ML Problem Type</th><th>Example Output</th></tr></thead>
+      <thead><tr>
+        <th><span data-tr="en">Question</span><span data-tr="es">Pregunta</span><span data-tr="ja">質問</span></th>
+        <th><span data-tr="en">ML Problem Type</span><span data-tr="es">Tipo de Problema ML</span><span data-tr="ja">ML問題の種類</span></th>
+        <th><span data-tr="en">Example Output</span><span data-tr="es">Salida de Ejemplo</span><span data-tr="ja">出力の例</span></th>
+      </tr></thead>
       <tbody>
-        <tr><td>How much?</td><td><span class="tag tag-r">Regression</span></td><td>Predicted house price: $412,000</td></tr>
-        <tr><td>Which category?</td><td><span class="tag tag-c">Classification</span></td><td>Spam or not spam</td></tr>
-        <tr><td>What groups exist?</td><td><span class="tag tag-cl">Clustering</span></td><td>3 customer segments</td></tr>
-        <tr><td>What comes next?</td><td><span class="tag tag-r">Forecasting</span></td><td>Next week's demand: 1,400 units</td></tr>
-        <tr><td>What's related?</td><td><span class="tag tag-cl">Recommendation</span></td><td>"Customers also bought…"</td></tr>
+        <tr>
+          <td><span data-tr="en">How much?</span><span data-tr="es">¿Cuánto?</span><span data-tr="ja">いくら？</span></td>
+          <td><span class="tag tag-r"><span data-tr="en">Regression</span><span data-tr="es">Regresión</span><span data-tr="ja">回帰</span></span></td>
+          <td><span data-tr="en">Predicted house price: $412,000</span><span data-tr="es">Precio de casa predicho: $412,000</span><span data-tr="ja">住宅価格の予測: $412,000</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">Which category?</span><span data-tr="es">¿Qué categoría?</span><span data-tr="ja">どのカテゴリ？</span></td>
+          <td><span class="tag tag-c"><span data-tr="en">Classification</span><span data-tr="es">Clasificación</span><span data-tr="ja">分類</span></span></td>
+          <td><span data-tr="en">Spam or not spam</span><span data-tr="es">Spam o no spam</span><span data-tr="ja">スパムかどうか</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">What groups exist?</span><span data-tr="es">¿Qué grupos existen?</span><span data-tr="ja">どのようなグループがある？</span></td>
+          <td><span class="tag tag-cl"><span data-tr="en">Clustering</span><span data-tr="es">Agrupamiento</span><span data-tr="ja">クラスタリング</span></span></td>
+          <td><span data-tr="en">3 customer segments</span><span data-tr="es">3 segmentos de clientes</span><span data-tr="ja">3つの顧客セグメント</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">What comes next?</span><span data-tr="es">¿Qué sigue?</span><span data-tr="ja">次に何が来る？</span></td>
+          <td><span class="tag tag-r"><span data-tr="en">Forecasting</span><span data-tr="es">Pronóstico</span><span data-tr="ja">予測</span></span></td>
+          <td><span data-tr="en">Next week's demand: 1,400 units</span><span data-tr="es">Demanda de la próxima semana: 1,400 unidades</span><span data-tr="ja">来週の需要: 1,400個</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">What's related?</span><span data-tr="es">¿Qué está relacionado?</span><span data-tr="ja">何が関連している？</span></td>
+          <td><span class="tag tag-cl"><span data-tr="en">Recommendation</span><span data-tr="es">Recomendación</span><span data-tr="ja">レコメンド</span></span></td>
+          <td><span data-tr="en">"Customers also bought…"</span><span data-tr="es">"Clientes también compraron…"</span><span data-tr="ja">「この商品を買った人は…」</span></td>
+        </tr>
       </tbody>
     </table>
 
     <div class="callout rule">
-      <div class="callout-label">Rule</div>
-      Write the problem statement in one sentence before writing any code: <em>"Predict [target] from [features] so that [stakeholder] can [action], measured by [metric]."</em>
+      <div class="callout-label">
+        <span data-tr="en">Rule</span><span data-tr="es">Regla</span><span data-tr="ja">ルール</span>
+      </div>
+      <span data-tr="en">Write the problem statement in one sentence before writing any code: <em>"Predict [target] from [features] so that [stakeholder] can [action], measured by [metric]."</em></span>
+      <span data-tr="es">Escribe el enunciado del problema en una sola frase antes de escribir código: <em>"Predecir [objetivo] a partir de [características] para que [interesado] pueda [acción], medido por [métrica]."</em></span>
+      <span data-tr="ja">コードを書く前に、問題をひとつの文で書き出しましょう: <em>「[特徴量] から [対象] を予測し、[関係者] が [行動] を取れるようにする。評価指標は [メトリクス]。」</em></span>
     </div>
   </div>
 </div>
@@ -353,76 +457,152 @@
 <!-- Stage 2 -->
 <div id="stage2" class="section s2">
   <div class="stage-header">
-    <span class="stage-num">Stage 02</span>
-    <div class="section-title">Collect the Data</div>
+    <span class="stage-num">
+      <span data-tr="en">Stage 02</span><span data-tr="es">Etapa 02</span><span data-tr="ja">段階 02</span>
+    </span>
+    <div class="section-title">
+      <span data-tr="en">Collect the Data</span>
+      <span data-tr="es">Recolectar los Datos</span>
+      <span data-tr="ja">データを収集する</span>
+    </div>
   </div>
 
   <div class="step">
-    <p>Data comes from databases, APIs, web scraping, sensors, surveys, and manual labeling. Where it comes from shapes everything downstream — including what biases you'll inherit.</p>
+    <p>
+      <span data-tr="en">Data comes from databases, APIs, web scraping, sensors, surveys, and manual labeling. Where it comes from shapes everything downstream — including what biases you'll inherit.</span>
+      <span data-tr="es">Los datos vienen de bases de datos, APIs, web scraping, sensores, encuestas y etiquetado manual. De dónde vienen moldea todo lo que sigue — incluyendo los sesgos que heredarás.</span>
+      <span data-tr="ja">データはデータベース、API、Webスクレイピング、センサー、調査、手動ラベリングから来ます。データの出所はその後の全てを形作ります — 引き継ぐバイアスも含めて。</span>
+    </p>
 
     <table>
-      <thead><tr><th>Source</th><th>Common Format</th><th>Watch Out For</th></tr></thead>
+      <thead><tr>
+        <th><span data-tr="en">Source</span><span data-tr="es">Fuente</span><span data-tr="ja">ソース</span></th>
+        <th><span data-tr="en">Common Format</span><span data-tr="es">Formato Común</span><span data-tr="ja">よくある形式</span></th>
+        <th><span data-tr="en">Watch Out For</span><span data-tr="es">Ten Cuidado Con</span><span data-tr="ja">要注意点</span></th>
+      </tr></thead>
       <tbody>
-        <tr><td>Relational database</td><td>SQL tables / CSV export</td><td>Stale snapshots, missing joins</td></tr>
-        <tr><td>REST API</td><td>JSON</td><td>Rate limits, schema changes</td></tr>
-        <tr><td>Web scraping</td><td>HTML → parsed</td><td>Legal restrictions, fragile selectors</td></tr>
-        <tr><td>IoT / sensors</td><td>Time series, CSV</td><td>Clock drift, missing windows</td></tr>
-        <tr><td>Manual labeling</td><td>CSV with label column</td><td>Inter-annotator disagreement</td></tr>
-        <tr><td>Public datasets</td><td>CSV, Parquet, HDF5</td><td>Outdated distributions</td></tr>
+        <tr>
+          <td><span data-tr="en">Relational database</span><span data-tr="es">Base de datos relacional</span><span data-tr="ja">リレーショナルDB</span></td>
+          <td><span data-tr="en">SQL tables / CSV export</span><span data-tr="es">Tablas SQL / exportación CSV</span><span data-tr="ja">SQLテーブル / CSVエクスポート</span></td>
+          <td><span data-tr="en">Stale snapshots, missing joins</span><span data-tr="es">Snapshots obsoletos, joins faltantes</span><span data-tr="ja">古いスナップショット、JOINの漏れ</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">REST API</span><span data-tr="es">REST API</span><span data-tr="ja">REST API</span></td>
+          <td>JSON</td>
+          <td><span data-tr="en">Rate limits, schema changes</span><span data-tr="es">Límites de tasa, cambios de esquema</span><span data-tr="ja">レート制限、スキーマ変更</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">Web scraping</span><span data-tr="es">Web scraping</span><span data-tr="ja">Webスクレイピング</span></td>
+          <td><span data-tr="en">HTML → parsed</span><span data-tr="es">HTML → parseado</span><span data-tr="ja">HTML → 解析済み</span></td>
+          <td><span data-tr="en">Legal restrictions, fragile selectors</span><span data-tr="es">Restricciones legales, selectores frágiles</span><span data-tr="ja">法的制約、壊れやすいセレクタ</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">IoT / sensors</span><span data-tr="es">IoT / sensores</span><span data-tr="ja">IoT / センサー</span></td>
+          <td><span data-tr="en">Time series, CSV</span><span data-tr="es">Series temporales, CSV</span><span data-tr="ja">時系列、CSV</span></td>
+          <td><span data-tr="en">Clock drift, missing windows</span><span data-tr="es">Deriva de reloj, ventanas faltantes</span><span data-tr="ja">時計のズレ、欠損ウィンドウ</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">Manual labeling</span><span data-tr="es">Etiquetado manual</span><span data-tr="ja">手動ラベリング</span></td>
+          <td><span data-tr="en">CSV with label column</span><span data-tr="es">CSV con columna de etiqueta</span><span data-tr="ja">ラベル列付きCSV</span></td>
+          <td><span data-tr="en">Inter-annotator disagreement</span><span data-tr="es">Desacuerdo entre anotadores</span><span data-tr="ja">アノテータ間の不一致</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">Public datasets</span><span data-tr="es">Conjuntos de datos públicos</span><span data-tr="ja">公開データセット</span></td>
+          <td>CSV, Parquet, HDF5</td>
+          <td><span data-tr="en">Outdated distributions</span><span data-tr="es">Distribuciones obsoletas</span><span data-tr="ja">古い分布</span></td>
+        </tr>
       </tbody>
     </table>
 
     <div class="callout warn">
-      <div class="callout-label">Warning — Sampling Bias</div>
-      Your model learns the distribution of your training data, not the world. If your data over-represents certain groups, geographies, or time periods, your model will too — silently.
+      <div class="callout-label">
+        <span data-tr="en">Warning — Sampling Bias</span>
+        <span data-tr="es">Advertencia — Sesgo de Muestreo</span>
+        <span data-tr="ja">警告 — サンプリングバイアス</span>
+      </div>
+      <span data-tr="en">Your model learns the distribution of your training data, not the world. If your data over-represents certain groups, geographies, or time periods, your model will too — silently.</span>
+      <span data-tr="es">Tu modelo aprende la distribución de tus datos de entrenamiento, no del mundo. Si tus datos sobre-representan ciertos grupos, geografías o períodos de tiempo, tu modelo también lo hará — en silencio.</span>
+      <span data-tr="ja">モデルは世界の分布ではなく、訓練データの分布を学習します。特定のグループや地域、期間がデータに過剰に表現されていれば、モデルも同じように — 静かに — 偏ります。</span>
     </div>
 
-    <p><strong style="color:#e6edf3">How much data do you need?</strong> There is no universal answer, but a rough starting point: at least 10× as many samples as features for linear models, and far more for neural networks. More importantly — more data beats a better algorithm almost every time. Collect more than you think you need.</p>
+    <p>
+      <span data-tr="en"><strong style="color:#e6edf3">How much data do you need?</strong> There is no universal answer, but a rough starting point: at least 10× as many samples as features for linear models, and far more for neural networks. More importantly — more data beats a better algorithm almost every time. Collect more than you think you need.</span>
+      <span data-tr="es"><strong style="color:#e6edf3">¿Cuántos datos necesitas?</strong> No hay respuesta universal, pero un punto de partida aproximado: al menos 10× más muestras que características para modelos lineales, y mucho más para redes neuronales. Más importante aún — más datos le ganan a un mejor algoritmo casi siempre. Recolecta más de lo que crees que necesitas.</span>
+      <span data-tr="ja"><strong style="color:#e6edf3">どれくらいのデータが必要？</strong> 普遍的な答えはありませんが、目安として: 線形モデルでは特徴量の少なくとも10倍のサンプル、ニューラルネットではそれ以上。さらに重要なのは — より多いデータはより良いアルゴリズムにほぼ毎回勝ちます。必要だと思う以上に集めましょう。</span>
+    </p>
   </div>
 </div>
 
 <!-- Stage 3 -->
 <div id="stage3" class="section s3">
   <div class="stage-header">
-    <span class="stage-num">Stage 03</span>
-    <div class="section-title">Explore the Data (EDA)</div>
+    <span class="stage-num">
+      <span data-tr="en">Stage 03</span><span data-tr="es">Etapa 03</span><span data-tr="ja">段階 03</span>
+    </span>
+    <div class="section-title">
+      <span data-tr="en">Explore the Data (EDA)</span>
+      <span data-tr="es">Explora los Datos (EDA)</span>
+      <span data-tr="ja">データを探索する (EDA)</span>
+    </div>
   </div>
 
   <div class="step">
-    <p>Exploratory Data Analysis is how you get to know your data before you trust it. The goal is simple: find the surprises now, not after you've trained a model.</p>
+    <p>
+      <span data-tr="en">Exploratory Data Analysis is how you get to know your data before you trust it. The goal is simple: find the surprises now, not after you've trained a model.</span>
+      <span data-tr="es">El Análisis Exploratorio de Datos es cómo conoces tus datos antes de confiar en ellos. El objetivo es simple: encontrar las sorpresas ahora, no después de haber entrenado un modelo.</span>
+      <span data-tr="ja">探索的データ分析は、データを信頼する前に知るためのものです。目標はシンプル: サプライズはモデルを訓練した後ではなく、今発見すること。</span>
+    </p>
 
-    <p>Start with shape and types:</p>
+    <p>
+      <span data-tr="en">Start with shape and types:</span>
+      <span data-tr="es">Empieza con forma y tipos:</span>
+      <span data-tr="ja">まず形状と型から:</span>
+    </p>
     <div class="code-box">
-<span class="cm"># First look</span>
-df.shape          <span class="cm"># (rows, columns)</span>
-df.dtypes         <span class="cm"># are numbers stored as strings?</span>
-df.describe()     <span class="cm"># min, max, mean, std, quartiles</span>
-df.head(<span class="nu">10</span>)      <span class="cm"># eyeball the raw data</span>
+<span class="cm"># <span data-tr="en">First look</span><span data-tr="es">Primera mirada</span><span data-tr="ja">最初の確認</span></span>
+df.shape          <span class="cm"># <span data-tr="en">(rows, columns)</span><span data-tr="es">(filas, columnas)</span><span data-tr="ja">(行, 列)</span></span>
+df.dtypes         <span class="cm"># <span data-tr="en">are numbers stored as strings?</span><span data-tr="es">¿hay números guardados como strings?</span><span data-tr="ja">数値が文字列として保存されていない？</span></span>
+df.describe()     <span class="cm"># <span data-tr="en">min, max, mean, std, quartiles</span><span data-tr="es">mín, máx, media, desv, cuartiles</span><span data-tr="ja">最小、最大、平均、標準偏差、四分位数</span></span>
+df.head(<span class="nu">10</span>)      <span class="cm"># <span data-tr="en">eyeball the raw data</span><span data-tr="es">inspecciona visualmente los datos crudos</span><span data-tr="ja">生データを目視で確認</span></span>
     </div>
 
-    <p>Then missing values:</p>
+    <p>
+      <span data-tr="en">Then missing values:</span>
+      <span data-tr="es">Luego valores faltantes:</span>
+      <span data-tr="ja">次に欠損値:</span>
+    </p>
     <div class="code-box">
-df.isnull().<span class="fn">sum</span>()                        <span class="cm"># count per column</span>
-df.isnull().<span class="fn">sum</span>() / <span class="fn">len</span>(df) * <span class="nu">100</span>     <span class="cm"># as percentage</span>
+df.isnull().<span class="fn">sum</span>()                        <span class="cm"># <span data-tr="en">count per column</span><span data-tr="es">conteo por columna</span><span data-tr="ja">列ごとのカウント</span></span>
+df.isnull().<span class="fn">sum</span>() / <span class="fn">len</span>(df) * <span class="nu">100</span>     <span class="cm"># <span data-tr="en">as percentage</span><span data-tr="es">como porcentaje</span><span data-tr="ja">パーセンテージ</span></span>
     </div>
 
-    <p>Then distributions and relationships:</p>
+    <p>
+      <span data-tr="en">Then distributions and relationships:</span>
+      <span data-tr="es">Luego distribuciones y relaciones:</span>
+      <span data-tr="ja">次に分布と関係性:</span>
+    </p>
     <div class="code-box">
 <span class="kw">import</span> seaborn <span class="kw">as</span> sns
 
-<span class="cm"># Distribution of a feature</span>
+<span class="cm"># <span data-tr="en">Distribution of a feature</span><span data-tr="es">Distribución de una característica</span><span data-tr="ja">特徴量の分布</span></span>
 sns.<span class="fn">histplot</span>(df[<span class="st">'age'</span>], bins=<span class="nu">30</span>)
 
-<span class="cm"># Correlation heatmap</span>
+<span class="cm"># <span data-tr="en">Correlation heatmap</span><span data-tr="es">Mapa de calor de correlaciones</span><span data-tr="ja">相関ヒートマップ</span></span>
 sns.<span class="fn">heatmap</span>(df.corr(), annot=<span class="kw">True</span>, fmt=<span class="st">'.2f'</span>)
 
-<span class="cm"># Class balance (classification problems)</span>
+<span class="cm"># <span data-tr="en">Class balance (classification problems)</span><span data-tr="es">Balance de clases (problemas de clasificación)</span><span data-tr="ja">クラスバランス (分類問題)</span></span>
 df[<span class="st">'target'</span>].<span class="fn">value_counts</span>(normalize=<span class="kw">True</span>)
     </div>
 
     <div class="callout tip">
-      <div class="callout-label">What you're looking for</div>
-      Skewed distributions that need transformation. Correlated features that carry redundant information. Class imbalance that will fool accuracy metrics. Leaky features that encode the answer.
+      <div class="callout-label">
+        <span data-tr="en">What you're looking for</span>
+        <span data-tr="es">Qué estás buscando</span>
+        <span data-tr="ja">探すべきもの</span>
+      </div>
+      <span data-tr="en">Skewed distributions that need transformation. Correlated features that carry redundant information. Class imbalance that will fool accuracy metrics. Leaky features that encode the answer.</span>
+      <span data-tr="es">Distribuciones sesgadas que necesitan transformación. Características correlacionadas con información redundante. Desbalance de clases que engañará a las métricas de accuracy. Características con fuga que codifican la respuesta.</span>
+      <span data-tr="ja">変換が必要な歪んだ分布。冗長な情報を持つ相関した特徴量。精度指標をだますクラス不均衡。答えをエンコードしているリーク特徴量。</span>
     </div>
   </div>
 </div>
@@ -430,16 +610,32 @@ df[<span class="st">'target'</span>].<span class="fn">value_counts</span>(normal
 <!-- Stage 4 -->
 <div id="stage4" class="section s4">
   <div class="stage-header">
-    <span class="stage-num">Stage 04</span>
-    <div class="section-title">Prepare the Data</div>
+    <span class="stage-num">
+      <span data-tr="en">Stage 04</span><span data-tr="es">Etapa 04</span><span data-tr="ja">段階 04</span>
+    </span>
+    <div class="section-title">
+      <span data-tr="en">Prepare the Data</span>
+      <span data-tr="es">Preparar los Datos</span>
+      <span data-tr="ja">データを準備する</span>
+    </div>
   </div>
 
   <div class="step">
-    <p>This is the most time-consuming stage. In real projects, data preparation consumes 60–80% of total project time. It is not glamorous. It is essential.</p>
+    <p>
+      <span data-tr="en">This is the most time-consuming stage. In real projects, data preparation consumes 60–80% of total project time. It is not glamorous. It is essential.</span>
+      <span data-tr="es">Esta es la etapa que más tiempo consume. En proyectos reales, la preparación de datos consume el 60–80% del tiempo total. No es glamorosa. Es esencial.</span>
+      <span data-tr="ja">これは最も時間のかかる段階です。実プロジェクトでは、データ準備がプロジェクト全体の時間の60〜80%を消費します。派手ではありません。しかし不可欠です。</span>
+    </p>
 
     <div class="callout warn">
-      <div class="callout-label">Critical — Split Before You Touch Anything</div>
-      Do your train/validation/test split <em>before</em> any preprocessing. If you fit a scaler or imputer on the full dataset, information from the test set leaks into your training process, and your evaluation metrics become lies.
+      <div class="callout-label">
+        <span data-tr="en">Critical — Split Before You Touch Anything</span>
+        <span data-tr="es">Crítico — Divide Antes de Tocar Cualquier Cosa</span>
+        <span data-tr="ja">重要 — 何かに触れる前に分割を</span>
+      </div>
+      <span data-tr="en">Do your train/validation/test split <em>before</em> any preprocessing. If you fit a scaler or imputer on the full dataset, information from the test set leaks into your training process, and your evaluation metrics become lies.</span>
+      <span data-tr="es">Divide train/validación/test <em>antes</em> de cualquier preprocesamiento. Si ajustas un escalador o imputador sobre el conjunto completo, información del conjunto de prueba se filtra al entrenamiento, y tus métricas de evaluación se vuelven mentiras.</span>
+      <span data-tr="ja">訓練/検証/テストの分割は前処理の<em>前</em>に行いましょう。全データセットでスケーラーや補完器を fit すると、テストセットの情報が訓練プロセスに漏れ、評価指標は嘘になります。</span>
     </div>
 
     <div class="code-box">
@@ -448,17 +644,41 @@ df[<span class="st">'target'</span>].<span class="fn">value_counts</span>(normal
 X_train, X_test, y_train, y_test = <span class="fn">train_test_split</span>(
     X, y, test_size=<span class="nu">0.2</span>, random_state=<span class="nu">42</span>, stratify=y
 )
-<span class="cm"># Now fit all preprocessing on X_train only.</span>
-<span class="cm"># Transform X_test using parameters learned from X_train.</span>
+<span class="cm"># <span data-tr="en">Now fit all preprocessing on X_train only.</span><span data-tr="es">Ahora ajusta todo el preprocesamiento solo en X_train.</span><span data-tr="ja">前処理は全て X_train のみで fit する。</span></span>
+<span class="cm"># <span data-tr="en">Transform X_test using parameters learned from X_train.</span><span data-tr="es">Transforma X_test con parámetros aprendidos de X_train.</span><span data-tr="ja">X_train で学習したパラメータで X_test を transform。</span></span>
     </div>
 
-    <p><strong style="color:#e6edf3">The preparation checklist:</strong></p>
+    <p>
+      <span data-tr="en"><strong style="color:#e6edf3">The preparation checklist:</strong></span>
+      <span data-tr="es"><strong style="color:#e6edf3">La lista de verificación de preparación:</strong></span>
+      <span data-tr="ja"><strong style="color:#e6edf3">準備のチェックリスト:</strong></span>
+    </p>
     <ul>
-      <li><strong>Missing values</strong> — drop rows/columns, or impute (mean/median/mode, or group-based). See the <a href="/feature_engineering/handling-missing-values.ipynb" style="color:#c87533">Handling Missing Values</a> notebook.</li>
-      <li><strong>Outliers</strong> — remove, cap at percentiles, or log-transform. See the <a href="/feature_engineering/outliers.ipynb" style="color:#c87533">Outlier Detection</a> notebook.</li>
-      <li><strong>Encoding</strong> — convert categoricals to numbers. Choice of method matters. See <a href="/feature_engineering/data-encoding.ipynb" style="color:#c87533">Data Encoding</a>.</li>
-      <li><strong>Scaling</strong> — standardize or normalize numerical features for distance-based and gradient-based models (not needed for tree-based models).</li>
-      <li><strong>Class imbalance</strong> — if your target is heavily skewed, use upsampling, downsampling, or SMOTE — on the training set only. See <a href="/feature_engineering/handling-imbalanced-datasets.ipynb" style="color:#c87533">Handling Imbalanced Datasets</a>.</li>
+      <li>
+        <span data-tr="en"><strong>Missing values</strong> — drop rows/columns, or impute (mean/median/mode, or group-based). See the <a href="/feature_engineering/handling-missing-values.ipynb" style="color:#c87533">Handling Missing Values</a> notebook.</span>
+        <span data-tr="es"><strong>Valores faltantes</strong> — elimina filas/columnas, o imputa (media/mediana/moda, o por grupo). Ver el notebook <a href="/feature_engineering/handling-missing-values.ipynb" style="color:#c87533">Manejo de Valores Faltantes</a>.</span>
+        <span data-tr="ja"><strong>欠損値</strong> — 行/列の削除、または補完 (平均/中央値/最頻値、グループベース)。<a href="/feature_engineering/handling-missing-values.ipynb" style="color:#c87533">欠損値の処理</a>ノートブック参照。</span>
+      </li>
+      <li>
+        <span data-tr="en"><strong>Outliers</strong> — remove, cap at percentiles, or log-transform. See the <a href="/feature_engineering/outliers.ipynb" style="color:#c87533">Outlier Detection</a> notebook.</span>
+        <span data-tr="es"><strong>Valores atípicos</strong> — elimina, limita en percentiles, o transforma con log. Ver el notebook <a href="/feature_engineering/outliers.ipynb" style="color:#c87533">Detección de Atípicos</a>.</span>
+        <span data-tr="ja"><strong>外れ値</strong> — 削除、パーセンタイルで上限設定、または対数変換。<a href="/feature_engineering/outliers.ipynb" style="color:#c87533">外れ値検出</a>ノートブック参照。</span>
+      </li>
+      <li>
+        <span data-tr="en"><strong>Encoding</strong> — convert categoricals to numbers. Choice of method matters. See <a href="/feature_engineering/data-encoding.ipynb" style="color:#c87533">Data Encoding</a>.</span>
+        <span data-tr="es"><strong>Codificación</strong> — convierte categóricas a números. La elección de método importa. Ver <a href="/feature_engineering/data-encoding.ipynb" style="color:#c87533">Codificación de Datos</a>.</span>
+        <span data-tr="ja"><strong>エンコーディング</strong> — カテゴリを数値に変換。手法選択が重要。<a href="/feature_engineering/data-encoding.ipynb" style="color:#c87533">データエンコーディング</a>参照。</span>
+      </li>
+      <li>
+        <span data-tr="en"><strong>Scaling</strong> — standardize or normalize numerical features for distance-based and gradient-based models (not needed for tree-based models).</span>
+        <span data-tr="es"><strong>Escalado</strong> — estandariza o normaliza características numéricas para modelos basados en distancia y gradiente (no necesario para modelos basados en árboles).</span>
+        <span data-tr="ja"><strong>スケーリング</strong> — 距離ベースおよび勾配ベースのモデルのために数値特徴を標準化または正規化 (木ベースのモデルでは不要)。</span>
+      </li>
+      <li>
+        <span data-tr="en"><strong>Class imbalance</strong> — if your target is heavily skewed, use upsampling, downsampling, or SMOTE — on the training set only. See <a href="/feature_engineering/handling-imbalanced-datasets.ipynb" style="color:#c87533">Handling Imbalanced Datasets</a>.</span>
+        <span data-tr="es"><strong>Desbalance de clases</strong> — si tu objetivo está muy sesgado, usa sobremuestreo, submuestreo o SMOTE — solo en el conjunto de entrenamiento. Ver <a href="/feature_engineering/handling-imbalanced-datasets.ipynb" style="color:#c87533">Manejo de Conjuntos Desequilibrados</a>.</span>
+        <span data-tr="ja"><strong>クラス不均衡</strong> — ターゲットが大きく偏っているなら、アップサンプリング、ダウンサンプリング、または SMOTE を — 訓練セットのみで。<a href="/feature_engineering/handling-imbalanced-datasets.ipynb" style="color:#c87533">不均衡データセットの処理</a>参照。</span>
+      </li>
     </ul>
   </div>
 </div>
@@ -466,28 +686,68 @@ X_train, X_test, y_train, y_test = <span class="fn">train_test_split</span>(
 <!-- Stage 5 -->
 <div id="stage5" class="section s5">
   <div class="stage-header">
-    <span class="stage-num">Stage 05</span>
-    <div class="section-title">Build & Train a Model</div>
+    <span class="stage-num">
+      <span data-tr="en">Stage 05</span><span data-tr="es">Etapa 05</span><span data-tr="ja">段階 05</span>
+    </span>
+    <div class="section-title">
+      <span data-tr="en">Build &amp; Train a Model</span>
+      <span data-tr="es">Construir y Entrenar un Modelo</span>
+      <span data-tr="ja">モデルを構築・訓練する</span>
+    </div>
   </div>
 
   <div class="step">
     <div class="callout rule">
-      <div class="callout-label">Rule — Always Start with a Baseline</div>
-      Before training anything complex, establish a naive baseline: mean prediction for regression, majority class for classification. If your model can't beat the baseline, nothing else matters.
+      <div class="callout-label">
+        <span data-tr="en">Rule — Always Start with a Baseline</span>
+        <span data-tr="es">Regla — Siempre Empieza con una Línea Base</span>
+        <span data-tr="ja">ルール — 必ずベースラインから始める</span>
+      </div>
+      <span data-tr="en">Before training anything complex, establish a naive baseline: mean prediction for regression, majority class for classification. If your model can't beat the baseline, nothing else matters.</span>
+      <span data-tr="es">Antes de entrenar cualquier cosa compleja, establece una línea base ingenua: predicción de la media para regresión, clase mayoritaria para clasificación. Si tu modelo no supera la línea base, nada más importa.</span>
+      <span data-tr="ja">複雑なものを訓練する前に、素朴なベースラインを確立しましょう: 回帰なら平均予測、分類なら多数派クラス。ベースラインに勝てないなら、他は全て意味がありません。</span>
     </div>
 
     <table>
-      <thead><tr><th>Problem Type</th><th>Good First Model</th><th>When to Go Further</th></tr></thead>
+      <thead><tr>
+        <th><span data-tr="en">Problem Type</span><span data-tr="es">Tipo de Problema</span><span data-tr="ja">問題の種類</span></th>
+        <th><span data-tr="en">Good First Model</span><span data-tr="es">Buen Primer Modelo</span><span data-tr="ja">最初に試すモデル</span></th>
+        <th><span data-tr="en">When to Go Further</span><span data-tr="es">Cuándo Ir Más Allá</span><span data-tr="ja">さらに進むタイミング</span></th>
+      </tr></thead>
       <tbody>
-        <tr><td>Regression</td><td>Linear Regression (OLS)</td><td>Non-linear relationships, many features</td></tr>
-        <tr><td>Classification</td><td>Logistic Regression</td><td>High-dimensional, complex boundaries</td></tr>
-        <tr><td>Either</td><td>Decision Tree</td><td>Baseline established, need more power</td></tr>
-        <tr><td>Either</td><td>Random Forest</td><td>Solid general-purpose choice</td></tr>
-        <tr><td>Either</td><td>Gradient Boosting (XGBoost)</td><td>When you need to squeeze out performance</td></tr>
+        <tr>
+          <td><span data-tr="en">Regression</span><span data-tr="es">Regresión</span><span data-tr="ja">回帰</span></td>
+          <td><span data-tr="en">Linear Regression (OLS)</span><span data-tr="es">Regresión Lineal (OLS)</span><span data-tr="ja">線形回帰 (OLS)</span></td>
+          <td><span data-tr="en">Non-linear relationships, many features</span><span data-tr="es">Relaciones no lineales, muchas características</span><span data-tr="ja">非線形の関係、多くの特徴量</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">Classification</span><span data-tr="es">Clasificación</span><span data-tr="ja">分類</span></td>
+          <td><span data-tr="en">Logistic Regression</span><span data-tr="es">Regresión Logística</span><span data-tr="ja">ロジスティック回帰</span></td>
+          <td><span data-tr="en">High-dimensional, complex boundaries</span><span data-tr="es">Alta dimensionalidad, fronteras complejas</span><span data-tr="ja">高次元、複雑な境界</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">Either</span><span data-tr="es">Cualquiera</span><span data-tr="ja">どちらでも</span></td>
+          <td><span data-tr="en">Decision Tree</span><span data-tr="es">Árbol de Decisión</span><span data-tr="ja">決定木</span></td>
+          <td><span data-tr="en">Baseline established, need more power</span><span data-tr="es">Línea base establecida, se necesita más poder</span><span data-tr="ja">ベースラインが確立、より高い性能が必要</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">Either</span><span data-tr="es">Cualquiera</span><span data-tr="ja">どちらでも</span></td>
+          <td><span data-tr="en">Random Forest</span><span data-tr="es">Bosque Aleatorio</span><span data-tr="ja">ランダムフォレスト</span></td>
+          <td><span data-tr="en">Solid general-purpose choice</span><span data-tr="es">Elección sólida de propósito general</span><span data-tr="ja">堅実な汎用選択肢</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">Either</span><span data-tr="es">Cualquiera</span><span data-tr="ja">どちらでも</span></td>
+          <td><span data-tr="en">Gradient Boosting (XGBoost)</span><span data-tr="es">Gradient Boosting (XGBoost)</span><span data-tr="ja">勾配ブースティング (XGBoost)</span></td>
+          <td><span data-tr="en">When you need to squeeze out performance</span><span data-tr="es">Cuando necesitas exprimir rendimiento</span><span data-tr="ja">性能を絞り出す必要があるとき</span></td>
+        </tr>
       </tbody>
     </table>
 
-    <p><strong style="color:#e6edf3">Cross-validation</strong> gives a more honest performance estimate than a single train/test split. Use k-fold (typically k=5 or k=10) to average performance across multiple held-out subsets.</p>
+    <p>
+      <span data-tr="en"><strong style="color:#e6edf3">Cross-validation</strong> gives a more honest performance estimate than a single train/test split. Use k-fold (typically k=5 or k=10) to average performance across multiple held-out subsets.</span>
+      <span data-tr="es"><strong style="color:#e6edf3">La validación cruzada</strong> da una estimación de rendimiento más honesta que una sola división train/test. Usa k-fold (típicamente k=5 o k=10) para promediar el rendimiento en múltiples subconjuntos retenidos.</span>
+      <span data-tr="ja"><strong style="color:#e6edf3">交差検証</strong>は、単一の train/test 分割よりも正直な性能推定を与えます。k-fold (通常 k=5 または k=10) で複数の検証サブセット間の平均性能を取りましょう。</span>
+    </p>
 
     <div class="code-box">
 <span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> cross_val_score
@@ -503,39 +763,107 @@ scores = <span class="fn">cross_val_score</span>(model, X_train, y_train, cv=<sp
 <!-- Stage 6 -->
 <div id="stage6" class="section s6">
   <div class="stage-header">
-    <span class="stage-num">Stage 06</span>
-    <div class="section-title">Evaluate</div>
+    <span class="stage-num">
+      <span data-tr="en">Stage 06</span><span data-tr="es">Etapa 06</span><span data-tr="ja">段階 06</span>
+    </span>
+    <div class="section-title">
+      <span data-tr="en">Evaluate</span>
+      <span data-tr="es">Evaluar</span>
+      <span data-tr="ja">評価する</span>
+    </div>
   </div>
 
   <div class="step">
-    <p>Evaluation happens on data the model has never seen. The test set is sacred — evaluate on it exactly once, at the very end, after all hyperparameter decisions are locked in.</p>
+    <p>
+      <span data-tr="en">Evaluation happens on data the model has never seen. The test set is sacred — evaluate on it exactly once, at the very end, after all hyperparameter decisions are locked in.</span>
+      <span data-tr="es">La evaluación ocurre en datos que el modelo nunca ha visto. El conjunto de prueba es sagrado — evalúalo exactamente una vez, al final, después de fijar todas las decisiones de hiperparámetros.</span>
+      <span data-tr="ja">評価はモデルが見たことのないデータで行います。テストセットは神聖 — 全てのハイパーパラメータの決定が固まった後、最後に一度だけ評価しましょう。</span>
+    </p>
 
-    <p><strong style="color:#e6edf3">Classification metrics:</strong></p>
+    <p>
+      <span data-tr="en"><strong style="color:#e6edf3">Classification metrics:</strong></span>
+      <span data-tr="es"><strong style="color:#e6edf3">Métricas de clasificación:</strong></span>
+      <span data-tr="ja"><strong style="color:#e6edf3">分類の指標:</strong></span>
+    </p>
     <table>
-      <thead><tr><th>Metric</th><th>Answers</th><th>Use When</th></tr></thead>
+      <thead><tr>
+        <th><span data-tr="en">Metric</span><span data-tr="es">Métrica</span><span data-tr="ja">指標</span></th>
+        <th><span data-tr="en">Answers</span><span data-tr="es">Responde</span><span data-tr="ja">答える質問</span></th>
+        <th><span data-tr="en">Use When</span><span data-tr="es">Usa Cuando</span><span data-tr="ja">使う場面</span></th>
+      </tr></thead>
       <tbody>
-        <tr><td>Accuracy</td><td>What fraction did I get right?</td><td>Balanced classes only</td></tr>
-        <tr><td>Precision</td><td>Of predicted positives, how many are real?</td><td>False positives are costly (spam filter)</td></tr>
-        <tr><td>Recall</td><td>Of real positives, how many did I catch?</td><td>False negatives are costly (cancer detection)</td></tr>
-        <tr><td>F1</td><td>Harmonic mean of precision and recall</td><td>Imbalanced classes, both errors matter</td></tr>
-        <tr><td>ROC-AUC</td><td>How well does the score rank examples?</td><td>Threshold-independent comparison</td></tr>
+        <tr>
+          <td><span data-tr="en">Accuracy</span><span data-tr="es">Exactitud</span><span data-tr="ja">正解率</span></td>
+          <td><span data-tr="en">What fraction did I get right?</span><span data-tr="es">¿Qué fracción acerté?</span><span data-tr="ja">どの割合を正解したか？</span></td>
+          <td><span data-tr="en">Balanced classes only</span><span data-tr="es">Solo clases balanceadas</span><span data-tr="ja">バランスのとれたクラスのみ</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">Precision</span><span data-tr="es">Precisión</span><span data-tr="ja">適合率</span></td>
+          <td><span data-tr="en">Of predicted positives, how many are real?</span><span data-tr="es">De los positivos predichos, ¿cuántos son reales?</span><span data-tr="ja">予測陽性のうち実際に陽性はいくつ？</span></td>
+          <td><span data-tr="en">False positives are costly (spam filter)</span><span data-tr="es">Los falsos positivos son costosos (filtro de spam)</span><span data-tr="ja">偽陽性のコストが高い (スパムフィルタ)</span></td>
+        </tr>
+        <tr>
+          <td><span data-tr="en">Recall</span><span data-tr="es">Recall</span><span data-tr="ja">再現率</span></td>
+          <td><span data-tr="en">Of real positives, how many did I catch?</span><span data-tr="es">De los positivos reales, ¿cuántos atrapé?</span><span data-tr="ja">実際の陽性のうち、いくつを捉えたか？</span></td>
+          <td><span data-tr="en">False negatives are costly (cancer detection)</span><span data-tr="es">Los falsos negativos son costosos (detección de cáncer)</span><span data-tr="ja">偽陰性のコストが高い (がん検出)</span></td>
+        </tr>
+        <tr>
+          <td>F1</td>
+          <td><span data-tr="en">Harmonic mean of precision and recall</span><span data-tr="es">Media armónica de precisión y recall</span><span data-tr="ja">適合率と再現率の調和平均</span></td>
+          <td><span data-tr="en">Imbalanced classes, both errors matter</span><span data-tr="es">Clases desbalanceadas, ambos errores importan</span><span data-tr="ja">不均衡クラス、両方のエラーが重要</span></td>
+        </tr>
+        <tr>
+          <td>ROC-AUC</td>
+          <td><span data-tr="en">How well does the score rank examples?</span><span data-tr="es">¿Qué tan bien ordena la puntuación los ejemplos?</span><span data-tr="ja">スコアが例をどれだけよくランク付けするか？</span></td>
+          <td><span data-tr="en">Threshold-independent comparison</span><span data-tr="es">Comparación independiente del umbral</span><span data-tr="ja">閾値に依存しない比較</span></td>
+        </tr>
       </tbody>
     </table>
 
-    <p><strong style="color:#e6edf3">Regression metrics:</strong></p>
+    <p>
+      <span data-tr="en"><strong style="color:#e6edf3">Regression metrics:</strong></span>
+      <span data-tr="es"><strong style="color:#e6edf3">Métricas de regresión:</strong></span>
+      <span data-tr="ja"><strong style="color:#e6edf3">回帰の指標:</strong></span>
+    </p>
     <table>
-      <thead><tr><th>Metric</th><th>Formula</th><th>Sensitive To</th></tr></thead>
+      <thead><tr>
+        <th><span data-tr="en">Metric</span><span data-tr="es">Métrica</span><span data-tr="ja">指標</span></th>
+        <th><span data-tr="en">Formula</span><span data-tr="es">Fórmula</span><span data-tr="ja">式</span></th>
+        <th><span data-tr="en">Sensitive To</span><span data-tr="es">Sensible A</span><span data-tr="ja">敏感な対象</span></th>
+      </tr></thead>
       <tbody>
-        <tr><td>MAE</td><td>mean(|y − ŷ|)</td><td>All errors equally</td></tr>
-        <tr><td>MSE</td><td>mean((y − ŷ)²)</td><td>Large errors heavily</td></tr>
-        <tr><td>RMSE</td><td>√MSE</td><td>Large errors, same units as y</td></tr>
-        <tr><td>R²</td><td>1 − SS_res / SS_tot</td><td>Proportion of variance explained</td></tr>
+        <tr>
+          <td>MAE</td>
+          <td>mean(|y − ŷ|)</td>
+          <td><span data-tr="en">All errors equally</span><span data-tr="es">Todos los errores por igual</span><span data-tr="ja">全ての誤差を等しく</span></td>
+        </tr>
+        <tr>
+          <td>MSE</td>
+          <td>mean((y − ŷ)²)</td>
+          <td><span data-tr="en">Large errors heavily</span><span data-tr="es">Errores grandes fuertemente</span><span data-tr="ja">大きな誤差に強く</span></td>
+        </tr>
+        <tr>
+          <td>RMSE</td>
+          <td>√MSE</td>
+          <td><span data-tr="en">Large errors, same units as y</span><span data-tr="es">Errores grandes, mismas unidades que y</span><span data-tr="ja">大きな誤差、yと同じ単位</span></td>
+        </tr>
+        <tr>
+          <td>R²</td>
+          <td>1 − SS_res / SS_tot</td>
+          <td><span data-tr="en">Proportion of variance explained</span><span data-tr="es">Proporción de varianza explicada</span><span data-tr="ja">説明された分散の割合</span></td>
+        </tr>
       </tbody>
     </table>
 
     <div class="callout tip">
-      <div class="callout-label">Error Analysis</div>
-      Don't just look at aggregate metrics. Look at where your model fails. Inspect the worst predictions individually — patterns in failures reveal what the model hasn't learned.
+      <div class="callout-label">
+        <span data-tr="en">Error Analysis</span>
+        <span data-tr="es">Análisis de Errores</span>
+        <span data-tr="ja">誤差分析</span>
+      </div>
+      <span data-tr="en">Don't just look at aggregate metrics. Look at where your model fails. Inspect the worst predictions individually — patterns in failures reveal what the model hasn't learned.</span>
+      <span data-tr="es">No te quedes solo en las métricas agregadas. Mira dónde falla tu modelo. Inspecciona las peores predicciones individualmente — los patrones en los fallos revelan lo que el modelo no ha aprendido.</span>
+      <span data-tr="ja">集計された指標だけを見るのはやめましょう。モデルがどこで失敗するかを見てください。最悪の予測を個別に調べる — 失敗のパターンはモデルが学習していないことを明らかにします。</span>
     </div>
   </div>
 </div>
@@ -543,102 +871,171 @@ scores = <span class="fn">cross_val_score</span>(model, X_train, y_train, cv=<sp
 <!-- Stage 7 -->
 <div id="stage7" class="section s7">
   <div class="stage-header">
-    <span class="stage-num">Stage 07</span>
-    <div class="section-title">Deploy & Monitor</div>
+    <span class="stage-num">
+      <span data-tr="en">Stage 07</span><span data-tr="es">Etapa 07</span><span data-tr="ja">段階 07</span>
+    </span>
+    <div class="section-title">
+      <span data-tr="en">Deploy &amp; Monitor</span>
+      <span data-tr="es">Desplegar y Monitorear</span>
+      <span data-tr="ja">デプロイと監視</span>
+    </div>
   </div>
 
   <div class="step">
-    <p>A model that lives only in a notebook has zero business value. Deployment means putting the model where it can receive real inputs and produce outputs that drive decisions.</p>
+    <p>
+      <span data-tr="en">A model that lives only in a notebook has zero business value. Deployment means putting the model where it can receive real inputs and produce outputs that drive decisions.</span>
+      <span data-tr="es">Un modelo que vive solo en un notebook tiene cero valor de negocio. Despliegue significa poner el modelo donde pueda recibir entradas reales y producir salidas que impulsen decisiones.</span>
+      <span data-tr="ja">ノートブックの中だけに存在するモデルはビジネス価値ゼロです。デプロイとは、モデルを現実の入力を受け取り意思決定を動かす出力を生成できる場所に置くことです。</span>
+    </p>
 
-    <p><strong style="color:#e6edf3">Serializing the model:</strong></p>
+    <p>
+      <span data-tr="en"><strong style="color:#e6edf3">Serializing the model:</strong></span>
+      <span data-tr="es"><strong style="color:#e6edf3">Serializando el modelo:</strong></span>
+      <span data-tr="ja"><strong style="color:#e6edf3">モデルのシリアライズ:</strong></span>
+    </p>
     <div class="code-box">
 <span class="kw">import</span> joblib
 
-<span class="cm"># Save</span>
+<span class="cm"># <span data-tr="en">Save</span><span data-tr="es">Guardar</span><span data-tr="ja">保存</span></span>
 joblib.<span class="fn">dump</span>(model, <span class="st">'model.joblib'</span>)
 
-<span class="cm"># Load</span>
+<span class="cm"># <span data-tr="en">Load</span><span data-tr="es">Cargar</span><span data-tr="ja">読み込み</span></span>
 model = joblib.<span class="fn">load</span>(<span class="st">'model.joblib'</span>)
     </div>
 
-    <p><strong style="color:#e6edf3">Serving patterns:</strong></p>
+    <p>
+      <span data-tr="en"><strong style="color:#e6edf3">Serving patterns:</strong></span>
+      <span data-tr="es"><strong style="color:#e6edf3">Patrones de serving:</strong></span>
+      <span data-tr="ja"><strong style="color:#e6edf3">サービングパターン:</strong></span>
+    </p>
     <ul>
-      <li><strong>Batch inference</strong> — run predictions on a dataset overnight, store results. Simple, no latency requirements.</li>
-      <li><strong>Real-time API</strong> — wrap the model in a REST endpoint (FastAPI, Flask). Returns predictions on demand in milliseconds.</li>
+      <li>
+        <span data-tr="en"><strong>Batch inference</strong> — run predictions on a dataset overnight, store results. Simple, no latency requirements.</span>
+        <span data-tr="es"><strong>Inferencia por lotes</strong> — ejecuta predicciones sobre un conjunto de datos de la noche a la mañana, guarda los resultados. Simple, sin requisitos de latencia.</span>
+        <span data-tr="ja"><strong>バッチ推論</strong> — データセット全体の予測を一晩で実行し、結果を保存。シンプルで、レイテンシ要件なし。</span>
+      </li>
+      <li>
+        <span data-tr="en"><strong>Real-time API</strong> — wrap the model in a REST endpoint (FastAPI, Flask). Returns predictions on demand in milliseconds.</span>
+        <span data-tr="es"><strong>API en tiempo real</strong> — envuelve el modelo en un endpoint REST (FastAPI, Flask). Devuelve predicciones bajo demanda en milisegundos.</span>
+        <span data-tr="ja"><strong>リアルタイムAPI</strong> — モデルを REST エンドポイント (FastAPI、Flask) でラップ。ミリ秒単位でオンデマンド予測を返します。</span>
+      </li>
     </ul>
 
-    <p><strong style="color:#e6edf3">Monitoring:</strong> Models degrade in production. Two failure modes to watch:</p>
+    <p>
+      <span data-tr="en"><strong style="color:#e6edf3">Monitoring:</strong> Models degrade in production. Two failure modes to watch:</span>
+      <span data-tr="es"><strong style="color:#e6edf3">Monitoreo:</strong> Los modelos se degradan en producción. Dos modos de fallo a vigilar:</span>
+      <span data-tr="ja"><strong style="color:#e6edf3">監視:</strong> モデルは本番環境で劣化します。注意すべき2つの障害モード:</span>
+    </p>
     <ul>
-      <li><strong>Data drift</strong> — the distribution of input features shifts over time (e.g., customer demographics change).</li>
-      <li><strong>Concept drift</strong> — the relationship between features and target changes (e.g., fraud patterns evolve).</li>
+      <li>
+        <span data-tr="en"><strong>Data drift</strong> — the distribution of input features shifts over time (e.g., customer demographics change).</span>
+        <span data-tr="es"><strong>Drift de datos</strong> — la distribución de las características de entrada cambia con el tiempo (p. ej., la demografía de clientes cambia).</span>
+        <span data-tr="ja"><strong>データドリフト</strong> — 入力特徴量の分布が時間とともに変わる (例: 顧客の属性が変化)。</span>
+      </li>
+      <li>
+        <span data-tr="en"><strong>Concept drift</strong> — the relationship between features and target changes (e.g., fraud patterns evolve).</span>
+        <span data-tr="es"><strong>Drift de concepto</strong> — la relación entre características y objetivo cambia (p. ej., los patrones de fraude evolucionan).</span>
+        <span data-tr="ja"><strong>コンセプトドリフト</strong> — 特徴量とターゲットの関係が変わる (例: 詐欺のパターンが進化)。</span>
+      </li>
     </ul>
 
     <div class="callout warn">
-      <div class="callout-label">Warning — Models Rot</div>
-      A model trained once and never retrained is a decaying asset. Track performance metrics in production, set alert thresholds, and have a retraining pipeline ready before you deploy.
+      <div class="callout-label">
+        <span data-tr="en">Warning — Models Rot</span>
+        <span data-tr="es">Advertencia — Los Modelos Se Pudren</span>
+        <span data-tr="ja">警告 — モデルは腐る</span>
+      </div>
+      <span data-tr="en">A model trained once and never retrained is a decaying asset. Track performance metrics in production, set alert thresholds, and have a retraining pipeline ready before you deploy.</span>
+      <span data-tr="es">Un modelo entrenado una vez y nunca reentrenado es un activo en decaimiento. Rastrea métricas de rendimiento en producción, establece umbrales de alerta, y ten listo un pipeline de reentrenamiento antes de desplegar.</span>
+      <span data-tr="ja">一度訓練して再訓練されないモデルは減衰する資産です。本番環境で性能指標を追跡し、アラート閾値を設定し、デプロイ前に再訓練パイプラインを準備しましょう。</span>
     </div>
   </div>
 </div>
 
 <!-- The Loop -->
 <div class="section">
-  <div class="section-title" style="border-left-color: #c87533; margin-bottom: 1rem;">The Lifecycle is a Loop</div>
-
-  <p>Data science is not a linear pipeline. Every stage feeds back into previous ones. EDA reveals that you need more data. Evaluation reveals you need different features. Monitoring reveals you need to retrain. Expect to iterate.</p>
-
-  <div class="loop-diagram">
-    <span class="active">Define</span> <span class="arrow">→</span>
-    Collect <span class="arrow">→</span>
-    Explore <span class="arrow">→</span>
-    Prepare <span class="arrow">→</span>
-    Model <span class="arrow">→</span>
-    Evaluate <span class="arrow">→</span>
-    Deploy<br>
-    <span style="color:#3d444d; font-size: 0.75rem">↑ ——————————————————————————————————————— ↓</span><br>
-    <span style="color:#3d444d; font-size: 0.7rem">retrain · refeature · recollect · redefine</span>
+  <div class="section-title" style="border-left-color: #c87533; margin-bottom: 1rem;">
+    <span data-tr="en">The Lifecycle is a Loop</span>
+    <span data-tr="es">El Ciclo de Vida es un Bucle</span>
+    <span data-tr="ja">ライフサイクルはループ</span>
   </div>
 
-  <p>The best data scientists aren't the ones who get it right the first time. They're the ones who build fast feedback loops and iterate quickly.</p>
+  <p>
+    <span data-tr="en">Data science is not a linear pipeline. Every stage feeds back into previous ones. EDA reveals that you need more data. Evaluation reveals you need different features. Monitoring reveals you need to retrain. Expect to iterate.</span>
+    <span data-tr="es">La ciencia de datos no es un pipeline lineal. Cada etapa alimenta las anteriores. EDA revela que necesitas más datos. La evaluación revela que necesitas características diferentes. El monitoreo revela que necesitas reentrenar. Espera iterar.</span>
+    <span data-tr="ja">データサイエンスは直線的なパイプラインではありません。各段階が前の段階にフィードバックします。EDA はもっとデータが必要だと明かす。評価は別の特徴量が必要だと明かす。監視は再訓練が必要だと明かす。反復を期待しましょう。</span>
+  </p>
+
+  <div class="loop-diagram">
+    <span class="active"><span data-tr="en">Define</span><span data-tr="es">Definir</span><span data-tr="ja">定義</span></span> <span class="arrow">→</span>
+    <span data-tr="en">Collect</span><span data-tr="es">Recolectar</span><span data-tr="ja">収集</span> <span class="arrow">→</span>
+    <span data-tr="en">Explore</span><span data-tr="es">Explorar</span><span data-tr="ja">探索</span> <span class="arrow">→</span>
+    <span data-tr="en">Prepare</span><span data-tr="es">Preparar</span><span data-tr="ja">準備</span> <span class="arrow">→</span>
+    <span data-tr="en">Model</span><span data-tr="es">Modelar</span><span data-tr="ja">モデル化</span> <span class="arrow">→</span>
+    <span data-tr="en">Evaluate</span><span data-tr="es">Evaluar</span><span data-tr="ja">評価</span> <span class="arrow">→</span>
+    <span data-tr="en">Deploy</span><span data-tr="es">Desplegar</span><span data-tr="ja">デプロイ</span><br>
+    <span style="color:#3d444d; font-size: 0.75rem">↑ ——————————————————————————————————————— ↓</span><br>
+    <span style="color:#3d444d; font-size: 0.7rem">
+      <span data-tr="en">retrain · refeature · recollect · redefine</span>
+      <span data-tr="es">reentrenar · re-feature · re-recolectar · redefinir</span>
+      <span data-tr="ja">再訓練 · 再特徴量 · 再収集 · 再定義</span>
+    </span>
+  </div>
+
+  <p>
+    <span data-tr="en">The best data scientists aren't the ones who get it right the first time. They're the ones who build fast feedback loops and iterate quickly.</span>
+    <span data-tr="es">Los mejores científicos de datos no son los que aciertan a la primera. Son los que construyen bucles de retroalimentación rápidos e iteran rápidamente.</span>
+    <span data-tr="ja">最高のデータサイエンティストは最初から正解する人ではありません。高速なフィードバックループを構築し、素早く反復する人です。</span>
+  </p>
 </div>
 
 <!-- What's Next -->
 <div class="section">
-  <div class="section-title" style="border-left-color: #c87533; margin-bottom: 1rem;">Go Deeper</div>
-  <p>Now that you have the map, explore the territory. Each link below goes deep on one part of the lifecycle.</p>
+  <div class="section-title" style="border-left-color: #c87533; margin-bottom: 1rem;">
+    <span data-tr="en">Go Deeper</span>
+    <span data-tr="es">Profundiza</span>
+    <span data-tr="ja">さらに深く</span>
+  </div>
+  <p>
+    <span data-tr="en">Now that you have the map, explore the territory. Each link below goes deep on one part of the lifecycle.</span>
+    <span data-tr="es">Ahora que tienes el mapa, explora el territorio. Cada enlace a continuación profundiza en una parte del ciclo de vida.</span>
+    <span data-tr="ja">地図を手に入れた今、領域を探索しましょう。以下の各リンクは、ライフサイクルの各部分を深掘りします。</span>
+  </p>
 
   <div class="next-grid">
-    <a class="next-card" href="/math/linear_regression.html">
-      <span class="next-tag">Stage 05 · Model</span>
-      <span class="next-title">Multiple Linear Regression</span>
-      <span class="next-arrow">→ read</span>
+    <a class="next-card" href="/math/linear_regression">
+      <span class="next-tag"><span data-tr="en">Stage 05 · Model</span><span data-tr="es">Etapa 05 · Modelo</span><span data-tr="ja">段階 05 · モデル</span></span>
+      <span class="next-title"><span data-tr="en">Multiple Linear Regression</span><span data-tr="es">Regresión Lineal Múltiple</span><span data-tr="ja">重回帰分析</span></span>
+      <span class="next-arrow"><span data-tr="en">→ read</span><span data-tr="es">→ leer</span><span data-tr="ja">→ 読む</span></span>
     </a>
-    <a class="next-card" href="/math/ols.html">
-      <span class="next-tag">Stage 05 · Model</span>
-      <span class="next-title">Ordinary Least Squares</span>
-      <span class="next-arrow">→ read</span>
+    <a class="next-card" href="/math/ols">
+      <span class="next-tag"><span data-tr="en">Stage 05 · Model</span><span data-tr="es">Etapa 05 · Modelo</span><span data-tr="ja">段階 05 · モデル</span></span>
+      <span class="next-title"><span data-tr="en">Ordinary Least Squares</span><span data-tr="es">Mínimos Cuadrados Ordinarios</span><span data-tr="ja">普通最小二乗法</span></span>
+      <span class="next-arrow"><span data-tr="en">→ read</span><span data-tr="es">→ leer</span><span data-tr="ja">→ 読む</span></span>
     </a>
-    <a class="next-card" href="/math/mse_mae_rmse.html">
-      <span class="next-tag">Stage 06 · Evaluate</span>
-      <span class="next-title">MSE, MAE & RMSE</span>
-      <span class="next-arrow">→ read</span>
+    <a class="next-card" href="/math/mse_mae_rmse">
+      <span class="next-tag"><span data-tr="en">Stage 06 · Evaluate</span><span data-tr="es">Etapa 06 · Evaluar</span><span data-tr="ja">段階 06 · 評価</span></span>
+      <span class="next-title">MSE, MAE &amp; RMSE</span>
+      <span class="next-arrow"><span data-tr="en">→ read</span><span data-tr="es">→ leer</span><span data-tr="ja">→ 読む</span></span>
     </a>
-    <a class="next-card" href="/math/R_R_squared.html">
-      <span class="next-tag">Stage 06 · Evaluate</span>
-      <span class="next-title">R² and Adjusted R²</span>
-      <span class="next-arrow">→ read</span>
+    <a class="next-card" href="/math/R_R_squared">
+      <span class="next-tag"><span data-tr="en">Stage 06 · Evaluate</span><span data-tr="es">Etapa 06 · Evaluar</span><span data-tr="ja">段階 06 · 評価</span></span>
+      <span class="next-title"><span data-tr="en">R² and Adjusted R²</span><span data-tr="es">R² y R² Ajustado</span><span data-tr="ja">R²と調整済みR²</span></span>
+      <span class="next-arrow"><span data-tr="en">→ read</span><span data-tr="es">→ leer</span><span data-tr="ja">→ 読む</span></span>
     </a>
-    <a class="next-card" href="/math/overfitting_underfitting.html">
-      <span class="next-tag">Stage 05–06 · Model & Evaluate</span>
-      <span class="next-title">Underfitting & Overfitting</span>
-      <span class="next-arrow">→ read</span>
+    <a class="next-card" href="/math/overfitting_underfitting">
+      <span class="next-tag"><span data-tr="en">Stage 05–06 · Model &amp; Evaluate</span><span data-tr="es">Etapa 05–06 · Modelo y Evaluar</span><span data-tr="ja">段階 05–06 · モデル & 評価</span></span>
+      <span class="next-title"><span data-tr="en">Underfitting &amp; Overfitting</span><span data-tr="es">Subajuste y Sobreajuste</span><span data-tr="ja">過少適合と過学習</span></span>
+      <span class="next-arrow"><span data-tr="en">→ read</span><span data-tr="es">→ leer</span><span data-tr="ja">→ 読む</span></span>
     </a>
-    <a class="next-card" href="/math/formulas.html">
-      <span class="next-tag">Reference</span>
-      <span class="next-title">Formula Cheat Sheet</span>
-      <span class="next-arrow">→ open</span>
+    <a class="next-card" href="/math/formulas">
+      <span class="next-tag"><span data-tr="en">Reference</span><span data-tr="es">Referencia</span><span data-tr="ja">リファレンス</span></span>
+      <span class="next-title"><span data-tr="en">Formula Cheat Sheet</span><span data-tr="es">Hoja de Fórmulas</span><span data-tr="ja">数式チートシート</span></span>
+      <span class="next-arrow"><span data-tr="en">→ open</span><span data-tr="es">→ abrir</span><span data-tr="ja">→ 開く</span></span>
     </a>
   </div>
 </div>
 
+<script src="/lang-toggle.js" defer></script>
 </body>
 </html>

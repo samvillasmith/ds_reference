@@ -17,7 +17,7 @@ export default function Navbar() {
     <nav className="site-nav">
       <a className="nav-brand" href="/">{nav.brand}</a>
       <div className="nav-links">
-        <a className="nav-cta" href="/crash-course.html">{nav.crashCourse}</a>
+        <a className="nav-cta" href="/crash-course">{nav.crashCourse}</a>
         <a className="nav-home" href="/#foundations">{nav.foundations}</a>
         <a className="nav-home" href="/#feature-eng">{nav.featureEng}</a>
         <a className="nav-home" href="/#reference">{nav.reference}</a>

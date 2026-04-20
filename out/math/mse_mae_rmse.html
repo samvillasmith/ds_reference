@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MSE, MAE & RMSE — Step by Step</title>
+<title data-tr-title
+  data-tr-en="MSE, MAE & RMSE — Step by Step"
+  data-tr-es="MSE, MAE y RMSE — Paso a Paso"
+  data-tr-ja="MSE、MAE、RMSE — ステップバイステップ">MSE, MAE & RMSE — Step by Step</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lang-toggle.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -204,39 +208,57 @@
 </head>
 <body>
 
-<h1>MSE, MAE & RMSE</h1>
-<p class="subtitle">Three ways to measure how wrong your model is — each with a different personality.</p>
+<h1>MSE, MAE &amp; RMSE</h1>
+<p class="subtitle">
+  <span data-tr="en">Three ways to measure how wrong your model is — each with a different personality.</span>
+  <span data-tr="es">Tres formas de medir qué tan equivocado está tu modelo — cada una con una personalidad diferente.</span>
+  <span data-tr="ja">モデルがどれくらい間違っているかを測る3つの方法 — それぞれ異なる個性を持つ。</span>
+</p>
 
 <div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:#ff4d4d"></div> plugged in</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ff4d4d"></div>
+    <span data-tr="en">plugged in</span><span data-tr="es">sustituido</span><span data-tr="ja">代入値</span>
+  </div>
   <div class="legend-item"><div class="legend-dot" style="background:#56d364"></div> MAE</div>
   <div class="legend-item"><div class="legend-dot" style="background:#58a6ff"></div> MSE</div>
   <div class="legend-item"><div class="legend-dot" style="background:#a371f7"></div> RMSE</div>
 </div>
 
 <div class="iteration-nav">
-  <button class="iter-btn active" onclick="showIter(0)">The Errors</button>
+  <button class="iter-btn active" onclick="showIter(0)">
+    <span data-tr="en">The Errors</span><span data-tr="es">Los Errores</span><span data-tr="ja">誤差</span>
+  </button>
   <button class="iter-btn" onclick="showIter(1)">MAE</button>
   <button class="iter-btn" onclick="showIter(2)">MSE</button>
   <button class="iter-btn" onclick="showIter(3)">RMSE</button>
-  <button class="iter-btn" onclick="showIter(4)">Compare All</button>
+  <button class="iter-btn" onclick="showIter(4)">
+    <span data-tr="en">Compare All</span><span data-tr="es">Comparar Todas</span><span data-tr="ja">全比較</span>
+  </button>
 </div>
 
 <!-- TAB 0: THE ERRORS -->
 <div class="iteration-content active" id="iter-0">
   <div class="section">
-    <div class="section-title">Same Dataset, Same Line</div>
+    <div class="section-title">
+      <span data-tr="en">Same Dataset, Same Line</span>
+      <span data-tr="es">Mismo Conjunto, Misma Línea</span>
+      <span data-tr="ja">同じデータセット、同じ直線</span>
+    </div>
     <div class="step">
-      <p class="note">Best-fit line from gradient descent: h(x) = <span class="v">2.2</span> + <span class="v">0.6</span>x</p>
+      <p class="note">
+        <span data-tr="en">Best-fit line from gradient descent: h(x) = <span class="v">2.2</span> + <span class="v">0.6</span>x</span>
+        <span data-tr="es">Línea de mejor ajuste del descenso de gradiente: h(x) = <span class="v">2.2</span> + <span class="v">0.6</span>x</span>
+        <span data-tr="ja">勾配降下法から得た最適直線: h(x) = <span class="v">2.2</span> + <span class="v">0.6</span>x</span>
+      </p>
 
       <table class="data-table">
         <thead>
           <tr>
-            <th>House</th>
-            <th>x (sq ft)</th>
-            <th>y (actual)</th>
-            <th>ŷ (predicted)</th>
-            <th>error (y − ŷ)</th>
+            <th><span data-tr="en">House</span><span data-tr="es">Casa</span><span data-tr="ja">家</span></th>
+            <th><span data-tr="en">x (sq ft)</span><span data-tr="es">x (pies²)</span><span data-tr="ja">x (平方フィート)</span></th>
+            <th><span data-tr="en">y (actual)</span><span data-tr="es">y (real)</span><span data-tr="ja">y (実測)</span></th>
+            <th><span data-tr="en">ŷ (predicted)</span><span data-tr="es">ŷ (predicho)</span><span data-tr="ja">ŷ (予測)</span></th>
+            <th><span data-tr="en">error (y − ŷ)</span><span data-tr="es">error (y − ŷ)</span><span data-tr="ja">誤差 (y − ŷ)</span></th>
           </tr>
         </thead>
         <tbody>
@@ -279,28 +301,54 @@
       </table>
 
       <div class="formula-box">
-        <span class="math-line" style="color:#e6edf3; font-weight:700;">How predictions were computed:</span>
+        <span class="math-line" style="color:#e6edf3; font-weight:700;">
+          <span data-tr="en">How predictions were computed:</span>
+          <span data-tr="es">Cómo se calcularon las predicciones:</span>
+          <span data-tr="ja">予測値の計算方法:</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">House 1: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">1</span> = <span class="v">2.8</span></span>
-        <span class="math-line">House 2: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">2</span> = <span class="v">3.4</span></span>
-        <span class="math-line">House 3: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">3</span> = <span class="v">4.0</span></span>
-        <span class="math-line">House 4: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">4</span> = <span class="v">4.6</span></span>
-        <span class="math-line">House 5: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">5</span> = <span class="v">5.2</span></span>
+        <span class="math-line"><span data-tr="en">House 1</span><span data-tr="es">Casa 1</span><span data-tr="ja">家 1</span>: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">1</span> = <span class="v">2.8</span></span>
+        <span class="math-line"><span data-tr="en">House 2</span><span data-tr="es">Casa 2</span><span data-tr="ja">家 2</span>: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">2</span> = <span class="v">3.4</span></span>
+        <span class="math-line"><span data-tr="en">House 3</span><span data-tr="es">Casa 3</span><span data-tr="ja">家 3</span>: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">3</span> = <span class="v">4.0</span></span>
+        <span class="math-line"><span data-tr="en">House 4</span><span data-tr="es">Casa 4</span><span data-tr="ja">家 4</span>: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">4</span> = <span class="v">4.6</span></span>
+        <span class="math-line"><span data-tr="en">House 5</span><span data-tr="es">Casa 5</span><span data-tr="ja">家 5</span>: ŷ = <span class="v">2.2</span> + <span class="v">0.6</span> × <span class="v">5</span> = <span class="v">5.2</span></span>
       </div>
 
       <div class="callout red">
-        <strong>The problem with raw errors:</strong> they cancel out.<br><br>
+        <strong>
+          <span data-tr="en">The problem with raw errors:</span>
+          <span data-tr="es">El problema con los errores crudos:</span>
+          <span data-tr="ja">生の誤差の問題点:</span>
+        </strong>
+        <span data-tr="en"> they cancel out.</span>
+        <span data-tr="es"> se cancelan.</span>
+        <span data-tr="ja"> 相殺してしまう。</span>
+        <br><br>
         <span style="font-family:'JetBrains Mono',monospace; font-size:0.85rem;">
           −0.8 + 0.6 + 1.0 + −0.6 + −0.2 = <strong>0.0</strong>
         </span><br><br>
-        The negatives and positives cancel perfectly. Sum = 0. That doesn't mean the model is perfect — it means raw errors are useless as a metric. We need to get rid of the signs.
+        <span data-tr="en">The negatives and positives cancel perfectly. Sum = 0. That doesn't mean the model is perfect — it means raw errors are useless as a metric. We need to get rid of the signs.</span>
+        <span data-tr="es">Los negativos y positivos se cancelan perfectamente. Suma = 0. Eso no significa que el modelo sea perfecto — significa que los errores crudos son inútiles como métrica. Necesitamos deshacernos de los signos.</span>
+        <span data-tr="ja">負と正が完全に相殺します。合計 = 0。これはモデルが完璧という意味ではなく、生の誤差は指標として役立たないという意味です。符号を取り除く必要があります。</span>
       </div>
 
       <div class="formula-box" style="border-color: #e3b341;">
-        <span class="math-line" style="color:#e3b341; font-weight:700;">Two ways to kill the sign:</span>
+        <span class="math-line" style="color:#e3b341; font-weight:700;">
+          <span data-tr="en">Two ways to kill the sign:</span>
+          <span data-tr="es">Dos formas de matar el signo:</span>
+          <span data-tr="ja">符号を消す2つの方法:</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#56d364;">① Take absolute value → |error| → that's MAE</span>
-        <span class="math-line" style="color:#58a6ff;">② Square the error → error² → that's MSE</span>
+        <span class="math-line" style="color:#56d364;">
+          <span data-tr="en">① Take absolute value → |error| → that's MAE</span>
+          <span data-tr="es">① Tomar valor absoluto → |error| → eso es MAE</span>
+          <span data-tr="ja">① 絶対値を取る → |誤差| → それが MAE</span>
+        </span>
+        <span class="math-line" style="color:#58a6ff;">
+          <span data-tr="en">② Square the error → error² → that's MSE</span>
+          <span data-tr="es">② Elevar al cuadrado → error² → eso es MSE</span>
+          <span data-tr="ja">② 誤差を二乗する → 誤差² → それが MSE</span>
+        </span>
       </div>
     </div>
   </div>
@@ -309,25 +357,39 @@
 <!-- TAB 1: MAE -->
 <div class="iteration-content" id="iter-1">
   <div class="section">
-    <div class="section-title green">MAE — Mean Absolute Error</div>
+    <div class="section-title green">
+      <span data-tr="en">MAE — Mean Absolute Error</span>
+      <span data-tr="es">MAE — Error Absoluto Medio</span>
+      <span data-tr="ja">MAE — 平均絶対誤差</span>
+    </div>
     <div class="step">
       <div class="callout green">
         <strong>MAE = (1/n) × Σ|yᵢ − ŷᵢ|</strong><br><br>
-        Take each error, drop the sign (absolute value), average them. Done.
+        <span data-tr="en">Take each error, drop the sign (absolute value), average them. Done.</span>
+        <span data-tr="es">Toma cada error, descarta el signo (valor absoluto), promedia. Listo.</span>
+        <span data-tr="ja">各誤差を取り、符号を落とし (絶対値)、平均を取る。完了。</span>
       </div>
 
       <div class="formula-box" style="border-color: #56d364;">
-        <span class="math-line" style="color:#56d364; font-weight:700;">Step 1 — Take absolute value of each error:</span>
+        <span class="math-line" style="color:#56d364; font-weight:700;">
+          <span data-tr="en">Step 1 — Take absolute value of each error:</span>
+          <span data-tr="es">Paso 1 — Tomar el valor absoluto de cada error:</span>
+          <span data-tr="ja">ステップ 1 — 各誤差の絶対値を取る:</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">House 1: |<span class="v">−0.8</span>| = <span class="vg">0.8</span></span>
-        <span class="math-line">House 2: |<span class="v">+0.6</span>| = <span class="vg">0.6</span></span>
-        <span class="math-line">House 3: |<span class="v">+1.0</span>| = <span class="vg">1.0</span></span>
-        <span class="math-line">House 4: |<span class="v">−0.6</span>| = <span class="vg">0.6</span></span>
-        <span class="math-line">House 5: |<span class="v">−0.2</span>| = <span class="vg">0.2</span></span>
+        <span class="math-line"><span data-tr="en">House 1</span><span data-tr="es">Casa 1</span><span data-tr="ja">家 1</span>: |<span class="v">−0.8</span>| = <span class="vg">0.8</span></span>
+        <span class="math-line"><span data-tr="en">House 2</span><span data-tr="es">Casa 2</span><span data-tr="ja">家 2</span>: |<span class="v">+0.6</span>| = <span class="vg">0.6</span></span>
+        <span class="math-line"><span data-tr="en">House 3</span><span data-tr="es">Casa 3</span><span data-tr="ja">家 3</span>: |<span class="v">+1.0</span>| = <span class="vg">1.0</span></span>
+        <span class="math-line"><span data-tr="en">House 4</span><span data-tr="es">Casa 4</span><span data-tr="ja">家 4</span>: |<span class="v">−0.6</span>| = <span class="vg">0.6</span></span>
+        <span class="math-line"><span data-tr="en">House 5</span><span data-tr="es">Casa 5</span><span data-tr="ja">家 5</span>: |<span class="v">−0.2</span>| = <span class="vg">0.2</span></span>
       </div>
 
       <div class="formula-box" style="border-color: #56d364;">
-        <span class="math-line" style="color:#56d364; font-weight:700;">Step 2 — Average them:</span>
+        <span class="math-line" style="color:#56d364; font-weight:700;">
+          <span data-tr="en">Step 2 — Average them:</span>
+          <span data-tr="es">Paso 2 — Promediar:</span>
+          <span data-tr="ja">ステップ 2 — 平均を取る:</span>
+        </span>
         <span class="math-line">&nbsp;</span>
         <span class="math-line">MAE = ( <span class="vg">0.8</span> + <span class="vg">0.6</span> + <span class="vg">1.0</span> + <span class="vg">0.6</span> + <span class="vg">0.2</span> ) / <span class="v">5</span></span>
         <span class="math-line">&nbsp;</span>
@@ -337,16 +399,38 @@
       </div>
 
       <div class="result-box">
-        MAE = 0.64 → "On average, predictions are off by $0.64k ($640)"
+        <span data-tr="en">MAE = 0.64 → "On average, predictions are off by $0.64k ($640)"</span>
+        <span data-tr="es">MAE = 0.64 → "En promedio, las predicciones están erradas por $0.64k ($640)"</span>
+        <span data-tr="ja">MAE = 0.64 → 「予測は平均して $0.64k ($640) ずれている」</span>
       </div>
 
       <div class="formula-box" style="margin-top: 1rem;">
-        <span class="math-line" style="color:#e6edf3; font-weight:700;">Why use MAE?</span>
+        <span class="math-line" style="color:#e6edf3; font-weight:700;">
+          <span data-tr="en">Why use MAE?</span>
+          <span data-tr="es">¿Por qué usar MAE?</span>
+          <span data-tr="ja">なぜ MAE を使う？</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#7d8590;">✓ Easy to understand — it's in the same units as y ($k)</span>
-        <span class="math-line" style="color:#7d8590;">✓ Treats all errors equally — a $1k miss counts the same everywhere</span>
-        <span class="math-line" style="color:#7d8590;">✓ Robust to outliers — one huge error doesn't dominate</span>
-        <span class="math-line" style="color:#7d8590;">✗ Not differentiable at 0 — harder to use in gradient descent</span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">✓ Easy to understand — it's in the same units as y ($k)</span>
+          <span data-tr="es">✓ Fácil de entender — está en las mismas unidades que y ($k)</span>
+          <span data-tr="ja">✓ 理解しやすい — y と同じ単位 ($k)</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">✓ Treats all errors equally — a $1k miss counts the same everywhere</span>
+          <span data-tr="es">✓ Trata todos los errores por igual — un error de $1k cuenta igual en todos lados</span>
+          <span data-tr="ja">✓ 全ての誤差を等しく扱う — $1k の誤差はどこでも同じ重み</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">✓ Robust to outliers — one huge error doesn't dominate</span>
+          <span data-tr="es">✓ Robusto a valores atípicos — un error enorme no domina</span>
+          <span data-tr="ja">✓ 外れ値に強い — 一つの大きな誤差が支配しない</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">✗ Not differentiable at 0 — harder to use in gradient descent</span>
+          <span data-tr="es">✗ No diferenciable en 0 — más difícil de usar en descenso de gradiente</span>
+          <span data-tr="ja">✗ 0 で微分不可能 — 勾配降下法で使いづらい</span>
+        </span>
       </div>
     </div>
   </div>
@@ -355,25 +439,39 @@
 <!-- TAB 2: MSE -->
 <div class="iteration-content" id="iter-2">
   <div class="section">
-    <div class="section-title blue">MSE — Mean Squared Error</div>
+    <div class="section-title blue">
+      <span data-tr="en">MSE — Mean Squared Error</span>
+      <span data-tr="es">MSE — Error Cuadrático Medio</span>
+      <span data-tr="ja">MSE — 平均二乗誤差</span>
+    </div>
     <div class="step">
       <div class="callout blue">
         <strong>MSE = (1/n) × Σ(yᵢ − ŷᵢ)²</strong><br><br>
-        Take each error, square it, average them. Squaring kills the sign AND punishes big errors more.
+        <span data-tr="en">Take each error, square it, average them. Squaring kills the sign AND punishes big errors more.</span>
+        <span data-tr="es">Toma cada error, elévalo al cuadrado, promedia. Elevar al cuadrado mata el signo Y castiga más los errores grandes.</span>
+        <span data-tr="ja">各誤差を二乗し、平均を取る。二乗は符号を消し、さらに大きな誤差をより重く罰する。</span>
       </div>
 
       <div class="formula-box" style="border-color: #58a6ff;">
-        <span class="math-line" style="color:#58a6ff; font-weight:700;">Step 1 — Square each error:</span>
+        <span class="math-line" style="color:#58a6ff; font-weight:700;">
+          <span data-tr="en">Step 1 — Square each error:</span>
+          <span data-tr="es">Paso 1 — Elevar al cuadrado cada error:</span>
+          <span data-tr="ja">ステップ 1 — 各誤差を二乗する:</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line">House 1: (<span class="v">−0.8</span>)² = <span class="vb">0.64</span></span>
-        <span class="math-line">House 2: (<span class="v">+0.6</span>)² = <span class="vb">0.36</span></span>
-        <span class="math-line">House 3: (<span class="v">+1.0</span>)² = <span class="vb">1.00</span></span>
-        <span class="math-line">House 4: (<span class="v">−0.6</span>)² = <span class="vb">0.36</span></span>
-        <span class="math-line">House 5: (<span class="v">−0.2</span>)² = <span class="vb">0.04</span></span>
+        <span class="math-line"><span data-tr="en">House 1</span><span data-tr="es">Casa 1</span><span data-tr="ja">家 1</span>: (<span class="v">−0.8</span>)² = <span class="vb">0.64</span></span>
+        <span class="math-line"><span data-tr="en">House 2</span><span data-tr="es">Casa 2</span><span data-tr="ja">家 2</span>: (<span class="v">+0.6</span>)² = <span class="vb">0.36</span></span>
+        <span class="math-line"><span data-tr="en">House 3</span><span data-tr="es">Casa 3</span><span data-tr="ja">家 3</span>: (<span class="v">+1.0</span>)² = <span class="vb">1.00</span></span>
+        <span class="math-line"><span data-tr="en">House 4</span><span data-tr="es">Casa 4</span><span data-tr="ja">家 4</span>: (<span class="v">−0.6</span>)² = <span class="vb">0.36</span></span>
+        <span class="math-line"><span data-tr="en">House 5</span><span data-tr="es">Casa 5</span><span data-tr="ja">家 5</span>: (<span class="v">−0.2</span>)² = <span class="vb">0.04</span></span>
       </div>
 
       <div class="formula-box" style="border-color: #58a6ff;">
-        <span class="math-line" style="color:#58a6ff; font-weight:700;">Step 2 — Average them:</span>
+        <span class="math-line" style="color:#58a6ff; font-weight:700;">
+          <span data-tr="en">Step 2 — Average them:</span>
+          <span data-tr="es">Paso 2 — Promediar:</span>
+          <span data-tr="ja">ステップ 2 — 平均を取る:</span>
+        </span>
         <span class="math-line">&nbsp;</span>
         <span class="math-line">MSE = ( <span class="vb">0.64</span> + <span class="vb">0.36</span> + <span class="vb">1.00</span> + <span class="vb">0.36</span> + <span class="vb">0.04</span> ) / <span class="v">5</span></span>
         <span class="math-line">&nbsp;</span>
@@ -383,35 +481,93 @@
       </div>
 
       <div class="result-box" style="border-color: #58a6ff; color: #58a6ff;">
-        MSE = 0.48 → "Average squared error is 0.48"
+        <span data-tr="en">MSE = 0.48 → "Average squared error is 0.48"</span>
+        <span data-tr="es">MSE = 0.48 → "Error cuadrático promedio es 0.48"</span>
+        <span data-tr="ja">MSE = 0.48 → 「平均二乗誤差は 0.48」</span>
       </div>
 
       <div class="callout orange" style="margin-top: 1rem;">
-        <strong>Notice the units problem:</strong><br><br>
-        Your y is in <strong>$k</strong>. You squared the errors, so MSE is in <strong>$k²</strong>.<br>
-        What's "$0.48 thousand-dollars-squared"? It doesn't mean anything intuitive.<br><br>
-        This is why RMSE exists →
+        <strong>
+          <span data-tr="en">Notice the units problem:</span>
+          <span data-tr="es">Fíjate en el problema de las unidades:</span>
+          <span data-tr="ja">単位の問題に注目:</span>
+        </strong><br><br>
+        <span data-tr="en">Your y is in <strong>$k</strong>. You squared the errors, so MSE is in <strong>$k²</strong>.<br>What's "$0.48 thousand-dollars-squared"? It doesn't mean anything intuitive.</span>
+        <span data-tr="es">Tu y está en <strong>$k</strong>. Elevaste los errores al cuadrado, entonces MSE está en <strong>$k²</strong>.<br>¿Qué es "$0.48 miles-de-dólares-al-cuadrado"? No significa nada intuitivo.</span>
+        <span data-tr="ja">y は <strong>$k</strong> です。誤差を二乗したので、MSE は <strong>$k²</strong> です。<br>「$0.48 千ドル二乗」とは何か？直感的には何も意味しません。</span>
+        <br><br>
+        <span data-tr="en">This is why RMSE exists →</span>
+        <span data-tr="es">Por esto existe RMSE →</span>
+        <span data-tr="ja">だから RMSE が存在します →</span>
       </div>
 
       <div class="formula-box" style="margin-top: 1rem;">
-        <span class="math-line" style="color:#e6edf3; font-weight:700;">Why use MSE?</span>
+        <span class="math-line" style="color:#e6edf3; font-weight:700;">
+          <span data-tr="en">Why use MSE?</span>
+          <span data-tr="es">¿Por qué usar MSE?</span>
+          <span data-tr="ja">なぜ MSE を使う？</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#7d8590;">✓ Differentiable everywhere — perfect for gradient descent</span>
-        <span class="math-line" style="color:#7d8590;">✓ Punishes large errors more — a 2.0 error costs 4× more than a 1.0 error</span>
-        <span class="math-line" style="color:#7d8590;">✓ This is what the cost function J(θ) is based on</span>
-        <span class="math-line" style="color:#7d8590;">✗ Units are squared — not directly interpretable</span>
-        <span class="math-line" style="color:#7d8590;">✗ Sensitive to outliers — one huge error can dominate</span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">✓ Differentiable everywhere — perfect for gradient descent</span>
+          <span data-tr="es">✓ Diferenciable en todas partes — perfecto para descenso de gradiente</span>
+          <span data-tr="ja">✓ どこでも微分可能 — 勾配降下法に最適</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">✓ Punishes large errors more — a 2.0 error costs 4× more than a 1.0 error</span>
+          <span data-tr="es">✓ Castiga más los errores grandes — un error de 2.0 cuesta 4× más que uno de 1.0</span>
+          <span data-tr="ja">✓ 大きな誤差をより重く罰する — 2.0 の誤差は 1.0 の誤差の 4 倍のコスト</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">✓ This is what the cost function J(θ) is based on</span>
+          <span data-tr="es">✓ En esto se basa la función de costo J(θ)</span>
+          <span data-tr="ja">✓ コスト関数 J(θ) はこれに基づく</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">✗ Units are squared — not directly interpretable</span>
+          <span data-tr="es">✗ Las unidades están al cuadrado — no directamente interpretable</span>
+          <span data-tr="ja">✗ 単位が二乗 — 直接解釈できない</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">✗ Sensitive to outliers — one huge error can dominate</span>
+          <span data-tr="es">✗ Sensible a valores atípicos — un error enorme puede dominar</span>
+          <span data-tr="ja">✗ 外れ値に敏感 — 一つの大きな誤差が支配する可能性</span>
+        </span>
       </div>
 
       <div class="formula-box" style="margin-top: 1rem; border-color: #e3b341;">
-        <span class="math-line" style="color:#e3b341; font-weight:700;">How squaring punishes big errors:</span>
+        <span class="math-line" style="color:#e3b341; font-weight:700;">
+          <span data-tr="en">How squaring punishes big errors:</span>
+          <span data-tr="es">Cómo el elevar al cuadrado castiga los errores grandes:</span>
+          <span data-tr="ja">二乗が大きな誤差をどう罰するか:</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#7d8590;">Error of 0.2 → squared = 0.04 &nbsp;(tiny)</span>
-        <span class="math-line" style="color:#7d8590;">Error of 1.0 → squared = 1.00 &nbsp;(25× bigger!)</span>
-        <span class="math-line" style="color:#7d8590;">Error of 5.0 → squared = 25.0 &nbsp;(625× bigger!)</span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">Error of 0.2 → squared = 0.04 &nbsp;(tiny)</span>
+          <span data-tr="es">Error de 0.2 → al cuadrado = 0.04 &nbsp;(minúsculo)</span>
+          <span data-tr="ja">誤差 0.2 → 二乗 = 0.04 &nbsp;(極小)</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">Error of 1.0 → squared = 1.00 &nbsp;(25× bigger!)</span>
+          <span data-tr="es">Error de 1.0 → al cuadrado = 1.00 &nbsp;(¡25× mayor!)</span>
+          <span data-tr="ja">誤差 1.0 → 二乗 = 1.00 &nbsp;(25倍大きい!)</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">Error of 5.0 → squared = 25.0 &nbsp;(625× bigger!)</span>
+          <span data-tr="es">Error de 5.0 → al cuadrado = 25.0 &nbsp;(¡625× mayor!)</span>
+          <span data-tr="ja">誤差 5.0 → 二乗 = 25.0 &nbsp;(625倍大きい!)</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#e3b341;">The bigger the miss, the more MSE cares about it.</span>
-        <span class="math-line" style="color:#e3b341;">MAE would treat these proportionally: 0.2, 1.0, 5.0.</span>
+        <span class="math-line" style="color:#e3b341;">
+          <span data-tr="en">The bigger the miss, the more MSE cares about it.</span>
+          <span data-tr="es">Mientras mayor el fallo, más lo castiga MSE.</span>
+          <span data-tr="ja">誤差が大きいほど、MSE はそれを重視する。</span>
+        </span>
+        <span class="math-line" style="color:#e3b341;">
+          <span data-tr="en">MAE would treat these proportionally: 0.2, 1.0, 5.0.</span>
+          <span data-tr="es">MAE los trataría proporcionalmente: 0.2, 1.0, 5.0.</span>
+          <span data-tr="ja">MAE はこれらを比例的に扱う: 0.2, 1.0, 5.0。</span>
+        </span>
       </div>
     </div>
   </div>
@@ -420,15 +576,25 @@
 <!-- TAB 3: RMSE -->
 <div class="iteration-content" id="iter-3">
   <div class="section">
-    <div class="section-title purple">RMSE — Root Mean Squared Error</div>
+    <div class="section-title purple">
+      <span data-tr="en">RMSE — Root Mean Squared Error</span>
+      <span data-tr="es">RMSE — Raíz del Error Cuadrático Medio</span>
+      <span data-tr="ja">RMSE — 二乗平均平方根誤差</span>
+    </div>
     <div class="step">
       <div class="callout purple">
         <strong>RMSE = √MSE</strong><br><br>
-        That's it. Take MSE and square-root it. This undoes the squaring so units make sense again.
+        <span data-tr="en">That's it. Take MSE and square-root it. This undoes the squaring so units make sense again.</span>
+        <span data-tr="es">Eso es todo. Toma MSE y sácale la raíz cuadrada. Esto deshace el cuadrado para que las unidades vuelvan a tener sentido.</span>
+        <span data-tr="ja">これだけ。MSE の平方根を取る。二乗を元に戻して、単位が再び意味を持つようにする。</span>
       </div>
 
       <div class="formula-box" style="border-color: #a371f7;">
-        <span class="math-line" style="color:#a371f7; font-weight:700;">Just one step — take the square root of MSE:</span>
+        <span class="math-line" style="color:#a371f7; font-weight:700;">
+          <span data-tr="en">Just one step — take the square root of MSE:</span>
+          <span data-tr="es">Solo un paso — tomar la raíz cuadrada del MSE:</span>
+          <span data-tr="ja">1 ステップだけ — MSE の平方根を取る:</span>
+        </span>
         <span class="math-line">&nbsp;</span>
         <span class="math-line">RMSE = √<span class="vb">MSE</span></span>
         <span class="math-line">&nbsp;</span>
@@ -438,11 +604,17 @@
       </div>
 
       <div class="result-box" style="border-color: #a371f7; color: #a371f7;">
-        RMSE = 0.6928 → "Predictions are off by ~$0.69k ($693) on average"
+        <span data-tr="en">RMSE = 0.6928 → "Predictions are off by ~$0.69k ($693) on average"</span>
+        <span data-tr="es">RMSE = 0.6928 → "Las predicciones están erradas por ~$0.69k ($693) en promedio"</span>
+        <span data-tr="ja">RMSE = 0.6928 → 「予測は平均して ~$0.69k ($693) ずれている」</span>
       </div>
 
       <div class="formula-box" style="margin-top: 1rem;">
-        <span class="math-line" style="color:#e6edf3; font-weight:700;">Or expand the full formula:</span>
+        <span class="math-line" style="color:#e6edf3; font-weight:700;">
+          <span data-tr="en">Or expand the full formula:</span>
+          <span data-tr="es">O desarrolla la fórmula completa:</span>
+          <span data-tr="ja">あるいは完全な式を展開:</span>
+        </span>
         <span class="math-line">&nbsp;</span>
         <span class="math-line">RMSE = √[ (1/n) × Σ(yᵢ − ŷᵢ)² ]</span>
         <span class="math-line">&nbsp;</span>
@@ -456,12 +628,32 @@
       </div>
 
       <div class="formula-box" style="margin-top: 1rem;">
-        <span class="math-line" style="color:#e6edf3; font-weight:700;">Why use RMSE?</span>
+        <span class="math-line" style="color:#e6edf3; font-weight:700;">
+          <span data-tr="en">Why use RMSE?</span>
+          <span data-tr="es">¿Por qué usar RMSE?</span>
+          <span data-tr="ja">なぜ RMSE を使う？</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#7d8590;">✓ Same units as y ($k) — directly interpretable</span>
-        <span class="math-line" style="color:#7d8590;">✓ Still punishes big errors more (from the squaring inside)</span>
-        <span class="math-line" style="color:#7d8590;">✓ Most commonly reported metric in ML papers</span>
-        <span class="math-line" style="color:#7d8590;">✗ Still sensitive to outliers (like MSE)</span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">✓ Same units as y ($k) — directly interpretable</span>
+          <span data-tr="es">✓ Mismas unidades que y ($k) — directamente interpretable</span>
+          <span data-tr="ja">✓ y と同じ単位 ($k) — 直接解釈可能</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">✓ Still punishes big errors more (from the squaring inside)</span>
+          <span data-tr="es">✓ Aún castiga más los errores grandes (por el cuadrado interno)</span>
+          <span data-tr="ja">✓ 内部の二乗により、大きな誤差を重く罰する</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">✓ Most commonly reported metric in ML papers</span>
+          <span data-tr="es">✓ La métrica más reportada en artículos de ML</span>
+          <span data-tr="ja">✓ ML 論文で最も多く報告される指標</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">✗ Still sensitive to outliers (like MSE)</span>
+          <span data-tr="es">✗ Sigue siendo sensible a valores atípicos (como MSE)</span>
+          <span data-tr="ja">✗ 依然として外れ値に敏感 (MSE と同様)</span>
+        </span>
       </div>
     </div>
   </div>
@@ -470,82 +662,214 @@
 <!-- TAB 4: COMPARE -->
 <div class="iteration-content" id="iter-4">
   <div class="section">
-    <div class="section-title yellow">All Three Side by Side</div>
+    <div class="section-title yellow">
+      <span data-tr="en">All Three Side by Side</span>
+      <span data-tr="es">Las Tres Lado a Lado</span>
+      <span data-tr="ja">3つを並べて</span>
+    </div>
     <div class="step">
 
       <div class="compare-row">
         <div class="compare-card" style="border-color: #56d364;">
           <div class="metric-name" style="color:#56d364;">MAE</div>
           <div class="metric-value" style="color:#56d364;">0.64</div>
-          <div class="metric-unit">$k (same as y)</div>
+          <div class="metric-unit">
+            <span data-tr="en">$k (same as y)</span>
+            <span data-tr="es">$k (igual que y)</span>
+            <span data-tr="ja">$k (y と同じ)</span>
+          </div>
         </div>
         <div class="compare-card" style="border-color: #58a6ff;">
           <div class="metric-name" style="color:#58a6ff;">MSE</div>
           <div class="metric-value" style="color:#58a6ff;">0.48</div>
-          <div class="metric-unit">$k² (squared units)</div>
+          <div class="metric-unit">
+            <span data-tr="en">$k² (squared units)</span>
+            <span data-tr="es">$k² (unidades al cuadrado)</span>
+            <span data-tr="ja">$k² (二乗単位)</span>
+          </div>
         </div>
         <div class="compare-card" style="border-color: #a371f7;">
           <div class="metric-name" style="color:#a371f7;">RMSE</div>
           <div class="metric-value" style="color:#a371f7;">0.6928</div>
-          <div class="metric-unit">$k (same as y)</div>
+          <div class="metric-unit">
+            <span data-tr="en">$k (same as y)</span>
+            <span data-tr="es">$k (igual que y)</span>
+            <span data-tr="ja">$k (y と同じ)</span>
+          </div>
         </div>
       </div>
 
       <div class="formula-box" style="margin-top: 1.5rem; border-color: #e3b341;">
-        <span class="math-line" style="color:#e3b341; font-weight:700;">Why is RMSE > MAE?</span>
+        <span class="math-line" style="color:#e3b341; font-weight:700;">
+          <span data-tr="en">Why is RMSE &gt; MAE?</span>
+          <span data-tr="es">¿Por qué RMSE &gt; MAE?</span>
+          <span data-tr="ja">なぜ RMSE &gt; MAE？</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#7d8590;">RMSE is always ≥ MAE. The squaring step amplifies larger errors,</span>
-        <span class="math-line" style="color:#7d8590;">so the average gets pulled up. The bigger the gap between</span>
-        <span class="math-line" style="color:#7d8590;">RMSE and MAE, the more variance in your errors (some big, some small).</span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">RMSE is always ≥ MAE. The squaring step amplifies larger errors,</span>
+          <span data-tr="es">RMSE siempre es ≥ MAE. El paso de elevar al cuadrado amplifica los errores mayores,</span>
+          <span data-tr="ja">RMSE は常に ≥ MAE。二乗ステップが大きな誤差を増幅し、</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">so the average gets pulled up. The bigger the gap between</span>
+          <span data-tr="es">así que la media se eleva. Cuanto mayor la brecha entre</span>
+          <span data-tr="ja">平均が引き上げられる。RMSE と MAE の差が</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">RMSE and MAE, the more variance in your errors (some big, some small).</span>
+          <span data-tr="es">RMSE y MAE, mayor es la varianza en tus errores (unos grandes, unos pequeños).</span>
+          <span data-tr="ja">大きいほど、誤差の分散が大きい (大小が混在)。</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#e3b341;">If RMSE ≈ MAE → errors are all similar sizes</span>
-        <span class="math-line" style="color:#e3b341;">If RMSE >> MAE → a few big errors are dragging it up</span>
+        <span class="math-line" style="color:#e3b341;">
+          <span data-tr="en">If RMSE ≈ MAE → errors are all similar sizes</span>
+          <span data-tr="es">Si RMSE ≈ MAE → los errores tienen tamaños similares</span>
+          <span data-tr="ja">RMSE ≈ MAE なら → 誤差が似たサイズ</span>
+        </span>
+        <span class="math-line" style="color:#e3b341;">
+          <span data-tr="en">If RMSE &gt;&gt; MAE → a few big errors are dragging it up</span>
+          <span data-tr="es">Si RMSE &gt;&gt; MAE → unos pocos errores grandes lo arrastran hacia arriba</span>
+          <span data-tr="ja">RMSE &gt;&gt; MAE なら → 少数の大きな誤差が引き上げている</span>
+        </span>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title yellow">How They're Related</div>
+    <div class="section-title yellow">
+      <span data-tr="en">How They're Related</span>
+      <span data-tr="es">Cómo Se Relacionan</span>
+      <span data-tr="ja">どう関連しているか</span>
+    </div>
     <div class="step">
       <div class="formula-box">
-        <span class="math-line" style="color:#e6edf3; font-weight:700;">The chain:</span>
+        <span class="math-line" style="color:#e6edf3; font-weight:700;">
+          <span data-tr="en">The chain:</span>
+          <span data-tr="es">La cadena:</span>
+          <span data-tr="ja">連鎖:</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#56d364;">MAE  = avg of |errors|           &nbsp;&nbsp;→ simple average</span>
-        <span class="math-line" style="color:#58a6ff;">MSE  = avg of errors²            &nbsp;&nbsp;→ square first, then average</span>
-        <span class="math-line" style="color:#a371f7;">RMSE = √(avg of errors²)         → square, average, then undo the square</span>
+        <span class="math-line" style="color:#56d364;">
+          <span data-tr="en">MAE  = avg of |errors|           &nbsp;&nbsp;→ simple average</span>
+          <span data-tr="es">MAE  = promedio de |errores|     &nbsp;&nbsp;→ promedio simple</span>
+          <span data-tr="ja">MAE  = |誤差| の平均              &nbsp;&nbsp;→ 単純平均</span>
+        </span>
+        <span class="math-line" style="color:#58a6ff;">
+          <span data-tr="en">MSE  = avg of errors²            &nbsp;&nbsp;→ square first, then average</span>
+          <span data-tr="es">MSE  = promedio de errores²      &nbsp;&nbsp;→ primero al cuadrado, luego promediar</span>
+          <span data-tr="ja">MSE  = 誤差² の平均               &nbsp;&nbsp;→ 先に二乗、次に平均</span>
+        </span>
+        <span class="math-line" style="color:#a371f7;">
+          <span data-tr="en">RMSE = √(avg of errors²)         → square, average, then undo the square</span>
+          <span data-tr="es">RMSE = √(promedio de errores²)   → cuadrado, promedio, luego deshacer el cuadrado</span>
+          <span data-tr="ja">RMSE = √(誤差² の平均)            → 二乗・平均・二乗を戻す</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#7d8590;">MSE and RMSE contain the same information — RMSE is just</span>
-        <span class="math-line" style="color:#7d8590;">MSE in human-readable units.</span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">MSE and RMSE contain the same information — RMSE is just</span>
+          <span data-tr="es">MSE y RMSE contienen la misma información — RMSE es simplemente</span>
+          <span data-tr="ja">MSE と RMSE は同じ情報を含む — RMSE は単に</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">MSE in human-readable units.</span>
+          <span data-tr="es">MSE en unidades legibles para humanos.</span>
+          <span data-tr="ja">MSE を人間が読める単位にしたもの。</span>
+        </span>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title yellow">When to Use Which</div>
+    <div class="section-title yellow">
+      <span data-tr="en">When to Use Which</span>
+      <span data-tr="es">Cuándo Usar Cuál</span>
+      <span data-tr="ja">いつどれを使うか</span>
+    </div>
     <div class="step">
       <div class="formula-box" style="font-size: 0.85rem;">
-        <span class="math-line" style="color:#56d364; font-weight:700;">Use MAE when:</span>
-        <span class="math-line" style="color:#7d8590;">• You want a simple "how far off am I on average?" answer</span>
-        <span class="math-line" style="color:#7d8590;">• You have outliers and don't want them to dominate</span>
-        <span class="math-line" style="color:#7d8590;">• All errors matter equally regardless of size</span>
-        <span class="math-line" style="color:#7d8590;">• Example: predicting delivery time — off by 5 min is 5× worse than 1 min</span>
+        <span class="math-line" style="color:#56d364; font-weight:700;">
+          <span data-tr="en">Use MAE when:</span>
+          <span data-tr="es">Usa MAE cuando:</span>
+          <span data-tr="ja">MAE を使う場面:</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">• You want a simple "how far off am I on average?" answer</span>
+          <span data-tr="es">• Quieres una respuesta simple "¿qué tan errado estoy en promedio?"</span>
+          <span data-tr="ja">• 「平均してどれくらいずれている？」というシンプルな答えが欲しい</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">• You have outliers and don't want them to dominate</span>
+          <span data-tr="es">• Tienes valores atípicos y no quieres que dominen</span>
+          <span data-tr="ja">• 外れ値があり、それらに支配されたくない</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">• All errors matter equally regardless of size</span>
+          <span data-tr="es">• Todos los errores importan por igual sin importar el tamaño</span>
+          <span data-tr="ja">• サイズに関係なく全ての誤差が等しく重要</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">• Example: predicting delivery time — off by 5 min is 5× worse than 1 min</span>
+          <span data-tr="es">• Ejemplo: predecir tiempo de entrega — 5 min tarde es 5× peor que 1 min</span>
+          <span data-tr="ja">• 例: 配達時間の予測 — 5分遅れは1分の5倍悪い</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#58a6ff; font-weight:700;">Use MSE when:</span>
-        <span class="math-line" style="color:#7d8590;">• You're training a model (it's the cost function)</span>
-        <span class="math-line" style="color:#7d8590;">• You need smooth gradients for optimization</span>
-        <span class="math-line" style="color:#7d8590;">• Big errors should be punished disproportionately</span>
+        <span class="math-line" style="color:#58a6ff; font-weight:700;">
+          <span data-tr="en">Use MSE when:</span>
+          <span data-tr="es">Usa MSE cuando:</span>
+          <span data-tr="ja">MSE を使う場面:</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">• You're training a model (it's the cost function)</span>
+          <span data-tr="es">• Estás entrenando un modelo (es la función de costo)</span>
+          <span data-tr="ja">• モデルを訓練している (コスト関数である)</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">• You need smooth gradients for optimization</span>
+          <span data-tr="es">• Necesitas gradientes suaves para optimización</span>
+          <span data-tr="ja">• 最適化のために滑らかな勾配が必要</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">• Big errors should be punished disproportionately</span>
+          <span data-tr="es">• Los errores grandes deben ser castigados desproporcionadamente</span>
+          <span data-tr="ja">• 大きな誤差を不釣り合いに罰するべき</span>
+        </span>
         <span class="math-line">&nbsp;</span>
-        <span class="math-line" style="color:#a371f7; font-weight:700;">Use RMSE when:</span>
-        <span class="math-line" style="color:#7d8590;">• You want MSE's properties but in interpretable units</span>
-        <span class="math-line" style="color:#7d8590;">• Reporting results to someone who needs to understand them</span>
-        <span class="math-line" style="color:#7d8590;">• Example: "our model is off by ~$693 on average" (RMSE)</span>
-        <span class="math-line" style="color:#7d8590;">&nbsp;&nbsp;vs "the mean squared error is 0.48" (MSE) — which is clearer?</span>
+        <span class="math-line" style="color:#a371f7; font-weight:700;">
+          <span data-tr="en">Use RMSE when:</span>
+          <span data-tr="es">Usa RMSE cuando:</span>
+          <span data-tr="ja">RMSE を使う場面:</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">• You want MSE's properties but in interpretable units</span>
+          <span data-tr="es">• Quieres las propiedades de MSE pero en unidades interpretables</span>
+          <span data-tr="ja">• MSE の性質を解釈可能な単位で欲しい</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">• Reporting results to someone who needs to understand them</span>
+          <span data-tr="es">• Reportas resultados a alguien que necesita entenderlos</span>
+          <span data-tr="ja">• 結果を理解する必要がある人に報告する</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">• Example: "our model is off by ~$693 on average" (RMSE)</span>
+          <span data-tr="es">• Ejemplo: "nuestro modelo se equivoca por ~$693 en promedio" (RMSE)</span>
+          <span data-tr="ja">• 例: 「我々のモデルは平均して ~$693 ずれている」(RMSE)</span>
+        </span>
+        <span class="math-line" style="color:#7d8590;">
+          <span data-tr="en">&nbsp;&nbsp;vs "the mean squared error is 0.48" (MSE) — which is clearer?</span>
+          <span data-tr="es">&nbsp;&nbsp;vs "el error cuadrático medio es 0.48" (MSE) — ¿cuál es más claro?</span>
+          <span data-tr="ja">&nbsp;&nbsp;vs 「平均二乗誤差は 0.48」(MSE) — どちらが明確？</span>
+        </span>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title yellow">Quick Reference — All Formulas</div>
+    <div class="section-title yellow">
+      <span data-tr="en">Quick Reference — All Formulas</span>
+      <span data-tr="es">Referencia Rápida — Todas las Fórmulas</span>
+      <span data-tr="ja">クイックリファレンス — 全ての式</span>
+    </div>
     <div class="step">
       <div class="formula-box" style="font-size: 0.9rem; line-height: 2.5;">
         <span class="math-line"><span class="vg">MAE</span>  = (1/n) × Σ |yᵢ − ŷᵢ|</span>
@@ -564,6 +888,6 @@
     document.querySelectorAll('.iter-btn')[index].classList.add('active');
   }
 </script>
-
+<script src="/lang-toggle.js" defer></script>
 </body>
 </html>

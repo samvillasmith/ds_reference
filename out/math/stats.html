@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Statistics & Probability Compendium — Texcoco Data Science</title>
+<title data-tr-title
+  data-tr-en="Statistics & Probability Compendium — Texcoco Data Science"
+  data-tr-es="Compendio de Estadística y Probabilidad — Texcoco Ciencia de Datos"
+  data-tr-ja="統計・確率コンペンディウム — テクスココ データサイエンス">Statistics &amp; Probability Compendium — Texcoco Data Science</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lang-toggle.css">
 <style>
   :root {
     --bg: #08090c;
@@ -35,7 +39,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── Header ── */
   .page-header {
     padding: 3rem 2rem 2rem;
     max-width: 960px;
@@ -56,7 +59,6 @@
     margin-top: 0.5rem;
   }
 
-  /* ── Nav ── */
   .nav-wrap {
     position: sticky;
     top: 0;
@@ -88,10 +90,8 @@
   }
   .nav a:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* ── Container ── */
   .container { max-width: 960px; margin: 0 auto; padding: 0 2rem 4rem; }
 
-  /* ── Section ── */
   .section {
     padding: 3.5rem 0 1rem;
     scroll-margin-top: 3.5rem;
@@ -140,7 +140,6 @@
     margin: 0;
   }
 
-  /* ── Cards ── */
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1.5rem; }
   .grid-1 { grid-template-columns: 1fr; }
 
@@ -171,7 +170,6 @@
     line-height: 1.5;
   }
 
-  /* ── Callout ── */
   .callout {
     border-radius: 6px;
     padding: 0.9rem 1.1rem;
@@ -189,7 +187,6 @@
   .cl-orange { background: rgba(240,136,62,0.06); border-color: rgba(240,136,62,0.25); color: var(--orange); }
   .cl-teal   { background: rgba(57,208,216,0.06); border-color: rgba(57,208,216,0.25); color: var(--teal); }
 
-  /* ── Sub-section ── */
   .sub-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.15rem;
@@ -198,14 +195,6 @@
     margin: 2rem 0 0.8rem;
   }
 
-  /* ── Table ── */
-  .tbl { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.82rem; }
-  .tbl th, .tbl td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid var(--border); }
-  .tbl th { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); background: var(--surface); }
-  .tbl tbody tr:hover { background: var(--surface); }
-  .tbl code { font-size: 0.8rem; }
-
-  /* ── Responsive ── */
   @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
 
   footer { text-align: center; padding: 3rem 2rem; color: var(--text-muted); font-size: 0.75rem; border-top: 1px solid var(--border); }
@@ -214,452 +203,434 @@
 <body>
 
 <div class="page-header">
-  <h1><span class="a">Statistics</span> & Probability Compendium</h1>
-  <p class="sub">Every concept, formula, distribution, and test you need for data science — derived, explained, and connected.</p>
+  <h1>
+    <span class="a"><span data-tr="en">Statistics</span><span data-tr="es">Estadística</span><span data-tr="ja">統計</span></span>
+    <span data-tr="en"> &amp; Probability Compendium</span>
+    <span data-tr="es"> y Probabilidad — Compendio</span>
+    <span data-tr="ja">・確率コンペンディウム</span>
+  </h1>
+  <p class="sub">
+    <span data-tr="en">Every concept, formula, distribution, and test you need for data science — derived, explained, and connected.</span>
+    <span data-tr="es">Cada concepto, fórmula, distribución y prueba que necesitas para ciencia de datos — derivados, explicados y conectados.</span>
+    <span data-tr="ja">データサイエンスに必要な全ての概念・数式・分布・検定を — 導出し、解説し、つなげて。</span>
+  </p>
 </div>
 
 <div class="nav-wrap">
   <nav class="nav">
-    <a href="#desc">Descriptive</a>
-    <a href="#prob">Probability</a>
-    <a href="#comb">Combinatorics</a>
-    <a href="#dist">Distributions</a>
-    <a href="#clt">CLT & Sampling</a>
-    <a href="#est">Estimation</a>
-    <a href="#hyp">Hypothesis Testing</a>
+    <a href="#desc"><span data-tr="en">Descriptive</span><span data-tr="es">Descriptiva</span><span data-tr="ja">記述</span></a>
+    <a href="#prob"><span data-tr="en">Probability</span><span data-tr="es">Probabilidad</span><span data-tr="ja">確率</span></a>
+    <a href="#comb"><span data-tr="en">Combinatorics</span><span data-tr="es">Combinatoria</span><span data-tr="ja">組み合わせ</span></a>
+    <a href="#dist"><span data-tr="en">Distributions</span><span data-tr="es">Distribuciones</span><span data-tr="ja">分布</span></a>
+    <a href="#clt"><span data-tr="en">CLT &amp; Sampling</span><span data-tr="es">TLC y Muestreo</span><span data-tr="ja">中心極限定理</span></a>
+    <a href="#est"><span data-tr="en">Estimation</span><span data-tr="es">Estimación</span><span data-tr="ja">推定</span></a>
+    <a href="#hyp"><span data-tr="en">Hypothesis Testing</span><span data-tr="es">Pruebas de Hipótesis</span><span data-tr="ja">仮説検定</span></a>
     <a href="#anova">ANOVA</a>
-    <a href="#nonparam">Nonparametric</a>
-    <a href="#bayes">Bayesian</a>
-    <a href="#info">Information Theory</a>
-    <a href="#regression">Regression</a>
-    <a href="#class">Classification</a>
-    <a href="#reg-met">Regression Metrics</a>
-    <a href="#class-met">Classification Metrics</a>
-    <a href="#regularize">Regularization</a>
-    <a href="#dimred">PCA & Dimensionality</a>
-    <a href="#ineq">Inequalities & Theorems</a>
+    <a href="#nonparam"><span data-tr="en">Nonparametric</span><span data-tr="es">No Paramétrico</span><span data-tr="ja">ノンパラ</span></a>
+    <a href="#bayes"><span data-tr="en">Bayesian</span><span data-tr="es">Bayesiano</span><span data-tr="ja">ベイズ</span></a>
+    <a href="#info"><span data-tr="en">Information Theory</span><span data-tr="es">Teoría de Info.</span><span data-tr="ja">情報理論</span></a>
+    <a href="#regression"><span data-tr="en">Regression</span><span data-tr="es">Regresión</span><span data-tr="ja">回帰</span></a>
+    <a href="#class"><span data-tr="en">Classification</span><span data-tr="es">Clasificación</span><span data-tr="ja">分類</span></a>
+    <a href="#reg-met"><span data-tr="en">Regression Metrics</span><span data-tr="es">Métricas de Reg.</span><span data-tr="ja">回帰指標</span></a>
+    <a href="#class-met"><span data-tr="en">Classification Metrics</span><span data-tr="es">Métricas de Clas.</span><span data-tr="ja">分類指標</span></a>
+    <a href="#regularize"><span data-tr="en">Regularization</span><span data-tr="es">Regularización</span><span data-tr="ja">正則化</span></a>
+    <a href="#dimred"><span data-tr="en">PCA &amp; Dimensionality</span><span data-tr="es">PCA y Dimensión</span><span data-tr="ja">PCA・次元削減</span></a>
+    <a href="#ineq"><span data-tr="en">Inequalities &amp; Theorems</span><span data-tr="es">Desigualdades y Teoremas</span><span data-tr="ja">不等式と定理</span></a>
   </nav>
 </div>
 
 <div class="container">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 1. DESCRIPTIVE STATISTICS                       -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 1. DESCRIPTIVE STATISTICS -->
 <div class="section" id="desc">
-  <div class="sec-head"><span class="sec-num n-red">01</span><span class="sec-title">Descriptive Statistics</span></div>
-  <p class="sec-desc">Summarizing data. Central tendency tells you where; dispersion tells you how spread; shape tells you the silhouette.</p>
+  <div class="sec-head"><span class="sec-num n-red">01</span><span class="sec-title"><span data-tr="en">Descriptive Statistics</span><span data-tr="es">Estadística Descriptiva</span><span data-tr="ja">記述統計</span></span></div>
+  <p class="sec-desc">
+    <span data-tr="en">Summarizing data. Central tendency tells you where; dispersion tells you how spread; shape tells you the silhouette.</span>
+    <span data-tr="es">Resumir datos. La tendencia central dice dónde; la dispersión dice qué tan esparcidos; la forma dice la silueta.</span>
+    <span data-tr="ja">データの要約。代表値は「どこ」を、ばらつきは「どれくらい広がっているか」を、形状はシルエットを教えてくれる。</span>
+  </p>
 
-  <div class="sub-title">Central Tendency</div>
+  <div class="sub-title"><span data-tr="en">Central Tendency</span><span data-tr="es">Tendencia Central</span><span data-tr="ja">代表値</span></div>
   <div class="grid">
-    <div class="c"><div class="c-label">Arithmetic Mean</div><div class="f">μ = (1/n) Σxᵢ</div><div class="n">Sum all, divide by count. Sensitive to outliers.</div></div>
-    <div class="c"><div class="c-label">Weighted Mean</div><div class="f">x̄_w = Σwᵢxᵢ / Σwᵢ</div><div class="n">Each observation contributes proportionally to its weight.</div></div>
-    <div class="c"><div class="c-label">Geometric Mean</div><div class="f">GM = (∏xᵢ)^(1/n)</div><div class="n">For rates, ratios, growth. Always ≤ arithmetic mean.</div></div>
-    <div class="c"><div class="c-label">Harmonic Mean</div><div class="f">HM = n / Σ(1/xᵢ)</div><div class="n">For averaging rates (speed, P/E ratios). F1 score uses this.</div></div>
-    <div class="c"><div class="c-label">Median</div><div class="f">Middle value when sorted</div><div class="n">Robust to outliers. If n even: average of two middle values.</div></div>
-    <div class="c"><div class="c-label">Mode</div><div class="f">Most frequent value</div><div class="n">Only measure of central tendency for categorical data. Can have 0, 1, or many.</div></div>
-    <div class="c"><div class="c-label">Trimmed Mean</div><div class="f">Mean after removing top/bottom k%</div><div class="n">Compromise between mean (efficient) and median (robust).</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Arithmetic Mean</span><span data-tr="es">Media Aritmética</span><span data-tr="ja">算術平均</span></div><div class="f">μ = (1/n) Σxᵢ</div><div class="n"><span data-tr="en">Sum all, divide by count. Sensitive to outliers.</span><span data-tr="es">Suma todo, divide entre la cantidad. Sensible a atípicos.</span><span data-tr="ja">全合計を個数で割る。外れ値に敏感。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Weighted Mean</span><span data-tr="es">Media Ponderada</span><span data-tr="ja">加重平均</span></div><div class="f">x̄_w = Σwᵢxᵢ / Σwᵢ</div><div class="n"><span data-tr="en">Each observation contributes proportionally to its weight.</span><span data-tr="es">Cada observación contribuye en proporción a su peso.</span><span data-tr="ja">各観測値がその重みに比例して寄与。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Geometric Mean</span><span data-tr="es">Media Geométrica</span><span data-tr="ja">幾何平均</span></div><div class="f">GM = (∏xᵢ)^(1/n)</div><div class="n"><span data-tr="en">For rates, ratios, growth. Always ≤ arithmetic mean.</span><span data-tr="es">Para tasas, razones, crecimiento. Siempre ≤ media aritmética.</span><span data-tr="ja">比率、成長率用。常に ≤ 算術平均。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Harmonic Mean</span><span data-tr="es">Media Armónica</span><span data-tr="ja">調和平均</span></div><div class="f">HM = n / Σ(1/xᵢ)</div><div class="n"><span data-tr="en">For averaging rates (speed, P/E ratios). F1 score uses this.</span><span data-tr="es">Para promediar tasas (velocidad, P/E). El F1 usa esta.</span><span data-tr="ja">速度や P/E など比率の平均に。F1 スコアで使用。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Median</span><span data-tr="es">Mediana</span><span data-tr="ja">中央値</span></div><div class="f"><span data-tr="en">Middle value when sorted</span><span data-tr="es">Valor central cuando está ordenado</span><span data-tr="ja">ソート時の中央値</span></div><div class="n"><span data-tr="en">Robust to outliers. If n even: average of two middle values.</span><span data-tr="es">Robusta a atípicos. Si n es par: promedio de los dos centrales.</span><span data-tr="ja">外れ値に強い。n が偶数なら中央2値の平均。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Mode</span><span data-tr="es">Moda</span><span data-tr="ja">最頻値</span></div><div class="f"><span data-tr="en">Most frequent value</span><span data-tr="es">Valor más frecuente</span><span data-tr="ja">最も頻繁な値</span></div><div class="n"><span data-tr="en">Only measure of central tendency for categorical data. Can have 0, 1, or many.</span><span data-tr="es">Única medida de tendencia central para datos categóricos. Puede tener 0, 1 o varias.</span><span data-tr="ja">カテゴリデータで使える唯一の代表値。0、1、または複数。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Trimmed Mean</span><span data-tr="es">Media Recortada</span><span data-tr="ja">調整平均</span></div><div class="f"><span data-tr="en">Mean after removing top/bottom k%</span><span data-tr="es">Media tras quitar k% superior/inferior</span><span data-tr="ja">上下 k% を除いた平均</span></div><div class="n"><span data-tr="en">Compromise between mean (efficient) and median (robust).</span><span data-tr="es">Compromiso entre media (eficiente) y mediana (robusta).</span><span data-tr="ja">平均 (効率的) と中央値 (頑健) の折衷。</span></div></div>
   </div>
 
-  <div class="sub-title">Dispersion</div>
+  <div class="sub-title"><span data-tr="en">Dispersion</span><span data-tr="es">Dispersión</span><span data-tr="ja">ばらつき</span></div>
   <div class="grid">
-    <div class="c"><div class="c-label">Range</div><div class="f">Range = max − min</div><div class="n">Simplest measure. Completely determined by two extreme values.</div></div>
-    <div class="c"><div class="c-label">Variance (population)</div><div class="f">σ² = (1/n) Σ(xᵢ − μ)²</div><div class="n">Average squared deviation. Units are squared.</div></div>
-    <div class="c"><div class="c-label">Variance (sample)</div><div class="f">s² = (1/(n−1)) Σ(xᵢ − x̄)²</div><div class="n">Bessel's correction (n−1) removes bias from using x̄ instead of μ.</div></div>
-    <div class="c"><div class="c-label">Standard Deviation</div><div class="f">σ = √σ² &nbsp; or &nbsp; s = √s²</div><div class="n">Same units as data. ~68% within ±1σ for normal distributions.</div></div>
-    <div class="c"><div class="c-label">IQR</div><div class="f">IQR = Q3 − Q1</div><div class="n">Middle 50% of data. Outliers: below Q1−1.5·IQR or above Q3+1.5·IQR.</div></div>
-    <div class="c"><div class="c-label">MAD (Median Absolute Deviation)</div><div class="f">MAD = median(|xᵢ − median(x)|)</div><div class="n">Most robust dispersion measure. Unaffected by any single outlier.</div></div>
-    <div class="c"><div class="c-label">Coefficient of Variation</div><div class="f">CV = σ / μ</div><div class="n">Relative variability. Dimensionless — compare spread across different scales.</div></div>
-    <div class="c"><div class="c-label">Standard Error</div><div class="f">SE = s / √n</div><div class="n">Std dev of the sampling distribution of the mean. Shrinks with more data.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Range</span><span data-tr="es">Rango</span><span data-tr="ja">範囲</span></div><div class="f">Range = max − min</div><div class="n"><span data-tr="en">Simplest measure. Completely determined by two extreme values.</span><span data-tr="es">La más simple. Determinada por los dos valores extremos.</span><span data-tr="ja">最も単純。2つの極端値のみで決まる。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Variance (population)</span><span data-tr="es">Varianza (poblacional)</span><span data-tr="ja">分散 (母集団)</span></div><div class="f">σ² = (1/n) Σ(xᵢ − μ)²</div><div class="n"><span data-tr="en">Average squared deviation. Units are squared.</span><span data-tr="es">Desviación cuadrada promedio. Unidades al cuadrado.</span><span data-tr="ja">平均二乗偏差。単位は二乗。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Variance (sample)</span><span data-tr="es">Varianza (muestral)</span><span data-tr="ja">分散 (標本)</span></div><div class="f">s² = (1/(n−1)) Σ(xᵢ − x̄)²</div><div class="n"><span data-tr="en">Bessel's correction (n−1) removes bias from using x̄ instead of μ.</span><span data-tr="es">Corrección de Bessel (n−1) elimina el sesgo de usar x̄ en lugar de μ.</span><span data-tr="ja">ベッセル補正 (n−1) により、μ の代わりに x̄ を使う偏りを除く。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Standard Deviation</span><span data-tr="es">Desviación Estándar</span><span data-tr="ja">標準偏差</span></div><div class="f">σ = √σ² &nbsp; <span data-tr="en">or</span><span data-tr="es">o</span><span data-tr="ja">または</span> &nbsp; s = √s²</div><div class="n"><span data-tr="en">Same units as data. ~68% within ±1σ for normal distributions.</span><span data-tr="es">Mismas unidades que los datos. ~68% dentro de ±1σ en normales.</span><span data-tr="ja">データと同じ単位。正規分布なら ±1σ 内に約 68%。</span></div></div>
+    <div class="c"><div class="c-label">IQR</div><div class="f">IQR = Q3 − Q1</div><div class="n"><span data-tr="en">Middle 50% of data. Outliers: below Q1−1.5·IQR or above Q3+1.5·IQR.</span><span data-tr="es">50% central. Atípicos: bajo Q1−1.5·IQR o sobre Q3+1.5·IQR.</span><span data-tr="ja">データの中央 50%。外れ値: Q1−1.5·IQR 未満か Q3+1.5·IQR 超。</span></div></div>
+    <div class="c"><div class="c-label">MAD <span data-tr="en">(Median Absolute Deviation)</span><span data-tr="es">(Desviación Absoluta Mediana)</span><span data-tr="ja">(中央絶対偏差)</span></div><div class="f">MAD = median(|xᵢ − median(x)|)</div><div class="n"><span data-tr="en">Most robust dispersion measure. Unaffected by any single outlier.</span><span data-tr="es">La medida de dispersión más robusta. No afectada por un atípico.</span><span data-tr="ja">最も頑健なばらつき指標。単一の外れ値に影響されない。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Coefficient of Variation</span><span data-tr="es">Coeficiente de Variación</span><span data-tr="ja">変動係数</span></div><div class="f">CV = σ / μ</div><div class="n"><span data-tr="en">Relative variability. Dimensionless — compare spread across different scales.</span><span data-tr="es">Variabilidad relativa. Adimensional — compara dispersión entre escalas.</span><span data-tr="ja">相対ばらつき。無次元なので異なるスケール間でも比較可能。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Standard Error</span><span data-tr="es">Error Estándar</span><span data-tr="ja">標準誤差</span></div><div class="f">SE = s / √n</div><div class="n"><span data-tr="en">Std dev of the sampling distribution of the mean. Shrinks with more data.</span><span data-tr="es">Desv. estándar de la distribución muestral de la media. Se reduce con más datos.</span><span data-tr="ja">平均の標本分布の標準偏差。データが増えるほど縮む。</span></div></div>
   </div>
 
-  <div class="sub-title">Shape</div>
+  <div class="sub-title"><span data-tr="en">Shape</span><span data-tr="es">Forma</span><span data-tr="ja">形状</span></div>
   <div class="grid">
-    <div class="c"><div class="c-label">Skewness</div><div class="f">γ₁ = (1/n) Σ((xᵢ − μ)/σ)³</div><div class="n">0 = symmetric. Positive = right tail longer. Negative = left tail longer.</div></div>
-    <div class="c"><div class="c-label">Kurtosis</div><div class="f">γ₂ = (1/n) Σ((xᵢ − μ)/σ)⁴</div><div class="n">Normal = 3 (excess kurtosis = 0). Higher = heavier tails, more extreme outliers.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Skewness</span><span data-tr="es">Asimetría</span><span data-tr="ja">歪度</span></div><div class="f">γ₁ = (1/n) Σ((xᵢ − μ)/σ)³</div><div class="n"><span data-tr="en">0 = symmetric. Positive = right tail longer. Negative = left tail longer.</span><span data-tr="es">0 = simétrico. Positivo = cola derecha larga. Negativo = cola izquierda larga.</span><span data-tr="ja">0 = 対称。正 = 右裾が長い。負 = 左裾が長い。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Kurtosis</span><span data-tr="es">Curtosis</span><span data-tr="ja">尖度</span></div><div class="f">γ₂ = (1/n) Σ((xᵢ − μ)/σ)⁴</div><div class="n"><span data-tr="en">Normal = 3 (excess kurtosis = 0). Higher = heavier tails, more extreme outliers.</span><span data-tr="es">Normal = 3 (exceso = 0). Mayor = colas más pesadas, más atípicos extremos.</span><span data-tr="ja">正規 = 3 (超過尖度 = 0)。大きいほど裾が重く、極端な外れ値が多い。</span></div></div>
   </div>
 
-  <div class="sub-title">Relationship</div>
+  <div class="sub-title"><span data-tr="en">Relationship</span><span data-tr="es">Relación</span><span data-tr="ja">関係性</span></div>
   <div class="grid">
-    <div class="c"><div class="c-label">Covariance</div><div class="f">Cov(X,Y) = (1/(n−1)) Σ(xᵢ−x̄)(yᵢ−ȳ)</div><div class="n">Direction of linear relationship. Scale-dependent — hard to compare across datasets.</div></div>
-    <div class="c"><div class="c-label">Pearson Correlation</div><div class="f">r = Cov(X,Y) / (sₓ · sᵧ)</div><div class="n">Normalized covariance. [−1, +1]. Measures linear association only.</div></div>
-    <div class="c"><div class="c-label">Spearman Rank Correlation</div><div class="f">ρₛ = Pearson(rank(X), rank(Y))</div><div class="n">Measures monotonic (not just linear) relationship. Robust to outliers.</div></div>
-    <div class="c"><div class="c-label">Kendall's Tau</div><div class="f">τ = (concordant − discordant) / C(n,2)</div><div class="n">Proportion of concordant pairs. More robust than Spearman for small n.</div></div>
-    <div class="c"><div class="c-label">Partial Correlation</div><div class="f">r_XY·Z = (r_XY − r_XZ·r_YZ) / √((1−r²_XZ)(1−r²_YZ))</div><div class="n">Correlation between X and Y after removing the effect of Z.</div></div>
-    <div class="c"><div class="c-label">Point-Biserial Correlation</div><div class="f">Same formula as Pearson, one variable binary</div><div class="n">Correlation between a continuous and a dichotomous variable.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Covariance</span><span data-tr="es">Covarianza</span><span data-tr="ja">共分散</span></div><div class="f">Cov(X,Y) = (1/(n−1)) Σ(xᵢ−x̄)(yᵢ−ȳ)</div><div class="n"><span data-tr="en">Direction of linear relationship. Scale-dependent — hard to compare across datasets.</span><span data-tr="es">Dirección de la relación lineal. Depende de la escala — difícil comparar entre datasets.</span><span data-tr="ja">線形関係の方向。スケール依存でデータセット間比較が難しい。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Pearson Correlation</span><span data-tr="es">Correlación de Pearson</span><span data-tr="ja">ピアソン相関</span></div><div class="f">r = Cov(X,Y) / (sₓ · sᵧ)</div><div class="n"><span data-tr="en">Normalized covariance. [−1, +1]. Measures linear association only.</span><span data-tr="es">Covarianza normalizada. [−1, +1]. Mide solo asociación lineal.</span><span data-tr="ja">正規化共分散。[−1, +1]。線形関係のみを測定。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Spearman Rank Correlation</span><span data-tr="es">Correlación de Rango Spearman</span><span data-tr="ja">スピアマン順位相関</span></div><div class="f">ρₛ = Pearson(rank(X), rank(Y))</div><div class="n"><span data-tr="en">Measures monotonic (not just linear) relationship. Robust to outliers.</span><span data-tr="es">Mide relación monótona (no solo lineal). Robusta a atípicos.</span><span data-tr="ja">単調関係 (線形でなくてよい) を測定。外れ値に強い。</span></div></div>
+    <div class="c"><div class="c-label">Kendall's Tau</div><div class="f">τ = (concordant − discordant) / C(n,2)</div><div class="n"><span data-tr="en">Proportion of concordant pairs. More robust than Spearman for small n.</span><span data-tr="es">Proporción de pares concordantes. Más robusta que Spearman para n pequeño.</span><span data-tr="ja">一致ペアの割合。n が小さいときスピアマンより頑健。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Partial Correlation</span><span data-tr="es">Correlación Parcial</span><span data-tr="ja">偏相関</span></div><div class="f">r_XY·Z = (r_XY − r_XZ·r_YZ) / √((1−r²_XZ)(1−r²_YZ))</div><div class="n"><span data-tr="en">Correlation between X and Y after removing the effect of Z.</span><span data-tr="es">Correlación entre X e Y tras eliminar el efecto de Z.</span><span data-tr="ja">Z の効果を除いた X と Y の相関。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Point-Biserial Correlation</span><span data-tr="es">Correlación Puntual Biserial</span><span data-tr="ja">点双列相関</span></div><div class="f"><span data-tr="en">Same formula as Pearson, one variable binary</span><span data-tr="es">Misma fórmula que Pearson, con una variable binaria</span><span data-tr="ja">ピアソンと同じ式、一方が二値</span></div><div class="n"><span data-tr="en">Correlation between a continuous and a dichotomous variable.</span><span data-tr="es">Correlación entre una variable continua y una dicotómica.</span><span data-tr="ja">連続変数と二値変数の相関。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 2. PROBABILITY FOUNDATIONS                      -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 2. PROBABILITY FOUNDATIONS -->
 <div class="section" id="prob">
-  <div class="sec-head"><span class="sec-num n-blue">02</span><span class="sec-title">Probability Foundations</span></div>
-  <p class="sec-desc">The language of uncertainty. Every ML model is, at its core, a probability machine.</p>
+  <div class="sec-head"><span class="sec-num n-blue">02</span><span class="sec-title"><span data-tr="en">Probability Foundations</span><span data-tr="es">Fundamentos de Probabilidad</span><span data-tr="ja">確率の基礎</span></span></div>
+  <p class="sec-desc"><span data-tr="en">The language of uncertainty. Every ML model is, at its core, a probability machine.</span><span data-tr="es">El lenguaje de la incertidumbre. Todo modelo de ML es, en el fondo, una máquina de probabilidad.</span><span data-tr="ja">不確実性の言語。全ての ML モデルは本質的に確率機械である。</span></p>
 
   <div class="grid">
-    <div class="c"><div class="c-label">Probability</div><div class="f">P(A) = |A| / |Ω|</div><div class="n">For equally likely outcomes. Always 0 ≤ P(A) ≤ 1.</div></div>
-    <div class="c"><div class="c-label">Kolmogorov Axioms</div><div class="f">1) P(A) ≥ 0<br>2) P(Ω) = 1<br>3) P(A∪B) = P(A)+P(B) if disjoint</div><div class="n">The three axioms from which all probability theory follows.</div></div>
-    <div class="c"><div class="c-label">Complement</div><div class="f">P(A') = 1 − P(A)</div></div>
-    <div class="c"><div class="c-label">Addition Rule</div><div class="f">P(A∪B) = P(A) + P(B) − P(A∩B)</div><div class="n">Inclusion-exclusion. If mutually exclusive: P(A∪B) = P(A)+P(B).</div></div>
-    <div class="c"><div class="c-label">Multiplication Rule</div><div class="f">P(A∩B) = P(A) · P(B|A)</div><div class="n">If independent: P(A∩B) = P(A) · P(B).</div></div>
-    <div class="c"><div class="c-label">Conditional Probability</div><div class="f">P(A|B) = P(A∩B) / P(B)</div><div class="n">Probability of A given B has occurred. The basis of Bayesian reasoning.</div></div>
-    <div class="c"><div class="c-label">Bayes' Theorem</div><div class="f">P(A|B) = P(B|A) · P(A) / P(B)</div><div class="n">Update beliefs with evidence. posterior ∝ likelihood × prior.</div></div>
-    <div class="c"><div class="c-label">Law of Total Probability</div><div class="f">P(B) = Σᵢ P(B|Aᵢ) · P(Aᵢ)</div><div class="n">Compute P(B) by summing over all partitions Aᵢ of sample space.</div></div>
-    <div class="c"><div class="c-label">Independence</div><div class="f">P(A∩B) = P(A) · P(B)</div><div class="n">Knowing A gives no information about B. P(A|B) = P(A).</div></div>
-    <div class="c"><div class="c-label">Conditional Independence</div><div class="f">P(A∩B|C) = P(A|C) · P(B|C)</div><div class="n">A and B independent once C is known. Key assumption of Naive Bayes.</div></div>
-    <div class="c"><div class="c-label">Expected Value</div><div class="f">E[X] = Σ xᵢ P(xᵢ) &nbsp; (discrete)<br>E[X] = ∫ x f(x) dx &nbsp; (continuous)</div><div class="n">Long-run average. Linear: E[aX+b] = aE[X]+b.</div></div>
-    <div class="c"><div class="c-label">Variance via Expectation</div><div class="f">Var(X) = E[X²] − (E[X])²</div><div class="n">Computational shortcut. Var(aX+b) = a²Var(X).</div></div>
-    <div class="c"><div class="c-label">Covariance via Expectation</div><div class="f">Cov(X,Y) = E[XY] − E[X]E[Y]</div><div class="n">If independent: Cov(X,Y) = 0. Converse is NOT true.</div></div>
-    <div class="c"><div class="c-label">Moment Generating Function</div><div class="f">M_X(t) = E[e^(tX)]</div><div class="n">k-th moment = M^(k)(0). Uniquely determines the distribution.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Probability</span><span data-tr="es">Probabilidad</span><span data-tr="ja">確率</span></div><div class="f">P(A) = |A| / |Ω|</div><div class="n"><span data-tr="en">For equally likely outcomes. Always 0 ≤ P(A) ≤ 1.</span><span data-tr="es">Para resultados igualmente probables. Siempre 0 ≤ P(A) ≤ 1.</span><span data-tr="ja">等確率の結果に対して。常に 0 ≤ P(A) ≤ 1。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Kolmogorov Axioms</span><span data-tr="es">Axiomas de Kolmogórov</span><span data-tr="ja">コルモゴロフの公理</span></div><div class="f">1) P(A) ≥ 0<br>2) P(Ω) = 1<br>3) P(A∪B) = P(A)+P(B) <span data-tr="en">if disjoint</span><span data-tr="es">si son disjuntos</span><span data-tr="ja">互いに素なら</span></div><div class="n"><span data-tr="en">The three axioms from which all probability theory follows.</span><span data-tr="es">Los tres axiomas de los que deriva toda la teoría de probabilidad.</span><span data-tr="ja">全ての確率論が導かれる3つの公理。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Complement</span><span data-tr="es">Complemento</span><span data-tr="ja">余事象</span></div><div class="f">P(A') = 1 − P(A)</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Addition Rule</span><span data-tr="es">Regla de la Suma</span><span data-tr="ja">加法定理</span></div><div class="f">P(A∪B) = P(A) + P(B) − P(A∩B)</div><div class="n"><span data-tr="en">Inclusion-exclusion. If mutually exclusive: P(A∪B) = P(A)+P(B).</span><span data-tr="es">Inclusión-exclusión. Si son mutuamente excluyentes: P(A∪B) = P(A)+P(B).</span><span data-tr="ja">包含排除原理。排反なら: P(A∪B) = P(A)+P(B)。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Multiplication Rule</span><span data-tr="es">Regla de la Multiplicación</span><span data-tr="ja">乗法定理</span></div><div class="f">P(A∩B) = P(A) · P(B|A)</div><div class="n"><span data-tr="en">If independent: P(A∩B) = P(A) · P(B).</span><span data-tr="es">Si son independientes: P(A∩B) = P(A) · P(B).</span><span data-tr="ja">独立なら: P(A∩B) = P(A) · P(B)。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Conditional Probability</span><span data-tr="es">Probabilidad Condicional</span><span data-tr="ja">条件付き確率</span></div><div class="f">P(A|B) = P(A∩B) / P(B)</div><div class="n"><span data-tr="en">Probability of A given B has occurred. The basis of Bayesian reasoning.</span><span data-tr="es">Probabilidad de A dado que B ocurrió. Base del razonamiento bayesiano.</span><span data-tr="ja">B が起きた下での A の確率。ベイズ推論の基盤。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Bayes' Theorem</span><span data-tr="es">Teorema de Bayes</span><span data-tr="ja">ベイズの定理</span></div><div class="f">P(A|B) = P(B|A) · P(A) / P(B)</div><div class="n"><span data-tr="en">Update beliefs with evidence. posterior ∝ likelihood × prior.</span><span data-tr="es">Actualiza creencias con evidencia. posterior ∝ verosimilitud × prior.</span><span data-tr="ja">証拠で信念を更新。事後 ∝ 尤度 × 事前。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Law of Total Probability</span><span data-tr="es">Ley de Probabilidad Total</span><span data-tr="ja">全確率の定理</span></div><div class="f">P(B) = Σᵢ P(B|Aᵢ) · P(Aᵢ)</div><div class="n"><span data-tr="en">Compute P(B) by summing over all partitions Aᵢ of sample space.</span><span data-tr="es">Calcula P(B) sumando sobre todas las particiones Aᵢ del espacio muestral.</span><span data-tr="ja">標本空間の分割 Aᵢ 全てにわたって和を取って P(B) を計算。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Independence</span><span data-tr="es">Independencia</span><span data-tr="ja">独立</span></div><div class="f">P(A∩B) = P(A) · P(B)</div><div class="n"><span data-tr="en">Knowing A gives no information about B. P(A|B) = P(A).</span><span data-tr="es">Conocer A no da información sobre B. P(A|B) = P(A).</span><span data-tr="ja">A を知っても B について情報がない。P(A|B) = P(A)。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Conditional Independence</span><span data-tr="es">Independencia Condicional</span><span data-tr="ja">条件付き独立</span></div><div class="f">P(A∩B|C) = P(A|C) · P(B|C)</div><div class="n"><span data-tr="en">A and B independent once C is known. Key assumption of Naive Bayes.</span><span data-tr="es">A y B independientes una vez conocido C. Supuesto clave de Naive Bayes.</span><span data-tr="ja">C が分かれば A と B は独立。ナイーブベイズの鍵となる仮定。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Expected Value</span><span data-tr="es">Valor Esperado</span><span data-tr="ja">期待値</span></div><div class="f">E[X] = Σ xᵢ P(xᵢ) &nbsp; <span data-tr="en">(discrete)</span><span data-tr="es">(discreto)</span><span data-tr="ja">(離散)</span><br>E[X] = ∫ x f(x) dx &nbsp; <span data-tr="en">(continuous)</span><span data-tr="es">(continuo)</span><span data-tr="ja">(連続)</span></div><div class="n"><span data-tr="en">Long-run average. Linear: E[aX+b] = aE[X]+b.</span><span data-tr="es">Promedio a largo plazo. Lineal: E[aX+b] = aE[X]+b.</span><span data-tr="ja">長期的な平均。線形性: E[aX+b] = aE[X]+b。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Variance via Expectation</span><span data-tr="es">Varianza vía Esperanza</span><span data-tr="ja">分散 (期待値経由)</span></div><div class="f">Var(X) = E[X²] − (E[X])²</div><div class="n"><span data-tr="en">Computational shortcut. Var(aX+b) = a²Var(X).</span><span data-tr="es">Atajo computacional. Var(aX+b) = a²Var(X).</span><span data-tr="ja">計算の近道。Var(aX+b) = a²Var(X)。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Covariance via Expectation</span><span data-tr="es">Covarianza vía Esperanza</span><span data-tr="ja">共分散 (期待値経由)</span></div><div class="f">Cov(X,Y) = E[XY] − E[X]E[Y]</div><div class="n"><span data-tr="en">If independent: Cov(X,Y) = 0. Converse is NOT true.</span><span data-tr="es">Si son independientes: Cov(X,Y) = 0. El recíproco NO es verdadero.</span><span data-tr="ja">独立なら Cov(X,Y) = 0。逆は真ではない。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Moment Generating Function</span><span data-tr="es">Función Generadora de Momentos</span><span data-tr="ja">積率母関数</span></div><div class="f">M_X(t) = E[e^(tX)]</div><div class="n"><span data-tr="en">k-th moment = M^(k)(0). Uniquely determines the distribution.</span><span data-tr="es">Momento k-ésimo = M^(k)(0). Determina unívocamente la distribución.</span><span data-tr="ja">k 次モーメント = M^(k)(0)。分布を一意に定める。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 3. COMBINATORICS                                -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 3. COMBINATORICS -->
 <div class="section" id="comb">
-  <div class="sec-head"><span class="sec-num n-green">03</span><span class="sec-title">Combinatorics</span></div>
-  <p class="sec-desc">Counting outcomes — the machinery behind discrete probability.</p>
+  <div class="sec-head"><span class="sec-num n-green">03</span><span class="sec-title"><span data-tr="en">Combinatorics</span><span data-tr="es">Combinatoria</span><span data-tr="ja">組み合わせ論</span></span></div>
+  <p class="sec-desc"><span data-tr="en">Counting outcomes — the machinery behind discrete probability.</span><span data-tr="es">Contar resultados — la maquinaria tras la probabilidad discreta.</span><span data-tr="ja">結果を数える — 離散確率の土台となる仕組み。</span></p>
 
   <div class="grid">
-    <div class="c"><div class="c-label">Factorial</div><div class="f">n! = n × (n−1) × … × 1</div><div class="n">0! = 1 by convention. Grows explosively: 10! = 3,628,800.</div></div>
-    <div class="c"><div class="c-label">Permutations (ordered)</div><div class="f">P(n,k) = n! / (n−k)!</div><div class="n">Choose k items from n, order matters.</div></div>
-    <div class="c"><div class="c-label">Combinations (unordered)</div><div class="f">C(n,k) = n! / (k!(n−k)!)</div><div class="n">"n choose k." Order doesn't matter. C(n,k) = C(n, n−k).</div></div>
-    <div class="c"><div class="c-label">Multinomial Coefficient</div><div class="f">n! / (n₁! n₂! … nₖ!)</div><div class="n">Ways to divide n items into groups of sizes n₁, n₂, …, nₖ.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Factorial</span><span data-tr="es">Factorial</span><span data-tr="ja">階乗</span></div><div class="f">n! = n × (n−1) × … × 1</div><div class="n"><span data-tr="en">0! = 1 by convention. Grows explosively: 10! = 3,628,800.</span><span data-tr="es">0! = 1 por convención. Crece explosivamente: 10! = 3,628,800.</span><span data-tr="ja">慣習で 0! = 1。爆発的に増加: 10! = 3,628,800。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Permutations (ordered)</span><span data-tr="es">Permutaciones (ordenadas)</span><span data-tr="ja">順列 (順序あり)</span></div><div class="f">P(n,k) = n! / (n−k)!</div><div class="n"><span data-tr="en">Choose k items from n, order matters.</span><span data-tr="es">Elige k de n, el orden importa.</span><span data-tr="ja">n から k 個選ぶ、順序を考慮。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Combinations (unordered)</span><span data-tr="es">Combinaciones (no ordenadas)</span><span data-tr="ja">組み合わせ (順序なし)</span></div><div class="f">C(n,k) = n! / (k!(n−k)!)</div><div class="n"><span data-tr="en">"n choose k." Order doesn't matter. C(n,k) = C(n, n−k).</span><span data-tr="es">"n elige k." El orden no importa. C(n,k) = C(n, n−k).</span><span data-tr="ja">「n から k を選ぶ」。順序は問わない。C(n,k) = C(n, n−k)。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Multinomial Coefficient</span><span data-tr="es">Coeficiente Multinomial</span><span data-tr="ja">多項係数</span></div><div class="f">n! / (n₁! n₂! … nₖ!)</div><div class="n"><span data-tr="en">Ways to divide n items into groups of sizes n₁, n₂, …, nₖ.</span><span data-tr="es">Formas de dividir n objetos en grupos de tamaños n₁, n₂, …, nₖ.</span><span data-tr="ja">n 個の要素をサイズ n₁, n₂, …, nₖ のグループに分ける場合の数。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 4. PROBABILITY DISTRIBUTIONS                    -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 4. PROBABILITY DISTRIBUTIONS -->
 <div class="section" id="dist">
-  <div class="sec-head"><span class="sec-num n-purple">04</span><span class="sec-title">Probability Distributions</span></div>
-  <p class="sec-desc">The building blocks. Every model assumption, every test statistic, every generative process maps to one of these.</p>
+  <div class="sec-head"><span class="sec-num n-purple">04</span><span class="sec-title"><span data-tr="en">Probability Distributions</span><span data-tr="es">Distribuciones de Probabilidad</span><span data-tr="ja">確率分布</span></span></div>
+  <p class="sec-desc"><span data-tr="en">The building blocks. Every model assumption, every test statistic, every generative process maps to one of these.</span><span data-tr="es">Los bloques de construcción. Cada supuesto de modelo, cada estadístico de prueba, cada proceso generativo se mapea a uno de estos.</span><span data-tr="ja">構成要素。モデルの仮定、検定統計量、生成過程 — すべてがこれらのどれかに対応する。</span></p>
 
-  <div class="sub-title">Discrete Distributions</div>
+  <div class="sub-title"><span data-tr="en">Discrete Distributions</span><span data-tr="es">Distribuciones Discretas</span><span data-tr="ja">離散分布</span></div>
   <div class="grid">
-    <div class="c"><div class="c-label">Bernoulli</div><div class="f">P(X=1) = p, P(X=0) = 1−p</div><div class="n">Single trial, two outcomes. E = p, Var = p(1−p).</div></div>
-    <div class="c"><div class="c-label">Binomial</div><div class="f">P(X=k) = C(n,k) p^k (1−p)^(n−k)</div><div class="n">k successes in n independent trials. E = np, Var = np(1−p).</div></div>
-    <div class="c"><div class="c-label">Poisson</div><div class="f">P(X=k) = λ^k e^(−λ) / k!</div><div class="n">Counts in a fixed interval. E = Var = λ. Limit of Binomial as n→∞, p→0, np→λ.</div></div>
-    <div class="c"><div class="c-label">Geometric</div><div class="f">P(X=k) = (1−p)^(k−1) p</div><div class="n">Trials until first success. E = 1/p, Var = (1−p)/p². Memoryless.</div></div>
-    <div class="c"><div class="c-label">Negative Binomial</div><div class="f">P(X=k) = C(k−1, r−1) p^r (1−p)^(k−r)</div><div class="n">Trials until r-th success. E = r/p. Generalizes geometric (r=1).</div></div>
-    <div class="c"><div class="c-label">Hypergeometric</div><div class="f">P(X=k) = C(K,k)C(N−K,n−k) / C(N,n)</div><div class="n">Sampling without replacement. N total, K successes, draw n. E = nK/N.</div></div>
-    <div class="c"><div class="c-label">Multinomial</div><div class="f">P(x₁,…,xₖ) = (n! / ∏xᵢ!) ∏pᵢ^xᵢ</div><div class="n">k categories, n trials. Generalizes binomial. Used in NLP (bag of words).</div></div>
-    <div class="c"><div class="c-label">Discrete Uniform</div><div class="f">P(X=k) = 1/n for k=1,…,n</div><div class="n">All outcomes equally likely. Fair die: n=6. E = (n+1)/2.</div></div>
+    <div class="c"><div class="c-label">Bernoulli</div><div class="f">P(X=1) = p, P(X=0) = 1−p</div><div class="n"><span data-tr="en">Single trial, two outcomes. E = p, Var = p(1−p).</span><span data-tr="es">Un ensayo, dos resultados. E = p, Var = p(1−p).</span><span data-tr="ja">1 回の試行、2 つの結果。E = p、Var = p(1−p)。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Binomial</span><span data-tr="es">Binomial</span><span data-tr="ja">二項</span></div><div class="f">P(X=k) = C(n,k) p^k (1−p)^(n−k)</div><div class="n"><span data-tr="en">k successes in n independent trials. E = np, Var = np(1−p).</span><span data-tr="es">k éxitos en n ensayos independientes. E = np, Var = np(1−p).</span><span data-tr="ja">n 回の独立試行で k 回成功。E = np、Var = np(1−p)。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Poisson</span><span data-tr="es">Poisson</span><span data-tr="ja">ポアソン</span></div><div class="f">P(X=k) = λ^k e^(−λ) / k!</div><div class="n"><span data-tr="en">Counts in a fixed interval. E = Var = λ. Limit of Binomial as n→∞, p→0, np→λ.</span><span data-tr="es">Conteos en un intervalo fijo. E = Var = λ. Límite de la binomial: n→∞, p→0, np→λ.</span><span data-tr="ja">固定区間の回数。E = Var = λ。二項分布の極限 (n→∞, p→0, np→λ)。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Geometric</span><span data-tr="es">Geométrica</span><span data-tr="ja">幾何分布</span></div><div class="f">P(X=k) = (1−p)^(k−1) p</div><div class="n"><span data-tr="en">Trials until first success. E = 1/p, Var = (1−p)/p². Memoryless.</span><span data-tr="es">Ensayos hasta el primer éxito. E = 1/p, Var = (1−p)/p². Sin memoria.</span><span data-tr="ja">最初の成功までの試行数。E = 1/p、Var = (1−p)/p²。無記憶性。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Negative Binomial</span><span data-tr="es">Binomial Negativa</span><span data-tr="ja">負の二項</span></div><div class="f">P(X=k) = C(k−1, r−1) p^r (1−p)^(k−r)</div><div class="n"><span data-tr="en">Trials until r-th success. E = r/p. Generalizes geometric (r=1).</span><span data-tr="es">Ensayos hasta el r-ésimo éxito. E = r/p. Generaliza la geométrica (r=1).</span><span data-tr="ja">r 回目の成功までの試行数。E = r/p。幾何分布 (r=1) の一般化。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Hypergeometric</span><span data-tr="es">Hipergeométrica</span><span data-tr="ja">超幾何分布</span></div><div class="f">P(X=k) = C(K,k)C(N−K,n−k) / C(N,n)</div><div class="n"><span data-tr="en">Sampling without replacement. N total, K successes, draw n. E = nK/N.</span><span data-tr="es">Muestreo sin reemplazo. N total, K éxitos, se toman n. E = nK/N.</span><span data-tr="ja">非復元抽出。全体 N、成功 K、n 個抽出。E = nK/N。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Multinomial</span><span data-tr="es">Multinomial</span><span data-tr="ja">多項分布</span></div><div class="f">P(x₁,…,xₖ) = (n! / ∏xᵢ!) ∏pᵢ^xᵢ</div><div class="n"><span data-tr="en">k categories, n trials. Generalizes binomial. Used in NLP (bag of words).</span><span data-tr="es">k categorías, n ensayos. Generaliza la binomial. Usado en NLP (bag of words).</span><span data-tr="ja">k カテゴリ、n 試行。二項を一般化。NLP (Bag of Words) で使用。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Discrete Uniform</span><span data-tr="es">Uniforme Discreta</span><span data-tr="ja">離散一様</span></div><div class="f">P(X=k) = 1/n <span data-tr="en">for k=1,…,n</span><span data-tr="es">para k=1,…,n</span><span data-tr="ja">k=1,…,n のとき</span></div><div class="n"><span data-tr="en">All outcomes equally likely. Fair die: n=6. E = (n+1)/2.</span><span data-tr="es">Todos los resultados igualmente probables. Dado justo: n=6. E = (n+1)/2.</span><span data-tr="ja">全結果が等確率。公平なサイコロ: n=6。E = (n+1)/2。</span></div></div>
   </div>
 
-  <div class="sub-title">Continuous Distributions</div>
+  <div class="sub-title"><span data-tr="en">Continuous Distributions</span><span data-tr="es">Distribuciones Continuas</span><span data-tr="ja">連続分布</span></div>
   <div class="grid">
-    <div class="c"><div class="c-label">Uniform</div><div class="f">f(x) = 1/(b−a) for a ≤ x ≤ b</div><div class="n">Constant density. E = (a+b)/2, Var = (b−a)²/12.</div></div>
-    <div class="c"><div class="c-label">Normal (Gaussian)</div><div class="f">f(x) = (1/(σ√(2π))) exp(−(x−μ)²/(2σ²))</div><div class="n">Bell curve. 68-95-99.7 rule. Sum of normals is normal. CLT target.</div></div>
-    <div class="c"><div class="c-label">Standard Normal</div><div class="f">Z = (X−μ)/σ ~ N(0,1)</div><div class="n">Any normal → standard normal via z-score. Tables, p-values live here.</div></div>
-    <div class="c"><div class="c-label">Log-Normal</div><div class="f">If ln(X) ~ N(μ,σ²), then X ~ LogN</div><div class="n">Always positive, right-skewed. Models: stock prices, income, city sizes.</div></div>
-    <div class="c"><div class="c-label">Exponential</div><div class="f">f(x) = λe^(−λx) for x ≥ 0</div><div class="n">Time between Poisson events. E = 1/λ, Var = 1/λ². Memoryless.</div></div>
-    <div class="c"><div class="c-label">Gamma</div><div class="f">f(x) = (β^α / Γ(α)) x^(α−1) e^(−βx)</div><div class="n">Sum of α independent exponentials. Generalizes exponential (α=1) and chi-square.</div></div>
-    <div class="c"><div class="c-label">Beta</div><div class="f">f(x) = x^(α−1)(1−x)^(β−1) / B(α,β)</div><div class="n">Defined on [0,1]. Perfect for modeling probabilities. Conjugate prior for Bernoulli/Binomial.</div></div>
-    <div class="c"><div class="c-label">Chi-Square (χ²)</div><div class="f">χ² ~ Gamma(k/2, 1/2)</div><div class="n">Sum of k squared standard normals. df = k. Used in goodness-of-fit, independence tests.</div></div>
-    <div class="c"><div class="c-label">Student's t</div><div class="f">t = Z / √(V/ν), V~χ²(ν)</div><div class="n">Heavier tails than normal. Approaches normal as ν→∞. Used when σ unknown.</div></div>
-    <div class="c"><div class="c-label">F-distribution</div><div class="f">F = (V₁/d₁) / (V₂/d₂)</div><div class="n">Ratio of two chi-squares. Used in ANOVA and regression F-tests.</div></div>
-    <div class="c"><div class="c-label">Weibull</div><div class="f">f(x) = (k/λ)(x/λ)^(k−1) e^(−(x/λ)^k)</div><div class="n">Flexible failure-time model. k=1 → exponential. Models lifetime, wind speed.</div></div>
-    <div class="c"><div class="c-label">Pareto</div><div class="f">f(x) = αx_m^α / x^(α+1) for x ≥ x_m</div><div class="n">Power law / heavy tail. 80-20 rule. Models wealth, city populations, file sizes.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Uniform</span><span data-tr="es">Uniforme</span><span data-tr="ja">一様</span></div><div class="f">f(x) = 1/(b−a) <span data-tr="en">for a ≤ x ≤ b</span><span data-tr="es">para a ≤ x ≤ b</span><span data-tr="ja">a ≤ x ≤ b のとき</span></div><div class="n"><span data-tr="en">Constant density. E = (a+b)/2, Var = (b−a)²/12.</span><span data-tr="es">Densidad constante. E = (a+b)/2, Var = (b−a)²/12.</span><span data-tr="ja">定密度。E = (a+b)/2、Var = (b−a)²/12。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Normal (Gaussian)</span><span data-tr="es">Normal (Gaussiana)</span><span data-tr="ja">正規 (ガウス)</span></div><div class="f">f(x) = (1/(σ√(2π))) exp(−(x−μ)²/(2σ²))</div><div class="n"><span data-tr="en">Bell curve. 68-95-99.7 rule. Sum of normals is normal. CLT target.</span><span data-tr="es">Curva de campana. Regla 68-95-99.7. La suma de normales es normal. Objetivo del TLC.</span><span data-tr="ja">ベル曲線。68-95-99.7 ルール。正規分布の和は正規分布。中心極限定理の到達点。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Standard Normal</span><span data-tr="es">Normal Estándar</span><span data-tr="ja">標準正規</span></div><div class="f">Z = (X−μ)/σ ~ N(0,1)</div><div class="n"><span data-tr="en">Any normal → standard normal via z-score. Tables, p-values live here.</span><span data-tr="es">Cualquier normal → estándar vía z-score. Tablas y p-valores viven aquí.</span><span data-tr="ja">どの正規分布も z スコアで標準正規に。表や p 値はここ。</span></div></div>
+    <div class="c"><div class="c-label">Log-Normal</div><div class="f"><span data-tr="en">If ln(X) ~ N(μ,σ²), then X ~ LogN</span><span data-tr="es">Si ln(X) ~ N(μ,σ²), entonces X ~ LogN</span><span data-tr="ja">ln(X) ~ N(μ,σ²) なら X ~ LogN</span></div><div class="n"><span data-tr="en">Always positive, right-skewed. Models: stock prices, income, city sizes.</span><span data-tr="es">Siempre positiva, asimétrica a la derecha. Modela precios, ingresos, tamaños de ciudades.</span><span data-tr="ja">常に正、右に歪む。株価、所得、都市規模などのモデル。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Exponential</span><span data-tr="es">Exponencial</span><span data-tr="ja">指数</span></div><div class="f">f(x) = λe^(−λx) <span data-tr="en">for x ≥ 0</span><span data-tr="es">para x ≥ 0</span><span data-tr="ja">x ≥ 0 のとき</span></div><div class="n"><span data-tr="en">Time between Poisson events. E = 1/λ, Var = 1/λ². Memoryless.</span><span data-tr="es">Tiempo entre eventos de Poisson. E = 1/λ, Var = 1/λ². Sin memoria.</span><span data-tr="ja">ポアソンイベント間の時間。E = 1/λ、Var = 1/λ²。無記憶性。</span></div></div>
+    <div class="c"><div class="c-label">Gamma</div><div class="f">f(x) = (β^α / Γ(α)) x^(α−1) e^(−βx)</div><div class="n"><span data-tr="en">Sum of α independent exponentials. Generalizes exponential (α=1) and chi-square.</span><span data-tr="es">Suma de α exponenciales independientes. Generaliza la exponencial (α=1) y chi-cuadrado.</span><span data-tr="ja">α 個の独立指数分布の和。指数分布 (α=1) とカイ二乗を一般化。</span></div></div>
+    <div class="c"><div class="c-label">Beta</div><div class="f">f(x) = x^(α−1)(1−x)^(β−1) / B(α,β)</div><div class="n"><span data-tr="en">Defined on [0,1]. Perfect for modeling probabilities. Conjugate prior for Bernoulli/Binomial.</span><span data-tr="es">Definida en [0,1]. Perfecta para modelar probabilidades. Prior conjugado para Bernoulli/Binomial.</span><span data-tr="ja">[0,1] 上で定義。確率のモデリングに最適。ベルヌーイ/二項の共役事前分布。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Chi-Square (χ²)</span><span data-tr="es">Chi-Cuadrado (χ²)</span><span data-tr="ja">カイ二乗 (χ²)</span></div><div class="f">χ² ~ Gamma(k/2, 1/2)</div><div class="n"><span data-tr="en">Sum of k squared standard normals. df = k. Used in goodness-of-fit, independence tests.</span><span data-tr="es">Suma de k normales estándar al cuadrado. gl = k. Usada en bondad de ajuste e independencia.</span><span data-tr="ja">標準正規の二乗 k 個の和。自由度 = k。適合度・独立性検定に使用。</span></div></div>
+    <div class="c"><div class="c-label">Student's t</div><div class="f">t = Z / √(V/ν), V~χ²(ν)</div><div class="n"><span data-tr="en">Heavier tails than normal. Approaches normal as ν→∞. Used when σ unknown.</span><span data-tr="es">Colas más pesadas que la normal. Tiende a la normal cuando ν→∞. Se usa cuando σ es desconocida.</span><span data-tr="ja">正規より裾が重い。ν→∞ で正規に近づく。σ が未知のとき使用。</span></div></div>
+    <div class="c"><div class="c-label">F-distribution</div><div class="f">F = (V₁/d₁) / (V₂/d₂)</div><div class="n"><span data-tr="en">Ratio of two chi-squares. Used in ANOVA and regression F-tests.</span><span data-tr="es">Razón de dos chi-cuadrados. Usada en ANOVA y pruebas F de regresión.</span><span data-tr="ja">2つのカイ二乗の比。ANOVA と回帰の F 検定で使用。</span></div></div>
+    <div class="c"><div class="c-label">Weibull</div><div class="f">f(x) = (k/λ)(x/λ)^(k−1) e^(−(x/λ)^k)</div><div class="n"><span data-tr="en">Flexible failure-time model. k=1 → exponential. Models lifetime, wind speed.</span><span data-tr="es">Modelo flexible de tiempos de falla. k=1 → exponencial. Modela vida útil, velocidad del viento.</span><span data-tr="ja">柔軟な故障時間モデル。k=1 で指数分布。寿命や風速のモデルに。</span></div></div>
+    <div class="c"><div class="c-label">Pareto</div><div class="f">f(x) = αx_m^α / x^(α+1) <span data-tr="en">for x ≥ x_m</span><span data-tr="es">para x ≥ x_m</span><span data-tr="ja">x ≥ x_m のとき</span></div><div class="n"><span data-tr="en">Power law / heavy tail. 80-20 rule. Models wealth, city populations, file sizes.</span><span data-tr="es">Ley de potencias / cola pesada. Regla 80-20. Modela riqueza, poblaciones, tamaños de archivos.</span><span data-tr="ja">べき法則 / 重い裾。80-20 ルール。富、都市人口、ファイルサイズなどのモデル。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 5. CLT & SAMPLING                               -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 5. CLT & SAMPLING -->
 <div class="section" id="clt">
-  <div class="sec-head"><span class="sec-num n-yellow">05</span><span class="sec-title">Central Limit Theorem & Sampling</span></div>
+  <div class="sec-head"><span class="sec-num n-yellow">05</span><span class="sec-title"><span data-tr="en">Central Limit Theorem &amp; Sampling</span><span data-tr="es">Teorema Central del Límite y Muestreo</span><span data-tr="ja">中心極限定理と標本抽出</span></span></div>
 
   <div class="grid">
-    <div class="c"><div class="c-label">Central Limit Theorem</div><div class="f">x̄ ~ N(μ, σ²/n) as n → ∞</div><div class="n">Sample means approach normal regardless of population shape. Practically kicks in around n ≥ 30.</div></div>
-    <div class="c"><div class="c-label">Sampling Distribution of x̄</div><div class="f">E[x̄] = μ, &nbsp; Var(x̄) = σ²/n</div><div class="n">The mean of means equals the population mean. Variance shrinks with sample size.</div></div>
-    <div class="c"><div class="c-label">Law of Large Numbers</div><div class="f">x̄_n → μ as n → ∞</div><div class="n">Sample mean converges to population mean. Foundation of all empirical estimation.</div></div>
-    <div class="c"><div class="c-label">Bootstrap</div><div class="f">Resample with replacement B times, compute statistic each time</div><div class="n">Distribution-free inference. Get CI and SE for any statistic without assumptions.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Central Limit Theorem</span><span data-tr="es">Teorema Central del Límite</span><span data-tr="ja">中心極限定理</span></div><div class="f">x̄ ~ N(μ, σ²/n) <span data-tr="en">as n → ∞</span><span data-tr="es">cuando n → ∞</span><span data-tr="ja">n → ∞ のとき</span></div><div class="n"><span data-tr="en">Sample means approach normal regardless of population shape. Practically kicks in around n ≥ 30.</span><span data-tr="es">Las medias muestrales se acercan a la normal sin importar la forma poblacional. Prácticamente activo desde n ≥ 30.</span><span data-tr="ja">母集団の形に関係なく標本平均は正規に近づく。実用上 n ≥ 30 で機能する。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Sampling Distribution of x̄</span><span data-tr="es">Distribución Muestral de x̄</span><span data-tr="ja">x̄ の標本分布</span></div><div class="f">E[x̄] = μ, &nbsp; Var(x̄) = σ²/n</div><div class="n"><span data-tr="en">The mean of means equals the population mean. Variance shrinks with sample size.</span><span data-tr="es">La media de las medias es igual a la media poblacional. La varianza se reduce con el tamaño.</span><span data-tr="ja">平均の平均 = 母平均。分散はサンプルサイズに反比例して縮む。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Law of Large Numbers</span><span data-tr="es">Ley de los Grandes Números</span><span data-tr="ja">大数の法則</span></div><div class="f">x̄_n → μ <span data-tr="en">as n → ∞</span><span data-tr="es">cuando n → ∞</span><span data-tr="ja">n → ∞ のとき</span></div><div class="n"><span data-tr="en">Sample mean converges to population mean. Foundation of all empirical estimation.</span><span data-tr="es">La media muestral converge a la poblacional. Base de toda estimación empírica.</span><span data-tr="ja">標本平均は母平均に収束する。経験的推定すべての基盤。</span></div></div>
+    <div class="c"><div class="c-label">Bootstrap</div><div class="f"><span data-tr="en">Resample with replacement B times, compute statistic each time</span><span data-tr="es">Remuestrea con reemplazo B veces, calcula el estadístico cada vez</span><span data-tr="ja">復元抽出を B 回行い、毎回統計量を計算</span></div><div class="n"><span data-tr="en">Distribution-free inference. Get CI and SE for any statistic without assumptions.</span><span data-tr="es">Inferencia sin supuestos distribucionales. Obtén IC y SE para cualquier estadístico.</span><span data-tr="ja">分布仮定不要の推測。任意の統計量の信頼区間や SE を得られる。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 6. ESTIMATION                                   -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 6. ESTIMATION -->
 <div class="section" id="est">
-  <div class="sec-head"><span class="sec-num n-orange">06</span><span class="sec-title">Estimation Theory</span></div>
-  <p class="sec-desc">How to go from sample to population. Point estimates, intervals, and the properties that make an estimator good.</p>
+  <div class="sec-head"><span class="sec-num n-orange">06</span><span class="sec-title"><span data-tr="en">Estimation Theory</span><span data-tr="es">Teoría de Estimación</span><span data-tr="ja">推定理論</span></span></div>
+  <p class="sec-desc"><span data-tr="en">How to go from sample to population. Point estimates, intervals, and the properties that make an estimator good.</span><span data-tr="es">Cómo pasar de muestra a población. Estimaciones puntuales, intervalos y las propiedades que hacen bueno a un estimador.</span><span data-tr="ja">標本から母集団へ。点推定・区間推定と、良い推定量の条件。</span></p>
 
   <div class="grid">
-    <div class="c"><div class="c-label">Maximum Likelihood Estimation</div><div class="f">θ̂_MLE = argmax_θ ∏ f(xᵢ|θ)<br>= argmax_θ Σ log f(xᵢ|θ)</div><div class="n">Find θ that makes the observed data most probable. Take the log, differentiate, set to zero.</div></div>
-    <div class="c"><div class="c-label">Method of Moments</div><div class="f">Set sample moments = population moments, solve for θ</div><div class="n">Simpler than MLE, often less efficient. Match x̄ to E[X], s² to Var(X), etc.</div></div>
-    <div class="c"><div class="c-label">MAP Estimation</div><div class="f">θ̂_MAP = argmax_θ P(θ|data)<br>= argmax_θ [log L(data|θ) + log P(θ)]</div><div class="n">MLE + prior. With uniform prior, MAP = MLE. With Gaussian prior, MAP = Ridge regression.</div></div>
-    <div class="c"><div class="c-label">Confidence Interval</div><div class="f">x̄ ± z* · (s/√n)</div><div class="n">95% CI: z*=1.96. 99%: z*=2.576. Interpretation: if you repeat the experiment ∞ times, 95% of CIs contain μ.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Maximum Likelihood Estimation</span><span data-tr="es">Estimación por Máxima Verosimilitud</span><span data-tr="ja">最尤推定</span></div><div class="f">θ̂_MLE = argmax_θ ∏ f(xᵢ|θ)<br>= argmax_θ Σ log f(xᵢ|θ)</div><div class="n"><span data-tr="en">Find θ that makes the observed data most probable. Take the log, differentiate, set to zero.</span><span data-tr="es">Encuentra θ que hace más probable los datos observados. Toma el log, deriva, iguala a cero.</span><span data-tr="ja">観測データを最も尤もらしくする θ を見つける。対数をとり微分し 0 とおく。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Method of Moments</span><span data-tr="es">Método de los Momentos</span><span data-tr="ja">モーメント法</span></div><div class="f"><span data-tr="en">Set sample moments = population moments, solve for θ</span><span data-tr="es">Iguala momentos muestrales a poblacionales, resuelve para θ</span><span data-tr="ja">標本モーメント = 母モーメントとして θ を解く</span></div><div class="n"><span data-tr="en">Simpler than MLE, often less efficient. Match x̄ to E[X], s² to Var(X), etc.</span><span data-tr="es">Más simple que MLE, a menudo menos eficiente. Iguala x̄ a E[X], s² a Var(X), etc.</span><span data-tr="ja">MLE より単純だが多くの場合効率が低い。x̄ と E[X]、s² と Var(X) を対応させる。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">MAP Estimation</span><span data-tr="es">Estimación MAP</span><span data-tr="ja">MAP 推定</span></div><div class="f">θ̂_MAP = argmax_θ P(θ|data)<br>= argmax_θ [log L(data|θ) + log P(θ)]</div><div class="n"><span data-tr="en">MLE + prior. With uniform prior, MAP = MLE. With Gaussian prior, MAP = Ridge regression.</span><span data-tr="es">MLE + prior. Con prior uniforme, MAP = MLE. Con prior gaussiano, MAP = regresión Ridge.</span><span data-tr="ja">MLE + 事前分布。一様事前では MAP = MLE。ガウス事前では MAP = Ridge 回帰。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Confidence Interval</span><span data-tr="es">Intervalo de Confianza</span><span data-tr="ja">信頼区間</span></div><div class="f">x̄ ± z* · (s/√n)</div><div class="n"><span data-tr="en">95% CI: z*=1.96. 99%: z*=2.576. Interpretation: if you repeat the experiment ∞ times, 95% of CIs contain μ.</span><span data-tr="es">IC 95%: z*=1.96. 99%: z*=2.576. Interpretación: si repites el experimento ∞ veces, 95% de los IC contienen μ.</span><span data-tr="ja">95% CI: z*=1.96、99%: z*=2.576。解釈: 実験を∞回繰り返せば 95% の CI が μ を含む。</span></div></div>
   </div>
 
-  <div class="sub-title">Properties of Estimators</div>
+  <div class="sub-title"><span data-tr="en">Properties of Estimators</span><span data-tr="es">Propiedades de los Estimadores</span><span data-tr="ja">推定量の性質</span></div>
   <div class="grid">
-    <div class="c"><div class="c-label">Unbiased</div><div class="f">E[θ̂] = θ</div><div class="n">On average, the estimator hits the true value.</div></div>
-    <div class="c"><div class="c-label">Consistent</div><div class="f">θ̂ → θ as n → ∞</div><div class="n">Converges to truth with more data.</div></div>
-    <div class="c"><div class="c-label">Efficient</div><div class="f">Var(θ̂) = 1/I(θ) (Cramér-Rao bound)</div><div class="n">Achieves minimum possible variance among all unbiased estimators.</div></div>
-    <div class="c"><div class="c-label">MSE of an Estimator</div><div class="f">MSE(θ̂) = Bias(θ̂)² + Var(θ̂)</div><div class="n">Total error = systematic error + random error. Sometimes biased estimators have lower MSE.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Unbiased</span><span data-tr="es">Insesgado</span><span data-tr="ja">不偏性</span></div><div class="f">E[θ̂] = θ</div><div class="n"><span data-tr="en">On average, the estimator hits the true value.</span><span data-tr="es">En promedio, el estimador acierta al valor verdadero.</span><span data-tr="ja">平均的に真の値を当てる。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Consistent</span><span data-tr="es">Consistente</span><span data-tr="ja">一致性</span></div><div class="f">θ̂ → θ <span data-tr="en">as n → ∞</span><span data-tr="es">cuando n → ∞</span><span data-tr="ja">n → ∞ のとき</span></div><div class="n"><span data-tr="en">Converges to truth with more data.</span><span data-tr="es">Converge a la verdad con más datos.</span><span data-tr="ja">データが増えると真値に収束する。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Efficient</span><span data-tr="es">Eficiente</span><span data-tr="ja">有効性</span></div><div class="f">Var(θ̂) = 1/I(θ) <span data-tr="en">(Cramér-Rao bound)</span><span data-tr="es">(cota de Cramér-Rao)</span><span data-tr="ja">(クラメル・ラオ下限)</span></div><div class="n"><span data-tr="en">Achieves minimum possible variance among all unbiased estimators.</span><span data-tr="es">Alcanza la mínima varianza posible entre los estimadores insesgados.</span><span data-tr="ja">全ての不偏推定量の中で最小分散を達成。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">MSE of an Estimator</span><span data-tr="es">MSE de un Estimador</span><span data-tr="ja">推定量の MSE</span></div><div class="f">MSE(θ̂) = Bias(θ̂)² + Var(θ̂)</div><div class="n"><span data-tr="en">Total error = systematic error + random error. Sometimes biased estimators have lower MSE.</span><span data-tr="es">Error total = error sistemático + error aleatorio. A veces un sesgado tiene menor MSE.</span><span data-tr="ja">総誤差 = 系統誤差 + ランダム誤差。偏りのある推定量が MSE を下げることも。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 7. HYPOTHESIS TESTING                           -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 7. HYPOTHESIS TESTING -->
 <div class="section" id="hyp">
-  <div class="sec-head"><span class="sec-num n-red">07</span><span class="sec-title">Hypothesis Testing</span></div>
-  <p class="sec-desc">The formal framework for deciding whether a pattern is real or just noise.</p>
+  <div class="sec-head"><span class="sec-num n-red">07</span><span class="sec-title"><span data-tr="en">Hypothesis Testing</span><span data-tr="es">Pruebas de Hipótesis</span><span data-tr="ja">仮説検定</span></span></div>
+  <p class="sec-desc"><span data-tr="en">The formal framework for deciding whether a pattern is real or just noise.</span><span data-tr="es">El marco formal para decidir si un patrón es real o solo ruido.</span><span data-tr="ja">パターンが実在するかノイズかを判断する正式な枠組み。</span></p>
 
   <div class="grid">
-    <div class="c"><div class="c-label">Framework</div><div class="f">H₀: null hypothesis (no effect)<br>H₁: alternative (effect exists)<br>Choose α → compute test stat → get p-value → decide</div></div>
-    <div class="c"><div class="c-label">p-value</div><div class="f">P(data ≥ observed | H₀ true)</div><div class="n">NOT the probability H₀ is true. It's how surprising the data is if H₀ were true.</div></div>
-    <div class="c"><div class="c-label">Z-test</div><div class="f">z = (x̄ − μ₀) / (σ/√n)</div><div class="n">σ known or n≥30. Tests if population mean = μ₀.</div></div>
-    <div class="c"><div class="c-label">One-sample t-test</div><div class="f">t = (x̄ − μ₀) / (s/√n), df = n−1</div><div class="n">σ unknown. Same purpose as z-test but with heavier tails.</div></div>
-    <div class="c"><div class="c-label">Two-sample t-test</div><div class="f">t = (x̄₁ − x̄₂) / √(s₁²/n₁ + s₂²/n₂)</div><div class="n">Compare means of two independent groups. Welch's version doesn't assume equal variance.</div></div>
-    <div class="c"><div class="c-label">Paired t-test</div><div class="f">t = d̄ / (s_d/√n), d = x₁−x₂</div><div class="n">Same subjects measured twice (before/after). Test if mean difference ≠ 0.</div></div>
-    <div class="c"><div class="c-label">Chi-square Goodness of Fit</div><div class="f">χ² = Σ (Oᵢ − Eᵢ)² / Eᵢ</div><div class="n">Does observed frequency match expected distribution? df = k−1.</div></div>
-    <div class="c"><div class="c-label">Chi-square Independence</div><div class="f">Same formula, applied to contingency table</div><div class="n">Are two categorical variables associated? df = (r−1)(c−1).</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Framework</span><span data-tr="es">Marco</span><span data-tr="ja">枠組み</span></div><div class="f"><span data-tr="en">H₀: null hypothesis (no effect)<br>H₁: alternative (effect exists)<br>Choose α → compute test stat → get p-value → decide</span><span data-tr="es">H₀: hipótesis nula (sin efecto)<br>H₁: alternativa (hay efecto)<br>Elige α → calcula el estadístico → obtén p → decide</span><span data-tr="ja">H₀: 帰無仮説 (効果なし)<br>H₁: 対立仮説 (効果あり)<br>α を選ぶ → 検定統計量を計算 → p 値を得る → 判断</span></div></div>
+    <div class="c"><div class="c-label">p-value</div><div class="f"><span data-tr="en">P(data ≥ observed | H₀ true)</span><span data-tr="es">P(datos ≥ observado | H₀ verdadera)</span><span data-tr="ja">P(データ ≥ 観測値 | H₀ が真)</span></div><div class="n"><span data-tr="en">NOT the probability H₀ is true. It's how surprising the data is if H₀ were true.</span><span data-tr="es">NO es la probabilidad de que H₀ sea verdadera. Es qué tan sorprendente son los datos si H₀ fuera verdadera.</span><span data-tr="ja">H₀ が真である確率ではない。H₀ が真なら観測データがどれほど驚くべきか。</span></div></div>
+    <div class="c"><div class="c-label">Z-test</div><div class="f">z = (x̄ − μ₀) / (σ/√n)</div><div class="n"><span data-tr="en">σ known or n≥30. Tests if population mean = μ₀.</span><span data-tr="es">σ conocida o n≥30. Prueba si la media poblacional = μ₀.</span><span data-tr="ja">σ が既知または n≥30。母平均 = μ₀ を検定。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">One-sample t-test</span><span data-tr="es">T-Test de Una Muestra</span><span data-tr="ja">1標本 t 検定</span></div><div class="f">t = (x̄ − μ₀) / (s/√n), df = n−1</div><div class="n"><span data-tr="en">σ unknown. Same purpose as z-test but with heavier tails.</span><span data-tr="es">σ desconocida. Mismo propósito que z-test pero con colas más pesadas.</span><span data-tr="ja">σ が未知。z 検定と同目的だが裾が重い。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Two-sample t-test</span><span data-tr="es">T-Test de Dos Muestras</span><span data-tr="ja">2標本 t 検定</span></div><div class="f">t = (x̄₁ − x̄₂) / √(s₁²/n₁ + s₂²/n₂)</div><div class="n"><span data-tr="en">Compare means of two independent groups. Welch's version doesn't assume equal variance.</span><span data-tr="es">Compara medias de dos grupos independientes. La versión de Welch no asume varianza igual.</span><span data-tr="ja">独立2群の平均を比較。Welch 版は等分散を仮定しない。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Paired t-test</span><span data-tr="es">T-Test Pareado</span><span data-tr="ja">対応のある t 検定</span></div><div class="f">t = d̄ / (s_d/√n), d = x₁−x₂</div><div class="n"><span data-tr="en">Same subjects measured twice (before/after). Test if mean difference ≠ 0.</span><span data-tr="es">Mismos sujetos medidos dos veces (antes/después). Prueba si la diferencia media ≠ 0.</span><span data-tr="ja">同じ被験者を 2 回測定 (前/後)。差の平均 ≠ 0 を検定。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Chi-square Goodness of Fit</span><span data-tr="es">Bondad de Ajuste Chi-Cuadrado</span><span data-tr="ja">カイ二乗 適合度検定</span></div><div class="f">χ² = Σ (Oᵢ − Eᵢ)² / Eᵢ</div><div class="n"><span data-tr="en">Does observed frequency match expected distribution? df = k−1.</span><span data-tr="es">¿La frecuencia observada coincide con la esperada? gl = k−1.</span><span data-tr="ja">観測頻度が期待分布と一致するか？ 自由度 = k−1。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Chi-square Independence</span><span data-tr="es">Chi-Cuadrado de Independencia</span><span data-tr="ja">カイ二乗 独立性検定</span></div><div class="f"><span data-tr="en">Same formula, applied to contingency table</span><span data-tr="es">Misma fórmula, aplicada a tabla de contingencia</span><span data-tr="ja">同じ式を分割表に適用</span></div><div class="n"><span data-tr="en">Are two categorical variables associated? df = (r−1)(c−1).</span><span data-tr="es">¿Están asociadas dos variables categóricas? gl = (r−1)(c−1).</span><span data-tr="ja">2 つのカテゴリ変数に関連があるか？ 自由度 = (r−1)(c−1)。</span></div></div>
   </div>
 
   <div class="callout cl-red">
-    <strong>Error Types</strong>
-    Type I (α): reject H₀ when it's true (false positive). You see a pattern that isn't there.<br>
-    Type II (β): fail to reject H₀ when it's false (false negative). You miss a real pattern.<br>
-    Power = 1 − β: probability of detecting a real effect. Increase with larger n, larger effect, or larger α.
+    <strong><span data-tr="en">Error Types</span><span data-tr="es">Tipos de Error</span><span data-tr="ja">誤りの種類</span></strong>
+    <span data-tr="en">Type I (α): reject H₀ when it's true (false positive). You see a pattern that isn't there.<br>Type II (β): fail to reject H₀ when it's false (false negative). You miss a real pattern.<br>Power = 1 − β: probability of detecting a real effect. Increase with larger n, larger effect, or larger α.</span>
+    <span data-tr="es">Tipo I (α): rechazar H₀ cuando es verdadera (falso positivo). Ves un patrón que no existe.<br>Tipo II (β): no rechazar H₀ cuando es falsa (falso negativo). Pierdes un patrón real.<br>Potencia = 1 − β: probabilidad de detectar un efecto real. Aumenta con mayor n, mayor efecto o mayor α.</span>
+    <span data-tr="ja">第一種 (α): H₀ が真なのに棄却 (偽陽性)。存在しないパターンを見る。<br>第二種 (β): H₀ が偽なのに棄却失敗 (偽陰性)。真のパターンを見逃す。<br>検出力 = 1 − β: 実際の効果を検出する確率。n、効果量、α を大きくすると増える。</span>
   </div>
 
-  <div class="sub-title">Multiple Testing</div>
+  <div class="sub-title"><span data-tr="en">Multiple Testing</span><span data-tr="es">Pruebas Múltiples</span><span data-tr="ja">多重検定</span></div>
   <div class="grid">
-    <div class="c"><div class="c-label">Bonferroni Correction</div><div class="f">α_adjusted = α / m</div><div class="n">m = number of tests. Conservative — controls family-wise error rate.</div></div>
-    <div class="c"><div class="c-label">Benjamini-Hochberg (FDR)</div><div class="f">Rank p-values, reject if pᵢ ≤ (i/m)·α</div><div class="n">Controls false discovery rate instead of family-wise rate. Less conservative, more power.</div></div>
-    <div class="c"><div class="c-label">Effect Size (Cohen's d)</div><div class="f">d = (x̄₁ − x̄₂) / s_pooled</div><div class="n">Standardized difference. Small=0.2, Medium=0.5, Large=0.8. p-value says if; effect size says how much.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Bonferroni Correction</span><span data-tr="es">Corrección de Bonferroni</span><span data-tr="ja">ボンフェローニ補正</span></div><div class="f">α_adjusted = α / m</div><div class="n"><span data-tr="en">m = number of tests. Conservative — controls family-wise error rate.</span><span data-tr="es">m = número de pruebas. Conservador — controla la tasa de error por familia.</span><span data-tr="ja">m = 検定の数。保守的 — ファミリーワイズ誤り率を制御。</span></div></div>
+    <div class="c"><div class="c-label">Benjamini-Hochberg (FDR)</div><div class="f"><span data-tr="en">Rank p-values, reject if pᵢ ≤ (i/m)·α</span><span data-tr="es">Ordena p-valores, rechaza si pᵢ ≤ (i/m)·α</span><span data-tr="ja">p 値を順位付け、pᵢ ≤ (i/m)·α なら棄却</span></div><div class="n"><span data-tr="en">Controls false discovery rate instead of family-wise rate. Less conservative, more power.</span><span data-tr="es">Controla la tasa de falsos descubrimientos en vez de familia-wise. Menos conservadora, más potencia.</span><span data-tr="ja">FDR を制御 (ファミリーワイズでなく)。保守的でなく、検出力が高い。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Effect Size (Cohen's d)</span><span data-tr="es">Tamaño del Efecto (d de Cohen)</span><span data-tr="ja">効果量 (コーエンの d)</span></div><div class="f">d = (x̄₁ − x̄₂) / s_pooled</div><div class="n"><span data-tr="en">Standardized difference. Small=0.2, Medium=0.5, Large=0.8. p-value says if; effect size says how much.</span><span data-tr="es">Diferencia estandarizada. Pequeño=0.2, Mediano=0.5, Grande=0.8. El p-valor dice si; el tamaño dice cuánto.</span><span data-tr="ja">標準化された差。小=0.2、中=0.5、大=0.8。p 値は「あるか」、効果量は「どれくらいか」。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 8. ANOVA                                        -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 8. ANOVA -->
 <div class="section" id="anova">
   <div class="sec-head"><span class="sec-num n-teal">08</span><span class="sec-title">ANOVA</span></div>
-  <p class="sec-desc">Comparing means across 3+ groups — because running pairwise t-tests inflates your Type I error.</p>
+  <p class="sec-desc"><span data-tr="en">Comparing means across 3+ groups — because running pairwise t-tests inflates your Type I error.</span><span data-tr="es">Comparar medias entre 3+ grupos — porque hacer t-tests pareados infla tu error tipo I.</span><span data-tr="ja">3 つ以上のグループの平均を比較 — ペアごとの t 検定は第一種の誤りを膨張させるため。</span></p>
 
   <div class="grid">
-    <div class="c"><div class="c-label">One-Way ANOVA</div><div class="f">F = MS_between / MS_within<br>MS = SS / df</div><div class="n">H₀: all group means equal. Large F → at least one group differs.</div></div>
-    <div class="c"><div class="c-label">SS_between</div><div class="f">SS_B = Σ nⱼ(x̄ⱼ − x̄)²</div><div class="n">Variation explained by group membership. df = k−1.</div></div>
-    <div class="c"><div class="c-label">SS_within</div><div class="f">SS_W = ΣΣ (xᵢⱼ − x̄ⱼ)²</div><div class="n">Variation within groups (noise). df = N−k.</div></div>
-    <div class="c"><div class="c-label">Two-Way ANOVA</div><div class="f">Tests main effects of A, B, and interaction A×B</div><div class="n">Can detect if the effect of one factor depends on the level of another.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">One-Way ANOVA</span><span data-tr="es">ANOVA de Una Vía</span><span data-tr="ja">一元配置 ANOVA</span></div><div class="f">F = MS_between / MS_within<br>MS = SS / df</div><div class="n"><span data-tr="en">H₀: all group means equal. Large F → at least one group differs.</span><span data-tr="es">H₀: todas las medias grupales iguales. F grande → al menos un grupo difiere.</span><span data-tr="ja">H₀: 全グループの平均が等しい。F が大きい → 少なくとも 1 グループが異なる。</span></div></div>
+    <div class="c"><div class="c-label">SS_between</div><div class="f">SS_B = Σ nⱼ(x̄ⱼ − x̄)²</div><div class="n"><span data-tr="en">Variation explained by group membership. df = k−1.</span><span data-tr="es">Variación explicada por la pertenencia al grupo. gl = k−1.</span><span data-tr="ja">グループ所属で説明される変動。自由度 = k−1。</span></div></div>
+    <div class="c"><div class="c-label">SS_within</div><div class="f">SS_W = ΣΣ (xᵢⱼ − x̄ⱼ)²</div><div class="n"><span data-tr="en">Variation within groups (noise). df = N−k.</span><span data-tr="es">Variación dentro de los grupos (ruido). gl = N−k.</span><span data-tr="ja">グループ内変動 (ノイズ)。自由度 = N−k。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Two-Way ANOVA</span><span data-tr="es">ANOVA de Dos Vías</span><span data-tr="ja">二元配置 ANOVA</span></div><div class="f"><span data-tr="en">Tests main effects of A, B, and interaction A×B</span><span data-tr="es">Prueba los efectos principales de A, B y la interacción A×B</span><span data-tr="ja">A、B の主効果と交互作用 A×B を検定</span></div><div class="n"><span data-tr="en">Can detect if the effect of one factor depends on the level of another.</span><span data-tr="es">Detecta si el efecto de un factor depende del nivel de otro.</span><span data-tr="ja">ある因子の効果が他の因子の水準に依存するかを検出。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 9. NONPARAMETRIC METHODS                        -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 9. NONPARAMETRIC -->
 <div class="section" id="nonparam">
-  <div class="sec-head"><span class="sec-num n-green">09</span><span class="sec-title">Nonparametric Methods</span></div>
-  <p class="sec-desc">When your data doesn't meet parametric assumptions — no normality required.</p>
+  <div class="sec-head"><span class="sec-num n-green">09</span><span class="sec-title"><span data-tr="en">Nonparametric Methods</span><span data-tr="es">Métodos No Paramétricos</span><span data-tr="ja">ノンパラメトリック手法</span></span></div>
+  <p class="sec-desc"><span data-tr="en">When your data doesn't meet parametric assumptions — no normality required.</span><span data-tr="es">Cuando tus datos no cumplen supuestos paramétricos — no se requiere normalidad.</span><span data-tr="ja">データがパラメトリックな仮定を満たさないとき — 正規性は不要。</span></p>
 
   <div class="grid">
-    <div class="c"><div class="c-label">Mann-Whitney U</div><div class="f">U = Σ ranks of group 1 − n₁(n₁+1)/2</div><div class="n">Nonparametric alternative to two-sample t-test. Compares distributions, not just means.</div></div>
-    <div class="c"><div class="c-label">Wilcoxon Signed-Rank</div><div class="f">Rank |differences|, sum positive & negative ranks</div><div class="n">Alternative to paired t-test. Tests if median difference = 0.</div></div>
-    <div class="c"><div class="c-label">Kruskal-Wallis</div><div class="f">H = (12/(N(N+1))) Σ (Rⱼ²/nⱼ) − 3(N+1)</div><div class="n">Alternative to one-way ANOVA. Tests if k groups come from same distribution.</div></div>
-    <div class="c"><div class="c-label">Permutation Test</div><div class="f">Shuffle labels B times, compute test stat each time</div><div class="n">Exact test under H₀. No distributional assumptions. p = fraction of permutations ≥ observed.</div></div>
-    <div class="c"><div class="c-label">Kolmogorov-Smirnov</div><div class="f">D = max|F_n(x) − F(x)|</div><div class="n">Tests if sample comes from a specific distribution. Compares empirical vs theoretical CDF.</div></div>
-    <div class="c"><div class="c-label">Kernel Density Estimation</div><div class="f">f̂(x) = (1/(nh)) Σ K((x−xᵢ)/h)</div><div class="n">Smooth nonparametric density estimate. K = kernel (usually Gaussian), h = bandwidth.</div></div>
+    <div class="c"><div class="c-label">Mann-Whitney U</div><div class="f">U = Σ <span data-tr="en">ranks of group 1</span><span data-tr="es">rangos del grupo 1</span><span data-tr="ja">グループ1の順位</span> − n₁(n₁+1)/2</div><div class="n"><span data-tr="en">Nonparametric alternative to two-sample t-test. Compares distributions, not just means.</span><span data-tr="es">Alternativa no paramétrica al t-test de dos muestras. Compara distribuciones, no solo medias.</span><span data-tr="ja">2 標本 t 検定のノンパラ版。平均だけでなく分布を比較。</span></div></div>
+    <div class="c"><div class="c-label">Wilcoxon Signed-Rank</div><div class="f"><span data-tr="en">Rank |differences|, sum positive &amp; negative ranks</span><span data-tr="es">Ordena |diferencias|, suma rangos positivos y negativos</span><span data-tr="ja">|差| に順位をつけ、正と負の順位和を取る</span></div><div class="n"><span data-tr="en">Alternative to paired t-test. Tests if median difference = 0.</span><span data-tr="es">Alternativa al t-test pareado. Prueba si la mediana de las diferencias = 0.</span><span data-tr="ja">対応のある t 検定の代替。差の中央値 = 0 を検定。</span></div></div>
+    <div class="c"><div class="c-label">Kruskal-Wallis</div><div class="f">H = (12/(N(N+1))) Σ (Rⱼ²/nⱼ) − 3(N+1)</div><div class="n"><span data-tr="en">Alternative to one-way ANOVA. Tests if k groups come from same distribution.</span><span data-tr="es">Alternativa al ANOVA de una vía. Prueba si k grupos vienen de la misma distribución.</span><span data-tr="ja">一元 ANOVA の代替。k グループが同じ分布由来かを検定。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Permutation Test</span><span data-tr="es">Prueba de Permutación</span><span data-tr="ja">並べ替え検定</span></div><div class="f"><span data-tr="en">Shuffle labels B times, compute test stat each time</span><span data-tr="es">Baraja etiquetas B veces, calcula el estadístico cada vez</span><span data-tr="ja">ラベルを B 回シャッフルし、毎回検定統計量を計算</span></div><div class="n"><span data-tr="en">Exact test under H₀. No distributional assumptions. p = fraction of permutations ≥ observed.</span><span data-tr="es">Prueba exacta bajo H₀. Sin supuestos distribucionales. p = fracción de permutaciones ≥ observada.</span><span data-tr="ja">H₀ の下で厳密検定。分布仮定不要。p = 観測値以上の順列の割合。</span></div></div>
+    <div class="c"><div class="c-label">Kolmogorov-Smirnov</div><div class="f">D = max|F_n(x) − F(x)|</div><div class="n"><span data-tr="en">Tests if sample comes from a specific distribution. Compares empirical vs theoretical CDF.</span><span data-tr="es">Prueba si la muestra viene de una distribución específica. Compara CDF empírica vs teórica.</span><span data-tr="ja">標本が特定の分布由来かを検定。経験 CDF と理論 CDF を比較。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Kernel Density Estimation</span><span data-tr="es">Estimación por Núcleo</span><span data-tr="ja">カーネル密度推定</span></div><div class="f">f̂(x) = (1/(nh)) Σ K((x−xᵢ)/h)</div><div class="n"><span data-tr="en">Smooth nonparametric density estimate. K = kernel (usually Gaussian), h = bandwidth.</span><span data-tr="es">Estimación de densidad no paramétrica suave. K = núcleo (usualmente Gaussiano), h = ancho de banda.</span><span data-tr="ja">滑らかなノンパラ密度推定。K = カーネル (通常ガウス)、h = バンド幅。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 10. BAYESIAN STATISTICS                         -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 10. BAYESIAN -->
 <div class="section" id="bayes">
-  <div class="sec-head"><span class="sec-num n-accent">10</span><span class="sec-title">Bayesian Statistics</span></div>
-  <p class="sec-desc">Parameters aren't fixed unknown constants — they're random variables with distributions that update as data arrives.</p>
+  <div class="sec-head"><span class="sec-num n-accent">10</span><span class="sec-title"><span data-tr="en">Bayesian Statistics</span><span data-tr="es">Estadística Bayesiana</span><span data-tr="ja">ベイズ統計</span></span></div>
+  <p class="sec-desc"><span data-tr="en">Parameters aren't fixed unknown constants — they're random variables with distributions that update as data arrives.</span><span data-tr="es">Los parámetros no son constantes fijas desconocidas — son variables aleatorias con distribuciones que se actualizan con datos.</span><span data-tr="ja">パラメータは固定の未知定数ではなく、データで更新される分布を持つ確率変数。</span></p>
 
   <div class="grid">
-    <div class="c"><div class="c-label">Bayesian Inference</div><div class="f">P(θ|data) = P(data|θ) · P(θ) / P(data)</div><div class="n">posterior = likelihood × prior / evidence. Everything follows from this.</div></div>
-    <div class="c"><div class="c-label">Prior → Posterior</div><div class="f">posterior ∝ likelihood × prior</div><div class="n">P(data) is just a normalizing constant. Often we work with the unnormalized form.</div></div>
-    <div class="c"><div class="c-label">Conjugate Priors</div><div class="f">Beta → Bernoulli/Binomial<br>Normal → Normal (known σ)<br>Gamma → Poisson<br>Dirichlet → Multinomial</div><div class="n">Prior and posterior are in the same family → closed-form updates. No MCMC needed.</div></div>
-    <div class="c"><div class="c-label">Beta-Binomial Update</div><div class="f">Prior: Beta(α, β)<br>After k successes in n trials:<br>Posterior: Beta(α+k, β+n−k)</div><div class="n">The most important conjugate pair. Models uncertainty about probabilities (A/B testing, CTR).</div></div>
-    <div class="c"><div class="c-label">Credible Interval</div><div class="f">Find [a,b] s.t. P(a ≤ θ ≤ b | data) = 0.95</div><div class="n">Direct probability statement about θ. "There's a 95% probability θ is in this interval." (CI can't say this.)</div></div>
-    <div class="c"><div class="c-label">Bayesian vs Frequentist</div><div class="f">Bayesian: P(θ|data) — probability of parameter<br>Frequentist: P(data|θ) — probability of data</div><div class="n">Different questions, not competitors. Use whichever matches your problem.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Bayesian Inference</span><span data-tr="es">Inferencia Bayesiana</span><span data-tr="ja">ベイズ推論</span></div><div class="f">P(θ|data) = P(data|θ) · P(θ) / P(data)</div><div class="n"><span data-tr="en">posterior = likelihood × prior / evidence. Everything follows from this.</span><span data-tr="es">posterior = verosimilitud × prior / evidencia. Todo se deriva de aquí.</span><span data-tr="ja">事後 = 尤度 × 事前 / エビデンス。全てはここから導かれる。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Prior → Posterior</span><span data-tr="es">Prior → Posterior</span><span data-tr="ja">事前 → 事後</span></div><div class="f">posterior ∝ likelihood × prior</div><div class="n"><span data-tr="en">P(data) is just a normalizing constant. Often we work with the unnormalized form.</span><span data-tr="es">P(datos) es solo una constante de normalización. A menudo trabajamos con la forma no normalizada.</span><span data-tr="ja">P(data) は正規化定数に過ぎない。非正規化形式で作業することが多い。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Conjugate Priors</span><span data-tr="es">Priors Conjugados</span><span data-tr="ja">共役事前分布</span></div><div class="f">Beta → Bernoulli/Binomial<br>Normal → Normal (<span data-tr="en">known σ</span><span data-tr="es">σ conocida</span><span data-tr="ja">σ 既知</span>)<br>Gamma → Poisson<br>Dirichlet → Multinomial</div><div class="n"><span data-tr="en">Prior and posterior are in the same family → closed-form updates. No MCMC needed.</span><span data-tr="es">Prior y posterior están en la misma familia → actualizaciones cerradas. Sin MCMC.</span><span data-tr="ja">事前と事後が同族 → 閉形式更新。MCMC 不要。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Beta-Binomial Update</span><span data-tr="es">Actualización Beta-Binomial</span><span data-tr="ja">ベータ-二項更新</span></div><div class="f">Prior: Beta(α, β)<br><span data-tr="en">After k successes in n trials:</span><span data-tr="es">Tras k éxitos en n ensayos:</span><span data-tr="ja">n 試行中 k 成功の後:</span><br>Posterior: Beta(α+k, β+n−k)</div><div class="n"><span data-tr="en">The most important conjugate pair. Models uncertainty about probabilities (A/B testing, CTR).</span><span data-tr="es">El par conjugado más importante. Modela incertidumbre sobre probabilidades (A/B, CTR).</span><span data-tr="ja">最重要の共役ペア。確率の不確実性をモデル化 (A/B テスト、CTR)。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Credible Interval</span><span data-tr="es">Intervalo de Credibilidad</span><span data-tr="ja">信用区間</span></div><div class="f"><span data-tr="en">Find [a,b] s.t. P(a ≤ θ ≤ b | data) = 0.95</span><span data-tr="es">Encuentra [a,b] tal que P(a ≤ θ ≤ b | datos) = 0.95</span><span data-tr="ja">P(a ≤ θ ≤ b | data) = 0.95 となる [a,b] を求める</span></div><div class="n"><span data-tr="en">Direct probability statement about θ. "There's a 95% probability θ is in this interval." (CI can't say this.)</span><span data-tr="es">Afirmación directa sobre θ. "Hay 95% de probabilidad de que θ esté en este intervalo." (El IC no puede decir esto.)</span><span data-tr="ja">θ について直接的な確率言明。「θ がこの区間にある確率は 95%」(頻度論の CI は言えない)。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Bayesian vs Frequentist</span><span data-tr="es">Bayesiano vs Frecuentista</span><span data-tr="ja">ベイズ vs 頻度論</span></div><div class="f"><span data-tr="en">Bayesian: P(θ|data) — probability of parameter<br>Frequentist: P(data|θ) — probability of data</span><span data-tr="es">Bayesiano: P(θ|datos) — probabilidad del parámetro<br>Frecuentista: P(datos|θ) — probabilidad de los datos</span><span data-tr="ja">ベイズ: P(θ|data) — パラメータの確率<br>頻度論: P(data|θ) — データの確率</span></div><div class="n"><span data-tr="en">Different questions, not competitors. Use whichever matches your problem.</span><span data-tr="es">Preguntas distintas, no competidores. Usa el que se ajuste a tu problema.</span><span data-tr="ja">異なる問い、競合ではない。問題に合う方を使う。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 11. INFORMATION THEORY                          -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 11. INFORMATION THEORY -->
 <div class="section" id="info">
-  <div class="sec-head"><span class="sec-num n-purple">11</span><span class="sec-title">Information Theory</span></div>
-  <p class="sec-desc">Quantifying uncertainty, surprise, and the information content of data. Powers decision trees, cross-entropy loss, and generative models.</p>
+  <div class="sec-head"><span class="sec-num n-purple">11</span><span class="sec-title"><span data-tr="en">Information Theory</span><span data-tr="es">Teoría de la Información</span><span data-tr="ja">情報理論</span></span></div>
+  <p class="sec-desc"><span data-tr="en">Quantifying uncertainty, surprise, and the information content of data. Powers decision trees, cross-entropy loss, and generative models.</span><span data-tr="es">Cuantificando incertidumbre, sorpresa y contenido informativo. Base de árboles de decisión, pérdida de entropía cruzada y modelos generativos.</span><span data-tr="ja">不確実性、驚き、データの情報量を定量化。決定木、交差エントロピー損失、生成モデルの基盤。</span></p>
 
   <div class="grid">
-    <div class="c"><div class="c-label">Entropy</div><div class="f">H(X) = −Σ P(xᵢ) log₂ P(xᵢ)</div><div class="n">Average surprise. Max when all outcomes equally likely (uniform). 0 when outcome is certain.</div></div>
-    <div class="c"><div class="c-label">Joint Entropy</div><div class="f">H(X,Y) = −ΣΣ P(x,y) log P(x,y)</div><div class="n">Uncertainty of the joint system. H(X,Y) ≤ H(X) + H(Y), equality iff independent.</div></div>
-    <div class="c"><div class="c-label">Conditional Entropy</div><div class="f">H(X|Y) = H(X,Y) − H(Y)</div><div class="n">Remaining uncertainty about X after observing Y.</div></div>
-    <div class="c"><div class="c-label">Mutual Information</div><div class="f">I(X;Y) = H(X) − H(X|Y) = H(X) + H(Y) − H(X,Y)</div><div class="n">Information gained about X by observing Y. Symmetric: I(X;Y) = I(Y;X). 0 iff independent.</div></div>
-    <div class="c"><div class="c-label">KL Divergence</div><div class="f">D_KL(P‖Q) = Σ P(x) log(P(x)/Q(x))</div><div class="n">Information lost when Q approximates P. Not symmetric. Always ≥ 0. Used in VAEs, policy gradient.</div></div>
-    <div class="c"><div class="c-label">Cross-Entropy</div><div class="f">H(P,Q) = −Σ P(x) log Q(x)</div><div class="n">H(P,Q) = H(P) + D_KL(P‖Q). Minimizing cross-entropy = minimizing KL (since H(P) is fixed).</div></div>
-    <div class="c"><div class="c-label">Information Gain</div><div class="f">IG(Y,X) = H(Y) − H(Y|X)</div><div class="n">Reduction in entropy from splitting on feature X. Used to build decision trees (ID3/C4.5).</div></div>
-    <div class="c"><div class="c-label">Gini Impurity</div><div class="f">Gini = 1 − Σ pᵢ²</div><div class="n">Alternative to entropy for tree splits. Faster to compute (no log). Max = 0.5 (binary), 0 = pure.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Entropy</span><span data-tr="es">Entropía</span><span data-tr="ja">エントロピー</span></div><div class="f">H(X) = −Σ P(xᵢ) log₂ P(xᵢ)</div><div class="n"><span data-tr="en">Average surprise. Max when all outcomes equally likely (uniform). 0 when outcome is certain.</span><span data-tr="es">Sorpresa promedio. Máxima cuando todos los resultados son igualmente probables. 0 cuando el resultado es seguro.</span><span data-tr="ja">平均驚き。全結果等確率 (一様) で最大。結果が確実なら 0。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Joint Entropy</span><span data-tr="es">Entropía Conjunta</span><span data-tr="ja">結合エントロピー</span></div><div class="f">H(X,Y) = −ΣΣ P(x,y) log P(x,y)</div><div class="n"><span data-tr="en">Uncertainty of the joint system. H(X,Y) ≤ H(X) + H(Y), equality iff independent.</span><span data-tr="es">Incertidumbre del sistema conjunto. H(X,Y) ≤ H(X) + H(Y), igualdad ssi son independientes.</span><span data-tr="ja">結合系の不確実性。H(X,Y) ≤ H(X) + H(Y)、等号は独立なときのみ。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Conditional Entropy</span><span data-tr="es">Entropía Condicional</span><span data-tr="ja">条件付きエントロピー</span></div><div class="f">H(X|Y) = H(X,Y) − H(Y)</div><div class="n"><span data-tr="en">Remaining uncertainty about X after observing Y.</span><span data-tr="es">Incertidumbre restante sobre X después de observar Y.</span><span data-tr="ja">Y を観測した後の X に対する残り不確実性。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Mutual Information</span><span data-tr="es">Información Mutua</span><span data-tr="ja">相互情報量</span></div><div class="f">I(X;Y) = H(X) − H(X|Y) = H(X) + H(Y) − H(X,Y)</div><div class="n"><span data-tr="en">Information gained about X by observing Y. Symmetric: I(X;Y) = I(Y;X). 0 iff independent.</span><span data-tr="es">Información ganada sobre X al observar Y. Simétrica: I(X;Y) = I(Y;X). 0 ssi independientes.</span><span data-tr="ja">Y を見ることで得られる X の情報量。対称: I(X;Y) = I(Y;X)。独立なら 0。</span></div></div>
+    <div class="c"><div class="c-label">KL Divergence</div><div class="f">D_KL(P‖Q) = Σ P(x) log(P(x)/Q(x))</div><div class="n"><span data-tr="en">Information lost when Q approximates P. Not symmetric. Always ≥ 0. Used in VAEs, policy gradient.</span><span data-tr="es">Información perdida cuando Q aproxima a P. No simétrica. Siempre ≥ 0. Usada en VAEs, policy gradient.</span><span data-tr="ja">Q で P を近似したときの情報損失。非対称。常に ≥ 0。VAE、方策勾配で使用。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Cross-Entropy</span><span data-tr="es">Entropía Cruzada</span><span data-tr="ja">交差エントロピー</span></div><div class="f">H(P,Q) = −Σ P(x) log Q(x)</div><div class="n"><span data-tr="en">H(P,Q) = H(P) + D_KL(P‖Q). Minimizing cross-entropy = minimizing KL (since H(P) is fixed).</span><span data-tr="es">H(P,Q) = H(P) + D_KL(P‖Q). Minimizar cross-entropy = minimizar KL (porque H(P) es fija).</span><span data-tr="ja">H(P,Q) = H(P) + D_KL(P‖Q)。H(P) は固定なので交差エントロピー最小化 = KL 最小化。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Information Gain</span><span data-tr="es">Ganancia de Información</span><span data-tr="ja">情報利得</span></div><div class="f">IG(Y,X) = H(Y) − H(Y|X)</div><div class="n"><span data-tr="en">Reduction in entropy from splitting on feature X. Used to build decision trees (ID3/C4.5).</span><span data-tr="es">Reducción de entropía al dividir por la característica X. Usada para construir árboles de decisión (ID3/C4.5).</span><span data-tr="ja">特徴量 X での分割によるエントロピー減少。決定木 (ID3/C4.5) の構築に使用。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Gini Impurity</span><span data-tr="es">Impureza Gini</span><span data-tr="ja">ジニ不純度</span></div><div class="f">Gini = 1 − Σ pᵢ²</div><div class="n"><span data-tr="en">Alternative to entropy for tree splits. Faster to compute (no log). Max = 0.5 (binary), 0 = pure.</span><span data-tr="es">Alternativa a la entropía para divisiones. Más rápida (sin log). Máx = 0.5 (binario), 0 = puro.</span><span data-tr="ja">木分割でエントロピーの代替。計算が速い (log なし)。最大 = 0.5 (二値)、0 = 純粋。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 12. REGRESSION                                  -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 12. REGRESSION -->
 <div class="section" id="regression">
-  <div class="sec-head"><span class="sec-num n-blue">12</span><span class="sec-title">Regression</span></div>
+  <div class="sec-head"><span class="sec-num n-blue">12</span><span class="sec-title"><span data-tr="en">Regression</span><span data-tr="es">Regresión</span><span data-tr="ja">回帰</span></span></div>
 
   <div class="grid">
-    <div class="c"><div class="c-label">Simple Linear Regression</div><div class="f">ŷ = β₀ + β₁x</div></div>
-    <div class="c"><div class="c-label">Multiple Linear Regression</div><div class="f">ŷ = β₀ + β₁x₁ + … + βₚxₚ</div></div>
-    <div class="c"><div class="c-label">OLS Slope</div><div class="f">β₁ = Σ(xᵢ−x̄)(yᵢ−ȳ) / Σ(xᵢ−x̄)²</div><div class="n">= Cov(X,Y) / Var(X). Closed-form solution.</div></div>
-    <div class="c"><div class="c-label">OLS Intercept</div><div class="f">β₀ = ȳ − β₁x̄</div><div class="n">Line always passes through (x̄, ȳ).</div></div>
-    <div class="c"><div class="c-label">Normal Equation</div><div class="f">β = (XᵀX)⁻¹ Xᵀy</div><div class="n">Closed-form for multiple regression. O(p³) — expensive for many features.</div></div>
-    <div class="c"><div class="c-label">Cost Function (MSE)</div><div class="f">J(β) = (1/2m) Σ(ŷᵢ − yᵢ)²</div><div class="n">The ½ makes the derivative cleaner. Gradient descent minimizes this.</div></div>
-    <div class="c"><div class="c-label">Gradient Descent Update</div><div class="f">βⱼ := βⱼ − α · (1/m) Σ(ŷᵢ−yᵢ)·xⱼᵢ</div><div class="n">α = learning rate. Repeat until convergence. Update all β simultaneously.</div></div>
-    <div class="c"><div class="c-label">Polynomial Regression</div><div class="f">ŷ = β₀ + β₁x + β₂x² + … + βₖx^k</div><div class="n">Still linear in the parameters — just use x, x², x³ as separate features.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Simple Linear Regression</span><span data-tr="es">Regresión Lineal Simple</span><span data-tr="ja">単回帰</span></div><div class="f">ŷ = β₀ + β₁x</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Multiple Linear Regression</span><span data-tr="es">Regresión Lineal Múltiple</span><span data-tr="ja">重回帰</span></div><div class="f">ŷ = β₀ + β₁x₁ + … + βₚxₚ</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">OLS Slope</span><span data-tr="es">Pendiente OLS</span><span data-tr="ja">OLS 傾き</span></div><div class="f">β₁ = Σ(xᵢ−x̄)(yᵢ−ȳ) / Σ(xᵢ−x̄)²</div><div class="n"><span data-tr="en">= Cov(X,Y) / Var(X). Closed-form solution.</span><span data-tr="es">= Cov(X,Y) / Var(X). Solución de forma cerrada.</span><span data-tr="ja">= Cov(X,Y) / Var(X)。閉形式解。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">OLS Intercept</span><span data-tr="es">Intercepto OLS</span><span data-tr="ja">OLS 切片</span></div><div class="f">β₀ = ȳ − β₁x̄</div><div class="n"><span data-tr="en">Line always passes through (x̄, ȳ).</span><span data-tr="es">La línea siempre pasa por (x̄, ȳ).</span><span data-tr="ja">直線は常に (x̄, ȳ) を通る。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Normal Equation</span><span data-tr="es">Ecuación Normal</span><span data-tr="ja">正規方程式</span></div><div class="f">β = (XᵀX)⁻¹ Xᵀy</div><div class="n"><span data-tr="en">Closed-form for multiple regression. O(p³) — expensive for many features.</span><span data-tr="es">Forma cerrada para regresión múltiple. O(p³) — cara con muchas características.</span><span data-tr="ja">重回帰の閉形式解。O(p³) — 特徴量が多いと高コスト。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Cost Function (MSE)</span><span data-tr="es">Función de Costo (MSE)</span><span data-tr="ja">コスト関数 (MSE)</span></div><div class="f">J(β) = (1/2m) Σ(ŷᵢ − yᵢ)²</div><div class="n"><span data-tr="en">The ½ makes the derivative cleaner. Gradient descent minimizes this.</span><span data-tr="es">El ½ hace la derivada más limpia. El descenso de gradiente minimiza esto.</span><span data-tr="ja">½ により微分がきれいに。勾配降下法でこれを最小化。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Gradient Descent Update</span><span data-tr="es">Actualización Descenso de Gradiente</span><span data-tr="ja">勾配降下法の更新</span></div><div class="f">βⱼ := βⱼ − α · (1/m) Σ(ŷᵢ−yᵢ)·xⱼᵢ</div><div class="n"><span data-tr="en">α = learning rate. Repeat until convergence. Update all β simultaneously.</span><span data-tr="es">α = tasa de aprendizaje. Repetir hasta converger. Actualiza todos los β simultáneamente.</span><span data-tr="ja">α = 学習率。収束まで繰り返す。全ての β を同時に更新。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Polynomial Regression</span><span data-tr="es">Regresión Polinomial</span><span data-tr="ja">多項式回帰</span></div><div class="f">ŷ = β₀ + β₁x + β₂x² + … + βₖx^k</div><div class="n"><span data-tr="en">Still linear in the parameters — just use x, x², x³ as separate features.</span><span data-tr="es">Sigue siendo lineal en los parámetros — solo usa x, x², x³ como características separadas.</span><span data-tr="ja">パラメータに関して依然線形 — x、x²、x³ を別々の特徴量として使うだけ。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 13. CLASSIFICATION                              -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 13. CLASSIFICATION -->
 <div class="section" id="class">
-  <div class="sec-head"><span class="sec-num n-red">13</span><span class="sec-title">Classification</span></div>
+  <div class="sec-head"><span class="sec-num n-red">13</span><span class="sec-title"><span data-tr="en">Classification</span><span data-tr="es">Clasificación</span><span data-tr="ja">分類</span></span></div>
 
   <div class="grid">
-    <div class="c"><div class="c-label">Sigmoid (Logistic)</div><div class="f">σ(z) = 1 / (1 + e^(−z))</div><div class="n">Maps ℝ → (0,1). Output = probability of class 1.</div></div>
-    <div class="c"><div class="c-label">Logistic Regression</div><div class="f">P(y=1|x) = σ(βᵀx)</div><div class="n">Linear in log-odds: log(p/(1−p)) = βᵀx. Decision boundary at βᵀx = 0.</div></div>
-    <div class="c"><div class="c-label">Binary Cross-Entropy (Log Loss)</div><div class="f">J = −(1/m) Σ[yᵢ log(ŷᵢ) + (1−yᵢ) log(1−ŷᵢ)]</div><div class="n">Convex. Heavily penalizes confident wrong predictions.</div></div>
-    <div class="c"><div class="c-label">Softmax (multi-class)</div><div class="f">P(y=k|x) = e^(zₖ) / Σⱼ e^(zⱼ)</div><div class="n">Generalizes sigmoid to K classes. Outputs sum to 1.</div></div>
-    <div class="c"><div class="c-label">Naive Bayes</div><div class="f">P(y|x₁,…,xₚ) ∝ P(y) ∏ P(xⱼ|y)</div><div class="n">Assumes features independent given class. Fast, works well for text. "Naive" = the independence assumption.</div></div>
-    <div class="c"><div class="c-label">KNN</div><div class="f">Predict class of k nearest neighbors (majority vote)</div><div class="n">No training phase. k=1 overfits, large k underfits. Distance metric matters (usually Euclidean).</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Sigmoid (Logistic)</span><span data-tr="es">Sigmoide (Logística)</span><span data-tr="ja">シグモイド (ロジスティック)</span></div><div class="f">σ(z) = 1 / (1 + e^(−z))</div><div class="n"><span data-tr="en">Maps ℝ → (0,1). Output = probability of class 1.</span><span data-tr="es">Mapea ℝ → (0,1). Salida = probabilidad de clase 1.</span><span data-tr="ja">ℝ → (0,1) に写像。出力 = クラス 1 の確率。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Logistic Regression</span><span data-tr="es">Regresión Logística</span><span data-tr="ja">ロジスティック回帰</span></div><div class="f">P(y=1|x) = σ(βᵀx)</div><div class="n"><span data-tr="en">Linear in log-odds: log(p/(1−p)) = βᵀx. Decision boundary at βᵀx = 0.</span><span data-tr="es">Lineal en log-momios: log(p/(1−p)) = βᵀx. Frontera de decisión en βᵀx = 0.</span><span data-tr="ja">対数オッズで線形: log(p/(1−p)) = βᵀx。決定境界は βᵀx = 0。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Binary Cross-Entropy (Log Loss)</span><span data-tr="es">Entropía Cruzada Binaria (Log Loss)</span><span data-tr="ja">二値交差エントロピー (Log Loss)</span></div><div class="f">J = −(1/m) Σ[yᵢ log(ŷᵢ) + (1−yᵢ) log(1−ŷᵢ)]</div><div class="n"><span data-tr="en">Convex. Heavily penalizes confident wrong predictions.</span><span data-tr="es">Convexa. Castiga fuerte predicciones confiadas erróneas.</span><span data-tr="ja">凸。自信のある誤予測を強く罰する。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Softmax (multi-class)</span><span data-tr="es">Softmax (multi-clase)</span><span data-tr="ja">ソフトマックス (多クラス)</span></div><div class="f">P(y=k|x) = e^(zₖ) / Σⱼ e^(zⱼ)</div><div class="n"><span data-tr="en">Generalizes sigmoid to K classes. Outputs sum to 1.</span><span data-tr="es">Generaliza la sigmoide a K clases. Las salidas suman 1.</span><span data-tr="ja">シグモイドを K クラスに一般化。出力の合計は 1。</span></div></div>
+    <div class="c"><div class="c-label">Naive Bayes</div><div class="f">P(y|x₁,…,xₚ) ∝ P(y) ∏ P(xⱼ|y)</div><div class="n"><span data-tr="en">Assumes features independent given class. Fast, works well for text. "Naive" = the independence assumption.</span><span data-tr="es">Supone características independientes dada la clase. Rápido, funciona bien en texto. "Ingenuo" = el supuesto de independencia.</span><span data-tr="ja">クラス条件下で特徴量独立を仮定。高速、テキストで有効。「素朴」= 独立仮定のこと。</span></div></div>
+    <div class="c"><div class="c-label">KNN</div><div class="f"><span data-tr="en">Predict class of k nearest neighbors (majority vote)</span><span data-tr="es">Predice la clase de los k vecinos más cercanos (voto mayoritario)</span><span data-tr="ja">k 近傍のクラスを予測 (多数決)</span></div><div class="n"><span data-tr="en">No training phase. k=1 overfits, large k underfits. Distance metric matters (usually Euclidean).</span><span data-tr="es">Sin fase de entrenamiento. k=1 sobreajusta, k grande subajusta. El método de distancia importa (usualmente Euclídea).</span><span data-tr="ja">訓練フェーズなし。k=1 で過学習、大きな k で過少適合。距離指標が重要 (通常ユークリッド)。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 14. REGRESSION METRICS                          -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 14. REGRESSION METRICS -->
 <div class="section" id="reg-met">
-  <div class="sec-head"><span class="sec-num n-yellow">14</span><span class="sec-title">Regression Metrics</span></div>
+  <div class="sec-head"><span class="sec-num n-yellow">14</span><span class="sec-title"><span data-tr="en">Regression Metrics</span><span data-tr="es">Métricas de Regresión</span><span data-tr="ja">回帰指標</span></span></div>
 
   <div class="grid">
-    <div class="c"><div class="c-label">MAE</div><div class="f">MAE = (1/n) Σ|yᵢ − ŷᵢ|</div><div class="n">Same units as y. Robust to outliers. Not differentiable at 0.</div></div>
-    <div class="c"><div class="c-label">MSE</div><div class="f">MSE = (1/n) Σ(yᵢ − ŷᵢ)²</div><div class="n">Units = y². Punishes large errors. Differentiable everywhere.</div></div>
-    <div class="c"><div class="c-label">RMSE</div><div class="f">RMSE = √MSE</div><div class="n">Same units as y. Most reported metric. RMSE ≥ MAE always.</div></div>
-    <div class="c"><div class="c-label">MAPE</div><div class="f">MAPE = (100/n) Σ |yᵢ−ŷᵢ|/|yᵢ|</div><div class="n">Percentage error. Undefined when yᵢ=0. Scale-independent.</div></div>
-    <div class="c"><div class="c-label">R²</div><div class="f">R² = 1 − SS_res / SS_total</div><div class="n">% variance explained. 1=perfect, 0=same as mean, <0=worse than mean.</div></div>
-    <div class="c"><div class="c-label">Adjusted R²</div><div class="f">Adj R² = 1 − [(1−R²)(n−1)/(n−p−1)]</div><div class="n">Penalizes adding useless features. If Adj R² drops, remove the feature.</div></div>
+    <div class="c"><div class="c-label">MAE</div><div class="f">MAE = (1/n) Σ|yᵢ − ŷᵢ|</div><div class="n"><span data-tr="en">Same units as y. Robust to outliers. Not differentiable at 0.</span><span data-tr="es">Mismas unidades que y. Robusto a atípicos. No diferenciable en 0.</span><span data-tr="ja">y と同じ単位。外れ値に強い。0 で微分不可能。</span></div></div>
+    <div class="c"><div class="c-label">MSE</div><div class="f">MSE = (1/n) Σ(yᵢ − ŷᵢ)²</div><div class="n"><span data-tr="en">Units = y². Punishes large errors. Differentiable everywhere.</span><span data-tr="es">Unidades = y². Castiga errores grandes. Diferenciable en todas partes.</span><span data-tr="ja">単位 = y²。大きな誤差を罰する。どこでも微分可能。</span></div></div>
+    <div class="c"><div class="c-label">RMSE</div><div class="f">RMSE = √MSE</div><div class="n"><span data-tr="en">Same units as y. Most reported metric. RMSE ≥ MAE always.</span><span data-tr="es">Mismas unidades que y. Métrica más reportada. Siempre RMSE ≥ MAE.</span><span data-tr="ja">y と同じ単位。最も報告される指標。常に RMSE ≥ MAE。</span></div></div>
+    <div class="c"><div class="c-label">MAPE</div><div class="f">MAPE = (100/n) Σ |yᵢ−ŷᵢ|/|yᵢ|</div><div class="n"><span data-tr="en">Percentage error. Undefined when yᵢ=0. Scale-independent.</span><span data-tr="es">Error porcentual. Indefinido cuando yᵢ=0. Independiente de escala.</span><span data-tr="ja">パーセント誤差。yᵢ=0 のとき未定義。スケール非依存。</span></div></div>
+    <div class="c"><div class="c-label">R²</div><div class="f">R² = 1 − SS_res / SS_total</div><div class="n"><span data-tr="en">% variance explained. 1=perfect, 0=same as mean, &lt;0=worse than mean.</span><span data-tr="es">% varianza explicada. 1=perfecto, 0=igual que la media, &lt;0=peor que la media.</span><span data-tr="ja">説明された分散の割合。1=完璧、0=平均と同等、&lt;0=平均より悪い。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Adjusted R²</span><span data-tr="es">R² Ajustado</span><span data-tr="ja">調整済み R²</span></div><div class="f">Adj R² = 1 − [(1−R²)(n−1)/(n−p−1)]</div><div class="n"><span data-tr="en">Penalizes adding useless features. If Adj R² drops, remove the feature.</span><span data-tr="es">Penaliza añadir características inútiles. Si Adj R² baja, elimina la característica.</span><span data-tr="ja">無用な特徴量追加を罰する。Adj R² が下がれば特徴量を除く。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 15. CLASSIFICATION METRICS                      -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 15. CLASSIFICATION METRICS -->
 <div class="section" id="class-met">
-  <div class="sec-head"><span class="sec-num n-orange">15</span><span class="sec-title">Classification Metrics</span></div>
+  <div class="sec-head"><span class="sec-num n-orange">15</span><span class="sec-title"><span data-tr="en">Classification Metrics</span><span data-tr="es">Métricas de Clasificación</span><span data-tr="ja">分類指標</span></span></div>
 
   <div class="grid">
-    <div class="c"><div class="c-label">Accuracy</div><div class="f">(TP+TN) / (TP+TN+FP+FN)</div><div class="n">Misleading on imbalanced data.</div></div>
-    <div class="c"><div class="c-label">Precision</div><div class="f">TP / (TP+FP)</div><div class="n">"Of predicted positives, how many are correct?" Minimize false alarms.</div></div>
-    <div class="c"><div class="c-label">Recall (Sensitivity)</div><div class="f">TP / (TP+FN)</div><div class="n">"Of actual positives, how many did I catch?" Minimize misses.</div></div>
-    <div class="c"><div class="c-label">F1 Score</div><div class="f">F1 = 2·(P·R)/(P+R)</div><div class="n">Harmonic mean of precision and recall. 0 to 1.</div></div>
-    <div class="c"><div class="c-label">Fβ Score</div><div class="f">Fβ = (1+β²)·(P·R)/(β²P+R)</div><div class="n">β>1 weights recall more, β<1 weights precision more. F1 is β=1.</div></div>
-    <div class="c"><div class="c-label">Specificity (TNR)</div><div class="f">TN / (TN+FP)</div><div class="n">"Of actual negatives, how many correctly identified?"</div></div>
-    <div class="c"><div class="c-label">AUC-ROC</div><div class="f">Area under TPR vs FPR curve</div><div class="n">0.5=random, 1.0=perfect. Threshold-independent. Probability that a random positive ranks above a random negative.</div></div>
-    <div class="c"><div class="c-label">AUC-PR</div><div class="f">Area under Precision vs Recall curve</div><div class="n">Better than AUC-ROC for highly imbalanced datasets. Focuses on the positive class.</div></div>
-    <div class="c"><div class="c-label">Log Loss</div><div class="f">−(1/n) Σ[yᵢ log(pᵢ) + (1−yᵢ)log(1−pᵢ)]</div><div class="n">Penalizes confident wrong predictions exponentially. Lower = better.</div></div>
-    <div class="c"><div class="c-label">Cohen's Kappa</div><div class="f">κ = (p₀ − pₑ) / (1 − pₑ)</div><div class="n">Agreement beyond chance. p₀=observed accuracy, pₑ=expected by chance. 0=chance, 1=perfect.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Accuracy</span><span data-tr="es">Exactitud</span><span data-tr="ja">正解率</span></div><div class="f">(TP+TN) / (TP+TN+FP+FN)</div><div class="n"><span data-tr="en">Misleading on imbalanced data.</span><span data-tr="es">Engañosa en datos desbalanceados.</span><span data-tr="ja">不均衡データで誤解を招く。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Precision</span><span data-tr="es">Precisión</span><span data-tr="ja">適合率</span></div><div class="f">TP / (TP+FP)</div><div class="n"><span data-tr="en">"Of predicted positives, how many are correct?" Minimize false alarms.</span><span data-tr="es">"De los positivos predichos, ¿cuántos son correctos?" Minimizar falsas alarmas.</span><span data-tr="ja">「予測陽性のうち正解はいくつ？」 誤報を最小化。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Recall (Sensitivity)</span><span data-tr="es">Recall (Sensibilidad)</span><span data-tr="ja">再現率 (感度)</span></div><div class="f">TP / (TP+FN)</div><div class="n"><span data-tr="en">"Of actual positives, how many did I catch?" Minimize misses.</span><span data-tr="es">"De los positivos reales, ¿cuántos atrapé?" Minimizar los fallados.</span><span data-tr="ja">「実際の陽性のうちいくつ捉えたか？」 見落としを最小化。</span></div></div>
+    <div class="c"><div class="c-label">F1 Score</div><div class="f">F1 = 2·(P·R)/(P+R)</div><div class="n"><span data-tr="en">Harmonic mean of precision and recall. 0 to 1.</span><span data-tr="es">Media armónica de precisión y recall. 0 a 1.</span><span data-tr="ja">適合率と再現率の調和平均。0 から 1。</span></div></div>
+    <div class="c"><div class="c-label">Fβ Score</div><div class="f">Fβ = (1+β²)·(P·R)/(β²P+R)</div><div class="n"><span data-tr="en">β&gt;1 weights recall more, β&lt;1 weights precision more. F1 is β=1.</span><span data-tr="es">β&gt;1 pesa más el recall, β&lt;1 pesa más la precisión. F1 es β=1.</span><span data-tr="ja">β&gt;1 で再現率を重視、β&lt;1 で適合率を重視。F1 は β=1。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Specificity (TNR)</span><span data-tr="es">Especificidad (TNR)</span><span data-tr="ja">特異度 (TNR)</span></div><div class="f">TN / (TN+FP)</div><div class="n"><span data-tr="en">"Of actual negatives, how many correctly identified?"</span><span data-tr="es">"De los negativos reales, ¿cuántos identifiqué correctamente?"</span><span data-tr="ja">「実際の陰性のうちいくつ正しく特定したか？」</span></div></div>
+    <div class="c"><div class="c-label">AUC-ROC</div><div class="f"><span data-tr="en">Area under TPR vs FPR curve</span><span data-tr="es">Área bajo la curva TPR vs FPR</span><span data-tr="ja">TPR 対 FPR 曲線下の面積</span></div><div class="n"><span data-tr="en">0.5=random, 1.0=perfect. Threshold-independent. Probability that a random positive ranks above a random negative.</span><span data-tr="es">0.5=aleatorio, 1.0=perfecto. Independiente de umbral. Probabilidad de que un positivo aleatorio rankee sobre un negativo aleatorio.</span><span data-tr="ja">0.5=ランダム、1.0=完璧。閾値非依存。ランダムな陽性がランダムな陰性より上位にランクされる確率。</span></div></div>
+    <div class="c"><div class="c-label">AUC-PR</div><div class="f"><span data-tr="en">Area under Precision vs Recall curve</span><span data-tr="es">Área bajo la curva Precisión vs Recall</span><span data-tr="ja">適合率 対 再現率曲線下の面積</span></div><div class="n"><span data-tr="en">Better than AUC-ROC for highly imbalanced datasets. Focuses on the positive class.</span><span data-tr="es">Mejor que AUC-ROC en datos muy desbalanceados. Se enfoca en la clase positiva.</span><span data-tr="ja">極端な不均衡データでは AUC-ROC より良い。陽性クラスに注目。</span></div></div>
+    <div class="c"><div class="c-label">Log Loss</div><div class="f">−(1/n) Σ[yᵢ log(pᵢ) + (1−yᵢ)log(1−pᵢ)]</div><div class="n"><span data-tr="en">Penalizes confident wrong predictions exponentially. Lower = better.</span><span data-tr="es">Castiga exponencialmente predicciones confiadas erróneas. Menor = mejor.</span><span data-tr="ja">自信のある誤予測を指数的に罰する。小さいほど良い。</span></div></div>
+    <div class="c"><div class="c-label">Cohen's Kappa</div><div class="f">κ = (p₀ − pₑ) / (1 − pₑ)</div><div class="n"><span data-tr="en">Agreement beyond chance. p₀=observed accuracy, pₑ=expected by chance. 0=chance, 1=perfect.</span><span data-tr="es">Acuerdo más allá del azar. p₀=exactitud observada, pₑ=esperada por azar. 0=azar, 1=perfecto.</span><span data-tr="ja">偶然を超えた一致。p₀=観測正解率、pₑ=偶然による期待値。0=偶然、1=完璧。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 16. REGULARIZATION                              -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 16. REGULARIZATION -->
 <div class="section" id="regularize">
-  <div class="sec-head"><span class="sec-num n-teal">16</span><span class="sec-title">Regularization</span></div>
-  <p class="sec-desc">Trading a little bias for a lot of variance reduction. The antidote to overfitting.</p>
+  <div class="sec-head"><span class="sec-num n-teal">16</span><span class="sec-title"><span data-tr="en">Regularization</span><span data-tr="es">Regularización</span><span data-tr="ja">正則化</span></span></div>
+  <p class="sec-desc"><span data-tr="en">Trading a little bias for a lot of variance reduction. The antidote to overfitting.</span><span data-tr="es">Cambiar un poco de sesgo por mucha reducción de varianza. El antídoto contra el sobreajuste.</span><span data-tr="ja">少しのバイアスと引き換えに大きな分散削減を。過学習の解毒剤。</span></p>
 
   <div class="grid">
-    <div class="c"><div class="c-label">L1 — Lasso</div><div class="f">J = MSE + λ Σ|βⱼ|</div><div class="n">Drives coefficients to exactly 0 → feature selection. Creates sparse models.</div></div>
-    <div class="c"><div class="c-label">L2 — Ridge</div><div class="f">J = MSE + λ Σβⱼ²</div><div class="n">Shrinks toward 0 but never reaches it. Handles multicollinearity. Equivalent to Gaussian prior (MAP).</div></div>
-    <div class="c"><div class="c-label">Elastic Net</div><div class="f">J = MSE + λ₁Σ|βⱼ| + λ₂Σβⱼ²</div><div class="n">Best of both: sparsity (L1) + stability (L2). Two hyperparameters.</div></div>
-    <div class="c"><div class="c-label">Dropout</div><div class="f">Randomly zero out neurons with prob p during training</div><div class="n">Neural network regularization. Forces redundancy. Like training an ensemble. p typically 0.2–0.5.</div></div>
-    <div class="c"><div class="c-label">Early Stopping</div><div class="f">Stop training when validation loss starts increasing</div><div class="n">Implicit regularization. Monitor val loss, keep best weights.</div></div>
+    <div class="c"><div class="c-label">L1 — Lasso</div><div class="f">J = MSE + λ Σ|βⱼ|</div><div class="n"><span data-tr="en">Drives coefficients to exactly 0 → feature selection. Creates sparse models.</span><span data-tr="es">Lleva coeficientes exactamente a 0 → selección de características. Crea modelos dispersos.</span><span data-tr="ja">係数を正確に 0 にする → 特徴量選択。スパースモデルを生成。</span></div></div>
+    <div class="c"><div class="c-label">L2 — Ridge</div><div class="f">J = MSE + λ Σβⱼ²</div><div class="n"><span data-tr="en">Shrinks toward 0 but never reaches it. Handles multicollinearity. Equivalent to Gaussian prior (MAP).</span><span data-tr="es">Encoge hacia 0 pero nunca llega. Maneja multicolinealidad. Equivale a prior Gaussiano (MAP).</span><span data-tr="ja">0 に近づけるが到達しない。多重共線性に対処。ガウス事前 (MAP) と等価。</span></div></div>
+    <div class="c"><div class="c-label">Elastic Net</div><div class="f">J = MSE + λ₁Σ|βⱼ| + λ₂Σβⱼ²</div><div class="n"><span data-tr="en">Best of both: sparsity (L1) + stability (L2). Two hyperparameters.</span><span data-tr="es">Lo mejor de ambos: dispersión (L1) + estabilidad (L2). Dos hiperparámetros.</span><span data-tr="ja">両者の良いとこ: スパース性 (L1) + 安定性 (L2)。ハイパーパラメータは 2 つ。</span></div></div>
+    <div class="c"><div class="c-label">Dropout</div><div class="f"><span data-tr="en">Randomly zero out neurons with prob p during training</span><span data-tr="es">Pon a cero neuronas aleatoriamente con prob p durante el entrenamiento</span><span data-tr="ja">訓練中、確率 p でニューロンをランダムに 0 にする</span></div><div class="n"><span data-tr="en">Neural network regularization. Forces redundancy. Like training an ensemble. p typically 0.2–0.5.</span><span data-tr="es">Regularización para redes neuronales. Fuerza redundancia. Como entrenar un ensemble. p típicamente 0.2–0.5.</span><span data-tr="ja">ニューラルネットの正則化。冗長性を強制。アンサンブル訓練のよう。p は通常 0.2〜0.5。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Early Stopping</span><span data-tr="es">Parada Temprana</span><span data-tr="ja">早期停止</span></div><div class="f"><span data-tr="en">Stop training when validation loss starts increasing</span><span data-tr="es">Detén el entrenamiento cuando la pérdida de validación empieza a subir</span><span data-tr="ja">検証損失が上昇し始めたら訓練を停止</span></div><div class="n"><span data-tr="en">Implicit regularization. Monitor val loss, keep best weights.</span><span data-tr="es">Regularización implícita. Monitorea val loss, conserva los mejores pesos.</span><span data-tr="ja">暗黙の正則化。検証損失を監視し最良の重みを保存。</span></div></div>
   </div>
 
   <div class="callout cl-teal">
-    <strong>λ (regularization strength)</strong>
-    λ=0 → no regularization (plain OLS). λ→∞ → all coefficients→0 (underfitting). Find the sweet spot with cross-validation.
+    <strong><span data-tr="en">λ (regularization strength)</span><span data-tr="es">λ (fuerza de regularización)</span><span data-tr="ja">λ (正則化強度)</span></strong>
+    <span data-tr="en">λ=0 → no regularization (plain OLS). λ→∞ → all coefficients→0 (underfitting). Find the sweet spot with cross-validation.</span>
+    <span data-tr="es">λ=0 → sin regularización (OLS plano). λ→∞ → todos los coeficientes→0 (subajuste). Encuentra el punto óptimo con validación cruzada.</span>
+    <span data-tr="ja">λ=0 → 正則化なし (通常の OLS)。λ→∞ → 全係数 → 0 (過少適合)。交差検証で最適点を見つける。</span>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 17. PCA & DIMENSIONALITY                        -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 17. PCA & DIMENSIONALITY -->
 <div class="section" id="dimred">
-  <div class="sec-head"><span class="sec-num n-purple">17</span><span class="sec-title">PCA & Dimensionality Reduction</span></div>
+  <div class="sec-head"><span class="sec-num n-purple">17</span><span class="sec-title"><span data-tr="en">PCA &amp; Dimensionality Reduction</span><span data-tr="es">PCA y Reducción de Dimensión</span><span data-tr="ja">PCA と次元削減</span></span></div>
 
   <div class="grid">
-    <div class="c"><div class="c-label">PCA Goal</div><div class="f">Find directions of maximum variance in the data</div><div class="n">Project onto top k principal components. Reduce dimensions while preserving information.</div></div>
-    <div class="c"><div class="c-label">Steps</div><div class="f">1) Center data (subtract mean)<br>2) Compute covariance matrix C = XᵀX/(n−1)<br>3) Eigendecompose: Cv = λv<br>4) Sort by λ, keep top k eigenvectors<br>5) Project: Z = XW_k</div></div>
-    <div class="c"><div class="c-label">Variance Explained</div><div class="f">VE_k = λₖ / Σλᵢ</div><div class="n">Fraction of total variance captured by k-th component. Cumulative sum → choose k.</div></div>
-    <div class="c"><div class="c-label">SVD</div><div class="f">X = UΣVᵀ</div><div class="n">U = left singular vectors, Σ = singular values, V = right singular vectors. PCA uses V and Σ.</div></div>
-    <div class="c"><div class="c-label">Eigenvalue / Eigenvector</div><div class="f">Av = λv</div><div class="n">v = direction unchanged by A, λ = how much A stretches v. Core of PCA, spectral methods, PageRank.</div></div>
-    <div class="c"><div class="c-label">Scree Plot</div><div class="f">Plot eigenvalues in decreasing order</div><div class="n">Look for the "elbow" — where additional components stop adding meaningful variance.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">PCA Goal</span><span data-tr="es">Objetivo de PCA</span><span data-tr="ja">PCA の目標</span></div><div class="f"><span data-tr="en">Find directions of maximum variance in the data</span><span data-tr="es">Encuentra direcciones de máxima varianza en los datos</span><span data-tr="ja">データの最大分散方向を見つける</span></div><div class="n"><span data-tr="en">Project onto top k principal components. Reduce dimensions while preserving information.</span><span data-tr="es">Proyecta sobre los k componentes principales. Reduce dimensiones preservando información.</span><span data-tr="ja">上位 k 個の主成分に射影。情報を保持しながら次元を削減。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Steps</span><span data-tr="es">Pasos</span><span data-tr="ja">手順</span></div><div class="f"><span data-tr="en">1) Center data (subtract mean)<br>2) Compute covariance matrix C = XᵀX/(n−1)<br>3) Eigendecompose: Cv = λv<br>4) Sort by λ, keep top k eigenvectors<br>5) Project: Z = XW_k</span><span data-tr="es">1) Centra los datos (resta la media)<br>2) Calcula la matriz de covarianza C = XᵀX/(n−1)<br>3) Descompón: Cv = λv<br>4) Ordena por λ, conserva los k primeros autovectores<br>5) Proyecta: Z = XW_k</span><span data-tr="ja">1) データを中心化 (平均を引く)<br>2) 共分散行列 C = XᵀX/(n−1) を計算<br>3) 固有分解: Cv = λv<br>4) λ でソート、上位 k 個の固有ベクトルを残す<br>5) 射影: Z = XW_k</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Variance Explained</span><span data-tr="es">Varianza Explicada</span><span data-tr="ja">寄与率</span></div><div class="f">VE_k = λₖ / Σλᵢ</div><div class="n"><span data-tr="en">Fraction of total variance captured by k-th component. Cumulative sum → choose k.</span><span data-tr="es">Fracción de varianza total capturada por el k-ésimo componente. Suma acumulada → elige k.</span><span data-tr="ja">k 番目の成分が捉える全分散の割合。累積で k を決める。</span></div></div>
+    <div class="c"><div class="c-label">SVD</div><div class="f">X = UΣVᵀ</div><div class="n"><span data-tr="en">U = left singular vectors, Σ = singular values, V = right singular vectors. PCA uses V and Σ.</span><span data-tr="es">U = vectores singulares izquierdos, Σ = valores singulares, V = vectores derechos. PCA usa V y Σ.</span><span data-tr="ja">U = 左特異ベクトル、Σ = 特異値、V = 右特異ベクトル。PCA は V と Σ を使う。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Eigenvalue / Eigenvector</span><span data-tr="es">Autovalor / Autovector</span><span data-tr="ja">固有値 / 固有ベクトル</span></div><div class="f">Av = λv</div><div class="n"><span data-tr="en">v = direction unchanged by A, λ = how much A stretches v. Core of PCA, spectral methods, PageRank.</span><span data-tr="es">v = dirección no cambiada por A, λ = cuánto A estira v. Núcleo de PCA, métodos espectrales, PageRank.</span><span data-tr="ja">v = A で方向が不変、λ = A が v を伸ばす量。PCA、スペクトル法、PageRank の中核。</span></div></div>
+    <div class="c"><div class="c-label">Scree Plot</div><div class="f"><span data-tr="en">Plot eigenvalues in decreasing order</span><span data-tr="es">Grafica los autovalores en orden decreciente</span><span data-tr="ja">固有値を降順にプロット</span></div><div class="n"><span data-tr="en">Look for the "elbow" — where additional components stop adding meaningful variance.</span><span data-tr="es">Busca el "codo" — donde componentes adicionales dejan de añadir varianza significativa.</span><span data-tr="ja">「肘」を探す — 追加成分が有意な分散を加えなくなる点。</span></div></div>
   </div>
 
-  <div class="sub-title">Key Linear Algebra</div>
+  <div class="sub-title"><span data-tr="en">Key Linear Algebra</span><span data-tr="es">Álgebra Lineal Clave</span><span data-tr="ja">主要な線形代数</span></div>
   <div class="grid">
-    <div class="c"><div class="c-label">Dot Product</div><div class="f">a·b = Σaᵢbᵢ = |a||b|cos(θ)</div><div class="n">Scalar. Foundation of projections and similarity.</div></div>
-    <div class="c"><div class="c-label">L1 Norm (Manhattan)</div><div class="f">‖x‖₁ = Σ|xᵢ|</div><div class="n">Used in Lasso regularization.</div></div>
-    <div class="c"><div class="c-label">L2 Norm (Euclidean)</div><div class="f">‖x‖₂ = √(Σxᵢ²)</div><div class="n">Used in Ridge, KNN, cosine similarity.</div></div>
-    <div class="c"><div class="c-label">Cosine Similarity</div><div class="f">cos(θ) = (a·b) / (‖a‖‖b‖)</div><div class="n">Direction similarity, ignores magnitude. [−1,1]. Standard in NLP (word embeddings, TF-IDF).</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Dot Product</span><span data-tr="es">Producto Punto</span><span data-tr="ja">内積</span></div><div class="f">a·b = Σaᵢbᵢ = |a||b|cos(θ)</div><div class="n"><span data-tr="en">Scalar. Foundation of projections and similarity.</span><span data-tr="es">Escalar. Base de proyecciones y similitud.</span><span data-tr="ja">スカラー。射影と類似度の基礎。</span></div></div>
+    <div class="c"><div class="c-label">L1 Norm (Manhattan)</div><div class="f">‖x‖₁ = Σ|xᵢ|</div><div class="n"><span data-tr="en">Used in Lasso regularization.</span><span data-tr="es">Usada en regularización Lasso.</span><span data-tr="ja">Lasso 正則化で使用。</span></div></div>
+    <div class="c"><div class="c-label">L2 Norm (Euclidean)</div><div class="f">‖x‖₂ = √(Σxᵢ²)</div><div class="n"><span data-tr="en">Used in Ridge, KNN, cosine similarity.</span><span data-tr="es">Usada en Ridge, KNN, similitud coseno.</span><span data-tr="ja">Ridge、KNN、コサイン類似度で使用。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Cosine Similarity</span><span data-tr="es">Similitud Coseno</span><span data-tr="ja">コサイン類似度</span></div><div class="f">cos(θ) = (a·b) / (‖a‖‖b‖)</div><div class="n"><span data-tr="en">Direction similarity, ignores magnitude. [−1,1]. Standard in NLP (word embeddings, TF-IDF).</span><span data-tr="es">Similitud de dirección, ignora magnitud. [−1,1]. Estándar en NLP (embeddings, TF-IDF).</span><span data-tr="ja">方向の類似度、大きさは無視。[−1,1]。NLP (単語埋め込み、TF-IDF) の標準。</span></div></div>
   </div>
 </div>
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 18. INEQUALITIES & THEOREMS                     -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- 18. INEQUALITIES & THEOREMS -->
 <div class="section" id="ineq">
-  <div class="sec-head"><span class="sec-num n-accent">18</span><span class="sec-title">Key Inequalities & Theorems</span></div>
-  <p class="sec-desc">The theoretical guarantees that underpin everything above.</p>
+  <div class="sec-head"><span class="sec-num n-accent">18</span><span class="sec-title"><span data-tr="en">Key Inequalities &amp; Theorems</span><span data-tr="es">Desigualdades y Teoremas Clave</span><span data-tr="ja">主要な不等式と定理</span></span></div>
+  <p class="sec-desc"><span data-tr="en">The theoretical guarantees that underpin everything above.</span><span data-tr="es">Las garantías teóricas que sustentan todo lo anterior.</span><span data-tr="ja">上記全てを支える理論的保証。</span></p>
 
   <div class="grid">
-    <div class="c"><div class="c-label">Markov's Inequality</div><div class="f">P(X ≥ a) ≤ E[X] / a &nbsp; (X ≥ 0)</div><div class="n">Weakest bound, fewest assumptions. Only needs X ≥ 0 and E[X] exists.</div></div>
-    <div class="c"><div class="c-label">Chebyshev's Inequality</div><div class="f">P(|X−μ| ≥ kσ) ≤ 1/k²</div><div class="n">At most 1/k² of data lies more than k std devs from the mean. Any distribution.</div></div>
-    <div class="c"><div class="c-label">Jensen's Inequality</div><div class="f">f(E[X]) ≤ E[f(X)] if f is convex</div><div class="n">Convex function of expectation ≤ expectation of convex function. Used in variational inference (ELBO).</div></div>
-    <div class="c"><div class="c-label">Cramér-Rao Lower Bound</div><div class="f">Var(θ̂) ≥ 1 / I(θ)</div><div class="n">I(θ) = Fisher information. No unbiased estimator can have variance below this bound.</div></div>
-    <div class="c"><div class="c-label">Bias-Variance Decomposition</div><div class="f">E[(y−ŷ)²] = Bias²+Var+σ²</div><div class="n">Total error = (systematic error)² + estimation uncertainty + irreducible noise.</div></div>
-    <div class="c"><div class="c-label">Central Limit Theorem</div><div class="f">√n(x̄−μ)/σ → N(0,1)</div><div class="n">Standardized sample mean converges to standard normal. The reason statistics works.</div></div>
-    <div class="c"><div class="c-label">Law of Large Numbers</div><div class="f">x̄_n →ᵖ μ</div><div class="n">Weak LLN: convergence in probability. Strong LLN: almost sure convergence.</div></div>
-    <div class="c"><div class="c-label">Gauss-Markov Theorem</div><div class="f">OLS is BLUE under classical assumptions</div><div class="n">Best Linear Unbiased Estimator — minimum variance among all linear unbiased estimators. Requires: linearity, exogeneity, homoscedasticity, no multicollinearity.</div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Markov's Inequality</span><span data-tr="es">Desigualdad de Markov</span><span data-tr="ja">マルコフの不等式</span></div><div class="f">P(X ≥ a) ≤ E[X] / a &nbsp; (X ≥ 0)</div><div class="n"><span data-tr="en">Weakest bound, fewest assumptions. Only needs X ≥ 0 and E[X] exists.</span><span data-tr="es">La cota más débil, con menos supuestos. Solo necesita X ≥ 0 y que E[X] exista.</span><span data-tr="ja">最も弱い限界、仮定が最少。X ≥ 0 と E[X] の存在のみ必要。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Chebyshev's Inequality</span><span data-tr="es">Desigualdad de Chebyshev</span><span data-tr="ja">チェビシェフの不等式</span></div><div class="f">P(|X−μ| ≥ kσ) ≤ 1/k²</div><div class="n"><span data-tr="en">At most 1/k² of data lies more than k std devs from the mean. Any distribution.</span><span data-tr="es">A lo sumo 1/k² de los datos está a más de k desviaciones de la media. Cualquier distribución.</span><span data-tr="ja">データの高々 1/k² が平均から k 標準偏差以上離れる。任意の分布で。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Jensen's Inequality</span><span data-tr="es">Desigualdad de Jensen</span><span data-tr="ja">イェンセンの不等式</span></div><div class="f">f(E[X]) ≤ E[f(X)] <span data-tr="en">if f is convex</span><span data-tr="es">si f es convexa</span><span data-tr="ja">f が凸なら</span></div><div class="n"><span data-tr="en">Convex function of expectation ≤ expectation of convex function. Used in variational inference (ELBO).</span><span data-tr="es">Función convexa del valor esperado ≤ valor esperado de la función. Usada en inferencia variacional (ELBO).</span><span data-tr="ja">期待値の凸関数 ≤ 凸関数の期待値。変分推論 (ELBO) で使用。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Cramér-Rao Lower Bound</span><span data-tr="es">Cota Inferior de Cramér-Rao</span><span data-tr="ja">クラメル・ラオ下限</span></div><div class="f">Var(θ̂) ≥ 1 / I(θ)</div><div class="n"><span data-tr="en">I(θ) = Fisher information. No unbiased estimator can have variance below this bound.</span><span data-tr="es">I(θ) = información de Fisher. Ningún estimador insesgado puede tener varianza por debajo.</span><span data-tr="ja">I(θ) = フィッシャー情報量。不偏推定量の分散はこの下限を下回れない。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Bias-Variance Decomposition</span><span data-tr="es">Descomposición Sesgo-Varianza</span><span data-tr="ja">バイアス-分散分解</span></div><div class="f">E[(y−ŷ)²] = Bias²+Var+σ²</div><div class="n"><span data-tr="en">Total error = (systematic error)² + estimation uncertainty + irreducible noise.</span><span data-tr="es">Error total = (error sistemático)² + incertidumbre de estimación + ruido irreducible.</span><span data-tr="ja">総誤差 = (系統誤差)² + 推定の不確実性 + 削減不能ノイズ。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Central Limit Theorem</span><span data-tr="es">Teorema Central del Límite</span><span data-tr="ja">中心極限定理</span></div><div class="f">√n(x̄−μ)/σ → N(0,1)</div><div class="n"><span data-tr="en">Standardized sample mean converges to standard normal. The reason statistics works.</span><span data-tr="es">La media muestral estandarizada converge a la normal estándar. La razón por la que la estadística funciona.</span><span data-tr="ja">標準化された標本平均が標準正規に収束。統計学が機能する理由。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Law of Large Numbers</span><span data-tr="es">Ley de los Grandes Números</span><span data-tr="ja">大数の法則</span></div><div class="f">x̄_n →ᵖ μ</div><div class="n"><span data-tr="en">Weak LLN: convergence in probability. Strong LLN: almost sure convergence.</span><span data-tr="es">LGN débil: convergencia en probabilidad. LGN fuerte: convergencia casi segura.</span><span data-tr="ja">弱 LLN: 確率収束。強 LLN: ほぼ確実収束。</span></div></div>
+    <div class="c"><div class="c-label"><span data-tr="en">Gauss-Markov Theorem</span><span data-tr="es">Teorema de Gauss-Markov</span><span data-tr="ja">ガウス・マルコフの定理</span></div><div class="f"><span data-tr="en">OLS is BLUE under classical assumptions</span><span data-tr="es">OLS es BLUE bajo los supuestos clásicos</span><span data-tr="ja">古典的仮定の下で OLS は BLUE</span></div><div class="n"><span data-tr="en">Best Linear Unbiased Estimator — minimum variance among all linear unbiased estimators. Requires: linearity, exogeneity, homoscedasticity, no multicollinearity.</span><span data-tr="es">Mejor Estimador Lineal Insesgado — mínima varianza entre todos los lineales insesgados. Requiere: linealidad, exogeneidad, homocedasticidad, sin multicolinealidad.</span><span data-tr="ja">最良線形不偏推定量 — 全線形不偏推定量の中で最小分散。必要条件: 線形性、外生性、等分散性、多重共線性なし。</span></div></div>
   </div>
 </div>
 
 </div>
 
 <footer>
-  Texcoco Data Science · Statistics & Probability Compendium · Free forever
+  <span data-tr="en">Texcoco Data Science · Statistics &amp; Probability Compendium · Free forever</span>
+  <span data-tr="es">Texcoco Ciencia de Datos · Compendio de Estadística y Probabilidad · Gratis para siempre</span>
+  <span data-tr="ja">テクスココ データサイエンス · 統計・確率コンペンディウム · 永久無料</span>
 </footer>
 
+<script src="/lang-toggle.js" defer></script>
 </body>
 </html>
